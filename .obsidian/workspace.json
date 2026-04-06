@@ -26,13 +26,14 @@
             "id": "6b10480230435bef",
             "type": "leaf",
             "state": {
-              "type": "bases",
+              "type": "split-diff-view",
               "state": {
-                "file": "未命名.base",
-                "viewName": "表格"
+                "aFile": "未命名.base",
+                "bFile": "未命名.base",
+                "aRef": ""
               },
-              "icon": "lucide-table",
-              "title": "未命名"
+              "icon": "diff",
+              "title": "Diff: 未命名.base  (Working Tree)"
             }
           }
         ],
@@ -120,7 +121,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "未命名.base",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -130,7 +130,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "未命名 的反向链接列表"
+              "title": "反向链接"
             }
           },
           {
@@ -139,12 +139,11 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "未命名.base",
                 "linksCollapsed": true,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "未命名 的出链列表"
+              "title": "出链"
             }
           },
           {
@@ -182,13 +181,12 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "未命名.base",
                 "followCursor": false,
                 "showSearch": true,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "未命名 的大纲"
+              "title": "大纲"
             }
           },
           {
@@ -221,15 +219,15 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "6b10480230435bef",
+  "active": "72570ad99ddc41d8",
   "lastOpenFiles": [
     "未命名.base",
+    "Niagara/9. NiagaraParameterStore.h.md",
     "Niagara/Niagara.md",
     "Niagara/0. Niagara整体框架与设计理念1.md",
     "Niagara/1. UE 4.26 Niagara 源码阅读指南.md",
     "Niagara/2. NiagaraCommon.h.md",
     "Niagara/0. Niagara整体框架与设计理念.md",
-    "Niagara/9. NiagaraParameterStore.h.md",
     "Niagara/8. NiagaraDataSet.h.md",
     "Tags/Untitled.md",
     "词典/SOA与AOS数据布局详解.md",
