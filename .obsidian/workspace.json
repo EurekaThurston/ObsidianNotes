@@ -76,7 +76,7 @@
             }
           },
           {
-            "id": "ec0b844e612fdf29",
+            "id": "6080d14e980ecdbd",
             "type": "leaf",
             "state": {
               "type": "mk-path-view",
@@ -219,12 +219,12 @@
       "templates:插入模板": false,
       "command-palette:打开命令面板": false,
       "bases:新建数据库": false,
-      "github-sync:Sync with Remote": false,
       "obsidian-git:Open Git source control": false
     }
   },
   "active": "4abb8e70bf730725",
   "lastOpenFiles": [
+    "Tags",
     "Niagara/0. Niagara整体框架与设计理念.md",
     "Niagara/1. UE 4.26 Niagara 源码阅读指南.md",
     "Niagara/Niagara.md",
@@ -242,7 +242,6 @@
     "Niagara/7. NiagaraScript.h.md",
     "Niagara/5. NiagaraEmitter.h.md",
     "Niagara/4. NiagaraSystem.h.md",
-    "Tags",
     "[SOA与AOS数据布局详解.md",
     "词典",
     "SOA与AOS数据布局详解.md.tmp.46244.1775410346861",
