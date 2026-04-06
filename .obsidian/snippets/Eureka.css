@@ -1,0 +1,80 @@
+/* @settings
+name: 颜色
+id: EurekaAppearance
+settings:
+    - 
+        id: my-highlight-color
+        title: 高亮背景色 (==高亮==)
+        description: 建议在面板里加上一点透明度，以免遮挡文字
+        type: variable-color
+        format: hex
+        default: '#ffd000'
+    - 
+        id: custom-headings-group
+        title: 标题颜色设置
+        type: heading
+        level: 2
+        collapsed: false
+    - 
+        id: my-h1-color
+        title: 标题 1 (H1) 颜色
+        type: variable-color
+        format: hex
+        default: '#e06c75'
+    - 
+        id: my-h2-color
+        title: 标题 2 (H2) 颜色
+        type: variable-color
+        format: hex
+        default: '#98c379'
+    - 
+        id: my-h3-color
+        title: 标题 3 (H3) 颜色
+        type: variable-color
+        format: hex
+        default: '#e5c07b'
+    - 
+        id: my-h4-color
+        title: 标题 4 (H4) 颜色
+        type: variable-color
+        format: hex
+        default: '#61afef'
+    - 
+        id: my-h5-color
+        title: 标题 5 (H5) 颜色
+        type: variable-color
+        format: hex
+        default: '#c678dd'
+*/
+
+/* 提高优先级，确保覆盖 Obsidian 默认主题的变量 */
+body, .theme-dark, .theme-light {
+    /* 这里的 var(A, B) 意思是：如果有 A (即你在面板里选的颜色)，就用 A；如果没有，就强制用 B (这里的色号) */
+    --text-highlight-bg: var(--my-highlight-color, rgba(255, 208, 0, 0.4)) !important;
+    --h1-color: var(--my-h1-color, #e06c75) !important;
+    --h2-color: var(--my-h2-color, #98c379) !important;
+    --h3-color: var(--my-h3-color, #e5c07b) !important;
+    --h4-color: var(--my-h4-color, #61afef) !important;
+    --h5-color: var(--my-h5-color, #c678dd) !important;
+}
+
+
+/* @settings
+name: 页面
+id: page-width-settings
+settings:
+  -
+    id: page-max-width
+    title: 页面最大宽度
+    description: 设置编辑和阅读模式的最大宽度
+    type: variable-number-slider
+    default: 700
+    min: 400
+    max: 1800
+    step: 50
+    format: px
+*/
+
+body {
+  --file-line-width: var(--page-max-width, 700px);
+}

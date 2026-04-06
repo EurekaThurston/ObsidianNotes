@@ -1,0 +1,11 @@
+{
+  "cssTheme": "",
+  "baseFontSize": 16,
+  "theme": "system",
+  "accentColor": "#ffa200",
+  "enabledCssSnippets": [
+    "supercharged-links-gen",
+    "Eureka",
+    "RiderDarkCodeColor"
+  ]
+}

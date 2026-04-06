@@ -1,0 +1,195 @@
+/* ============================================
+   Rider Dark (Darcula) Theme for Obsidian Code Blocks
+   针对 Obsidian 实际 DOM 结构，高优先级覆盖
+   ============================================ */
+
+/* === 代码块背景 === */
+body pre[class*="language-"],
+body .markdown-preview-view pre[class*="language-"],
+body .markdown-reading-view pre[class*="language-"],
+body .markdown-preview-section pre[class*="language-"] {
+  background-color: #2b2b2b !important;
+  border: 1px solid #3c3f41 !important;
+  border-radius: 4px !important;
+}
+
+/* === 代码块内文字（最关键：裸文本节点的颜色和粗细） === */
+body pre[class*="language-"] code[class*="language-"],
+body .markdown-preview-view pre[class*="language-"] code[class*="language-"],
+body .markdown-reading-view pre[class*="language-"] code[class*="language-"],
+body .markdown-preview-section pre[class*="language-"] code[class*="language-"],
+body pre[class*="language-"] code,
+body .markdown-preview-view pre code,
+body .markdown-reading-view pre code {
+  color: #a9b7c6 !important;
+  font-weight: 400 !important;
+  text-shadow: none !important;
+}
+
+/* === 行内代码 === */
+body .markdown-preview-view :not(pre) > code,
+body .markdown-reading-view :not(pre) > code {
+  background-color: #2b2b2b !important;
+  color: #a9b7c6 !important;
+  font-weight: 400 !important;
+  border: 1px solid #3c3f41 !important;
+  border-radius: 3px !important;
+  padding: 1px 4px !important;
+}
+
+/* === Prism Token 全局重置 === */
+body pre[class*="language-"] .token,
+body .markdown-preview-view pre[class*="language-"] .token,
+body .markdown-reading-view pre[class*="language-"] .token {
+  font-weight: 400 !important;
+  text-shadow: none !important;
+  background: none !important;
+}
+
+/* --- 注释 --- */
+body pre[class*="language-"] .token.comment,
+body pre[class*="language-"] .token.prolog,
+body pre[class*="language-"] .token.doctype,
+body pre[class*="language-"] .token.cdata {
+  color: #808080 !important;
+  font-style: italic !important;
+}
+
+/* --- 关键字 (struct, void, bool, float, int32, const, return, enum...) --- */
+body pre[class*="language-"] .token.keyword {
+  color: #cc7832 !important;
+}
+
+/* --- 函数名 --- */
+body pre[class*="language-"] .token.function {
+  color: #ffc66d !important;
+}
+
+/* --- 类名/类型名 — 与普通文本同色 --- */
+body pre[class*="language-"] .token.class-name,
+body pre[class*="language-"] .token.type-name,
+body pre[class*="language-"] .token.maybe-class-name {
+  color: #a9b7c6 !important;
+  font-weight: 400 !important;
+}
+
+/* --- 内置类型 --- */
+body pre[class*="language-"] .token.builtin {
+  color: #cc7832 !important;
+}
+
+/* --- 字符串 --- */
+body pre[class*="language-"] .token.string,
+body pre[class*="language-"] .token.char,
+body pre[class*="language-"] .token.attr-value {
+  color: #6a8759 !important;
+}
+
+/* --- 数字 --- */
+body pre[class*="language-"] .token.number {
+  color: #6897bb !important;
+}
+
+/* --- 布尔 / 常量 --- */
+body pre[class*="language-"] .token.boolean,
+body pre[class*="language-"] .token.constant {
+  color: #9876aa !important;
+}
+
+/* --- 操作符 --- */
+body pre[class*="language-"] .token.operator {
+  color: #a9b7c6 !important;
+  background: none !important;
+}
+
+/* --- 标点 --- */
+body pre[class*="language-"] .token.punctuation {
+  color: #a9b7c6 !important;
+}
+
+/* --- 变量 --- */
+body pre[class*="language-"] .token.variable {
+  color: #a9b7c6 !important;
+}
+
+/* --- 属性 --- */
+body pre[class*="language-"] .token.property {
+  color: #9876aa !important;
+}
+
+/* --- HTML/XML 标签 --- */
+body pre[class*="language-"] .token.tag {
+  color: #e8bf6a !important;
+}
+
+body pre[class*="language-"] .token.attr-name {
+  color: #bababa !important;
+}
+
+/* --- 选择器 / at-rule --- */
+body pre[class*="language-"] .token.selector,
+body pre[class*="language-"] .token.atrule {
+  color: #cc7832 !important;
+}
+
+/* --- 正则 --- */
+body pre[class*="language-"] .token.regex {
+  color: #6a8759 !important;
+}
+
+/* --- 宏 / 预处理器 / 注解 --- */
+body pre[class*="language-"] .token.macro,
+body pre[class*="language-"] .token.preprocessor,
+body pre[class*="language-"] .token.directive-hash,
+body pre[class*="language-"] .token.annotation {
+  color: #bbb529 !important;
+}
+
+body pre[class*="language-"] .token.namespace {
+  color: #a9b7c6 !important;
+}
+
+/* --- important --- */
+body pre[class*="language-"] .token.important {
+  color: #cc7832 !important;
+  font-weight: 400 !important;
+}
+
+/* === Source Mode (CodeMirror 6) === */
+body .cm-s-obsidian .HyperMD-codeblock,
+body .cm-s-obsidian .cm-line.HyperMD-codeblock {
+  background-color: #2b2b2b !important;
+  color: #a9b7c6 !important;
+}
+
+body .cm-s-obsidian .HyperMD-codeblock .cm-comment    { color: #808080 !important; }
+body .cm-s-obsidian .HyperMD-codeblock .cm-keyword    { color: #cc7832 !important; }
+body .cm-s-obsidian .HyperMD-codeblock .cm-def        { color: #ffc66d !important; }
+body .cm-s-obsidian .HyperMD-codeblock .cm-variable   { color: #a9b7c6 !important; }
+body .cm-s-obsidian .HyperMD-codeblock .cm-variable-2 { color: #a9b7c6 !important; }
+body .cm-s-obsidian .HyperMD-codeblock .cm-type       { color: #a9b7c6 !important; }
+body .cm-s-obsidian .HyperMD-codeblock .cm-property   { color: #9876aa !important; }
+body .cm-s-obsidian .HyperMD-codeblock .cm-operator   { color: #a9b7c6 !important; }
+body .cm-s-obsidian .HyperMD-codeblock .cm-number     { color: #6897bb !important; }
+body .cm-s-obsidian .HyperMD-codeblock .cm-string     { color: #6a8759 !important; }
+body .cm-s-obsidian .HyperMD-codeblock .cm-meta       { color: #bbb529 !important; }
+body .cm-s-obsidian .HyperMD-codeblock .cm-builtin    { color: #ffc66d !important; }
+body .cm-s-obsidian .HyperMD-codeblock .cm-tag        { color: #e8bf6a !important; }
+body .cm-s-obsidian .HyperMD-codeblock .cm-attribute  { color: #bababa !important; }
+body .cm-s-obsidian .HyperMD-codeblock .cm-atom       { color: #cc7832 !important; }
+
+/* === 选中高亮 === */
+body pre[class*="language-"] ::selection {
+  background-color: #214283 !important;
+}
+
+/* === 滚动条 === */
+body pre[class*="language-"]::-webkit-scrollbar {
+  height: 8px;
+  background-color: #2b2b2b;
+}
+
+body pre[class*="language-"]::-webkit-scrollbar-thumb {
+  background-color: #5a5d5e;
+  border-radius: 4px;
+}
