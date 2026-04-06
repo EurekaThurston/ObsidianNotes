@@ -26,14 +26,15 @@
             "id": "6b10480230435bef",
             "type": "leaf",
             "state": {
-              "type": "split-diff-view",
+              "type": "markdown",
               "state": {
-                "aFile": "未命名.base",
-                "bFile": "未命名.base",
-                "aRef": ""
+                "file": "Niagara/9. NiagaraParameterStore.h.md",
+                "mode": "source",
+                "source": true,
+                "backlinks": false
               },
-              "icon": "diff",
-              "title": "Diff: 未命名.base  (Working Tree)"
+              "icon": "lucide-file",
+              "title": "9. NiagaraParameterStore.h"
             }
           }
         ],
@@ -121,6 +122,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "Niagara/9. NiagaraParameterStore.h.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -130,7 +132,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "反向链接"
+              "title": "9. NiagaraParameterStore.h 的反向链接列表"
             }
           },
           {
@@ -139,11 +141,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "Niagara/9. NiagaraParameterStore.h.md",
                 "linksCollapsed": true,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "出链"
+              "title": "9. NiagaraParameterStore.h 的出链列表"
             }
           },
           {
@@ -181,12 +184,13 @@
             "state": {
               "type": "outline",
               "state": {
+                "file": "Niagara/9. NiagaraParameterStore.h.md",
                 "followCursor": false,
                 "showSearch": true,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "大纲"
+              "title": "9. NiagaraParameterStore.h 的大纲"
             }
           },
           {
@@ -219,7 +223,7 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "72570ad99ddc41d8",
+  "active": "6b10480230435bef",
   "lastOpenFiles": [
     "未命名.base",
     "Niagara/9. NiagaraParameterStore.h.md",
