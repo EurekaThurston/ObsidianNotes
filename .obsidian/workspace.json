@@ -13,13 +13,13 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "code-roots.local.md",
+                "file": "wiki/entities/project-game/kuro-effect-system/effect-define.md",
                 "mode": "preview",
                 "source": true,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "code-roots.local"
+              "title": "effect-define"
             }
           }
         ]
@@ -79,7 +79,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 336.5
+    "width": 436.5
   },
   "right": {
     "id": "7631e9cc46c5a60f",
@@ -140,7 +140,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "code-roots.local.md",
+                "file": "wiki/entities/project-game/kuro-effect-system/effect-define.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -150,7 +150,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "code-roots.local 的反向链接列表"
+              "title": "effect-define 的反向链接列表"
             }
           },
           {
@@ -159,12 +159,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "code-roots.local.md",
+                "file": "wiki/entities/project-game/kuro-effect-system/effect-define.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "code-roots.local 的出链列表"
+              "title": "effect-define 的出链列表"
             }
           },
           {
@@ -197,11 +197,11 @@
             }
           }
         ],
-        "currentTab": 3
+        "currentTab": 2
       }
     ],
     "direction": "horizontal",
-    "width": 888.5
+    "width": 768.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -216,44 +216,44 @@
       "claudian:Open Claudian": false
     }
   },
-  "active": "bd3a2248e9232759",
+  "active": "72570ad99ddc41d8",
   "lastOpenFiles": [
-    "index.md",
-    "log.md",
     "wiki/overview.md",
     "wiki/sources/karpathy-llm-wiki.md",
-    "CLAUDE.md",
-    "code-roots.local.md",
-    "CLAUDE.md.tmp.56972.1776428402790",
+    "wiki/sources/project-game/kuro-effect-system-new/overview.md",
+    "wiki/concepts/scripting-bridge-pattern.md",
+    "wiki/entities/project-game/kuro-effect-system-new/effect-actor-handle.md",
+    "log.md.tmp.56972.1776433970338",
+    "index.md.tmp.56972.1776433946685",
+    "index.md.tmp.56972.1776433932294",
+    "wiki/concepts/pending-init-pattern.md",
+    "wiki/syntheses/kuro-effect-system-old-vs-new.md",
+    "wiki/syntheses/kuro-effect-system-old-vs-new.md.tmp.56972.1776433712068",
+    "log.md.tmp.56972.1776433508498",
+    "index.md.tmp.56972.1776433478931",
+    "wiki/entities/project-game/kuro-effect-system-new/implementation-insights.md",
+    "index.md.tmp.56972.1776433183748",
+    "wiki/entities/project-game/kuro-effect-system-new/effect-bp-libraries.md",
+    "wiki/entities/project-game/kuro-effect-system-new/effect-bp-libraries.md.tmp.56972.1776433171871",
+    "wiki/entities/project-game/kuro-effect-system-new/kuro-effect-reflection.md",
+    "wiki/entities/project-game/kuro-effect-system-new/kuro-effect-reflection.md.tmp.56972.1776433052474",
+    "wiki/entities/project-game/kuro-effect-system-new/effect-function-holders.md",
+    "wiki/entities/project-game/kuro-effect-system-new/effect-system-script-bridge.md",
+    "wiki/entities/project-game/kuro-effect-system-new/effect-system-script-bridge.md.tmp.56972.1776432848685",
+    "wiki/entities/project-game/kuro-effect-system-new/scripting-bridge-architecture.md",
+    "wiki/entities/project-game/kuro-effect-system-new/niagara-component-handle.md",
+    "wiki/entities/project-game/kuro-effect-system-new/effect-system-actor.md",
+    "wiki/entities/project-game/kuro-effect-system-new/continuous-effect-controller.md",
+    "wiki/entities/project-game/kuro-effect-system-new/player-effect-container.md",
+    "wiki/entities/project-game/kuro-effect-system-new/effect-spec-subclasses.md",
+    "wiki/entities/project-game/kuro-effect-system/effect-define.md",
+    "wiki/entities/project-game/kuro-effect-system-new/effect-spec-factory.md",
     "wiki/concepts/rag.md",
-    "CLAUDE.md.tmp.51396.1776422251447",
-    "CLAUDE.md.tmp.51396.1776422226786",
     "wiki/concepts/memex.md",
     "wiki/concepts/llm-wiki-方法论.md",
-    "wiki/entities/karpathy.md",
-    "log.md.tmp.37572.1776421264378",
-    "CLAUDE.md.tmp.37572.1776421252591",
-    "wiki/overview.md.tmp.37572.1776421248183",
-    "index.md.tmp.37572.1776421230450",
-    "wiki/entities/karpathy.md.tmp.37572.1776421212823",
-    "wiki/concepts/memex.md.tmp.37572.1776421201231",
-    "wiki/concepts/llm-wiki-方法论.md.tmp.37572.1776421173549",
+    "CLAUDE.md",
+    "wiki/entities/project-game/kuro-effect-system-new/effect-spec-base.md",
     "raw/notes/Karpathy Wiki 方法论.md",
-    "Karpathy Wiki 方法论.md",
-    "raw/assets/_README.md",
-    "wiki/sources/Niagara-源码阅读指南.md",
-    "wiki/entities/NiagaraSystem.md",
-    "wiki/entities/NiagaraTypeDefinition.md",
-    "wiki/entities/NiagaraVM.md",
-    "wiki/entities/NiagaraDataInterface.md",
-    "wiki/entities/NiagaraDataBuffer.md",
-    "wiki/concepts/数据驱动架构.md",
-    "wiki/entities/Cascade.md",
-    "wiki/concepts/快速迭代参数.md",
-    "wiki/concepts/持久ID系统.md",
-    "wiki/concepts/插值生成.md",
-    "wiki/concepts/参数推送链.md",
-    "wiki/concepts/参数命名空间.md",
     "未命名.canvas"
   ]
 }
