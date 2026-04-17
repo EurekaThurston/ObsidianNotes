@@ -1,6 +1,12 @@
 # 本机专用配置(各台机器独立维护,不同步)
 code-roots.local.md
 
+# Claudian / Claude Code 运行时状态(会话日志、agent 定义、插件本体)
+# 各机器各自维护,含本机偏好且可能含对话历史
+.claude/
+.claudian/
+.obsidian/plugins/claudian/
+
 # Obsidian 工作区缓存 / 本机偏好(按需开启)
 # .obsidian/workspace.json
 # .obsidian/workspace-mobile.json
