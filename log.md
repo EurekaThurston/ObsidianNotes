@@ -119,3 +119,26 @@
   - **TUniquePtr\<TMap\> 懒分配**:大部分特效只用 1-2 种参数,空 Map 不分配内存
   - **GlobalAlphaBodyOpacity**:Niagara Handle 的字段,配合 BodyEffect 做身上特效 Alpha 混合
 - 下一步:Batch 5 — ScriptBridge & Reflection(Puerts 集成)—— 读 ScriptBridge/、Reflection/、EffectSystemHandleHelper、EffectSystemForPuerts
+
+## [2026-04-17] ingest | KuroEffectSystem — Batch 5(ScriptBridge & Reflection)
+- source: 同 Batch 1
+- 读入 9 个文件:ScriptBridge/ 5 个、Reflection/ 3 个、EffectSystemForPuerts.h
+- 新建 5 页(**全部 New 独有**):
+  - [[wiki/entities/project-game/kuro-effect-system-new/scripting-bridge-architecture]] — 脚本桥架构总览(~10 类协作)
+  - [[wiki/entities/project-game/kuro-effect-system-new/effect-system-script-bridge]] — 核心三件套(门面 + JsBridge + CSharpBridge)
+  - [[wiki/entities/project-game/kuro-effect-system-new/effect-function-holders]] — 6 类 Callback Holder(3 业务场景 × 2 语言)
+  - [[wiki/entities/project-game/kuro-effect-system-new/kuro-effect-reflection]] — 29 Dynamic Delegate + USTRUCT Context / SpecData / Parameters
+  - [[wiki/entities/project-game/kuro-effect-system-new/effect-bp-libraries]] — BP 函数库(~130 UFUNCTION)
+- 更新:[[index]](+5 条)、[[log]]
+- 关键发现:
+  - **分层架构**:BP/脚本层 → BP FunctionLib(反射/marshal)→ ScriptBridge 门面 → JsBridge/CSharpBridge → Spec/Handle/System 原生 C++
+  - **双脚本宿主**:Puerts(v8)+ C#,各 30 个回调注册点,门面 dispatch
+  - **29 个上行 API**:脚本提前注册,C++ 在运行时查询(IsNetPlayer / GetEntityOwnerActor / IsNeedQualityBias 等)
+  - **6 个 Holder 类**:每业务场景(Spawn/Finish/DynamicInit)× 每语言(JS/C#)一个;JS 版多一个 `JsObjectGlobal` 字段作为 this
+  - **TWeakPtr 打破 Callback 循环所有权**:Model 强持 Callback,Callback bind 到 Holder thunk,Holder 持 Weak 指回 Callback
+  - **USTRUCT 双版本**:FEffectContext(C++ 原生)↔ FKuroEffectContext(USTRUCT);Parameter 和 SpecData 同样双版本,ctor 做一次性 marshal
+  - **BP 友好类型转换**:FString→FName、enum→uint8、TUniquePtr→值 USTRUCT、UClass*→TSubclassOf;反射层做脏活
+  - **12 个 SpawnEffect 重载**:4 种 Context × 3 种 Spawn(Unlooped/Normal/WithActor)——蓝图不支持结构体多态
+  - **Puerts 绑定**:`UsingCppType` 模板宏,C++ 类型零开销 passthrough 到 TS(vs UE 反射的 marshal 开销)
+  - **为什么分层**:核心热路径纯 C++(性能),脚本友好层做 marshal(易用性),两者并存不互相污染
+- 下一步:Batch 6 — Private 实现精读(选 6-8 个关键 cpp 读,补充 "关键代码片段")

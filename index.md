@@ -42,6 +42,11 @@
 - [[wiki/entities/project-game/kuro-effect-system-new/continuous-effect-controller|FContinuousEffectController]] — 连续技特效的 AnsSlot 过渡管理
 - [[wiki/entities/project-game/kuro-effect-system-new/effect-system-actor|AEffectSystemActor]] — 专用 UE Actor 类(含 HandleId + 蓝图 API)
 - [[wiki/entities/project-game/kuro-effect-system-new/niagara-component-handle|FNiagaraComponentHandle]] — Niagara 参数缓存门面(Pending 期间延迟下发)
+- [[wiki/entities/project-game/kuro-effect-system-new/scripting-bridge-architecture|脚本桥架构总览]] — ~10 个类构成的 Puerts + C# 双语言脚本桥
+- [[wiki/entities/project-game/kuro-effect-system-new/effect-system-script-bridge|FEffectSystemScriptBridge + JsBridge + CSharpBridge]] — Bridge 门面 + 双语言实现
+- [[wiki/entities/project-game/kuro-effect-system-new/effect-function-holders|Function Holders]] — Spawn/Finish/DynamicInit × JS/C# 共 6 类 callback 持有者
+- [[wiki/entities/project-game/kuro-effect-system-new/kuro-effect-reflection|KuroEffectDefine]] — USTRUCT/Dynamic Delegate 反射层(脚本可见的所有类型)
+- [[wiki/entities/project-game/kuro-effect-system-new/effect-bp-libraries|UKuroEffectSystemFunctionLibrary + HandleHelperLibrary]] — BP/脚本主入口(~130 UFUNCTION)
 
 ## Concepts(概念)
 *想法、理论、方法、术语。*
