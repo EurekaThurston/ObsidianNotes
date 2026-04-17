@@ -75,3 +75,27 @@
   - **双版本 Context**:FEffectContext(C++ 运行时)/ FKuroEffectContext(USTRUCT,脚本可见),ctor 做一次性转换
   - 非常大的 DA:`UEffectModelPostProcess` 700+ 行,涵盖天气/色调/灰度/VHS/BurstDissolve 等十几项后处理子效果
 - 下一步:Batch 3 — Spec 系统(`FEffectSpecBase` + 各类型 hpp,`IEffectSpecBase` + `FEffectSpecFactory`)
+
+## [2026-04-17] ingest | KuroEffectSystem — Batch 3(Spec 运行时系统)
+- source: 同 Batch 1
+- 读入:13 个文件(Old EffectSpec.hpp + 5 个 Spec 子类;New IEffectSpecBase.h + EffectSpec.hpp + EffectSpecFactory.h + 3 个 Spec 子类)
+- 新建 5 页:
+  - [[wiki/entities/project-game/kuro-effect-system/effect-spec-base]] — Old FEffectSpecBase + FEffectSpec<T> CRTP 模板 + Template Method 模式讲解 + 3 子类 exemplar
+  - [[wiki/entities/project-game/kuro-effect-system/effect-spec-subclasses]] — Old 12 子类目录表
+  - [[wiki/entities/project-game/kuro-effect-system-new/effect-spec-base]] — New IEffectSpecBase 80+ 虚接口 + FEffectSpec<T> 1150 行模板 + AdditionTimeScale / BodyEffect 机制
+  - [[wiki/entities/project-game/kuro-effect-system-new/effect-spec-factory]] — FEffectSpecFactory 工厂
+  - [[wiki/entities/project-game/kuro-effect-system-new/effect-spec-subclasses]] — New 17 子类目录(新增 Audio/CurveTrailDecal/MaterialController/NDC/SequencePose)
+- 更新:[[index]](+5 条)、[[log]]
+- 1 对新增 twin 链:Spec 基类 Old/New
+- 关键发现:
+  - **架构模式**:两版都用"抽象(Base/Interface)+ CRTP 模板 + 子类"三层。Old 的 Base 是 `FEffectSpecBase`(含 LifeTime 字段),New 的是纯接口 `IEffectSpecBase`
+  - **接口规模爆炸**:Old 6 纯虚 → New 80+ 纯虚。New 把之前散落在 System/Handle 的方法(Init/Start/End/Clear/Destroy/Play/PreStop/Stop/Replay/PreFirstPlay/OnParentInit/OnBeginDelayPlay 等)全部拉到 Spec 接口
+  - **AdditionTimeScale 机制**(New 独有):`TMap<int32, float> AdditionTimeScaleMap`,多来源乘法叠加,帧内缓存(`LastUpdateTotalAdditionTimeScale == GFrameCounter`)
+  - **Factory 集中化**:`FEffectSpecFactory::CreateEffectSpec(FEffectSpecData)` 替代 Old 里散落在 RegisterEffectHandle 7 重载的 `new` 调用——加新类型从"改 5 处"降到"改 2 处"
+  - **异步 Init 状态**:`EEffectSpecInitState_Fail/Success/Initializing` 三态;Group::OnInit 返回 Initializing 并等所有 child SpawnChildEffect 完成
+  - **DelayPlay 的 float 值**:回答 Batch 2 开放问题——`UEffectModelGroup::EffectData` map 的 float 值就是 **child 延迟播放秒数**
+  - **MultiEffect 管控权转移**:Old 靠 TS 回调 (MultiEffectAdjustNumber) 增删子特效,New 的 Spec 直接 SpawnEffect/StopEffectById 自管
+  - **WaitPostTick 机制**(Niagara):所有 SetPaused 延后到帧末 OnPostTick,避免 tick 中途状态不一致
+  - **CVars**:New 引入 `Kuro.CppEffectSystem.*` 系列 6+ 个运行时开关,线上可控
+  - **ScriptBridge 调用**:BodyEffect 注册/反注册经过 `FEffectSystem::EffectSystemScriptBridge`(Batch 5 细读)
+- 下一步:Batch 4 — New 独有新概念(FPlayerEffectContainer / FContinuousEffectController / AEffectSystemActor / FNiagaraComponentHandle)

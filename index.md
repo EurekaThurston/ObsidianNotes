@@ -24,6 +24,8 @@
 - [[wiki/entities/project-game/kuro-effect-system/effect-define|EffectDefine]] — 枚举 & Delegate 参考(两版共享)
 - [[wiki/entities/project-game/kuro-effect-system/effect-model-base|UEffectModelBase 家族]] — 18 种 DataAsset 配置(两版共享)
 - [[wiki/entities/project-game/kuro-effect-system/effect-parameters|EffectParameters 家族]] — Old 运行时参数抽象
+- [[wiki/entities/project-game/kuro-effect-system/effect-spec-base|FEffectSpecBase + FEffectSpec<T>]] — Old Spec 基类 + CRTP 模板
+- [[wiki/entities/project-game/kuro-effect-system/effect-spec-subclasses|Old Spec 子类目录]] — 12 个 FEffectModelXxxSpec
 
 ### project-game / KuroEffectSystemNew(新版)
 - [[wiki/entities/project-game/kuro-effect-system-new/effect-system|KuroEffect::FEffectSystem]] — New 入口静态类
@@ -33,6 +35,9 @@
 - [[wiki/entities/project-game/kuro-effect-system-new/effect-init-pipeline|FEffectInitModel / FEffectInitHandle]] — New 异步初始化管线
 - [[wiki/entities/project-game/kuro-effect-system-new/effect-context|FEffectContext 家族]] — New 创建上下文(4 层继承)
 - [[wiki/entities/project-game/kuro-effect-system-new/effect-actor-handle|FEffectActorHandle]] — New Actor 门面 + Action 命令模式
+- [[wiki/entities/project-game/kuro-effect-system-new/effect-spec-base|IEffectSpecBase + KuroEffect::FEffectSpec<T>]] — New 接口 + 模板基类(~1150 行)
+- [[wiki/entities/project-game/kuro-effect-system-new/effect-spec-factory|FEffectSpecFactory]] — New Spec 工厂
+- [[wiki/entities/project-game/kuro-effect-system-new/effect-spec-subclasses|New Spec 子类目录]] — 17 个(比 Old 多 5 个)
 
 ## Concepts(概念)
 *想法、理论、方法、术语。*
