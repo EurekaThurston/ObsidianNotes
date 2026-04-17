@@ -52,9 +52,14 @@
 ## Concepts(概念)
 *想法、理论、方法、术语。*
 
+### 方法论
 - [[wiki/concepts/llm-wiki-方法论|LLM Wiki 方法论]] — 让 LLM 增量构建并维护持久化 wiki 的范式 (来源:1)
 - [[wiki/concepts/rag|RAG]] — 查询时检索文档片段的主流 LLM+文档范式 (来源:1)
 - [[wiki/concepts/memex|Memex]] — Vannevar Bush 1945 提出的个人关联式知识存储愿景 (来源:1)
+
+### 架构模式(从 KuroEffectSystem 提炼)
+- [[wiki/concepts/scripting-bridge-pattern|脚本桥模式]] — C++ 主系统与脚本宿主的解耦模式(Bridge 门面 + Holder + 双版本类型)
+- [[wiki/concepts/pending-init-pattern|Pending Init 模式]] — 异步初始化 + 命令队列缓存,业务代码无感
 
 ## Sources(源摘要)
 *每个 raw 文件或代码源对应一页摘要。按时间倒序。*
@@ -69,7 +74,7 @@
 ## Syntheses(综合/专题)
 *跨源分析、对比、好答案的沉淀。*
 
-_(Batch 7 将产出:`kuro-effect-system-old-vs-new`)_
+- [[wiki/syntheses/kuro-effect-system-old-vs-new|KuroEffectSystem Old vs New 架构综合]] — Old→New 五大结构性改变 + 未完成工作 + 可迁移的设计启示(~500 行)
 
 ---
 

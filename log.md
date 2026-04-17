@@ -165,3 +165,21 @@
   - **新 CVars 6 个**:Enable / RemoveHandleForceDelete / RemoveHandleImmediately / PreviewWithoutConfig / NotifyTickSystemPausedChange / DebugTotalEffectHandle(console 命令)
 - 未读内容清单(可按需补):主 .cpp 文件大多数行数未读(EffectSystem 后 3400 行、EffectHandle 1926 行全、ActorHandle/NiagaraHandle/PlayerContainer 全、Bridge/Reflection 所有 .cpp)
 - 下一步:Batch 7 — 综合页(kuro-effect-system-old-vs-new 大 synthesis + overview 更新 + concept 提炼 + lint)
+
+## [2026-04-17] ingest | KuroEffectSystem — Batch 7(综合 + Concept + Overview + Lint)
+- source: 回读全部前 6 批产出(~40 页 wiki),提炼综合
+- 新建 4 页:
+  - [[wiki/syntheses/kuro-effect-system-old-vs-new]] — **核心产出**。Old→New 五大结构性改变:(1) JS 解耦 (2) 所有权精细化 (3) 数据驱动构造 (4) 异步 Spawn 管线 (5) 联机多玩家支持。含规模对比、设计决策、未完成工作、性能推测、业务迁移、**8 条可迁移设计启示**。~500 行
+  - [[wiki/concepts/scripting-bridge-pattern]] — 脚本桥模式(从 KuroEffectSystem 提炼的跨仓 concept):Bridge 门面 + Holder + 双版本类型 + 所有权方向
+  - [[wiki/concepts/pending-init-pattern]] — Pending Init 模式:命令队列缓存 + flush 时机 + 边界情况(取消/超时/嵌套)
+- 重大更新:
+  - [[wiki/overview]] — 从"方法论自举"状态升级到"覆盖 KuroEffectSystem 完整文档化 + 2 个 concept 提炼",建立**当前 wiki 的知识图**(3 条主线)+ 短/中/长期下一步
+  - [[index]] — concepts 分类(方法论 + 架构模式),syntheses 填充
+- **Ingest 总计**:7 批下来总产出 43 entity + 2 source overview + 1 synthesis + 2 concept + 1 overview update + 1 implementation insights = **50 wiki 页**,对 ~23k 行 C++ 代码的完整解构
+- **Lint 报告**:
+  - 无孤儿页:所有新页都有入链(index.md 登记 + synthesis 链到 + overview 引用)
+  - twin 链 6 对完整(Old/New entity 入口、Handle、LifeTime、Spec 基类各一对,sources overview 一对)
+  - "开放问题" 约 60+ 条散落各页,未全部解答(可按需后续补)
+  - 4 个 "待兼容" Spec 的实际状态未验证(需业务侧运行时观察)
+  - concept 页**跨仓 ready** — 将来 ingest `stock` 仓时可复用
+- **这一轮 ingest 完结**。后续工作按 [[wiki/overview]] 的"下一步建议"进行
