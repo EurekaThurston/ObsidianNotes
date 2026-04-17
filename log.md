@@ -142,3 +142,26 @@
   - **Puerts 绑定**:`UsingCppType` 模板宏,C++ 类型零开销 passthrough 到 TS(vs UE 反射的 marshal 开销)
   - **为什么分层**:核心热路径纯 C++(性能),脚本友好层做 marshal(易用性),两者并存不互相污染
 - 下一步:Batch 6 — Private 实现精读(选 6-8 个关键 cpp 读,补充 "关键代码片段")
+
+## [2026-04-17] ingest | KuroEffectSystem — Batch 6(Private 实现关键路径)
+- source: 同 Batch 1
+- 读入:EffectSpecFactory.cpp(163 行,全读)+ EffectSystem.cpp(~400/3849 行) + EffectLifeTime.cpp(~200/507 行)
+- 新建 1 页(综合性答开放问题):
+  - [[wiki/entities/project-game/kuro-effect-system-new/implementation-insights]] — Private 实现洞察(回答 15+ 前批开放问题)
+- 更新:[[index]](+1 条)、[[log]]
+- 回答的开放问题:
+  - **LRU 容量 = 100**
+  - **Handle Id 位编码**:编辑器 15 位 Index + 17 位 Version;Shipping 12 位 Index + 20 位 Version(反映两种使用特点)
+  - **AfterConstruct 语义**:LruCreator 里二阶段构造 Handle(ctor 只存 Path,AfterConstruct 接收 SpecData 构造 Spec)
+  - **Factory 实现**:switch-on-SpecType,PointCloudNiagara 和 Niagara 共享同一 Spec 类;MaterialController/SequencePose/NDC/CurveTrailDecal 标 "待兼容"
+  - **Initialize 完整流程**:13 步(CVars 检查 → Bridge → HoldPreloadObject → RefreshSpecData → LRU 构造 → Container → Visibility → Mobile 检测 → BP View → Delegate 注册 × 5 → 3 段 Tick 注册)
+  - **3 段 Tick**:TG_PrePhysics → Tick,TG_PostPhysics → PostPhysicsTick,TG_PostUpdateWork → PostUpdateWorkTick
+  - **SetTime 判断循环**:`IsLoopInternal = StartTime < 0 || LoopTime > 0`;`WillEverPlay = IsLoopInternal || LifeTimeStamp <= 0`
+  - **PlayFinished 4 分支决策树**:子特效 / Spec!CanStop(延 1s)/ 运行时根(detach+hide+unreg+AddRemove)/ 编辑器预览(StopEffect)
+  - **MakeLoop 防卡顿**:LoopTime<0.001f 卡在 StartTime 末端;超过一轮的用 FMod 跳过多 Loop
+  - **MiniTimeScale 10 秒保底**:`MAX_WAIT_TIME_SCALE_ZERO_TIME = 10`,触发时强制 SetTimeScale(1) + Warning 日志带 CreateReason
+  - **EffectForSpecChildMap 内存优化**:只缓存含 PointCloud 子特效的 Group,其他 Group 不存(内存优化)
+  - **配置加载路径**:`../Config/Client/EffectData/`
+  - **新 CVars 6 个**:Enable / RemoveHandleForceDelete / RemoveHandleImmediately / PreviewWithoutConfig / NotifyTickSystemPausedChange / DebugTotalEffectHandle(console 命令)
+- 未读内容清单(可按需补):主 .cpp 文件大多数行数未读(EffectSystem 后 3400 行、EffectHandle 1926 行全、ActorHandle/NiagaraHandle/PlayerContainer 全、Bridge/Reflection 所有 .cpp)
+- 下一步:Batch 7 — 综合页(kuro-effect-system-old-vs-new 大 synthesis + overview 更新 + concept 提炼 + lint)

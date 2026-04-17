@@ -47,6 +47,7 @@
 - [[wiki/entities/project-game/kuro-effect-system-new/effect-function-holders|Function Holders]] — Spawn/Finish/DynamicInit × JS/C# 共 6 类 callback 持有者
 - [[wiki/entities/project-game/kuro-effect-system-new/kuro-effect-reflection|KuroEffectDefine]] — USTRUCT/Dynamic Delegate 反射层(脚本可见的所有类型)
 - [[wiki/entities/project-game/kuro-effect-system-new/effect-bp-libraries|UKuroEffectSystemFunctionLibrary + HandleHelperLibrary]] — BP/脚本主入口(~130 UFUNCTION)
+- [[wiki/entities/project-game/kuro-effect-system-new/implementation-insights|Private 实现洞察]] — 填前 5 批的开放问题(LRU=100、Id 位编码、Initialize 流程、PlayFinished 决策树等)
 
 ## Concepts(概念)
 *想法、理论、方法、术语。*
