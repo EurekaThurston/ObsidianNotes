@@ -7,6 +7,6 @@ code-roots.local.md
 .claudian/
 .obsidian/plugins/claudian/
 
-# Obsidian 工作区缓存 / 本机偏好(按需开启)
-# .obsidian/workspace.json
-# .obsidian/workspace-mobile.json
+# Obsidian 工作区缓存 / 本机偏好
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
