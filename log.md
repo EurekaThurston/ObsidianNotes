@@ -99,3 +99,23 @@
   - **CVars**:New 引入 `Kuro.CppEffectSystem.*` 系列 6+ 个运行时开关,线上可控
   - **ScriptBridge 调用**:BodyEffect 注册/反注册经过 `FEffectSystem::EffectSystemScriptBridge`(Batch 5 细读)
 - 下一步:Batch 4 — New 独有新概念(FPlayerEffectContainer / FContinuousEffectController / AEffectSystemActor / FNiagaraComponentHandle)
+
+## [2026-04-17] ingest | KuroEffectSystem — Batch 4(New 独有新概念)
+- source: 同 Batch 1
+- 读入 4 个新概念 header:PlayerEffectContainer.h、ContinuousEffectController.h、EffectSystemActor.h、NiagaraComponentHandle.h
+- 新建 4 页(**全部 New 独有,无 Old twin**):
+  - [[wiki/entities/project-game/kuro-effect-system-new/player-effect-container]] — 玩家作用域 LRU 分池(队伍 N 人各自一池)+ FSceneTeamItem + OnFormationLoaded
+  - [[wiki/entities/project-game/kuro-effect-system-new/continuous-effect-controller]] — AnsSlot 维度的连续特效过渡(前特效柔停 + Pending 等帧数)
+  - [[wiki/entities/project-game/kuro-effect-system-new/effect-system-actor]] — AActor 派生,含 HandleId/Path/EffectType/TimeScale/OwnerEntityId,6 个 UFUNCTION(BlueprintCallable)
+  - [[wiki/entities/project-game/kuro-effect-system-new/niagara-component-handle]] — Niagara 参数缓存门面(8 种 Map + 3 种 Emitter Array),Pending 期间延迟下发
+- 更新:[[index]](+4 条)、[[log]]
+- 关键发现(全部 New 独有能力):
+  - **玩家分池**:每个玩家(主角/队友 ×3)一个独立 LRU 池(`TArray<TUniquePtr<TLru<FName, FEffectHandle>>>`),队伍变化时 OnFormationLoaded 重组
+  - **AnsSlot 连续特效**:`TMap<SkeletalMesh, TMap<SlotName, HandleId>>` 维护当前活跃特效;新特效 Spawn 时柔停旧的;`MaxWaitContinuousEffectFrame` 超时兜底
+  - **AEffectSystemActor 蓝图可调**:6 个 UFUNCTION 直接暴露给蓝图,兼容旧 BP_EffectActor 模式
+  - **双层 TimeDilation 下发**:UE 原生 CustomTimeDilation + AEffectSystemActor::TimeScale(特效逻辑用)
+  - **FNiagaraComponentHandle 解答 Pending Init 的参数问题**:Component 未创建前,参数先缓存到 TMap,Component Init 时一次性 flush
+  - **双参数命名空间**:Variable(FString Key,对应 Niagara User.XXX)vs Parameter(FName Key,对应渲染参数 override)
+  - **TUniquePtr\<TMap\> 懒分配**:大部分特效只用 1-2 种参数,空 Map 不分配内存
+  - **GlobalAlphaBodyOpacity**:Niagara Handle 的字段,配合 BodyEffect 做身上特效 Alpha 混合
+- 下一步:Batch 5 — ScriptBridge & Reflection(Puerts 集成)—— 读 ScriptBridge/、Reflection/、EffectSystemHandleHelper、EffectSystemForPuerts

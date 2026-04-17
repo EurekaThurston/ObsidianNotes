@@ -38,6 +38,10 @@
 - [[wiki/entities/project-game/kuro-effect-system-new/effect-spec-base|IEffectSpecBase + KuroEffect::FEffectSpec<T>]] — New 接口 + 模板基类(~1150 行)
 - [[wiki/entities/project-game/kuro-effect-system-new/effect-spec-factory|FEffectSpecFactory]] — New Spec 工厂
 - [[wiki/entities/project-game/kuro-effect-system-new/effect-spec-subclasses|New Spec 子类目录]] — 17 个(比 Old 多 5 个)
+- [[wiki/entities/project-game/kuro-effect-system-new/player-effect-container|FPlayerEffectContainer]] — 玩家作用域 LRU 分池(队伍 N 人各自一池)
+- [[wiki/entities/project-game/kuro-effect-system-new/continuous-effect-controller|FContinuousEffectController]] — 连续技特效的 AnsSlot 过渡管理
+- [[wiki/entities/project-game/kuro-effect-system-new/effect-system-actor|AEffectSystemActor]] — 专用 UE Actor 类(含 HandleId + 蓝图 API)
+- [[wiki/entities/project-game/kuro-effect-system-new/niagara-component-handle|FNiagaraComponentHandle]] — Niagara 参数缓存门面(Pending 期间延迟下发)
 
 ## Concepts(概念)
 *想法、理论、方法、术语。*
