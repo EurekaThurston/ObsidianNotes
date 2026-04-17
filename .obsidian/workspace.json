@@ -8,18 +8,18 @@
         "type": "tabs",
         "children": [
           {
-            "id": "4abb8e70bf730725",
+            "id": "bd3a2248e9232759",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "词典/SOA与AOS.md",
+                "file": "code-roots.local.md",
                 "mode": "preview",
                 "source": true,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "SOA与AOS"
+              "title": "code-roots.local"
             }
           }
         ]
@@ -74,19 +74,8 @@
               "icon": "lucide-bookmark",
               "title": "书签"
             }
-          },
-          {
-            "id": "6080d14e980ecdbd",
-            "type": "leaf",
-            "state": {
-              "type": "mk-path-view",
-              "state": {},
-              "icon": "layout-grid",
-              "title": "Navigator"
-            }
           }
-        ],
-        "currentTab": 3
+        ]
       }
     ],
     "direction": "horizontal",
@@ -101,12 +90,57 @@
         "type": "tabs",
         "children": [
           {
-            "id": "d1402f6bf71d1bf7",
+            "id": "b2f4fd9cfe2e5dc5",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "CLAUDE.md",
+                "followCursor": false,
+                "showSearch": true,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "CLAUDE 的大纲"
+            }
+          },
+          {
+            "id": "6b10480230435bef",
+            "type": "leaf",
+            "state": {
+              "type": "graph",
+              "state": {},
+              "icon": "lucide-git-fork",
+              "title": "关系图谱"
+            }
+          },
+          {
+            "id": "72570ad99ddc41d8",
+            "type": "leaf",
+            "state": {
+              "type": "git-view",
+              "state": {},
+              "icon": "git-pull-request",
+              "title": "Source Control"
+            }
+          },
+          {
+            "id": "0750a49d08b2d55a",
+            "type": "leaf",
+            "state": {
+              "type": "claudian-view",
+              "state": {},
+              "icon": "bot",
+              "title": "Claudian"
+            }
+          },
+          {
+            "id": "a525943a889e2369",
             "type": "leaf",
             "state": {
               "type": "backlink",
               "state": {
-                "file": "词典/SOA与AOS.md",
+                "file": "code-roots.local.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -116,25 +150,25 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "SOA与AOS 的反向链接列表"
+              "title": "code-roots.local 的反向链接列表"
             }
           },
           {
-            "id": "4636bf0a14963935",
+            "id": "e0a3807949ec315f",
             "type": "leaf",
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "词典/SOA与AOS.md",
-                "linksCollapsed": true,
+                "file": "code-roots.local.md",
+                "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "SOA与AOS 的出链列表"
+              "title": "code-roots.local 的出链列表"
             }
           },
           {
-            "id": "b3c5b2e7ec2e9a0b",
+            "id": "babea449dcd350a7",
             "type": "leaf",
             "state": {
               "type": "tag",
@@ -149,7 +183,7 @@
             }
           },
           {
-            "id": "7cdac49e7e4a6881",
+            "id": "61f234d9177dd523",
             "type": "leaf",
             "state": {
               "type": "all-properties",
@@ -161,54 +195,13 @@
               "icon": "lucide-archive",
               "title": "添加笔记属性"
             }
-          },
-          {
-            "id": "b2f4fd9cfe2e5dc5",
-            "type": "leaf",
-            "state": {
-              "type": "outline",
-              "state": {
-                "file": "词典/SOA与AOS.md",
-                "followCursor": false,
-                "showSearch": true,
-                "searchQuery": ""
-              },
-              "icon": "lucide-list",
-              "title": "SOA与AOS 的大纲"
-            }
-          },
-          {
-            "id": "72570ad99ddc41d8",
-            "type": "leaf",
-            "state": {
-              "type": "git-view",
-              "state": {},
-              "icon": "git-pull-request",
-              "title": "Source Control"
-            }
           }
         ],
-        "currentTab": 5
-      },
-      {
-        "id": "7413b8682e56c9fa",
-        "type": "tabs",
-        "children": [
-          {
-            "id": "6b10480230435bef",
-            "type": "leaf",
-            "state": {
-              "type": "graph",
-              "state": {},
-              "icon": "lucide-git-fork",
-              "title": "关系图谱"
-            }
-          }
-        ]
+        "currentTab": 3
       }
     ],
     "direction": "horizontal",
-    "width": 458.5
+    "width": 888.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -219,39 +212,48 @@
       "templates:插入模板": false,
       "command-palette:打开命令面板": false,
       "bases:新建数据库": false,
-      "obsidian-git:Open Git source control": false
+      "obsidian-git:Open Git source control": false,
+      "claudian:Open Claudian": false
     }
   },
-  "active": "4abb8e70bf730725",
+  "active": "bd3a2248e9232759",
   "lastOpenFiles": [
-    "Tags",
-    "Niagara/0. Niagara整体框架与设计理念.md",
-    "Niagara/1. UE 4.26 Niagara 源码阅读指南.md",
-    "Niagara/Niagara.md",
-    "未命名.canvas",
-    "Untitled.md",
-    "Niagara/9. NiagaraParameterStore.h.md",
-    "未命名.base",
-    "Niagara/0. Niagara整体框架与设计理念1.md",
-    "Niagara/2. NiagaraCommon.h.md",
-    "Niagara/8. NiagaraDataSet.h.md",
-    "Tags/Untitled.md",
-    "词典/SOA与AOS.md",
-    "Niagara/3. NiagaraTypes.h.md",
-    "Niagara/6. NiagaraEmitterHandle.h.md",
-    "Niagara/7. NiagaraScript.h.md",
-    "Niagara/5. NiagaraEmitter.h.md",
-    "Niagara/4. NiagaraSystem.h.md",
-    "[SOA与AOS数据布局详解.md",
-    "词典",
-    "SOA与AOS数据布局详解.md.tmp.46244.1775410346861",
-    "Niagara整体框架与设计理念.md.tmp.46244.1775405241200",
-    "2026-04-05.md",
-    "Niagara",
-    "Notes/欢迎.md",
-    "NiagaraParameterStore_h_解读.md.tmp.46244.1775372574849",
-    "NiagaraDataSet_h_解读.md.tmp.46244.1775372527748",
-    "NiagaraScript_h_解读.md.tmp.46244.1775372475025",
-    "NiagaraEmitterHandle_h_解读.md.tmp.46244.1775372423780"
+    "index.md",
+    "log.md",
+    "wiki/overview.md",
+    "wiki/sources/karpathy-llm-wiki.md",
+    "CLAUDE.md",
+    "code-roots.local.md",
+    "CLAUDE.md.tmp.56972.1776428402790",
+    "wiki/concepts/rag.md",
+    "CLAUDE.md.tmp.51396.1776422251447",
+    "CLAUDE.md.tmp.51396.1776422226786",
+    "wiki/concepts/memex.md",
+    "wiki/concepts/llm-wiki-方法论.md",
+    "wiki/entities/karpathy.md",
+    "log.md.tmp.37572.1776421264378",
+    "CLAUDE.md.tmp.37572.1776421252591",
+    "wiki/overview.md.tmp.37572.1776421248183",
+    "index.md.tmp.37572.1776421230450",
+    "wiki/entities/karpathy.md.tmp.37572.1776421212823",
+    "wiki/concepts/memex.md.tmp.37572.1776421201231",
+    "wiki/concepts/llm-wiki-方法论.md.tmp.37572.1776421173549",
+    "raw/notes/Karpathy Wiki 方法论.md",
+    "Karpathy Wiki 方法论.md",
+    "raw/assets/_README.md",
+    "wiki/sources/Niagara-源码阅读指南.md",
+    "wiki/entities/NiagaraSystem.md",
+    "wiki/entities/NiagaraTypeDefinition.md",
+    "wiki/entities/NiagaraVM.md",
+    "wiki/entities/NiagaraDataInterface.md",
+    "wiki/entities/NiagaraDataBuffer.md",
+    "wiki/concepts/数据驱动架构.md",
+    "wiki/entities/Cascade.md",
+    "wiki/concepts/快速迭代参数.md",
+    "wiki/concepts/持久ID系统.md",
+    "wiki/concepts/插值生成.md",
+    "wiki/concepts/参数推送链.md",
+    "wiki/concepts/参数命名空间.md",
+    "未命名.canvas"
   ]
 }
