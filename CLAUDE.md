@@ -1,7 +1,7 @@
-# CLAUDE.md — Wiki Schema & Operating Instructions
+﻿# CLAUDE.md — Wiki Schema & Operating Instructions
 
 > 本文档是 LLM(Claude/Claudian)维护本仓库的"作业规程"。
-> 灵感来自 Karpathy 的 LLM Wiki 方法论(源文件见 [[raw/notes/Karpathy Wiki 方法论]],概念见 [[wiki/concepts/llm-wiki-方法论]])。
+> 灵感来自 Karpathy 的 LLM Wiki 方法论(源文件见 [[Raw/Notes/Karpathy Wiki 方法论]],概念见 [[Wiki/Concepts/Methodology/Llm-wiki-方法论]])。
 > 人类负责:提供原始资料、提问、指方向。LLM 负责:读、写、归档、交叉引用、维护。
 
 ---
@@ -10,42 +10,50 @@
 
 | 层 | 路径 | 所有者 | 可变性 |
 |---|---|---|---|
-| **Raw sources(原始资料)** | `raw/` | 人类 | 只读(LLM 绝不修改) |
-| **Wiki(知识库)** | `wiki/` | LLM | LLM 完全拥有,持续更新 |
+| **Raw sources(原始资料)** | `Raw/` | 人类 | 只读(LLM 绝不修改) |
+| **Wiki(知识库)** | `Wiki/` | LLM | LLM 完全拥有,持续更新 |
 | **Schema(本文件)** | `CLAUDE.md` | 人 + LLM 共同演进 | 谨慎修改 |
 
 特殊文件:
 - `index.md` — 内容目录(按类别列出所有 wiki 页面)
 - `log.md` — 时间线日志(追加式)
-- `wiki/overview.md` — 当前最高层级的综合视图
+- `Wiki/Overview.md` — 当前最高层级的综合视图
 
 ---
 
 ## 2. 目录说明
 
 ```
-raw/
-  articles/   网页剪藏、博客文章(Obsidian Web Clipper 输出)
-  papers/     论文(PDF 或 markdown)
-  books/      书籍章节笔记
-  notes/      个人手记、播客/视频笔记、会议记录
-  assets/     图片等附件(Obsidian 附件目录指向这里)
+Raw/
+  Articles/   网页剪藏、博客文章(Obsidian Web Clipper 输出)
+  Papers/     论文(PDF 或 markdown)
+  Books/      书籍章节笔记
+  Notes/      个人手记、播客/视频笔记、会议记录
+  Assets/     图片等附件(Obsidian 附件目录指向这里)
 
-wiki/
-  overview.md     顶层综合:当前对整个知识领域的"最佳理解"
-  entities/       实体页:人、组织、地点、产品、项目
-    stock/          - 代码实体:UE 公版引擎(见 §9 Code Roots)
-    project/        - 代码实体:Aki 项目魔改引擎
-  concepts/       概念页:想法、理论、方法、术语(不分仓,跨仓共享)
-  sources/        源文件摘要:每个 raw 文件或代码源对应一页
-    stock/          - 代码源摘要:UE 公版
-    project/        - 代码源摘要:Aki 项目
-  syntheses/      跨源综合:对比、分析、专题报告、你问出来的好答案
-                  (公版 vs 项目的代码 diff 综合页也放这里)
+Wiki/
+  Overview.md     顶层综合:当前对整个知识领域的"最佳理解"
+  Concepts/       概念页:想法、理论、方法、术语
+    Methodology/    - 知识管理方法论相关概念
+    UE4/            - UE4 引擎基础概念
+    Niagara/        - Niagara 粒子系统概念
+    (新主题时在此增加子目录)
+  Entities/       实体页:人、组织、地点、产品、项目
+    Methodology/    - 方法论相关人物/组织
+    Stock/          - 代码实体:UE 公版引擎(见 §9 Code Roots)
+    Project/        - 代码实体:Aki 项目魔改引擎
+  Sources/        源文件摘要:每个 raw 文件或代码源对应一页
+    Methodology/    - 方法论相关源摘要
+    Stock/          - 代码源摘要:UE 公版
+    Project/        - 代码源摘要:Aki 项目
+  Syntheses/      跨源综合:对比、分析、专题报告、你问出来的好答案
+    Niagara/        - Niagara 源码学习相关综合
+    (新主题时在此增加子目录)
 ```
 
-- `entities/` 与 `sources/` 顶层直接放**非代码**页(如 `entities/karpathy.md`);代码相关的实体/源一律放进 `stock/` 或 `project/` 子目录。
-- `concepts/` 保持扁平——同一个概念(如"数据驱动架构")在两个仓里可能有不同实现,页内分节讨论,不复制成两份。
+- 所有目录均按**主题**建子文件夹（大写开头）；新增主题时在对应父目录下加一个子目录。
+- `Concepts/` 子目录名代表主题领域；同一概念跨仓有不同实现时，页内分节讨论，不复制成两份。
+- `Entities/` 与 `Sources/` 的 `Stock/` / `Project/` 子目录专用于代码实体/摘要（见 §9）；非代码内容按主题放入 `Methodology/` 等目录。
 
 ---
 
@@ -53,20 +61,20 @@ wiki/
 
 ### 3.1 Ingest(摄入新资料)
 
-当人类把一个文件放进 `raw/` 并说"帮我吸收这个"时:
+当人类把一个文件放进 `Raw/` 并说"帮我吸收这个"时:
 
-1. **读源**:通读 `raw/xxx` 全文。
+1. **读源**:通读 `Raw/xxx` 全文。
 2. **讨论要点**:与人类对话,确认关键信息、你的理解、人类想强调什么。
-3. **建立源页**:在 `wiki/sources/` 写一页摘要,文件名与源文件对应(例如 `raw/articles/xxx.md` → `wiki/sources/xxx.md`)。包含:
+3. **建立源页**:在 `Wiki/Sources/<topic>/` 写一页摘要,文件名与源文件对应(例如 `Raw/Articles/xxx.md` → `Wiki/Sources/Topic/xxx.md`)。包含:
    - 源路径链接、作者、日期、来源 URL(如有)
    - 3-10 句话核心摘要
    - 关键要点列表
    - 引用出的实体/概念(wikilink 形式)
-4. **更新受影响页**:源里提到的每个实体/概念,去 `wiki/entities/` 或 `wiki/concepts/` 找对应页面:
+4. **更新受影响页**:源里提到的每个实体/概念,去 `Wiki/Entities/<topic>/` 或 `Wiki/Concepts/<topic>/` 找对应页面:
    - 已有 → 增补、修订、标注矛盾
    - 没有但值得 → 新建
 5. **更新 index.md**:新增页面登记;已更新页面可选更新 one-liner。
-6. **更新 overview.md**(如有重大影响):综合视图更新。
+6. **更新 Overview.md**(如有重大影响):综合视图更新。
 7. **追加 log.md**:一条 ingest 记录,格式见 §5。
 
 一次 ingest 通常会触及 5-15 个 wiki 页面。**这是特性,不是 bug**——这就是为什么 wiki 比 RAG 强。
@@ -76,9 +84,9 @@ wiki/
 当人类问问题时:
 
 1. 先读 `index.md` 找相关页。
-2. 深入相关页面,必要时回溯到 `raw/` 查原文。
-3. 给出带引用的答案:引用格式用 wikilink `[[wiki/xxx]]`,原文用 `[[raw/xxx]]`。
-4. **好答案要能沉淀**:如果这个答案本身有长期价值(对比、分析、新发现),主动提议归档为 `wiki/syntheses/xxx.md`。
+2. 深入相关页面,必要时回溯到 `Raw/` 查原文。
+3. 给出带引用的答案:引用格式用 wikilink `[[Wiki/xxx]]`,原文用 `[[Raw/xxx]]`。
+4. **好答案要能沉淀**:如果这个答案本身有长期价值(对比、分析、新发现),主动提议归档为 `Wiki/Syntheses/<topic>/xxx.md`。
 5. 追加 log.md 一条 query 记录(可选,视是否重要)。
 
 ### 3.3 Lint(体检)
@@ -109,13 +117,13 @@ tags: [tag1, tag2]
 sources: 3   # 被多少个 raw source 支持
 aliases: [别名1, 别名2]   # 可选
 
-# ——以下字段仅代码相关页面(entities/stock|project, sources/stock|project)使用——
+# ——以下字段仅代码相关页面(Entities/Stock|Project, Sources/Stock|Project)使用——
 repo: stock | project            # 必填:属于哪个 code root(见 §9)
 source_root: UE-4.26-Stock       # code root 的 name,可选(便于阅读)
 source_path: Engine/Source/...   # 相对 code root 的路径
 source_ref: 4.26 | Eureka        # 分支/tag
 source_commit: b6ab0dee9         # git HEAD(公版)或 p4 CL(项目),ingest 当时的快照
-twin: [[entities/project/XXX]]   # 另一个仓里的孪生页,可选
+twin: [[Entities/Project/XXX]]   # 另一个仓里的孪生页,可选
 ---
 ```
 
@@ -138,7 +146,7 @@ twin: [[entities/project/XXX]]   # 另一个仓里的孪生页,可选
 - [[实体/概念 B]] — 关系
 
 ## 引用来源
-- [[wiki/sources/xxx]] (raw: [[raw/articles/xxx]])
+- [[Wiki/Sources/Topic/xxx]] (raw: [[Raw/Articles/xxx]])
 - …
 
 ## 开放问题 / 矛盾
@@ -150,7 +158,7 @@ twin: [[entities/project/XXX]]   # 另一个仓里的孪生页,可选
 ```markdown
 # 源标题
 
-- **原文**:[[raw/articles/xxx]]
+- **原文**:[[Raw/Articles/xxx]]
 - **作者**:
 - **日期**:
 - **URL**:
@@ -171,9 +179,9 @@ twin: [[entities/project/XXX]]   # 另一个仓里的孪生页,可选
 - 新增:[[…]]
 ```
 
-### 4.4 代码源摘要页结构(`sources/stock/*`、`sources/project/*`)
+### 4.4 代码源摘要页结构(`Sources/Stock/*`、`Sources/Project/*`)
 
-代码源不在 `raw/` 下——源真相是 code root(见 §9)里的真实文件。摘要页记录"这一次 ingest 读了哪些代码、看出了什么"。
+代码源不在 `Raw/` 下——源真相是 code root(见 §9)里的真实文件。摘要页记录"这一次 ingest 读了哪些代码、看出了什么"。
 
 ```markdown
 # 文件名或模块名
@@ -202,10 +210,10 @@ twin: [[entities/project/XXX]]   # 另一个仓里的孪生页,可选
 > ```
 
 ## 涉及实体 / 概念
-- [[entities/stock/UFoo]]、[[concepts/xxx]]
+- [[Entities/Stock/UFoo]]、[[Concepts/Topic/xxx]]
 
 ## 与另一仓差异(如已 ingest 孪生)
-- 对比见 [[syntheses/foo-stock-vs-project]]
+- 对比见 [[Syntheses/Topic/foo-stock-vs-project]]
 ```
 
 ---
@@ -222,13 +230,13 @@ grep "^## \[" log.md | tail -10
 
 ```markdown
 ## [2026-04-17] ingest | 某文章标题
-- source: [[raw/articles/xxx]]
-- 新建:[[wiki/sources/xxx]]、[[wiki/entities/某某]]
-- 更新:[[wiki/concepts/某某]](+3 句)、[[wiki/overview]]
+- source: [[Raw/Articles/xxx]]
+- 新建:[[Wiki/Sources/Topic/xxx]]、[[Wiki/Entities/Topic/某某]]
+- 更新:[[Wiki/Concepts/Topic/某某]](+3 句)、[[Wiki/Overview]]
 - 要点:…
 
 ## [2026-04-17] query | "X 和 Y 的区别"
-- 归档为:[[wiki/syntheses/x-vs-y]]
+- 归档为:[[Wiki/Syntheses/Topic/x-vs-y]]
 
 ## [2026-04-17] lint
 - 矛盾:[[A]] 与 [[B]] 关于 Z 的陈述
@@ -240,16 +248,16 @@ grep "^## \[" log.md | tail -10
 
 ## 6. 链接 & 命名约定
 
-- **内部链接**一律用 wikilink:`[[wiki/concepts/abc]]` 或 `[[abc]]`(当无歧义时)。
+- **内部链接**一律用 wikilink:`[[Wiki/Concepts/Topic/abc]]` 或 `[[abc]]`(当无歧义时)。
 - **文件名**用小写+连字符:`rag-vs-wiki.md`,避免空格(除非必须)。中文名可用,但尽量配英文 alias。
-- **指回原始资料**必须标注:`[[raw/articles/xxx]]`,让人类能一键跳源。
-- **图片**用 `![[xxx.png]]` 嵌入,文件放 `raw/assets/`。
+- **指回原始资料**必须标注:`[[Raw/Articles/xxx]]`,让人类能一键跳源。
+- **图片**用 `![[xxx.png]]` 嵌入,文件放 `Raw/Assets/`。
 
 ---
 
 ## 7. 重要原则(Don'ts)
 
-1. **绝不修改 `raw/` 下任何文件**。raw 是 source of truth,只读。
+1. **绝不修改 `Raw/` 下任何文件**。raw 是 source of truth,只读。
 2. **不要凭空编造事实**。wiki 里每一条陈述都应可追溯到某个 raw source(或明确标注为"推断")。
 3. **发现矛盾时不要偷偷覆盖**——并列记录,在页面底部的"矛盾"区注明来源冲突,交给人类裁决。
 4. **不要批量 ingest 而不更新 index 和 log**。bookkeeping 是这套方法的灵魂。
@@ -259,17 +267,17 @@ grep "^## \[" log.md | tail -10
 
 ## 8. 工作流提示(给人类)
 
-- 新资料进来:扔进 `raw/对应子目录`,告诉 Claudian "帮我 ingest xxx"。
+- 新资料进来:扔进 `Raw/对应子目录`,告诉 Claudian "帮我 ingest xxx"。
 - 提问:直接问,Claudian 会先查 index 再答。
 - 定期(每周 / 每 N 次 ingest 后)跑一次 lint。
 - 查看 Obsidian 图谱视图 → 看 wiki 的形状(枢纽页、孤儿页)。
-- 想要新输出形式(幻灯片、图表、canvas)→ 告诉 Claudian,它会生成并(如果有价值)归档到 `syntheses/`。
+- 想要新输出形式(幻灯片、图表、canvas)→ 告诉 Claudian,它会生成并(如果有价值)归档到 `Syntheses/<topic>/`。
 
 ---
 
 ## 9. Code Roots(代码源)
 
-本 wiki 纳管多个代码仓,代码本身**不复制进 `raw/`**——直接从本机磁盘读。LLM 根据对话里的关键词路由到正确的仓。
+本 wiki 纳管多个代码仓,代码本身**不复制进 `Raw/`**——直接从本机磁盘读。LLM 根据对话里的关键词路由到正确的仓。
 
 > **多机协作**:本 vault 可能在多台机器间同步(例如公司电脑 + 家里电脑),各机器上的代码仓绝对路径不同,某些仓甚至不存在。因此:
 > - **本文件(`CLAUDE.md`,同步)只定义逻辑**:有哪些 root id、它们的 aliases、VCS 类型、路由规则。
@@ -279,7 +287,7 @@ grep "^## \[" log.md | tail -10
 
 | id | 中文名 | 分支/版本 | VCS | 触发关键词(aliases) |
 |---|---|---|---|---|
-| `stock` | UE 公版(个人学习版) | branch `Eureka`(基于 4.26) | git | 公版、ue 官方的、官方的、stock |
+| `stock` | UE 公版(个人学习版) | branch `Eureka`(基于 4.26) | git | 公版、UE 官方的、官方的、stock |
 | `project-engine` | Aki 项目魔改引擎 | UE 4.26.2(`++UE4+Release-4.26`) | perforce | 项目引擎、魔改引擎、aki 引擎、project-engine |
 | `project-game` | Aki 游戏项目(含 `Plugins/`) | — | perforce | 项目、项目里的、aki、插件、业务代码、Client、project-game |
 
@@ -300,7 +308,7 @@ grep "^## \[" log.md | tail -10
 
 1. **显式关键词**:用户说话命中 §9.1 的 aliases → 直接定位到对应仓。
 2. **当前页上下文**:`<current_note>` 指向的 wiki 页 frontmatter 有 `repo:` 字段 → 沿用。
-3. **对比意图**:用户说"这段在项目里改了什么 / 两边区别 / diff"等 → 同时读相关的两个仓(通常 `stock` + `project-engine`),产出或更新 `syntheses/xxx-stock-vs-project.md`。
+3. **对比意图**:用户说"这段在项目里改了什么 / 两边区别 / diff"等 → 同时读相关的两个仓(通常 `stock` + `project-engine`),产出或更新 `Syntheses/Topic/xxx-stock-vs-project.md`。
 4. **歧义兜底**:以上都没命中,或同一 alias 可能命中多仓时 → **停下来问用户**选哪个,不猜。
 5. **命中了但本机没有**:按 §9.2 缺失处理,告诉用户并停下。
 
@@ -321,7 +329,7 @@ grep "^## \[" log.md | tail -10
 1. Read `code-roots.local.md`,确认相关 id 在本机可用。
 2. 按 §9.3 路由决定 `repo`。
 3. 记录快照:`source_commit` / `source_ref`。
-4. Source 摘要页写到 `wiki/sources/<repo>/<文件名>.md`,按 §4.4 模板。
-5. Entity 页写到 `wiki/entities/<repo>/<类名或模块名>.md`。
-6. 若另一仓已有同名 entity,**双向加 `twin:` 链**,并考虑生成/更新 `syntheses/xxx-stock-vs-project.md`。
-7. Concept 页保持在 `wiki/concepts/` 扁平目录;若一个概念在两仓实现差异大,页内开 `## Stock 实现` 和 `## Project 实现` 两节,分别链回各自 entity。
+4. Source 摘要页写到 `Wiki/Sources/<repo>/<文件名>.md`（如 `Sources/Stock/`），按 §4.4 模板。
+5. Entity 页写到 `Wiki/Entities/<repo>/<类名或模块名>.md`（如 `Entities/Stock/`）。
+6. 若另一仓已有同名 entity,**双向加 `twin:` 链**,并考虑生成/更新 `Syntheses/Topic/xxx-stock-vs-project.md`。
+7. Concept 页写到 `Wiki/Concepts/<topic>/` 对应主题子目录;若一个概念在两仓实现差异大,页内开 `## Stock 实现` 和 `## Project 实现` 两节,分别链回各自 entity。

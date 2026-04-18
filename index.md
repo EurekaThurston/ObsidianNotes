@@ -1,85 +1,53 @@
-# Index — Wiki 目录
+﻿# Index — Wiki 目录
 
 > 本文件是整个 wiki 的内容目录。LLM 每次 ingest 都会更新。
 > 查询时先读这里,再深入相关页面。
 
-最后更新:2026-04-17
+最后更新:2026-04-18
 
 ---
 
 ## Overview
-- [[wiki/overview]] — 当前主题:方法论 + KuroEffectSystem ingest(Batch 1 已完成)
+- [[Wiki/Overview]] — 当前主题:知识库方法论(自举)
 
 ## Entities(实体)
 *人、组织、地点、产品、项目。*
 
 ### 方法论相关
-- [[wiki/entities/karpathy|Andrej Karpathy]] — AI 研究者;LLM Wiki 方法论提出者 (来源:1)
-
-### project-game / KuroEffectSystem(老版)
-- [[wiki/entities/project-game/kuro-effect-system/kuro-effect-system|FKuroEffectSystem]] — Old 入口类(instance-based)
-- [[wiki/entities/project-game/kuro-effect-system/effect-handle|FEffectHandle (Old)]] — Old 句柄类
-- [[wiki/entities/project-game/kuro-effect-system/effect-handle-info|FEffectHandleInfo]] — Old Handle 的 JS 伴生体
-- [[wiki/entities/project-game/kuro-effect-system/effect-life-time|FEffectLifeTime (Old)]] — Old 时间/播放状态机
-- [[wiki/entities/project-game/kuro-effect-system/effect-define|EffectDefine]] — 枚举 & Delegate 参考(两版共享)
-- [[wiki/entities/project-game/kuro-effect-system/effect-model-base|UEffectModelBase 家族]] — 18 种 DataAsset 配置(两版共享)
-- [[wiki/entities/project-game/kuro-effect-system/effect-parameters|EffectParameters 家族]] — Old 运行时参数抽象
-- [[wiki/entities/project-game/kuro-effect-system/effect-spec-base|FEffectSpecBase + FEffectSpec<T>]] — Old Spec 基类 + CRTP 模板
-- [[wiki/entities/project-game/kuro-effect-system/effect-spec-subclasses|Old Spec 子类目录]] — 12 个 FEffectModelXxxSpec
-
-### project-game / KuroEffectSystemNew(新版)
-- [[wiki/entities/project-game/kuro-effect-system-new/effect-system|KuroEffect::FEffectSystem]] — New 入口静态类
-- [[wiki/entities/project-game/kuro-effect-system-new/effect-handle|KuroEffect::FEffectHandle]] — New 句柄核心
-- [[wiki/entities/project-game/kuro-effect-system-new/effect-life-time|KuroEffect::FEffectLifeTime]] — New 时间状态(Timer 驱动)
-- [[wiki/entities/project-game/kuro-effect-system-new/effect-spec-data|FEffectSpecData]] — New 数据索引层
-- [[wiki/entities/project-game/kuro-effect-system-new/effect-init-pipeline|FEffectInitModel / FEffectInitHandle]] — New 异步初始化管线
-- [[wiki/entities/project-game/kuro-effect-system-new/effect-context|FEffectContext 家族]] — New 创建上下文(4 层继承)
-- [[wiki/entities/project-game/kuro-effect-system-new/effect-actor-handle|FEffectActorHandle]] — New Actor 门面 + Action 命令模式
-- [[wiki/entities/project-game/kuro-effect-system-new/effect-spec-base|IEffectSpecBase + KuroEffect::FEffectSpec<T>]] — New 接口 + 模板基类(~1150 行)
-- [[wiki/entities/project-game/kuro-effect-system-new/effect-spec-factory|FEffectSpecFactory]] — New Spec 工厂
-- [[wiki/entities/project-game/kuro-effect-system-new/effect-spec-subclasses|New Spec 子类目录]] — 17 个(比 Old 多 5 个)
-- [[wiki/entities/project-game/kuro-effect-system-new/player-effect-container|FPlayerEffectContainer]] — 玩家作用域 LRU 分池(队伍 N 人各自一池)
-- [[wiki/entities/project-game/kuro-effect-system-new/continuous-effect-controller|FContinuousEffectController]] — 连续技特效的 AnsSlot 过渡管理
-- [[wiki/entities/project-game/kuro-effect-system-new/effect-system-actor|AEffectSystemActor]] — 专用 UE Actor 类(含 HandleId + 蓝图 API)
-- [[wiki/entities/project-game/kuro-effect-system-new/niagara-component-handle|FNiagaraComponentHandle]] — Niagara 参数缓存门面(Pending 期间延迟下发)
-- [[wiki/entities/project-game/kuro-effect-system-new/scripting-bridge-architecture|脚本桥架构总览]] — ~10 个类构成的 Puerts + C# 双语言脚本桥
-- [[wiki/entities/project-game/kuro-effect-system-new/effect-system-script-bridge|FEffectSystemScriptBridge + JsBridge + CSharpBridge]] — Bridge 门面 + 双语言实现
-- [[wiki/entities/project-game/kuro-effect-system-new/effect-function-holders|Function Holders]] — Spawn/Finish/DynamicInit × JS/C# 共 6 类 callback 持有者
-- [[wiki/entities/project-game/kuro-effect-system-new/kuro-effect-reflection|KuroEffectDefine]] — USTRUCT/Dynamic Delegate 反射层(脚本可见的所有类型)
-- [[wiki/entities/project-game/kuro-effect-system-new/effect-bp-libraries|UKuroEffectSystemFunctionLibrary + HandleHelperLibrary]] — BP/脚本主入口(~130 UFUNCTION)
-- [[wiki/entities/project-game/kuro-effect-system-new/implementation-insights|Private 实现洞察]] — 填前 5 批的开放问题(LRU=100、Id 位编码、Initialize 流程、PlayFinished 决策树等)
+- [[Wiki/Entities/Methodology/Karpathy|Andrej Karpathy]] — AI 研究者;LLM Wiki 方法论提出者 (来源:1)
 
 ## Concepts(概念)
 *想法、理论、方法、术语。*
 
 ### 方法论
-- [[wiki/concepts/llm-wiki-方法论|LLM Wiki 方法论]] — 让 LLM 增量构建并维护持久化 wiki 的范式 (来源:1)
-- [[wiki/concepts/rag|RAG]] — 查询时检索文档片段的主流 LLM+文档范式 (来源:1)
-- [[wiki/concepts/memex|Memex]] — Vannevar Bush 1945 提出的个人关联式知识存储愿景 (来源:1)
+- [[Wiki/Concepts/Methodology/Llm-wiki-方法论|LLM Wiki 方法论]] — 让 LLM 增量构建并维护持久化 wiki 的范式 (来源:1)
+- [[Wiki/Concepts/Methodology/Rag|RAG]] — 查询时检索文档片段的主流 LLM+文档范式 (来源:1)
+- [[Wiki/Concepts/Methodology/Memex|Memex]] — Vannevar Bush 1945 提出的个人关联式知识存储愿景 (来源:1)
 
-### 架构模式(从 KuroEffectSystem 提炼)
-- [[wiki/concepts/scripting-bridge-pattern|脚本桥模式]] — C++ 主系统与脚本宿主的解耦模式(Bridge 门面 + Holder + 双版本类型)
-- [[wiki/concepts/pending-init-pattern|Pending Init 模式]] — 异步初始化 + 命令队列缓存,业务代码无感
+### UE4 基础
+- [[Wiki/Concepts/UE4/UE4-uobject-系统|UE4 UObject 系统]] — UCLASS/USTRUCT/UPROPERTY 宏、GC、反射、序列化
+- [[Wiki/Concepts/UE4/UE4-资产与实例|UE4 资产与实例]] — Asset（磁盘，只读模板）vs Instance（运行时，有状态）二元模型
+
+### Niagara 基础
+- [[Wiki/Concepts/Niagara/Niagara-vs-cascade|Niagara vs Cascade]] — 设计哲学对比：黑盒模块 vs 完全可编程数据流
+- [[Wiki/Concepts/Niagara/Niagara-cpu-vs-gpu模拟|Niagara CPU vs GPU 模拟]] — VectorVM(CPU) 与 Compute Shader(GPU) 的分工、能力边界与源码分叉点
 
 ## Sources(源摘要)
 *每个 raw 文件或代码源对应一页摘要。按时间倒序。*
 
-### 代码模块(project-game)
-- [[wiki/sources/project-game/kuro-effect-system/overview|KuroEffectSystem overview (Old)]] — Aki 特效系统第一代,~9k 行,已冻结 (p4 CL 6985991)
-- [[wiki/sources/project-game/kuro-effect-system-new/overview|KuroEffectSystemNew overview]] — Aki 特效系统第二代,~23k 行,当前版本 (p4 CL 7086024)
-
 ### 文章 / 笔记
-- [[wiki/sources/karpathy-llm-wiki]] — Karpathy 的 LLM Wiki idea file (2026-04,note)
+- [[Wiki/Sources/Methodology/Karpathy-llm-wiki]] — Karpathy 的 LLM Wiki idea file (2026-04,note)
 
 ## Syntheses(综合/专题)
 *跨源分析、对比、好答案的沉淀。*
 
-- [[wiki/syntheses/kuro-effect-system-old-vs-new|KuroEffectSystem Old vs New 架构综合]] — Old→New 五大结构性改变 + 未完成工作 + 可迁移的设计启示(~500 行)
+### Niagara 源码学习
+- [[Wiki/Syntheses/Niagara/Niagara-learning-path|Niagara 源码学习路径]] — UE 4.26 Niagara 插件 10 阶段学习路线图，含 ~69 个文件待 ingest (stock)
 
 ---
 
 ## 快速导航
 
-- 方法论源文档:[[raw/notes/Karpathy Wiki 方法论]]
+- 方法论源文档:[[Raw/Notes/Karpathy Wiki 方法论]]
 - 操作规程:[[CLAUDE]]
 - 时间线日志:[[log]]

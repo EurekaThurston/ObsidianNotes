@@ -1,17 +1,1 @@
-{
-  "attachmentFolderPath": "raw/assets",
-  "newLinkFormat": "relative",
-  "useMarkdownLinks": false,
-  "alwaysUpdateLinks": true,
-  "showInlineTitle": false,
-  "promptDelete": false,
-  "defaultViewMode": "preview",
-  "showLineNumber": true,
-  "rightToLeft": false,
-  "spellcheck": true,
-  "vimMode": false,
-  "readableLineLength": true,
-  "strictLineBreaks": false,
-  "propertiesInDocument": "visible",
-  "livePreview": false
-}
+{}
