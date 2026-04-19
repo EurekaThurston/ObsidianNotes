@@ -83,14 +83,19 @@ Harness 的常见组件：在关键决策点（要删数据、要花钱、要对
 ## 相关
 
 - [[Wiki/Concepts/AIApps/Ai-agent|AI Agent]] — Harness 服务的对象
+- [[Wiki/Concepts/AIApps/Llm|LLM]] — Agent 的大脑;Harness 不改 LLM 本身,只改它周围的环境
 - [[Wiki/Concepts/AIApps/Agent-skills|Agent Skills]] — 支柱一（上下文管理）的核心工具
 - [[Wiki/Concepts/AIApps/Context-window|Context Window & Context Rot]] — 支柱一的动因
 - [[Wiki/Concepts/AIApps/Hallucination|幻觉]] — 支柱二和三的动因
+- [[Wiki/Concepts/AIApps/Mcp|MCP]] — Agent 拿工具的标准协议,Harness 的上下文动态组装多半经过 MCP
+- [[Wiki/Concepts/AIApps/Reasoning-model|推理模型]] — 推理模型的"隐式 CoT"加剧了 Context 消耗,放大 Harness 的必要性
+- [[Wiki/Concepts/Methodology/Vibe-coding|Vibe Coding]] — 演进第一阶段;Harness 是它的反面答卷
 - [[Wiki/Syntheses/AIApps/Prompt-context-harness-evolution|Prompt → Context → Harness 三段论]] — 历史脉络
 
 ## 引用来源
 
-- [[Wiki/Sources/AIApps/AI-primer-v2]] (raw: [[Raw/Articles/AI 应用技术发展脉络与核心概念扫盲手册 v2]])
+- 主题读本(推荐通读):[[Wiki/Readers/AIApps/AI-primer-v2-读本]]
+- 原子 source:[[Wiki/Sources/AIApps/AI-primer-v2]] (raw: [[Raw/Articles/AI 应用技术发展脉络与核心概念扫盲手册 v2]])
 
 ## 开放问题
 

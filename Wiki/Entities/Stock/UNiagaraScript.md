@@ -65,6 +65,7 @@ source_commit: b6ab0dee9
 - [[Wiki/Entities/Stock/UNiagaraEmitter]] — 持有粒子 / GPU / EventHandler 脚本
 - [[Wiki/Concepts/Niagara/Niagara-cpu-vs-gpu模拟]] — CPU(VectorVM)/GPU(Compute Shader)双形态在此类统一
 - [[Wiki/Concepts/Niagara/Niagara-vs-cascade]] — "显式编译字节码" 是相对 Cascade 的质变
+- [[Wiki/Concepts/UE4/UE4-ddc|DDC]] — `CachedScriptVMId` 直接作为 DDC key,团队编译产物缓存的入口
 
 ## 深入阅读
 

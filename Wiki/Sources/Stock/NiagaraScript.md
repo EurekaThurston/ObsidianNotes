@@ -213,6 +213,7 @@ Debug 用,记录一次执行的 `FNiagaraDataSet Frame` 快照 + 参数快照 + 
 - [[Wiki/Entities/Stock/UNiagaraEmitter]] — 持有 Emitter/Particle/GPU 脚本
 - [[Wiki/Concepts/Niagara/Niagara-cpu-vs-gpu模拟]] — `CanBeRunOnGpu / GetSimTarget / ScriptResource / ScriptShader` 是 GPU 分支的入口
 - [[Wiki/Concepts/Niagara/Niagara-vs-cascade]] — "显式编译的字节码 + DDC 缓存" 是 Niagara 相对 Cascade 的质变
+- [[Wiki/Concepts/UE4/UE4-ddc|UE4 DDC]] — `BuildNiagaraDDCKeyString` / `BinaryToExecData` 等函数是该层的直接消费点
 
 ## 与既有 wiki 的关系
 

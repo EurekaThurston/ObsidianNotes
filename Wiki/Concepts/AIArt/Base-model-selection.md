@@ -88,7 +88,8 @@ aliases: [基座模型选型, Base Model, 基座选择]
 
 ## 引用来源
 
-- [[Wiki/Sources/AIArt/Lora-deep-dive]]（raw: [[Raw/Notes/Lora_Deep_Dive]]）
+- 主题读本(推荐通读):[[Wiki/Readers/AIArt/Lora-深度指南-读本]]
+- 原子 source:[[Wiki/Sources/AIArt/Lora-deep-dive]]（raw: [[Raw/Notes/Lora_Deep_Dive]]）
 
 ## 开放问题 / 待深入
 

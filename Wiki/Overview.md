@@ -145,7 +145,8 @@ AI 应用生态 (2026-04 新增)
 - **MCP 治理细节**：是否已捐赠基金会/哪个基金会——v2 采取了模糊措辞，待官方公告核实。
 - **`agentskills.io` 域名真伪**：v1 提到，v2 已改为"Anthropic 工程博客/GitHub 规范仓库"——如需精确引用需核实。
 - **OpenClaw 技术细节**：扫盲源未给 GitHub 仓库、许可证、硬件需求等细节，后续如用户关心可单独 ingest。
-- **待建页**：Transformer、Embedding、Function Calling、Subagent、HITL、Vibe/Spec Coding、Mitchell Hashimoto、Martin Fowler 等 v2 中提及但未建页，按实际引用需要再建。
+- **已补建(2026-04-20)**:[[Wiki/Concepts/AIApps/Embedding]]、[[Wiki/Concepts/Methodology/Vibe-coding]]、[[Wiki/Concepts/UE4/UE4-ddc]] (见 2026-04-20 lint 后的 🟡 批)
+- **仍待建页**：Transformer、Function Calling、Subagent、HITL、Spec Coding、Mitchell Hashimoto、Martin Fowler 等 v2 中提及但未建页，按实际引用需要再建。
 
 ---
 
@@ -164,5 +165,5 @@ AI 应用生态 (2026-04 新增)
 
 - **Niagara Phase 2**：读 `NiagaraComponent.h` / `NiagaraActor.h` / `NiagaraFunctionLibrary.h`（3 文件，Component 层，把 Asset 连到场景 / BP）
 - **AI 美术**：验证本机 kohya_ss 环境，跑第一个 MVP LoRA
-- **AI 应用**：按需补建 Transformer / Embedding / Vibe Coding 等提及但未建页面
+- **AI 应用**：按需补建 Transformer / Function Calling / Spec Coding 等剩余待建页(Embedding / Vibe Coding 已在 2026-04-20 补建)
 - **lint**：运行 "帮我 lint 一下 wiki"，检查 4 个主题的内部一致性、特别是新建 AIApps 主题的交叉引用闭环、Phase 1 新增 10 页的 back-link 情况

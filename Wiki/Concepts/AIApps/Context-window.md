@@ -61,7 +61,8 @@ aliases: [上下文窗口, Context Window, Context Rot, 上下文腐烂]
 
 ## 引用来源
 
-- [[Wiki/Sources/AIApps/AI-primer-v2]] (raw: [[Raw/Articles/AI 应用技术发展脉络与核心概念扫盲手册 v2]])
+- 主题读本(推荐通读):[[Wiki/Readers/AIApps/AI-primer-v2-读本]]
+- 原子 source:[[Wiki/Sources/AIApps/AI-primer-v2]] (raw: [[Raw/Articles/AI 应用技术发展脉络与核心概念扫盲手册 v2]])
 
 ## 开放问题
 

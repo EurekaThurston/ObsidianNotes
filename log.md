@@ -5,6 +5,108 @@
 
 ---
 
+## [2026-04-20] synthesis | lint 🟡🟢 项清理 — 3 个新概念页 + 小问题修补
+
+- 触发:🔴 项完成后用户"黄的也修一下",一口气把 🟡 和 🟢 全部扫清
+- 新建 3 个高频缺失概念页(对应 lint 报告 🟡 中的三个)。每页标准 header + 概览 + 字段速查 + ⚠️ 陷阱 + 相关 + 深入阅读 + 开放问题;长度 70-95 行:
+  - [[Wiki/Concepts/UE4/UE4-ddc]] — Derived Data Cache;UE4 机器/团队级编译产物缓存;Niagara 用 `FNiagaraVMExecutableDataId` 直接作 key,也记录 shader/texture/mesh 等其他典型用户
+  - [[Wiki/Concepts/Methodology/Vibe-coding]] — Karpathy 2025-02 命名;定位为 Vibe/Spec/Harness 三阶段演进的起点;含对非开发角色的适用视角(美术/策划/管理者)
+  - [[Wiki/Concepts/AIApps/Embedding]] — 把语义变成几何距离的数学底座;RAG 的检索层 + 多模态对齐 + 聚类/推荐/异常检测等延伸应用
+- 交叉引用 wiring(让新页不成孤儿):
+  - [[Wiki/Entities/Methodology/Karpathy]] 的"Vibe Coding 命名"条目改为 wikilink
+  - [[Wiki/Concepts/Methodology/Rag]] 正文的"Embedding（向量嵌入）"改为 wikilink + 相关节增一条
+  - [[Wiki/Entities/Stock/UNiagaraScript]] 相关节增一条 DDC 回链
+  - [[Wiki/Sources/Stock/NiagaraScript]] 涉及实体节增一条 DDC 回链
+  - [[Wiki/Readers/Niagara/Phase1-asset-layer-读本]] 第 472 行首次提到 DDC 改为 wikilink
+  - [[Wiki/Syntheses/AIApps/Prompt-context-harness-evolution]] 相关节增一条 Vibe Coding 链
+- 🟢 小问题修补:
+  - [[Wiki/Syntheses/Niagara/Niagara-learning-path]] line 16 `[[Wiki/Sources/Stock/]]` 目录式死链改为普通 code 样式
+  - [[Wiki/Concepts/AIArt/Multi-lora-composition]] 相关节补一条 Caption-strategy 链
+  - [[Wiki/Concepts/AIApps/Harness-engineering]] 相关节补 Llm / Mcp / Reasoning-model / Vibe-coding 四条,解决交叉密度偏低
+- 更新:
+  - [[index]] — Concepts 的方法论/UE4/AI 应用生态三个分区各新增一条
+  - [[Wiki/Overview]] — "待建页"列表去掉 Embedding / Vibe Coding,加一行"已补建(2026-04-20)"标注;"下一步建议"的 AI 应用一行同步更新
+- 回查 lint 报告剩余项的状态:
+  - ✓ `FNiagaraSystemInstance`(7 处) — 留到 Phase 3 自然 ingest,不急
+  - ✓ [[Wiki/Sources/AIApps/AI-primer-v2]] 缺 `aliases` — 尚未补,可下一轮 lint 一并处理(属 cosmetic)
+  - ✓ `Niagara-vs-cascade` vs `Niagara-cpu-vs-gpu模拟` 对 Cascade GPU 能力措辞强弱不一致 — 未改(不算矛盾,只是措辞),留待合适时机统一口径
+- 本轮合计影响文件:16 个(3 新建 + 13 更新)
+
+---
+
+## [2026-04-20] refactor | lint 🔴 项清理 — Claudian 页 + 读本回链 × 13 + cheatsheet 去引
+
+- 触发:2026-04-20 lint 后用户决策:(1) Claudian 选方案 a 建实体页;(2) cheatsheet 已人工删除,清理所有残留引用
+- 新建: [[Wiki/Entities/Claudian]] — 本仓 LLM 作者身份实体页,固化签名约定和运行模型,同时消解读本模板 Reader.md 的 `[[Claudian]]` 占位问题(原 6 处读本签名 + 1 处 learning-path 的 broken link 自动解析)
+- 更新(读本回链,13 页,在"引用来源"节新增"主题读本(推荐通读)"行):
+  - AIApps 8 页: [[Wiki/Concepts/AIApps/Llm]]、[[Wiki/Concepts/AIApps/Hallucination]]、[[Wiki/Concepts/AIApps/Context-window]]、[[Wiki/Concepts/AIApps/Ai-agent]]、[[Wiki/Concepts/AIApps/Mcp]]、[[Wiki/Concepts/AIApps/Harness-engineering]]、[[Wiki/Concepts/AIApps/Agent-skills]]、[[Wiki/Concepts/AIApps/Reasoning-model]] → 全部回链 [[Wiki/Readers/AIApps/AI-primer-v2-读本]]
+  - AIArt 5 页: [[Wiki/Concepts/AIArt/Lora]]、[[Wiki/Concepts/AIArt/Base-model-selection]]、[[Wiki/Concepts/AIArt/Caption-strategy]]、[[Wiki/Concepts/AIArt/Trigger-word]]、[[Wiki/Concepts/AIArt/Multi-lora-composition]] → 全部回链 [[Wiki/Readers/AIArt/Lora-深度指南-读本]]
+  - 执行:用 sed 批量替换"## 引用来源"节下的 source 行,7+4 个页面(Llm/Lora 用 Edit 先行完成)
+- 删除引用(cheatsheet 用户已手动删除源文件,清理残留):log.md:230 原条目"[[Wiki/Syntheses/Methodology/How-to-prompt-ai-chat-cheatsheet]] — 一页纸精简版..." 已去除。其余 line 224 的"一页纸简化版"只是"下一步猜测",非实际引用,保留
+- 更新:[[index]] — Entities 方法论分区新增 Claudian 条目
+- lint 报告三个 🔴 项(读本孤立 / cheatsheet 丢失 / Claudian broken link)全部解决;🟡🟢 未动,留待下一批次
+- 副产品:读本模板 [[Wiki/_templates/Reader.md]] 末尾签名 `*本读本由 [[Claudian]] 生成*` 从此不再是 broken link
+- 下一步:🟡 建 DDC / Vibe-coding / Embedding 三个高频缺失概念页;🟢 修若干小问题(Niagara-learning-path:16 目录 link、Multi-lora 缺 Caption-strategy 链、Harness 交叉密度等)
+
+---
+
+## [2026-04-20] lint | 首次体检 — 读本回链缺口 + 4 个缺失概念页 + 1 个丢失文件
+
+- 触发:用户首次使用 lint 功能
+- 范围:Wiki/ 下 47 个非模板页 + 根目录 index/README/log/Overview,排除 `_templates/` 占位符
+- 方法:并行 grep 全量 wikilink + frontmatter,派 Explore agent 交叉分析,手动验证 2 个可疑点
+
+### 关键发现
+
+1. **系统性:读本被孤立** — 13 个 AIApps/AIArt 概念页没有一个回链对应主题读本
+   - AIApps 8 页(Llm/Hallucination/Context-window/Reasoning-model/Ai-agent/Mcp/Harness-engineering/Agent-skills)未回链 [[Wiki/Readers/AIApps/AI-primer-v2-读本]]
+   - AIArt 5 页(Lora/Base-model-selection/Caption-strategy/Trigger-word/Multi-lora-composition)未回链 [[Wiki/Readers/AIArt/Lora-深度指南-读本]]
+   - 结果:[[Wiki/Readers/AIApps/AI-primer-v2-读本]] 全无非索引入链(接近孤儿)
+   - **根因**:本仓的读本范式是在概念页之后才定型的(§3.4),历史概念页尚未按新模板回链
+   - **建议**:批量补"深入阅读"节回链,可作为一次小型 refactor
+
+2. **丢失文件:`How-to-prompt-ai-chat-cheatsheet`**
+   - log.md:173 声称 2026-04-19 已创建此页("一页纸精简版"),但文件系统里不存在
+   - 未在后续 commit 中看到删除记录
+   - **建议**:确认是否需要补建,或从 log 移除该行(加"未落地"标注)
+
+3. **损坏链接:`[[Claudian]]`** — 6 处读本签名 + 1 处 Niagara-learning-path 指向不存在的页面
+   - 根因:读本模板 Reader.md 末尾签名约定 `*本读本由 [[Claudian]] 生成…*`,但 `Wiki/Entities/Claudian.md` 未建
+   - **建议**两选一:(a) 建 `Wiki/Entities/Claudian.md` 作为本仓 LLM 作者实体;(b) 改签名为纯文本"由 Claudian 生成",避免占位式 broken link
+
+4. **缺失概念页(高频术语但无独立页)**:
+   - `FNiagaraSystemInstance`(7 处) — Phase 3 自然会建,暂不急
+   - `DDC / Derived Data Cache`(6 处) — 建议建 [[Wiki/Concepts/UE4/UE4-ddc]],Niagara 编译身份证直接作 DDC key
+   - `Vibe Coding`(6 处) — Overview 已列待建;建议建 [[Wiki/Concepts/Methodology/Vibe-coding]]
+   - `Embedding`(5 处) — Overview 已列待建;建议建 [[Wiki/Concepts/AIApps/Embedding]]
+
+5. **其他小问题**
+   - `Niagara-learning-path.md:16` 指向目录 `[[Wiki/Sources/Stock/]]`(非页面),应删或改具体文件
+   - `Multi-lora-composition` 不链 `Caption-strategy`(两者逻辑紧密),建议补
+   - `Harness-engineering` 与其他 AIApps 概念页交叉密度偏低,建议补 `Llm / Reasoning-model / Mcp` 三条
+   - `Wiki/Concepts/Niagara/Niagara-vs-cascade` 与 `Niagara-cpu-vs-gpu模拟` 对 Cascade GPU 能力描述措辞强弱不一致(轻微,不算矛盾)
+   - `Sources/AIApps/AI-primer-v2.md` 缺 `aliases` 字段(其他 source 页均有)
+
+### 不用处理的
+
+- index.md 已覆盖全部 47 页 ✓
+- 所有 Stock 代码页 frontmatter 完整(repo/source_root/source_path/source_ref/source_commit 齐备) ✓
+- 所有读本 frontmatter 合规(type: synthesis + tags 含 reader) ✓
+- Niagara 5 个实体页 ↔ Phase1 读本双向链完整 ✓
+- 无"updated < created"时间异常 ✓
+
+### 下一步建议(按优先级)
+
+1. 🔴 **高**:查清 `How-to-prompt-ai-chat-cheatsheet` 丢失原因(补建 or log 标注)
+2. 🟡 **中**:决定 `[[Claudian]]` 处理方式 → 批量修 7 处 broken link
+3. 🟡 **中**:批量补 AIApps/AIArt 概念页的读本回链(13 页 × "深入阅读"节)
+4. 🟢 **低**:建 DDC / Vibe-coding / Embedding 三个高频缺失概念页
+5. 🟢 **低**:修 `Niagara-learning-path.md:16` 的目录 link
+
+等待用户指示是否要在本轮就动手修,还是只记录等批次处理。
+
+---
+
 ## [2026-04-20] refactor | 新增元规则:新流程/规则的归处分层判断
 - 触发:用户指令"以后有涉及到新的流程的时候你都考虑一下是需要写到 CLAUDE.md 里还是单独开一个文档,包括这条也是"
 - 元规则本身的归处分析(自洽应用):
@@ -170,7 +272,6 @@
 - 触发:团队内推广 AI 使用,观察到"结果质量 ↔ 使用意愿"的正反馈循环,但大多数人不知如何有效提问
 - 归档为:
   - [[Wiki/Syntheses/Methodology/How-to-prompt-ai-chat]] — 详细版（心智模型 + 5 要素 + 8 技巧 + 反模式 + 好/差对照 + 团队推广经验）
-  - [[Wiki/Syntheses/Methodology/How-to-prompt-ai-chat-cheatsheet]] — 一页纸精简版（检查清单 + 8 技巧 + 反模式）,设计为可直接转发群里
 - 更新:[[index]](Syntheses 新增"方法论"分区)
 - 核心洞察:糟糕的 prompt 来自错误的心智模型（把 AI 当搜索引擎/全知神谕）——校正心智模型后,技巧都是推论
 

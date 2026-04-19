@@ -17,7 +17,7 @@ aliases: [Retrieval-Augmented Generation, 检索增强生成]
 
 ## 它到底怎么"检索"的：Embedding 向量嵌入
 
-RAG 检索的底层机制是 **Embedding（向量嵌入）**：
+RAG 检索的底层机制是 **[[Wiki/Concepts/AIApps/Embedding|Embedding（向量嵌入）]]**：
 
 - 把每段文字转成一串数字（一个几百到几千维的向量）
 - **意思相近的文字在数字空间里距离也近**
@@ -51,6 +51,7 @@ RAG 检索的底层机制是 **Embedding（向量嵌入）**：
 - [[Wiki/Concepts/Methodology/Memex|Memex]] — 更早的"关联式个人知识库"愿景
 - [[Wiki/Concepts/AIApps/Hallucination|幻觉]] — RAG 是对抗幻觉的主要机制之一
 - [[Wiki/Concepts/AIApps/Mcp|MCP]] — 另一条"让 AI 接触外部数据"的路径——RAG 是"把数据塞给 AI"，MCP 是"让 AI 主动去取"
+- [[Wiki/Concepts/AIApps/Embedding|Embedding 向量嵌入]] — RAG 检索的底层数学
 
 ## 引用来源
 

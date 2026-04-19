@@ -469,7 +469,7 @@ struct FNiagaraVMExecutableDataId
 
 **这个结构体回答一个问题**:"给定当前状态,这份脚本的编译产物是否还有效?"
 
-它的 `operator==` + `GetTypeHash` 被用作 DDC(Derived Data Cache)的 key——UE 的 DDC 是**机器级的编译产物缓存**,可以在团队间共享。两个人编译同一个图,只要这个 Id 一样,第二个人从 DDC 拉缓存即可,不用真跑编译。
+它的 `operator==` + `GetTypeHash` 被用作 [[Wiki/Concepts/UE4/UE4-ddc|DDC(Derived Data Cache)]] 的 key——UE 的 DDC 是**机器级的编译产物缓存**,可以在团队间共享。两个人编译同一个图,只要这个 Id 一样,第二个人从 DDC 拉缓存即可,不用真跑编译。
 
 #### `FNiagaraVMExecutableData`:字节码容器
 

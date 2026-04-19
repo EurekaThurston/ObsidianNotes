@@ -25,7 +25,7 @@ Karpathy 以 AI 教育性内容、神经网络 from-scratch 讲解和实用 LLM 
 
 1. **LLM Wiki 方法论**（2026-04）—— 见 [[Wiki/Concepts/Methodology/Llm-wiki-方法论|LLM Wiki 方法论]]。
 2. **Context Engineering**（2025）—— 在 [[Wiki/Syntheses/AIApps/Prompt-context-harness-evolution|三段论演进]] 的第二阶段扮演关键倡导者角色：公开指出 "Context Engineering > Prompt Engineering"，把焦点从"怎么措辞"转向"给 AI 搭建完整信息环境"。
-3. **Vibe Coding 命名**（2025-02）—— 在推文里首次命名这种"你主导决策，AI 负责执行"的编程范式（"There's a new kind of coding I call 'vibe coding'"）。随后被 Y Combinator 等大力推广。
+3. **[[Wiki/Concepts/Methodology/Vibe-coding|Vibe Coding]] 命名**（2025-02）—— 在推文里首次命名这种"你主导决策，AI 负责执行"的编程范式（"There's a new kind of coding I call 'vibe coding'"）。随后被 Y Combinator 等大力推广。
 
 ## 相关
 

@@ -15,6 +15,7 @@
 
 ### 方法论相关
 - [[Wiki/Entities/Methodology/Karpathy|Andrej Karpathy]] — AI 研究者;LLM Wiki 方法论提出者、Context Engineering 倡导者、Vibe Coding 命名者 (来源:2)
+- [[Wiki/Entities/Claudian|Claudian]] — 本仓 LLM 作者身份;按 [[CLAUDE]] 规程运行,负责 ingest/query/lint/synthesis 全部 wiki 操作 (来源:1)
 
 ### AI 美术（工具与基座）
 - [[Wiki/Entities/AIArt/Illustrious-XL|Illustrious XL]] — SDXL 架构二次元基座,2026 初二次元 SOTA 之一 (来源:1)
@@ -40,10 +41,12 @@
 - [[Wiki/Concepts/Methodology/Llm-wiki-方法论|LLM Wiki 方法论]] — 让 LLM 增量构建并维护持久化 wiki 的范式 (来源:1)
 - [[Wiki/Concepts/Methodology/Rag|RAG]] — 查询时检索文档片段的主流 LLM+文档范式；底层靠 Embedding 向量嵌入 (来源:2)
 - [[Wiki/Concepts/Methodology/Memex|Memex]] — Vannevar Bush 1945 提出的个人关联式知识存储愿景 (来源:1)
+- [[Wiki/Concepts/Methodology/Vibe-coding|Vibe Coding]] — Karpathy 2025-02 命名;AI 编程三阶段(Vibe/Spec/Harness)的起点 (来源:1)
 
 ### UE4 基础
 - [[Wiki/Concepts/UE4/UE4-uobject-系统|UE4 UObject 系统]] — UCLASS/USTRUCT/UPROPERTY 宏、GC、反射、序列化
 - [[Wiki/Concepts/UE4/UE4-资产与实例|UE4 资产与实例]] — Asset（磁盘，只读模板）vs Instance（运行时，有状态）二元模型
+- [[Wiki/Concepts/UE4/UE4-ddc|UE4 DDC]] — Derived Data Cache,机器/团队级编译产物缓存;Niagara 编译身份证直接作 key (来源:1)
 
 ### Niagara 基础
 - [[Wiki/Concepts/Niagara/Niagara-vs-cascade|Niagara vs Cascade]] — 设计哲学对比：黑盒模块 vs 完全可编程数据流
@@ -58,6 +61,7 @@
 
 ### AI 应用生态
 - [[Wiki/Concepts/AIApps/Llm|LLM]] — 大语言模型,本质是"词语接龙引擎";三步训练(Pretrain/SFT/RLHF) (来源:1)
+- [[Wiki/Concepts/AIApps/Embedding|Embedding 向量嵌入]] — 把语义变成几何距离;RAG / 语义检索 / 多模态对齐的数学底座 (来源:1)
 - [[Wiki/Concepts/AIApps/Hallucination|幻觉]] — AI 一本正经胡说的结构性毛病;用户第一纪律:具体事实必核验 (来源:1)
 - [[Wiki/Concepts/AIApps/Context-window|上下文窗口 & Context Rot]] — AI 的视力范围,塞满反而变笨;Skills 渐进式披露的根本动机 (来源:1)
 - [[Wiki/Concepts/AIApps/Reasoning-model|推理模型]] — o1/R1/Extended Thinking,先打草稿再答题 (来源:1)

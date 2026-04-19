@@ -119,6 +119,7 @@ aliases: [三段论演进, Prompt-Context-Harness, AI 工程三阶段]
 - [[Wiki/Concepts/AIApps/Harness-engineering|Harness Engineering]]
 - [[Wiki/Concepts/AIApps/Agent-skills|Agent Skills]] — Harness 支柱一的核心工具
 - [[Wiki/Entities/Methodology/Karpathy|Andrej Karpathy]] — Context Engineering 倡导者、Vibe Coding 命名者
+- [[Wiki/Concepts/Methodology/Vibe-coding|Vibe Coding]] — 演进第一阶段的独立概念页
 - [[Wiki/Syntheses/Methodology/How-to-prompt-ai-chat|如何向 AI 提问]] — 第一阶段的实操指南
 
 ## 引用来源

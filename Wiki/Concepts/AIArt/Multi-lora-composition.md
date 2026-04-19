@@ -77,11 +77,13 @@ aliases: [Multi-LoRA, 多 LoRA 组合, LoRA 叠加]
 
 - [[Wiki/Concepts/AIArt/Lora]] — 单个 LoRA
 - [[Wiki/Concepts/AIArt/Trigger-word]] — 每个 LoRA 各自的触发词
+- [[Wiki/Concepts/AIArt/Caption-strategy]] — 触发词的打标策略决定 LoRA 组合时的隔离干净度
 - [[Wiki/Entities/AIArt/ComfyUI]] — 提供多 LoRA 挂载的平台
 
 ## 引用来源
 
-- [[Wiki/Sources/AIArt/Lora-deep-dive]]（raw: [[Raw/Notes/Lora_Deep_Dive]]）
+- 主题读本(推荐通读):[[Wiki/Readers/AIArt/Lora-深度指南-读本]]
+- 原子 source:[[Wiki/Sources/AIArt/Lora-deep-dive]]（raw: [[Raw/Notes/Lora_Deep_Dive]]）
 
 ## 开放问题 / 待深入
 
