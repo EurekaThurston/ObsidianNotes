@@ -20,7 +20,7 @@ sources: 8
 
 自举阶段的产出：基于 [[Raw/Notes/Karpathy Wiki 方法论]] 建的三层架构（Raw / Wiki / Schema）；详见 [[Wiki/Concepts/Methodology/Llm-wiki-方法论|LLM Wiki 方法论]]。
 
-📖 **主题读本（推荐初读）**：[[Wiki/Syntheses/Methodology/Llm-wiki-方法论-读本]] — 把本仓库的起点、历史源流、RAG 对比、Karpathy 三里程碑、本仓库如何具体化编成一篇线性读物。
+📖 **主题读本（推荐初读）**：[[Wiki/Readers/Methodology/Llm-wiki-方法论-读本]] — 把本仓库的起点、历史源流、RAG 对比、Karpathy 三里程碑、本仓库如何具体化编成一篇线性读物。
 
 **核心主张**：持续整合 > 查询时检索。RAG 每次查询都在从零发现知识，LLM Wiki 则在 ingest 时就完成跨源整合、交叉引用、矛盾标注。
 
@@ -29,8 +29,8 @@ sources: 8
 面向 C++ 零基础、UE 源码零基础的学员，通过 AI 辅助学习 Niagara 插件 749 个文件中的运行时部分（约 286 个文件）。
 
 - 路线：[[Wiki/Syntheses/Niagara/Niagara-learning-path]] — 10 阶段路径
-- **Phase 0 ✅**：心智模型建立 —— 📖 **主题读本**：[[Wiki/Syntheses/Niagara/Phase0-心智模型-读本]] / 原子概念页:[[Wiki/Concepts/UE4/UE4-uobject-系统]]、[[Wiki/Concepts/UE4/UE4-资产与实例]]、[[Wiki/Concepts/Niagara/Niagara-vs-cascade]]、[[Wiki/Concepts/Niagara/Niagara-cpu-vs-gpu模拟]]
-- **Phase 1 ✅**（2026-04-19）：Asset 层三件套 —— 📖 **主题读本**：[[Wiki/Syntheses/Niagara/Phase1-asset-layer-读本]] / 原子页见 [[Wiki/Entities/Stock/UNiagaraSystem]]、[[Wiki/Entities/Stock/UNiagaraEmitter]]、[[Wiki/Entities/Stock/FNiagaraEmitterHandle]]、[[Wiki/Entities/Stock/UNiagaraScript]]、[[Wiki/Entities/Stock/UNiagaraScriptSourceBase]]
+- **Phase 0 ✅**：心智模型建立 —— 📖 **主题读本**：[[Wiki/Readers/Niagara/Phase0-心智模型-读本]] / 原子概念页:[[Wiki/Concepts/UE4/UE4-uobject-系统]]、[[Wiki/Concepts/UE4/UE4-资产与实例]]、[[Wiki/Concepts/Niagara/Niagara-vs-cascade]]、[[Wiki/Concepts/Niagara/Niagara-cpu-vs-gpu模拟]]
+- **Phase 1 ✅**（2026-04-19）：Asset 层三件套 —— 📖 **主题读本**：[[Wiki/Readers/Niagara/Phase1-asset-layer-读本]] / 原子页见 [[Wiki/Entities/Stock/UNiagaraSystem]]、[[Wiki/Entities/Stock/UNiagaraEmitter]]、[[Wiki/Entities/Stock/FNiagaraEmitterHandle]]、[[Wiki/Entities/Stock/UNiagaraScript]]、[[Wiki/Entities/Stock/UNiagaraScriptSourceBase]]
 - Phase 2-10 等待逐文件 ingest
 
 **Phase 1 的关键收获**（从 5 个 header 里提炼）：
@@ -43,7 +43,7 @@ sources: 8
 
 面向鸣潮美术向 TA 的落地方案，从 MidJourney + tag 库逐步迁移到 ComfyUI + 自训 LoRA。
 
-📖 **主题读本（推荐初读）**：[[Wiki/Syntheses/AIArt/Lora-深度指南-读本]] — 从战略（离开 MJ 的三个结构性动因）到技术（LoRA 原理 + 基座选型 + caption 反常识 + 多 LoRA 组合）到工具（kohya_ss + ComfyUI）到工程落地（6 个月路线图 + 合规），一次读完掌握全链路。
+📖 **主题读本（推荐初读）**：[[Wiki/Readers/AIArt/Lora-深度指南-读本]] — 从战略（离开 MJ 的三个结构性动因）到技术（LoRA 原理 + 基座选型 + caption 反常识 + 多 LoRA 组合）到工具（kohya_ss + ComfyUI）到工程落地（6 个月路线图 + 合规），一次读完掌握全链路。
 
 - 核心源：[[Wiki/Sources/AIArt/Lora-deep-dive]]（2026-04，Eureka × Claude 撰写）
 - 技术路径：[[Wiki/Concepts/AIArt/Lora|LoRA]] + [[Wiki/Entities/AIArt/Illustrious-XL|Illustrious/NoobAI]] 基座 + [[Wiki/Entities/AIArt/Kohya-ss|kohya_ss]] 训练 + [[Wiki/Entities/AIArt/ComfyUI|ComfyUI]] 部署
@@ -54,7 +54,7 @@ sources: 8
 
 **面向**：对 AI 完全没概念的非开发角色（美术、设计、策划、管理者）+ 开发者的主线脉络梳理。
 
-📖 **主题读本（推荐初读）**：[[Wiki/Syntheses/AIApps/AI-primer-v2-读本]] — 从 LLM 本质到 2026 技术栈三层全景的完整读物,覆盖三个怪癖/推理模型/Agent/MCP/RAG/三段论/Harness 四柱/Skills/OpenClaw/Vibe-Spec-Harness Coding,一次读完。
+📖 **主题读本（推荐初读）**：[[Wiki/Readers/AIApps/AI-primer-v2-读本]] — 从 LLM 本质到 2026 技术栈三层全景的完整读物,覆盖三个怪癖/推理模型/Agent/MCP/RAG/三段论/Harness 四柱/Skills/OpenClaw/Vibe-Spec-Harness Coding,一次读完。
 
 - 核心源：[[Wiki/Sources/AIApps/AI-primer-v2]]（2026-04-19，Eureka × Claude 撰写，v2）
 - 专题综合：[[Wiki/Syntheses/AIApps/Prompt-context-harness-evolution|Prompt → Context → Harness 三段论]](方法论演进专题)

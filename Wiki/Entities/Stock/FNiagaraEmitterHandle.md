@@ -49,7 +49,7 @@ source_commit: b6ab0dee9
 ## 深入阅读
 
 - 全字段清单 + 设计理由:[[Wiki/Sources/Stock/NiagaraEmitterHandle]]
-- 主题读本(推荐初读):[[Wiki/Syntheses/Niagara/Phase1-asset-layer-读本]] § 2
+- 主题读本(推荐初读):[[Wiki/Readers/Niagara/Phase1-asset-layer-读本]] § 2
 
 ## 开放问题
 

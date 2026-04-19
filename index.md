@@ -3,7 +3,7 @@
 > 本文件是整个 wiki 的内容目录。LLM 每次 ingest 都会更新。
 > 查询时先读这里,再深入相关页面。
 
-最后更新:2026-04-20（+ 历史债清算:补齐方法论/AIArt/AIApps 三份主题读本）
+最后更新:2026-04-20（+ 新增 Wiki/Readers/ 顶层目录,5 份读本从 Syntheses/ 迁出）
 
 ---
 
@@ -81,24 +81,33 @@
 - [[Wiki/Sources/Stock/NiagaraScript]] — NiagaraScript.h @ b6ab0dee9 (Phase 1.4,编译后脚本 + VMExecutableData)
 - [[Wiki/Sources/Stock/NiagaraScriptSourceBase]] — NiagaraScriptSourceBase.h @ b6ab0dee9 (Phase 1.5,图源抽象基类)
 
-## Syntheses(综合/专题)
-*跨源分析、对比、好答案的沉淀。*
+## Readers(主题读本)
+*每个议题"一次读完即完整掌握"的线性读物。人类阅读的首选入口,详见 [[CLAUDE]] §3.4。*
 
 ### 方法论
-- [[Wiki/Syntheses/Methodology/Llm-wiki-方法论-读本|方法论读本 — 本仓库为什么存在]] — LLM Wiki 方法论主题读本,详解三层架构/三操作/两文件/Memex-RAG-Wiki 脉络/Karpathy 三里程碑/本仓库如何具体化 (2026-04-20)
+- [[Wiki/Readers/Methodology/Llm-wiki-方法论-读本|方法论读本 — 本仓库为什么存在]] — LLM Wiki 方法论主题读本,详解三层架构/三操作/两文件/Memex-RAG-Wiki 脉络/Karpathy 三里程碑/本仓库如何具体化 (2026-04-20)
+
+### AI 美术
+- [[Wiki/Readers/AIArt/Lora-深度指南-读本|LoRA 深度指南读本]] — 鸣潮美术向 LoRA 落地方案主题读本,从战略(离开 MJ)到技术(LoRA/caption/trigger)到工具(kohya+ComfyUI)到落地路线 (2026-04-20)
+
+### AI 应用生态
+- [[Wiki/Readers/AIApps/AI-primer-v2-读本|AI 应用生态读本]] — AI Primer v2 主题读本,从 LLM 本质到 2026 技术栈三层全景,一次读完掌握整条主线 (2026-04-20)
+
+### Niagara 源码学习
+- [[Wiki/Readers/Niagara/Phase0-心智模型-读本|Phase 0 读本 — 上阵前的四层脑内地图]] — 把 UObject / Asset-Instance / Niagara-vs-Cascade / CPU-vs-GPU 四概念编成自下而上一条叙事链,一次读完掌握 Phase 1+ 所需全部前置 (2026-04-19)
+- [[Wiki/Readers/Niagara/Phase1-asset-layer-读本|Phase 1 读本 — Niagara 的资产层]] — 把 5 个 header 讲成一个连贯故事,从 System 到图源抽象基类,一次读完掌握 Asset 层全部心智模型 (2026-04-19)
+
+## Syntheses(综合/专题)
+*跨源分析、对比、专题报告、好答案的沉淀(非读本)。读本见上方 [[#Readers(主题读本)]] 分区。*
+
+### 方法论
 - [[Wiki/Syntheses/Methodology/How-to-prompt-ai-chat|如何向 AI 提问（详细版）]] — Chat 场景 prompt 指南，含心智模型、5 要素、8 技巧、反模式、团队推广经验
 
 ### AI 应用生态
-- [[Wiki/Syntheses/AIApps/AI-primer-v2-读本|AI 应用生态读本]] — AI Primer v2 主题读本,从 LLM 本质到 2026 技术栈三层全景,一次读完掌握整条主线 (2026-04-20)
 - [[Wiki/Syntheses/AIApps/Prompt-context-harness-evolution|Prompt → Context → Harness 三段论]] — AI 工程方法论 2022-2026 演进主线叙事
-
-### AI 美术
-- [[Wiki/Syntheses/AIArt/Lora-深度指南-读本|LoRA 深度指南读本]] — 鸣潮美术向 LoRA 落地方案主题读本,从战略(离开 MJ)到技术(LoRA/caption/trigger)到工具(kohya+ComfyUI)到落地路线 (2026-04-20)
 
 ### Niagara 源码学习
 - [[Wiki/Syntheses/Niagara/Niagara-learning-path|Niagara 源码学习路径]] — UE 4.26 Niagara 插件 10 阶段学习路线图，含 ~69 个文件待 ingest (stock)
-- [[Wiki/Syntheses/Niagara/Phase0-心智模型-读本|Phase 0 读本 — 上阵前的四层脑内地图]] — 把 UObject / Asset-Instance / Niagara-vs-Cascade / CPU-vs-GPU 四概念编成自下而上一条叙事链,一次读完掌握 Phase 1+ 所需全部前置 (2026-04-19)
-- [[Wiki/Syntheses/Niagara/Phase1-asset-layer-读本|Phase 1 读本 — Niagara 的资产层]] — 把 5 个 header 讲成一个连贯故事,从 System 到图源抽象基类,一次读完掌握 Asset 层全部心智模型 (2026-04-19)
 
 ---
 

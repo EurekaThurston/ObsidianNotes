@@ -46,14 +46,26 @@ Wiki/
     Methodology/    - 方法论相关源摘要
     Stock/          - 代码源摘要:UE 公版
     Project/        - 代码源摘要:Aki 项目
-  Syntheses/      跨源综合:对比、分析、专题报告、你问出来的好答案
-    Niagara/        - Niagara 源码学习相关综合
+  Syntheses/      跨源综合:对比、分析、专题报告、好答案沉淀(非读本)
+    Niagara/        - Niagara 源码学习相关综合(如学习路径总图)
+    Methodology/    - 方法论相关综合(如"如何向 AI 提问"指南)
+    AIApps/         - AI 应用生态相关综合(如三段论演进专题)
     (新主题时在此增加子目录)
+  Readers/        主题读本:每个议题的"一次读完即掌握"线性读物(见 §3.4)
+    Methodology/    - 方法论主题读本
+    AIArt/          - AI 美术主题读本
+    AIApps/         - AI 应用生态主题读本
+    Niagara/        - Niagara 各 Phase 读本
+    (每个议题至少一份读本,新议题建子目录)
 ```
 
 - 所有目录均按**主题**建子文件夹（大写开头）；新增主题时在对应父目录下加一个子目录。
 - `Concepts/` 子目录名代表主题领域；同一概念跨仓有不同实现时，页内分节讨论，不复制成两份。
 - `Entities/` 与 `Sources/` 的 `Stock/` / `Project/` 子目录专用于代码实体/摘要（见 §9）；非代码内容按主题放入 `Methodology/` 等目录。
+- **`Syntheses/` vs `Readers/` 的分工**:
+  - `Readers/` = 每个议题**必有**的"一次读完即掌握"线性读物(见 §3.4),是**人类阅读的首选入口**
+  - `Syntheses/` = 非读本类的专题综合(跨主题对比、方法论指南、学习路径总图、"好答案"沉淀等)
+  - 一个议题通常一份读本 + 零到多份专题综合。规模大的议题(如 AIApps)可能读本之外还有"三段论演进"这种独立专题
 
 ---
 
@@ -104,7 +116,7 @@ Wiki/
 
 ### 3.4 主题读本(Topic 级线性读物)
 
-**每个议题(topic / issue)都必须配套产出一份"主题读本"**,归档到 `Wiki/Syntheses/<topic>/`。议题的粒度由产出量决定:结构化学习路径的每个 Phase、一份新入驻的重量级扫盲源、一组围绕同一主题的多个 raw source、用户提出的一个深度问题且答案跨多页——都算一个议题。
+**每个议题(topic / issue)都必须配套产出一份"主题读本"**,归档到 **`Wiki/Readers/<topic>/`**(读本有独立顶层目录,与 `Syntheses/` 分开;见 §2)。议题的粒度由产出量决定:结构化学习路径的每个 Phase、一份新入驻的重量级扫盲源、一组围绕同一主题的多个 raw source、用户提出的一个深度问题且答案跨多页——都算一个议题。
 
 **读本不是摘要**。读本是一篇"**详细、精确、满满当当、一次读完即完整掌握该主题**"的长文。用户/人类读者**不需要跳来跳去**就能拿走此议题的全部知识。
 
@@ -140,10 +152,15 @@ Wiki/
 - 末尾必有 **下一步预告**(下一 Phase、下一议题、或后续可深入方向)+ **本议题遗留的 open question 清单**(明确标注哪个 Phase/议题回答)
 - 末尾一行签名:`*本读本由 [[Claudian]] 基于 <议题>的 X 个原子页综合生成,YYYY-MM-DD。*`
 
-#### 文件命名
+#### 文件命名与路径
 
+- 路径:`Wiki/Readers/<topic>/`
 - 结构化学习路径阶段:`PhaseN-<主题片段>-读本.md`
 - 其他议题:`<议题>-读本.md`(如 `Lora-深度指南-读本.md`、`AI-primer-v2-读本.md`)
+- 示例:
+  - `Wiki/Readers/Niagara/Phase1-asset-layer-读本.md`
+  - `Wiki/Readers/AIArt/Lora-深度指南-读本.md`
+  - `Wiki/Readers/Methodology/Llm-wiki-方法论-读本.md`
 
 #### 执行清单(产出读本时按序)
 
@@ -163,9 +180,9 @@ Entity 页后续被多个 Source 引用时,可扩展为"跨 source 汇总入口"
 #### 历史债(已于 2026-04-20 全部回补)
 
 早期 ingest 时尚未建立读本规范,历史债于 2026-04-20 清算完毕:
-- ✅ **方法论(Karpathy LLM Wiki)** → [[Wiki/Syntheses/Methodology/Llm-wiki-方法论-读本]]
-- ✅ **AI 美术(LoRA 深度指南)** → [[Wiki/Syntheses/AIArt/Lora-深度指南-读本]]
-- ✅ **AI 应用生态(AI Primer v2)** → [[Wiki/Syntheses/AIApps/AI-primer-v2-读本]]
+- ✅ **方法论(Karpathy LLM Wiki)** → [[Wiki/Readers/Methodology/Llm-wiki-方法论-读本]]
+- ✅ **AI 美术(LoRA 深度指南)** → [[Wiki/Readers/AIArt/Lora-深度指南-读本]]
+- ✅ **AI 应用生态(AI Primer v2)** → [[Wiki/Readers/AIApps/AI-primer-v2-读本]]
 
 今后任何新主题 ingest **同步产出读本**,不再累积历史债。
 
@@ -285,7 +302,7 @@ twin: [[Entities/Project/XXX]]   # 另一个仓里的孪生页,可选
 - 对比见 [[Syntheses/Topic/foo-stock-vs-project]]
 ```
 
-### 4.5 主题读本页结构(见 §3.4)
+### 4.5 主题读本页结构(见 §3.4,归档路径 `Wiki/Readers/<topic>/`)
 
 通用骨架(适用所有议题,结构化学习路径/新主题入驻/综合专题均按此):
 

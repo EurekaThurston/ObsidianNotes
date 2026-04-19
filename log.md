@@ -5,12 +5,35 @@
 
 ---
 
+## [2026-04-20] refactor | 读本独立顶层目录 Wiki/Readers/
+- 触发:用户指出读本散在 `Syntheses/Methodology/`、`Syntheses/AIArt/`、`Syntheses/AIApps/`、`Syntheses/Niagara/` 四个子目录里,和普通专题(三段论演进、How-to-prompt、学习路径总图)混在一起"有点乱,到处都是"
+- 方案:新增 `Wiki/Readers/` 顶层目录,5 份读本全部迁过去;`Syntheses/` 回归原定位——非读本类的专题综合
+- 迁移(全部用 `git mv` 保留历史):
+  - `Wiki/Syntheses/Methodology/Llm-wiki-方法论-读本.md` → `Wiki/Readers/Methodology/Llm-wiki-方法论-读本.md`
+  - `Wiki/Syntheses/AIArt/Lora-深度指南-读本.md` → `Wiki/Readers/AIArt/Lora-深度指南-读本.md`(`Wiki/Syntheses/AIArt/` 本来只有读本,搬完即删空目录)
+  - `Wiki/Syntheses/AIApps/AI-primer-v2-读本.md` → `Wiki/Readers/AIApps/AI-primer-v2-读本.md`
+  - `Wiki/Syntheses/Niagara/Phase0-心智模型-读本.md` → `Wiki/Readers/Niagara/Phase0-心智模型-读本.md`
+  - `Wiki/Syntheses/Niagara/Phase1-asset-layer-读本.md` → `Wiki/Readers/Niagara/Phase1-asset-layer-读本.md`
+- CLAUDE.md 更新:
+  - §2 目录说明:新增 `Readers/` 顶层目录的完整描述 + 明确 "`Syntheses/` vs `Readers/` 的分工"小节
+  - §3.4:归档路径从 `Wiki/Syntheses/<topic>/` 改为 `Wiki/Readers/<topic>/`,新增"文件命名与路径"具体示例
+  - §4.5:模板标题注明路径 `Wiki/Readers/<topic>/`
+  - 历史债清单(§3.4 末尾)3 条 ✅ 条目的链接同步更新到新路径
+- 连带同步改链接(用 sed 跨 12 个文件批量替换):
+  - 5 份读本之间的互相引用
+  - 5 个 Phase 1 Entity 页的"深入阅读"链接
+  - [[Wiki/Syntheses/Niagara/Niagara-learning-path]] Phase 0/1 顶部读本引流
+  - [[index]]、[[Wiki/Overview]]、以及历史 log 条目里的 wikilink
+- [[index]] 分区重构:`Readers(主题读本)` 提升为**顶层分区**,与 `Entities / Concepts / Sources / Syntheses` 平级(不再作为 Syntheses 的子分区);Syntheses 分区回到"非读本类专题综合"的精简列表
+- 本条 log 描述时的路径均为**迁移后新路径**(旧路径仅在本条内提到一次)
+- 下一步:读本独立目录生效,路径稳定,之后 Phase 2 读本直接入驻 `Wiki/Readers/Niagara/`
+
 ## [2026-04-20] synthesis | 历史债清算 — 三份主题读本一次性补齐
 - 触发:4-19 CLAUDE.md §3.4 引入"主题读本"规则时,历史上三个主题(方法论/AIArt/AIApps)因 ingest 时规则尚未存在而未产出读本,已在当时钉为"历史债清单"。今日用户命令清算
 - 新建 3 份读本,每份都按 CLAUDE.md §4.5 通用骨架(问题驱动叙事 + 代码/原文 inline + 陷阱 ⚠️ 高亮 + 深入阅读指回原子 + 开放问题):
-  - [[Wiki/Syntheses/Methodology/Llm-wiki-方法论-读本]] — 方法论议题读本,~500 行,叙事主线"时间线(Memex 1945 → RAG → LLM Wiki 2026)+ 哲学线(关联文档 → 查询时拼碎片 → 持续编译)"交织,五节 Memex/RAG/方法论骨架/Karpathy/本仓库具体化,末尾举 2026-04-17 第一次 ingest 作为完整例子
-  - [[Wiki/Syntheses/AIArt/Lora-深度指南-读本]] — AI 美术议题读本,~900 行,叙事主线"战略(为什么离开 MJ,三个结构性短板)→ 技术(LoRA 原理 → 基座选型 → Caption 反常识 → Trigger Word → Multi-LoRA)→ 工具(kohya_ss + ComfyUI)→ 工程(6 个月路线图 + 合规 + 硬件 + 评估准则)"
-  - [[Wiki/Syntheses/AIApps/AI-primer-v2-读本]] — AI 应用生态议题读本,~1000 行,叙事主线"LLM 本质 → 三个怪癖(幻觉/Context Rot/不稳定)→ 新面孔(推理/多模态/Agent)→ 连接外部(MCP/RAG/记忆)→ 三段论演进 → Harness 四柱 → Agent Skills → 2026 技术栈三层 → Karpathy 三节点 → Vibe/Spec/Harness Coding"
+  - [[Wiki/Readers/Methodology/Llm-wiki-方法论-读本]] — 方法论议题读本,~500 行,叙事主线"时间线(Memex 1945 → RAG → LLM Wiki 2026)+ 哲学线(关联文档 → 查询时拼碎片 → 持续编译)"交织,五节 Memex/RAG/方法论骨架/Karpathy/本仓库具体化,末尾举 2026-04-17 第一次 ingest 作为完整例子
+  - [[Wiki/Readers/AIArt/Lora-深度指南-读本]] — AI 美术议题读本,~900 行,叙事主线"战略(为什么离开 MJ,三个结构性短板)→ 技术(LoRA 原理 → 基座选型 → Caption 反常识 → Trigger Word → Multi-LoRA)→ 工具(kohya_ss + ComfyUI)→ 工程(6 个月路线图 + 合规 + 硬件 + 评估准则)"
+  - [[Wiki/Readers/AIApps/AI-primer-v2-读本]] — AI 应用生态议题读本,~1000 行,叙事主线"LLM 本质 → 三个怪癖(幻觉/Context Rot/不稳定)→ 新面孔(推理/多模态/Agent)→ 连接外部(MCP/RAG/记忆)→ 三段论演进 → Harness 四柱 → Agent Skills → 2026 技术栈三层 → Karpathy 三节点 → Vibe/Spec/Harness Coding"
 - 更新:
   - [[CLAUDE]] §3.4 历史债清单全部标 ✅,明确"今后新主题 ingest 同步产出读本,不再累积"
   - [[index]] Syntheses 分区新增方法论/AIArt 两个分类,三份读本各自登记
@@ -41,7 +64,7 @@
 - 下一步:Phase 2 按新规则产出 "Phase 2 读本";用户需要时可回补 AIArt / AIApps 主题读本
 
 ## [2026-04-19] synthesis | Niagara Phase 0 导读(补齐)
-- 新建:[[Wiki/Syntheses/Niagara/Phase0-心智模型-读本|Phase0-心智模型-导读]] — Phase 0 的线性读物,把四个概念页(UObject / Asset-Instance / Niagara-vs-Cascade / CPU-vs-GPU)编成自下而上一条叙事链  *(注:4-19 晚些时候重命名为"读本",详见本条上方的 refactor 条目)*
+- 新建:[[Wiki/Readers/Niagara/Phase0-心智模型-读本|Phase0-心智模型-导读]] — Phase 0 的线性读物,把四个概念页(UObject / Asset-Instance / Niagara-vs-Cascade / CPU-vs-GPU)编成自下而上一条叙事链  *(注:4-19 晚些时候重命名为"读本",详见本条上方的 refactor 条目)*
 - 叙事结构:四层脑内地图(Layer 1 UObject → Layer 2 Asset/Instance → Layer 3 Niagara 哲学 → Layer 4 CPU/GPU 分叉),每层末尾小结 + 最后一节"四层地图回看"贯通
 - 埋雷:第 2.8 节专门提前钉死"`FNiagaraEmitterHandle::Instance` 不是运行时 Instance"这个 Phase 1 必踩的命名陷阱,让读者到 Phase 1 时有预期
 - 更新:[[Wiki/Syntheses/Niagara/Niagara-learning-path]](Phase 0 节顶加导读链接)、[[index]]、[[Wiki/Overview]]
@@ -49,7 +72,7 @@
 
 ## [2026-04-19] synthesis | Niagara Phase 1 导读 + 方法论升级
 - 触发:用户指出原子化 Source/Entity 页不符合人类线性阅读习惯(频繁跳转、碎片化)
-- 核心产出:[[Wiki/Syntheses/Niagara/Phase1-asset-layer-读本|Phase1-asset-layer-导读]] — Phase 1 的**教科书章节**,500+ 行线性叙事,从 Content Browser 切入讲到图源抽象基类,关键代码片段 inline,不强制跳转  *(注:4-19 晚些时候重命名为"读本")*
+- 核心产出:[[Wiki/Readers/Niagara/Phase1-asset-layer-读本|Phase1-asset-layer-导读]] — Phase 1 的**教科书章节**,500+ 行线性叙事,从 Content Browser 切入讲到图源抽象基类,关键代码片段 inline,不强制跳转  *(注:4-19 晚些时候重命名为"读本")*
 - 方法论升级(写入 [[CLAUDE]]):
   - 新增 §3.4 "Phase 导读":结构化学习路径每阶段收尾强制产出线性读物,定位"教科书章节"与原子页 spec 角色互补;准确/不遗漏 > 简短,不为压缩而压缩
   - 新增 §4.5 "Phase 导读页结构"模板

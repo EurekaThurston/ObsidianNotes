@@ -69,7 +69,7 @@ Niagara 插件位于 `Engine/Plugins/FX/Niagara/`，共 7 个模块：
 ### Phase 0 — 上阵前：基础心智模型 ✅
 > **无需读代码。** 这一阶段通过概念建立正确的"脑内地图"，避免后面读代码时迷失。
 >
-> 📖 **主题读本(推荐初读)**：[[Wiki/Syntheses/Niagara/Phase0-心智模型-读本]] — 把四个概念自下而上(UObject → Asset/Instance → Niagara vs Cascade → CPU/GPU)编成一条叙事链,一次读完掌握 Phase 1+ 所需全部前置。
+> 📖 **主题读本(推荐初读)**：[[Wiki/Readers/Niagara/Phase0-心智模型-读本]] — 把四个概念自下而上(UObject → Asset/Instance → Niagara vs Cascade → CPU/GPU)编成一条叙事链,一次读完掌握 Phase 1+ 所需全部前置。
 
 - [[Wiki/Concepts/UE4/UE4-uobject-系统]] *(已完成)* — UCLASS / USTRUCT / UPROPERTY 宏是什么，UObject 为什么重要
 - [[Wiki/Concepts/UE4/UE4-资产与实例]] *(已完成)* — Asset（Content Browser 里的文件）vs Instance（运行时对象）的本质区别
@@ -83,7 +83,7 @@ Niagara 插件位于 `Engine/Plugins/FX/Niagara/`，共 7 个模块：
 ### Phase 1 — 资产层：三件套 Asset ✅
 > **目标**：理解 Niagara 特效的"静态定义"——存在磁盘上的数据结构长什么样。
 >
-> 📖 **主题读本(推荐初读)**：[[Wiki/Syntheses/Niagara/Phase1-asset-layer-读本]] — 把下面 5 个文件讲成一个连贯故事,从 `UNiagaraSystem` 到图源抽象基类一气读完。
+> 📖 **主题读本(推荐初读)**：[[Wiki/Readers/Niagara/Phase1-asset-layer-读本]] — 把下面 5 个文件讲成一个连贯故事,从 `UNiagaraSystem` 到图源抽象基类一气读完。
 
 | # | 文件 | 模块 | 路径 | 源摘要 → 主实体 |
 |---|---|---|---|---|
