@@ -11,7 +11,6 @@ aliases: [如何向 AI 提问, 提问指南, prompt 指南, AI 使用培训]
 
 > **背景**：团队内推广 AI 时，使用意愿往往取决于"能不能拿到好结果"。但很多人的提问方式恰好导致拿不到好结果——这是可教授的技能，不是天赋。
 > **范围**：只覆盖 chat based 场景（ChatGPT / Claude / Gemini 网页或 App 对话），不涉及 agentic / coding 工具（Cursor / Claude Code 等）。
-> **配套**：一页纸精简版见 [[Wiki/Syntheses/Methodology/How-to-prompt-ai-chat-cheatsheet|提问检查清单]]。
 
 ---
 
@@ -227,7 +226,6 @@ AI 的"注意力"是有限的。一个对话聊了几十轮、上下文塞满了
 ## 相关
 
 - [[Wiki/Concepts/Methodology/Llm-wiki-方法论]] — 另一种"让 AI 产出长期价值"的范式（针对知识管理场景）
-- [[Wiki/Syntheses/Methodology/How-to-prompt-ai-chat-cheatsheet]] — 一页纸精简版，适合直接发群里
 
 ## 引用来源
 
