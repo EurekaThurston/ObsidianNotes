@@ -402,13 +402,12 @@ wwstyle_v1, a young woman with long hair standing in front of a temple at sunset
 | 不加触发词 | LoRA 强制生效,生产时不灵活 |
 | 触发词用常用词(如 `anime`) | 污染基座,没挂 LoRA 也会发作 |
 
-### 4.7 ⚠️ 角色 LoRA 的 caption 策略是否一样
+### 4.7 角色 LoRA 的 caption 策略是否一样
 
-**原理相同,但实践有差别**:
-
-- 角色 LoRA 数据少(15-30 张),caption 编辑成本低
-- 触发词设计更重要(`wwstyle_encore` 直接对应角色名)
-- 图里你希望"永远带"的是**角色的视觉特征**(发色、瞳色、标志装饰),这些**不写入 caption**
+> [!warning] 原理相同,实践有差别
+> - 角色 LoRA 数据少(15-30 张),caption 编辑成本低
+> - 触发词设计更重要(`wwstyle_encore` 直接对应角色名)
+> - 图里你希望"永远带"的是**角色的视觉特征**(发色、瞳色、标志装饰),这些**不写入 caption**
 
 ### 4.8 小结:Caption 策略
 
@@ -528,17 +527,18 @@ wwstyle_v1, a young woman with long hair standing in front of a temple at sunset
 - **角色 LoRA**:`0.8 - 1.0`(需要强特征锁定)
 - **细节/辅助 LoRA**:`0.2 - 0.5`(只是微调)
 
-### 6.5 ⚠️ 多 LoRA 互相争抢权重
+### 6.5 多 LoRA 互相争抢权重
 
-当多个 LoRA 学了**重叠的特征**,会互相削弱:
-
-- 如果角色 LoRA 训练时不小心学了一些画风特征(caption 没清干净),会和风格 LoRA 冲突
-- 表现:强度相加后画面崩坏、风格漂移
-
-**解法**:
-- 重训问题 LoRA,caption 清干净
-- 调降冲突 LoRA 的 strength
-- 更换基座重训(可能是基座对某些特征偏好不一致)
+> [!warning] 重叠特征会互相削弱
+> 当多个 LoRA 学了**重叠的特征**,会互相削弱:
+>
+> - 如果角色 LoRA 训练时不小心学了一些画风特征(caption 没清干净),会和风格 LoRA 冲突
+> - 表现:强度相加后画面崩坏、风格漂移
+>
+> **解法**:
+> - 重训问题 LoRA,caption 清干净
+> - 调降冲突 LoRA 的 strength
+> - 更换基座重训(可能是基座对某些特征偏好不一致)
 
 ### 6.6 和 Tag 库前端的衔接
 
@@ -659,7 +659,8 @@ D:/datasets/wwstyle_v1/
 | OneTrainer | 纯 GUI,新手友好 | ★★★ |
 | Civitai 在线训练 | 懒人方案 | ★ **(公司数据严禁用!)** |
 
-**⚠️ Civitai 在线训练公司数据禁止** — 上传给第三方 = 数据泄漏。**任何公司美术素材都必须本地训练**。
+> [!warning] Civitai 在线训练公司数据禁止
+> 上传给第三方 = 数据泄漏。**任何公司美术素材都必须本地训练**。
 
 ### 7.3 ComfyUI 部署
 
@@ -818,7 +819,8 @@ def handle_tag_selection(tag_combo):
 
 ### 9.3 LoRA 继承基座的许可
 
-⚠️ **重要**:用某基座训的 LoRA 在**法律上继承基座的许可限制**。用 Flux Dev 训出的 LoRA 也**不能商用**。
+> [!warning] 重要:LoRA 法律上继承基座许可
+> 用某基座训的 LoRA 在**法律上继承基座的许可限制**。用 Flux Dev 训出的 LoRA 也**不能商用**。
 
 ### 9.4 硬件成本(参考)
 

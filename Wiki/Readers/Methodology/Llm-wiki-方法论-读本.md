@@ -270,11 +270,12 @@ Lint 定期进行,保证知识库**健康度**,避免熵增。
 - Obsidian 是工作环境,提供图谱视图、wiki 链接、搜索等"IDE 级"工具
 - wiki 本身是被维护的产品,有版本(git),有架构(CLAUDE.md),有测试(lint)
 
-### 3.7 ⚠️ 重要澄清:刻意抽象
+### 3.7 重要澄清:刻意抽象
 
-Karpathy 原文明确声明:
-
-> 此文件故意抽象,只描述 pattern,具体实现由你和你的 LLM 共同决定。
+> [!warning] 方法论只规定骨架,不规定实现
+> Karpathy 原文明确声明:
+>
+> > 此文件故意抽象,只描述 pattern,具体实现由你和你的 LLM 共同决定。
 
 这意味着方法论**只规定骨架**——具体的:
 
@@ -351,15 +352,16 @@ Karpathy 在推文中首次命名:
 - **实用性 + 抽象性的平衡**:Karpathy 既给出可立即用的操作清单(ingest/query/lint 三件套),又保持方法论抽象到每人可适配——这是好方法论的标志
 - **给 pattern 不给方案**:这让方法论**可演进**——本仓库的 `CLAUDE.md` 至今已迭代多次,没有被原文的具体结构卡住过
 
-### 4.4 ⚠️ 事实追溯提示
+### 4.4 事实追溯提示
 
-关于 Karpathy 的具体引用,[[Wiki/Entities/Methodology/Karpathy|Karpathy entity 页]]诚实标注:
-
-- **Vibe Coding 推文原文**:v2 源中是间接转述,如需精确引用需另行追溯推特原帖
-- **Context Engineering 具体发言**:类似情况
-- **他对 Harness Engineering 的公开看法**:暂未查到
-
-这些是**已知的事实不确定点**——需要精确引用时,回到推特/博客一手资料,不要依赖本 wiki 的二手转述。
+> [!warning] 已知的事实不确定点
+> 关于 Karpathy 的具体引用,[[Wiki/Entities/Methodology/Karpathy|Karpathy entity 页]]诚实标注:
+>
+> - **Vibe Coding 推文原文**:v2 源中是间接转述,如需精确引用需另行追溯推特原帖
+> - **Context Engineering 具体发言**:类似情况
+> - **他对 Harness Engineering 的公开看法**:暂未查到
+>
+> 这些是已知的事实不确定点——需要精确引用时,回到推特/博客一手资料,不要依赖本 wiki 的二手转述。
 
 ### 4.5 小结
 

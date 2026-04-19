@@ -5,6 +5,25 @@
 
 ---
 
+## [2026-04-20] refactor | 4 个读本批量刷 Callouts(收尾)
+
+- 触发:昨天 Phase 1 读本 4 处示范看下来视觉满意,用户请求把其余 4 个读本也统一刷一遍
+- 范围:[[Wiki/Readers/Methodology/Llm-wiki-方法论-读本]]、[[Wiki/Readers/Niagara/Phase0-心智模型-读本]]、[[Wiki/Readers/AIApps/AI-primer-v2-读本]]、[[Wiki/Readers/AIArt/Lora-深度指南-读本]]
+- 策略:heading 级 ⚠️ 标题转 `[!warning]` callout(heading 去 emoji,配标题短语);inline ⚠️ 标记(bullet / table cell / numbered list)**保留不动**——精准点标记不适合整块 callout
+- 统计:
+  - Methodology 读本:2 个 heading ⚠️ → warning callout(§3.7 刻意抽象、§4.4 事实追溯)
+  - Phase0 读本:2 个 heading ⚠️ → warning callout(§2.8 Handle.Instance 陷阱、§3.7 兼容性提示)
+  - AIApps 读本:5 个 heading/段落 ⚠️ → warning callout(§1.2 没有元认知、§2.1.5 第一纪律、§3.1.7 推理幻觉、§9.6 信息缺口、Karpathy 事实追溯)
+  - AIArt 读本:4 个 heading/段落 ⚠️ → warning callout(§4.7 角色 caption、§6.5 权重冲突、§7.2 Civitai 禁用、§9.3 LoRA 许可继承)
+  - 共 13 处转换,保留 3 处 inline ⚠️(都在 AIArt 读本,分别是 rank 过大 bullet、Flux Dev 表格、Dev 非商用数字列表)
+- 覆盖率:5 个读本(含 Phase 1 昨天先做的 4 处)合计 **17 个 callout**,分布:warning ×13 + question ×1 + abstract ×1 + quote ×1 + 其他
+- 副产品:读本视觉统一达成——全库不再有裸 ⚠️ emoji 作为章节标题,所有警告都有统一视觉分层
+- 不做的:
+  - 为每个读本再硬加 [!question] / [!abstract] / [!quote] — 本次只做 ⚠️ 一类,保持批量修改的简单性;后续写新读本按 Reader.md 模板约定自然产出多样化 callout 即可
+- 收工:今天共 7 个 commit(首次 lint + 三档修复 + Lint playbook + 5 项视觉/使用改进 + quote 配色两次调整 + 读本 callout 全库覆盖),从"读本概念页历史债"到"视觉统一"走通一个完整回路
+
+---
+
 ## [2026-04-20] refactor | vault 使用 / 视觉 5 项改进(post-lint 打磨)
 
 - 触发:用户问"这个 vault 使用和视觉上还能怎么改",我给了三档建议,用户挑了真值得改的 4 项 + 开放问题汇总机制,一口气都做掉
