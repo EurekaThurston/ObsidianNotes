@@ -3,7 +3,7 @@ type: overview
 created: 2026-04-17
 updated: 2026-04-19
 tags: [overview]
-sources: 3
+sources: 8
 ---
 
 # Overview
@@ -27,8 +27,15 @@ sources: 3
 面向 C++ 零基础、UE 源码零基础的学员，通过 AI 辅助学习 Niagara 插件 749 个文件中的运行时部分（约 286 个文件）。
 
 - 路线：[[Wiki/Syntheses/Niagara/Niagara-learning-path]] — 10 阶段路径
-- Phase 0 已完成：心智模型建立（[[Wiki/Concepts/UE4/UE4-uobject-系统]]、[[Wiki/Concepts/UE4/UE4-资产与实例]]、[[Wiki/Concepts/Niagara/Niagara-vs-cascade]]、[[Wiki/Concepts/Niagara/Niagara-cpu-vs-gpu模拟]]）
-- Phase 1-10 等待逐文件 ingest
+- **Phase 0 ✅**：心智模型建立（[[Wiki/Concepts/UE4/UE4-uobject-系统]]、[[Wiki/Concepts/UE4/UE4-资产与实例]]、[[Wiki/Concepts/Niagara/Niagara-vs-cascade]]、[[Wiki/Concepts/Niagara/Niagara-cpu-vs-gpu模拟]]）
+- **Phase 1 ✅**（2026-04-19）：Asset 层三件套 —— [[Wiki/Entities/Stock/UNiagaraSystem]] / [[Wiki/Entities/Stock/UNiagaraEmitter]] / [[Wiki/Entities/Stock/FNiagaraEmitterHandle]] / [[Wiki/Entities/Stock/UNiagaraScript]] / [[Wiki/Entities/Stock/UNiagaraScriptSourceBase]]，对应 5 个源摘要页在 `Wiki/Sources/Stock/`
+- Phase 2-10 等待逐文件 ingest
+
+**Phase 1 的关键收获**（从 5 个 header 里提炼）：
+- **Asset 链路定型**：System →（`TArray<FNiagaraEmitterHandle>`）→ Handle(Id+Name+enabled+Instance) → Emitter →（脚本 / 渲染器 / SimStages）→ Script（字节码 + GPU shader）
+- **命名陷阱**：`FNiagaraEmitterHandle::Instance` 仍在 Asset 层（Emitter 资产副本），与 Phase 3 的 `FNiagaraEmitterInstance`（运行时粒子模拟）**完全不是一回事**
+- **EmitterSpawn/EmitterUpdate 脚本不独立编译**，被合并进 System 脚本（`UNiagaraScript::IsCompilable()` 对这两者返 false）
+- **editor/runtime 解耦点**：`UNiagaraScriptSourceBase` 抽象基类在 runtime 模块，真正的图实现 `UNiagaraScriptSource + UNiagaraGraph` 在 NiagaraEditor 模块，使 runtime 能持图指针但不 link editor
 
 ### 3. AI 美术生成管线（LoRA / ComfyUI）
 
@@ -74,7 +81,13 @@ methodology (meta, 自举)
 Niagara 源码学习 (UE 4.26)
     ├── UE4 基础
     ├── Niagara 基础
-    └── Niagara 学习路径 (10 阶段, Phase 0 ✅)
+    ├── stock 代码实体 (Asset 层)
+    │   ├── UNiagaraSystem          ← 顶层资产
+    │   ├── UNiagaraEmitter         ← 粒子行为单元
+    │   ├── FNiagaraEmitterHandle   ← System→Emitter 引用包装
+    │   ├── UNiagaraScript          ← 编译后脚本(字节码 + GPU shader)
+    │   └── UNiagaraScriptSourceBase ← 图源抽象基类
+    └── Niagara 学习路径 (10 阶段, Phase 0 ✅ / Phase 1 ✅)
 
 AI 美术 (LoRA/ComfyUI)
     ├── 概念：LoRA / 基座选型 / Caption / Trigger Word / Multi-LoRA
@@ -107,8 +120,13 @@ AI 应用生态 (2026-04 新增)
 
 ### 关于 Niagara 路径
 
-- **Phase 1 启动时机**：等待用户指令，下一个文件是 `NiagaraSystem.h`
+- **Phase 2 启动时机**：等待用户指令，下一步是 `NiagaraComponent.h / NiagaraActor.h / NiagaraFunctionLibrary.h`（从场景入口视角把 Asset 连到 World）
 - **Code root 本机可用性**：已登记 `stock`（D:\UE\...），`project-*` 本机未登记
+- **Phase 1 遗留的 open question**（等 Phase 3+ 回答）：
+  - `EmitterExecutionOrder.kStartNewOverlapGroupBit` 的 parallel tick 消费点
+  - `RapidIterationParameters` vs `ExposedParameters` vs `User.*` 命名空间的协作关系
+  - `FNiagaraVMExecutableData::DIParamInfo` 的技术债（GPU 信息不该在 VM 数据里）
+  - `UNiagaraEmitter::Parent / ParentAtLastMerge` 的 merge 语义能传播什么
 
 ### 关于 AI 美术
 
@@ -138,7 +156,7 @@ AI 应用生态 (2026-04 新增)
 
 ## 下一步建议
 
-- **Niagara Phase 1**：开始读 `NiagaraSystem.h` / `NiagaraEmitter.h` / `NiagaraScript.h`
+- **Niagara Phase 2**：读 `NiagaraComponent.h` / `NiagaraActor.h` / `NiagaraFunctionLibrary.h`（3 文件，Component 层，把 Asset 连到场景 / BP）
 - **AI 美术**：验证本机 kohya_ss 环境，跑第一个 MVP LoRA
 - **AI 应用**：按需补建 Transformer / Embedding / Vibe Coding 等提及但未建页面
-- **lint**：运行 "帮我 lint 一下 wiki"，检查 4 个主题的内部一致性、特别是新建 AIApps 主题的交叉引用闭环
+- **lint**：运行 "帮我 lint 一下 wiki"，检查 4 个主题的内部一致性、特别是新建 AIApps 主题的交叉引用闭环、Phase 1 新增 10 页的 back-link 情况

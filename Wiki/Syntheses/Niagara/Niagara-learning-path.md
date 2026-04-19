@@ -1,7 +1,7 @@
 ﻿---
 type: synthesis
 created: 2026-04-18
-updated: 2026-04-18
+updated: 2026-04-19
 tags: [niagara, UE4, learning-path, source-code, roadmap]
 sources: 0
 aliases: [Niagara 学习路径, niagara 源码路径]
@@ -66,7 +66,7 @@ Niagara 插件位于 `Engine/Plugins/FX/Niagara/`，共 7 个模块：
 
 ## 学习路线图
 
-### Phase 0 — 上阵前：基础心智模型
+### Phase 0 — 上阵前：基础心智模型 ✅
 > **无需读代码。** 这一阶段通过概念建立正确的"脑内地图"，避免后面读代码时迷失。
 
 - [[Wiki/Concepts/UE4/UE4-uobject-系统]] *(已完成)* — UCLASS / USTRUCT / UPROPERTY 宏是什么，UObject 为什么重要
@@ -78,16 +78,16 @@ Niagara 插件位于 `Engine/Plugins/FX/Niagara/`，共 7 个模块：
 
 ---
 
-### Phase 1 — 资产层：三件套 Asset
+### Phase 1 — 资产层：三件套 Asset ✅
 > **目标**：理解 Niagara 特效的"静态定义"——存在磁盘上的数据结构长什么样。
 
-| # | 文件 | 模块 | 路径 |
-|---|---|---|---|
-| 1.1 | `NiagaraSystem.h` | Niagara | `Classes/` |
-| 1.2 | `NiagaraEmitter.h` | Niagara | `Classes/` |
-| 1.3 | `NiagaraEmitterHandle.h` | Niagara | `Classes/` |
-| 1.4 | `NiagaraScript.h` | Niagara | `Classes/` |
-| 1.5 | `NiagaraScriptSourceBase.h` | Niagara | `Classes/` |
+| # | 文件 | 模块 | 路径 | 源摘要 → 主实体 |
+|---|---|---|---|---|
+| 1.1 | `NiagaraSystem.h` | Niagara | `Classes/` | [[Wiki/Sources/Stock/NiagaraSystem]] → [[Wiki/Entities/Stock/UNiagaraSystem]] |
+| 1.2 | `NiagaraEmitter.h` | Niagara | `Classes/` | [[Wiki/Sources/Stock/NiagaraEmitter]] → [[Wiki/Entities/Stock/UNiagaraEmitter]] |
+| 1.3 | `NiagaraEmitterHandle.h` | Niagara | `Classes/` | [[Wiki/Sources/Stock/NiagaraEmitterHandle]] → [[Wiki/Entities/Stock/FNiagaraEmitterHandle]] |
+| 1.4 | `NiagaraScript.h` | Niagara | `Classes/` | [[Wiki/Sources/Stock/NiagaraScript]] → [[Wiki/Entities/Stock/UNiagaraScript]] |
+| 1.5 | `NiagaraScriptSourceBase.h` | Niagara | `Classes/` | [[Wiki/Sources/Stock/NiagaraScriptSourceBase]] → [[Wiki/Entities/Stock/UNiagaraScriptSourceBase]] |
 
 **学习要点：**
 - `UNiagaraSystem` 持有一个 `TArray<FNiagaraEmitterHandle>`，即"一个特效由多个 Emitter 组成"
@@ -354,6 +354,7 @@ Niagara 插件位于 `Engine/Plugins/FX/Niagara/`，共 7 个模块：
 ### 已完成文档
 
 **Phase 0 ✅ 完成**（2026-04-18）
+**Phase 1 ✅ 完成**（2026-04-19）
 
 ### Phase 0（概念页）
 - [x] [[Wiki/Concepts/UE4/UE4-uobject-系统]]
@@ -362,11 +363,11 @@ Niagara 插件位于 `Engine/Plugins/FX/Niagara/`，共 7 个模块：
 - [x] [[Wiki/Concepts/Niagara/Niagara-cpu-vs-gpu模拟]]
 
 ### Phase 1（Asset 层）
-- [ ] [[Wiki/Sources/Stock/NiagaraSystem]]
-- [ ] [[Wiki/Sources/Stock/NiagaraEmitter]]
-- [ ] [[Wiki/Sources/Stock/NiagaraEmitterHandle]]
-- [ ] [[Wiki/Sources/Stock/NiagaraScript]]
-- [ ] [[Wiki/Sources/Stock/NiagaraScriptSourceBase]]
+- [x] [[Wiki/Sources/Stock/NiagaraSystem]] → [[Wiki/Entities/Stock/UNiagaraSystem]]
+- [x] [[Wiki/Sources/Stock/NiagaraEmitter]] → [[Wiki/Entities/Stock/UNiagaraEmitter]]
+- [x] [[Wiki/Sources/Stock/NiagaraEmitterHandle]] → [[Wiki/Entities/Stock/FNiagaraEmitterHandle]]
+- [x] [[Wiki/Sources/Stock/NiagaraScript]] → [[Wiki/Entities/Stock/UNiagaraScript]]
+- [x] [[Wiki/Sources/Stock/NiagaraScriptSourceBase]] → [[Wiki/Entities/Stock/UNiagaraScriptSourceBase]]
 
 ### Phase 2（Component 层）
 - [ ] [[Wiki/Sources/Stock/NiagaraComponent]]

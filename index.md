@@ -3,7 +3,7 @@
 > 本文件是整个 wiki 的内容目录。LLM 每次 ingest 都会更新。
 > 查询时先读这里,再深入相关页面。
 
-最后更新:2026-04-19（+ AI 应用生态扫盲，新主题 AIApps）
+最后更新:2026-04-19（+ Niagara Phase 1 — 5 个 Asset 层源 + 5 个 Entity）
 
 ---
 
@@ -25,6 +25,13 @@
 
 ### AI 应用生态（产品 / 项目）
 - [[Wiki/Entities/AIApps/OpenClaw|OpenClaw（小龙虾）]] — 开源的本地部署个人 AI Agent 系统，记忆+主动+行动三件套 (来源:1)
+
+### Niagara 代码实体（stock / UE 4.26）
+- [[Wiki/Entities/Stock/UNiagaraSystem|UNiagaraSystem]] — Niagara 特效顶层资产;EmitterHandles + System 脚本 + 编译产物 (来源:1)
+- [[Wiki/Entities/Stock/UNiagaraEmitter|UNiagaraEmitter]] — Emitter 资产;脚本/渲染器/模拟参数/继承-merge 机制 (来源:1)
+- [[Wiki/Entities/Stock/FNiagaraEmitterHandle|FNiagaraEmitterHandle]] — System 引用 Emitter 的 USTRUCT 包装器;Id + Name + enabled + Instance (来源:1)
+- [[Wiki/Entities/Stock/UNiagaraScript|UNiagaraScript]] — 编译后脚本资产;承载 VectorVM 字节码 + GPU shader 双形态 (来源:1)
+- [[Wiki/Entities/Stock/UNiagaraScriptSourceBase|UNiagaraScriptSourceBase]] — 图源抽象基类(editor-only 实现在 NiagaraEditor 模块) (来源:1)
 
 ## Concepts(概念)
 *想法、理论、方法、术语。*
@@ -66,6 +73,13 @@
 - [[Wiki/Sources/AIApps/AI-primer-v2]] — AI 应用技术发展脉络与核心概念扫盲手册 v2 (2026-04,article)
 - [[Wiki/Sources/Methodology/Karpathy-llm-wiki]] — Karpathy 的 LLM Wiki idea file (2026-04,note)
 - [[Wiki/Sources/AIArt/Lora-deep-dive]] — LoRA 深度指南：给鸣潮美术向流水线的落地方案 (2026-04,note)
+
+### 代码源摘要 — stock（UE 4.26 Niagara）
+- [[Wiki/Sources/Stock/NiagaraSystem]] — NiagaraSystem.h @ b6ab0dee9 (Phase 1.1,Asset 层顶点)
+- [[Wiki/Sources/Stock/NiagaraEmitter]] — NiagaraEmitter.h @ b6ab0dee9 (Phase 1.2,Emitter 资产)
+- [[Wiki/Sources/Stock/NiagaraEmitterHandle]] — NiagaraEmitterHandle.h @ b6ab0dee9 (Phase 1.3,System→Emitter 引用包装)
+- [[Wiki/Sources/Stock/NiagaraScript]] — NiagaraScript.h @ b6ab0dee9 (Phase 1.4,编译后脚本 + VMExecutableData)
+- [[Wiki/Sources/Stock/NiagaraScriptSourceBase]] — NiagaraScriptSourceBase.h @ b6ab0dee9 (Phase 1.5,图源抽象基类)
 
 ## Syntheses(综合/专题)
 *跨源分析、对比、好答案的沉淀。*
