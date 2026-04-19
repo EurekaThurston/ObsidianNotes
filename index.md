@@ -3,7 +3,7 @@
 > 本文件是整个 wiki 的内容目录。LLM 每次 ingest 都会更新。
 > 查询时先读这里,再深入相关页面。
 
-最后更新:2026-04-19（+ Niagara Phase 1 导读 + Entity 页瘦身 + CLAUDE.md §3.4 导读规则）
+最后更新:2026-04-19（+ Niagara Phase 0 导读补齐)
 
 ---
 
@@ -86,13 +86,13 @@
 
 ### 方法论
 - [[Wiki/Syntheses/Methodology/How-to-prompt-ai-chat|如何向 AI 提问（详细版）]] — Chat 场景 prompt 指南，含心智模型、5 要素、8 技巧、反模式、团队推广经验
-- [[Wiki/Syntheses/Methodology/How-to-prompt-ai-chat-cheatsheet|如何向 AI 提问（一页纸）]] — 精简版检查清单，适合发群里
 
 ### AI 应用生态
 - [[Wiki/Syntheses/AIApps/Prompt-context-harness-evolution|Prompt → Context → Harness 三段论]] — AI 工程方法论 2022-2026 演进主线叙事
 
 ### Niagara 源码学习
 - [[Wiki/Syntheses/Niagara/Niagara-learning-path|Niagara 源码学习路径]] — UE 4.26 Niagara 插件 10 阶段学习路线图，含 ~69 个文件待 ingest (stock)
+- [[Wiki/Syntheses/Niagara/Phase0-心智模型-导读|Phase 0 导读 — 上阵前的四层脑内地图]] — 把 UObject / Asset-Instance / Niagara-vs-Cascade / CPU-vs-GPU 四概念编成自下而上一条叙事链 (2026-04-19)
 - [[Wiki/Syntheses/Niagara/Phase1-asset-layer-导读|Phase 1 导读 — Niagara 的资产层]] — 把 5 个 header 讲成一个连贯故事,从 System 到图源抽象基类的线性读物 (2026-04-19)
 
 ---

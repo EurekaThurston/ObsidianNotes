@@ -5,6 +5,13 @@
 
 ---
 
+## [2026-04-19] synthesis | Niagara Phase 0 导读(补齐)
+- 新建:[[Wiki/Syntheses/Niagara/Phase0-心智模型-导读]] — Phase 0 的线性读物,把四个概念页(UObject / Asset-Instance / Niagara-vs-Cascade / CPU-vs-GPU)编成自下而上一条叙事链
+- 叙事结构:四层脑内地图(Layer 1 UObject → Layer 2 Asset/Instance → Layer 3 Niagara 哲学 → Layer 4 CPU/GPU 分叉),每层末尾小结 + 最后一节"四层地图回看"贯通
+- 埋雷:第 2.8 节专门提前钉死"`FNiagaraEmitterHandle::Instance` 不是运行时 Instance"这个 Phase 1 必踩的命名陷阱,让读者到 Phase 1 时有预期
+- 更新:[[Wiki/Syntheses/Niagara/Niagara-learning-path]](Phase 0 节顶加导读链接)、[[index]]、[[Wiki/Overview]]
+- 动机:补齐方法论升级后 Phase 0 的导读缺位;今后任何 Phase 完成都要有配套线性读物
+
 ## [2026-04-19] synthesis | Niagara Phase 1 导读 + 方法论升级
 - 触发:用户指出原子化 Source/Entity 页不符合人类线性阅读习惯(频繁跳转、碎片化)
 - 核心产出:[[Wiki/Syntheses/Niagara/Phase1-asset-layer-导读]] — Phase 1 的**教科书章节**,500+ 行线性叙事,从 Content Browser 切入讲到图源抽象基类,关键代码片段 inline,不强制跳转
