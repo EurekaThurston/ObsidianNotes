@@ -160,14 +160,14 @@ Wiki/
 
 Entity 页后续被多个 Source 引用时,可扩展为"跨 source 汇总入口",但仍保持精炼,细节下沉。
 
-#### 历史债(待回补)
+#### 历史债(已于 2026-04-20 全部回补)
 
-以下主题 ingest 时尚未建立读本规范,当时未产出:
-- **AI 美术(LoRA 深度指南)**:5 Concepts + 5 Entities + 1 Source + Raw 源,产出量足,应有读本
-- **AI 应用生态(AI Primer v2)**:8 Concepts + 1 Entity + 1 Synthesis + 1 Source,产出量足,应有读本
-- **方法论(Karpathy LLM Wiki)**:产出 3 Concepts + 1 Entity + 1 Source,边界可选
+早期 ingest 时尚未建立读本规范,历史债于 2026-04-20 清算完毕:
+- ✅ **方法论(Karpathy LLM Wiki)** → [[Wiki/Syntheses/Methodology/Llm-wiki-方法论-读本]]
+- ✅ **AI 美术(LoRA 深度指南)** → [[Wiki/Syntheses/AIArt/Lora-深度指南-读本]]
+- ✅ **AI 应用生态(AI Primer v2)** → [[Wiki/Syntheses/AIApps/AI-primer-v2-读本]]
 
-用户提出时按此清单回补。
+今后任何新主题 ingest **同步产出读本**,不再累积历史债。
 
 ---
 

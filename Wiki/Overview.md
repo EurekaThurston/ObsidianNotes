@@ -20,6 +20,8 @@ sources: 8
 
 自举阶段的产出：基于 [[Raw/Notes/Karpathy Wiki 方法论]] 建的三层架构（Raw / Wiki / Schema）；详见 [[Wiki/Concepts/Methodology/Llm-wiki-方法论|LLM Wiki 方法论]]。
 
+📖 **主题读本（推荐初读）**：[[Wiki/Syntheses/Methodology/Llm-wiki-方法论-读本]] — 把本仓库的起点、历史源流、RAG 对比、Karpathy 三里程碑、本仓库如何具体化编成一篇线性读物。
+
 **核心主张**：持续整合 > 查询时检索。RAG 每次查询都在从零发现知识，LLM Wiki 则在 ingest 时就完成跨源整合、交叉引用、矛盾标注。
 
 ### 2. Niagara 源码学习（UE 4.26）
@@ -41,6 +43,8 @@ sources: 8
 
 面向鸣潮美术向 TA 的落地方案，从 MidJourney + tag 库逐步迁移到 ComfyUI + 自训 LoRA。
 
+📖 **主题读本（推荐初读）**：[[Wiki/Syntheses/AIArt/Lora-深度指南-读本]] — 从战略（离开 MJ 的三个结构性动因）到技术（LoRA 原理 + 基座选型 + caption 反常识 + 多 LoRA 组合）到工具（kohya_ss + ComfyUI）到工程落地（6 个月路线图 + 合规），一次读完掌握全链路。
+
 - 核心源：[[Wiki/Sources/AIArt/Lora-deep-dive]]（2026-04，Eureka × Claude 撰写）
 - 技术路径：[[Wiki/Concepts/AIArt/Lora|LoRA]] + [[Wiki/Entities/AIArt/Illustrious-XL|Illustrious/NoobAI]] 基座 + [[Wiki/Entities/AIArt/Kohya-ss|kohya_ss]] 训练 + [[Wiki/Entities/AIArt/ComfyUI|ComfyUI]] 部署
 - 关键洞察：[[Wiki/Concepts/AIArt/Caption-strategy|Caption 策略反常识]]
@@ -50,8 +54,10 @@ sources: 8
 
 **面向**：对 AI 完全没概念的非开发角色（美术、设计、策划、管理者）+ 开发者的主线脉络梳理。
 
+📖 **主题读本（推荐初读）**：[[Wiki/Syntheses/AIApps/AI-primer-v2-读本]] — 从 LLM 本质到 2026 技术栈三层全景的完整读物,覆盖三个怪癖/推理模型/Agent/MCP/RAG/三段论/Harness 四柱/Skills/OpenClaw/Vibe-Spec-Harness Coding,一次读完。
+
 - 核心源：[[Wiki/Sources/AIApps/AI-primer-v2]]（2026-04-19，Eureka × Claude 撰写，v2）
-- 主线叙事：[[Wiki/Syntheses/AIApps/Prompt-context-harness-evolution|Prompt → Context → Harness 三段论]]
+- 专题综合：[[Wiki/Syntheses/AIApps/Prompt-context-harness-evolution|Prompt → Context → Harness 三段论]](方法论演进专题)
 - 基础概念：[[Wiki/Concepts/AIApps/Llm|LLM]]、[[Wiki/Concepts/AIApps/Hallucination|幻觉]]、[[Wiki/Concepts/AIApps/Context-window|上下文窗口 & Context Rot]]、[[Wiki/Concepts/AIApps/Reasoning-model|推理模型]]
 - Agent 时代：[[Wiki/Concepts/AIApps/Ai-agent|AI Agent]]、[[Wiki/Concepts/AIApps/Mcp|MCP]]、[[Wiki/Concepts/AIApps/Harness-engineering|Harness Engineering]]、[[Wiki/Concepts/AIApps/Agent-skills|Agent Skills]]
 - 落地产品：[[Wiki/Entities/AIApps/OpenClaw|OpenClaw（小龙虾）]]
