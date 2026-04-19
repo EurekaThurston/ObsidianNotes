@@ -3,7 +3,7 @@ type: overview
 created: 2026-04-17
 updated: 2026-04-19
 tags: [overview]
-sources: 2
+sources: 3
 ---
 
 # Overview
@@ -14,7 +14,7 @@ sources: 2
 
 ---
 
-## 当前主题（3 个）
+## 当前主题（4 个）
 
 ### 1. 知识库方法论（meta / bootstrap）
 
@@ -36,17 +36,29 @@ sources: 2
 
 - 核心源：[[Wiki/Sources/AIArt/Lora-deep-dive]]（2026-04，Eureka × Claude 撰写）
 - 技术路径：[[Wiki/Concepts/AIArt/Lora|LoRA]] + [[Wiki/Entities/AIArt/Illustrious-XL|Illustrious/NoobAI]] 基座 + [[Wiki/Entities/AIArt/Kohya-ss|kohya_ss]] 训练 + [[Wiki/Entities/AIArt/ComfyUI|ComfyUI]] 部署
-- 关键洞察：[[Wiki/Concepts/AIArt/Caption-strategy|Caption 策略反常识]]——想让 LoRA 永远带的不写，按需触发的写清楚
-- 策略：复用飞书 tag 库前端，后端从 MJ 路由逐步切 ComfyUI
+- 关键洞察：[[Wiki/Concepts/AIArt/Caption-strategy|Caption 策略反常识]]
 - **当前阶段：准备期**（评估/选型中，未开始 MVP 训练）
-- 硬件：家里 RTX 5080、公司 RTX 5090（均 > 24GB VRAM，训/推都够）
+
+### 4. AI 应用生态（2026-04 新增）
+
+**面向**：对 AI 完全没概念的非开发角色（美术、设计、策划、管理者）+ 开发者的主线脉络梳理。
+
+- 核心源：[[Wiki/Sources/AIApps/AI-primer-v2]]（2026-04-19，Eureka × Claude 撰写，v2）
+- 主线叙事：[[Wiki/Syntheses/AIApps/Prompt-context-harness-evolution|Prompt → Context → Harness 三段论]]
+- 基础概念：[[Wiki/Concepts/AIApps/Llm|LLM]]、[[Wiki/Concepts/AIApps/Hallucination|幻觉]]、[[Wiki/Concepts/AIApps/Context-window|上下文窗口 & Context Rot]]、[[Wiki/Concepts/AIApps/Reasoning-model|推理模型]]
+- Agent 时代：[[Wiki/Concepts/AIApps/Ai-agent|AI Agent]]、[[Wiki/Concepts/AIApps/Mcp|MCP]]、[[Wiki/Concepts/AIApps/Harness-engineering|Harness Engineering]]、[[Wiki/Concepts/AIApps/Agent-skills|Agent Skills]]
+- 落地产品：[[Wiki/Entities/AIApps/OpenClaw|OpenClaw（小龙虾）]]
+
+**核心洞察**：2026 年 AI 技术栈三层结构（Model / Harness / Skills）中，模型层正在商品化，真正差异化竞争在 Harness 和 Skills 两层。用户第一纪律：AI 给的具体事实必须验证。
 
 ---
 
-## 跨主题联系（目前少）
+## 跨主题联系
 
-- **方法论 → AI 美术**：这份 wiki 自己验证了 "LLM 可以管理跨领域知识库" 的假设——方法论、引擎源码、AI 管线三个毫不相关的主题共存
-- **Niagara ↔ AI 美术**：都涉及"数据驱动的视觉产出"，但前者是 runtime 算法、后者是生产管线，目前无实质交集
+- **方法论 → AI 应用生态**：本 wiki 正是"LLM Wiki 方法论"本身；AI Primer 则是我们用这套方法论 ingest 的第一份广域综合型源材料。
+- **AI 应用 → AI 美术**：AI Primer 为 AI 美术管线提供了术语和心智模型的全局坐标——LoRA/基座模型都是 LLM/Transformer 生态的应用分支。
+- **方法论 → AI 美术**：同一 wiki 自证了"LLM 可以管理跨领域知识库"的假设。
+- **Niagara ↔ AI**：目前无实质交集，未来可能涉及 Niagara GPU 模拟路径对 AI 推理的借鉴。
 
 ---
 
@@ -54,32 +66,33 @@ sources: 2
 
 ```
 methodology (meta, 自举)
-    ├── Karpathy
+    ├── Karpathy ── 也出现在 AI 应用生态（Context Engineering / Vibe Coding）
     ├── LLM Wiki 方法论
-    ├── RAG
+    ├── RAG ── 补充了 Embedding 交叉引用
     └── Memex
 
 Niagara 源码学习 (UE 4.26)
     ├── UE4 基础
-    │   ├── UObject 系统
-    │   └── 资产与实例
     ├── Niagara 基础
-    │   ├── vs Cascade
-    │   └── CPU vs GPU 模拟
     └── Niagara 学习路径 (10 阶段, Phase 0 ✅)
 
 AI 美术 (LoRA/ComfyUI)
-    ├── 概念
-    │   ├── LoRA
-    │   ├── 基座模型选型
-    │   ├── Caption 策略
-    │   ├── Trigger Word
-    │   └── Multi-LoRA 组合
-    └── 实体
-        ├── Illustrious XL / NoobAI XL
-        ├── Flux.1
-        ├── Kohya-ss
-        └── ComfyUI
+    ├── 概念：LoRA / 基座选型 / Caption / Trigger Word / Multi-LoRA
+    └── 实体：Illustrious / NoobAI / Flux / Kohya-ss / ComfyUI
+
+AI 应用生态 (2026-04 新增)
+    ├── 基础
+    │   ├── LLM
+    │   ├── 幻觉
+    │   ├── 上下文窗口 & Context Rot
+    │   └── 推理模型
+    ├── Agent 时代
+    │   ├── AI Agent
+    │   ├── MCP
+    │   ├── Harness Engineering
+    │   └── Agent Skills
+    ├── 综合：Prompt → Context → Harness 三段论
+    └── 实体：OpenClaw
 ```
 
 ---
@@ -88,9 +101,9 @@ AI 美术 (LoRA/ComfyUI)
 
 ### 关于 Wiki 本身
 
-- **规模边界**：当前约 25+ 页，index.md 还够用；超过 200 页时怎么办？
-- **Concept 页跨仓共享**：`stock` 仓 ingest 时，[[Wiki/Concepts/UE4/UE4-uobject-系统]] 等页能复用多少？
-- **跨主题链接**：3 个主题几乎完全独立，是特性还是可以挖出深层联系？
+- **规模边界**：当前约 37 页（AIApps 一次性新增 11 页），index.md 还够用；200 页时怎么办？
+- **Concept 页跨仓共享**：`stock` 仓 ingest 时 UE4 概念页能复用多少？
+- **跨主题链接**：AIApps 与 Methodology 已经开始交叉（Karpathy、RAG），而 AIArt / Niagara 仍相对独立——是特性还是可以挖深？
 
 ### 关于 Niagara 路径
 
@@ -103,6 +116,13 @@ AI 美术 (LoRA/ComfyUI)
 - **许可变动追溯**：Illustrious 条款历史变动是否影响已训 LoRA？
 - ~~**鸣潮团队落地阶段**~~：已确认 = **准备期**（2026-04-19）
 
+### 关于 AI 应用生态
+
+- **MCP 治理细节**：是否已捐赠基金会/哪个基金会——v2 采取了模糊措辞，待官方公告核实。
+- **`agentskills.io` 域名真伪**：v1 提到，v2 已改为"Anthropic 工程博客/GitHub 规范仓库"——如需精确引用需核实。
+- **OpenClaw 技术细节**：扫盲源未给 GitHub 仓库、许可证、硬件需求等细节，后续如用户关心可单独 ingest。
+- **待建页**：Transformer、Embedding、Function Calling、Subagent、HITL、Vibe/Spec Coding、Mitchell Hashimoto、Martin Fowler 等 v2 中提及但未建页，按实际引用需要再建。
+
 ---
 
 ## 入口
@@ -112,6 +132,7 @@ AI 美术 (LoRA/ComfyUI)
 - 时间线日志：[[log]]
 - **方法论原文**：[[Raw/Notes/Karpathy Wiki 方法论]]
 - **AI 美术路线源**：[[Raw/Notes/Lora_Deep_Dive]]
+- **AI 扫盲手册 v2**：[[Raw/Articles/AI 应用技术发展脉络与核心概念扫盲手册 v2]]
 
 ---
 
@@ -119,4 +140,5 @@ AI 美术 (LoRA/ComfyUI)
 
 - **Niagara Phase 1**：开始读 `NiagaraSystem.h` / `NiagaraEmitter.h` / `NiagaraScript.h`
 - **AI 美术**：验证本机 kohya_ss 环境，跑第一个 MVP LoRA
-- **lint**：运行 "帮我 lint 一下 wiki"，检查 3 个主题的内部一致性
+- **AI 应用**：按需补建 Transformer / Embedding / Vibe Coding 等提及但未建页面
+- **lint**：运行 "帮我 lint 一下 wiki"，检查 4 个主题的内部一致性、特别是新建 AIApps 主题的交叉引用闭环
