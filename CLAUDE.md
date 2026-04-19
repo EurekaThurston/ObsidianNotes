@@ -199,6 +199,10 @@ op 取值:`ingest / query / lint / synthesis / refactor / bootstrap`。
 3. **矛盾不偷偷覆盖**——并列记录,在"矛盾"区注明来源冲突,交给人类裁决
 4. **不批量 ingest 而不更新 index 和 log**。bookkeeping 是这套方法的灵魂
 5. **不把 `CLAUDE.md` 当作不可变**——工作流演进时回来更新本文件
+6. **新流程/规则落地前先做分层判断**:问一句"这是**每轮对话都要遵守**的,还是**只在做 X 时才需要**的?"
+   - 每轮都要守(心智模型、硬约束、路由规则)→ 进 CLAUDE.md 某一节,尽量简短
+   - 只在做 X 时要(页面模板、详细执行手册、一次性决策)→ 外移到独立文件(`Wiki/_templates/`、议题的 wiki 页、或专门 playbook)
+   - **CLAUDE.md 只放 always-apply 的核心,防 context rot**。本条本身也按此规则落地——它是元规则,故进 §7
 
 ---
 

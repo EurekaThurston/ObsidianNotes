@@ -5,6 +5,23 @@
 
 ---
 
+## [2026-04-20] refactor | 新增元规则:新流程/规则的归处分层判断
+- 触发:用户指令"以后有涉及到新的流程的时候你都考虑一下是需要写到 CLAUDE.md 里还是单独开一个文档,包括这条也是"
+- 元规则本身的归处分析(自洽应用):
+  - 性质:每次考虑扩 schema 时的元判断
+  - 频率:always-apply
+  - 结论:进 CLAUDE.md §7,作为原则 6,和既有"不把 CLAUDE.md 当作不可变"(原则 5)配对
+- CLAUDE.md §7 新增原则 6(全文):
+  > 新流程/规则落地前先做分层判断:问一句"这是每轮对话都要遵守的,还是只在做 X 时才需要的?"
+  > - 每轮都要守 → 进 CLAUDE.md 某一节,尽量简短
+  > - 只在做 X 时要 → 外移到独立文件(Wiki/_templates/、议题的 wiki 页、或专门 playbook)
+  > - CLAUDE.md 只放 always-apply 的核心,防 context rot
+- 更新 [[README]]:
+  - 三层架构图的 Schema 层注明"CLAUDE.md + Wiki/_templates/",Wiki/ 树加 `_templates/` 一栏
+  - 新增一段 "Schema 分层设计" 解释"always-apply vs conditional"原则,指向 CLAUDE.md §7 原则 6
+- 这条 refactor 是本轮 CLAUDE.md 瘦身的自然延续——瘦身是一次性动作,**分层判断原则**把这次的治理经验固化为未来的规则
+- 下一步:任何后续 schema 扩展都应先问这一句;如果判断模糊就先在 log 里记录,待 2-3 次同类情形后回看规律再做选择
+
 ## [2026-04-20] refactor | CLAUDE.md 分层瘦身 — 模板外移,防 context rot
 - 触发:用户关心的不是 token 成本,而是 CLAUDE.md 膨胀导致 context rot(长对话中 schema 内容占用注意力,挤占硬约束的遵守可靠性)
 - 核心洞察:CLAUDE.md 里**每轮对话都要遵守的核心规则** vs **条件性使用的详细模板** 应当分层——前者 always-loaded,后者 on-demand Read
