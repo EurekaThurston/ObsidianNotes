@@ -8,5 +8,6 @@
     "Eureka",
     "RiderDarkCodeColor"
   ],
-  "showRibbon": false
+  "showRibbon": false,
+  "baseFontSizeAction": true
 }

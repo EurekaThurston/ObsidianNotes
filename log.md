@@ -5,6 +5,17 @@
 
 ---
 
+## [2026-04-19] ingest | LoRA 深度指南 — AI 美术生成管线首次入驻
+- source: [[Raw/Notes/Lora_Deep_Dive]]（鸣潮美术向 TA 的 LoRA 落地方案）
+- 新建主题目录:`Wiki/{Concepts,Entities,Sources}/AIArt/`
+- 新建:
+  - Source: [[Wiki/Sources/AIArt/Lora-deep-dive]]
+  - Concepts (5): [[Wiki/Concepts/AIArt/Lora]]、[[Wiki/Concepts/AIArt/Base-model-selection]]、[[Wiki/Concepts/AIArt/Caption-strategy]]、[[Wiki/Concepts/AIArt/Trigger-word]]、[[Wiki/Concepts/AIArt/Multi-lora-composition]]
+  - Entities (5): [[Wiki/Entities/AIArt/Illustrious-XL]]、[[Wiki/Entities/AIArt/NoobAI-XL]]、[[Wiki/Entities/AIArt/Flux]]、[[Wiki/Entities/AIArt/Kohya-ss]]、[[Wiki/Entities/AIArt/ComfyUI]]
+- 更新:[[index]](新增 AI 美术 Concepts + Entities + Sources 三个分区)、[[Wiki/Overview]](从 1 主题扩至 3 主题综合,重写知识图)
+- 要点:wiki 首次覆盖 AI 美术生成领域,和既有方法论/Niagara 主题完全独立；核心洞察是 "LoRA 让游戏团队把美术 DNA 固化成可版本化的文件"、Caption 反常识策略、基座选型的许可陷阱（Flux Dev 非商用）
+- 下一步:用户可能要验证本机 kohya_ss 环境,或询问具体章节的实践细节
+
 ## [2026-04-18] refactor | raw/wiki 顶层+笔记首字母大写化、UE 全大写
 - 变更:顶层目录 `raw/` → `Raw/`、`wiki/` → `Wiki/`；所有 raw 子目录 `Articles/Papers/Books/Notes/Assets/`
 - 变更:笔记文件名英文首字母大写：`overview → Overview`、`rag → Rag`、`memex → Memex`、`karpathy → Karpathy`、`llm-wiki-方法论 → Llm-wiki-方法论`、`niagara-* → Niagara-*`、`ue4-* → UE4-*` 等
