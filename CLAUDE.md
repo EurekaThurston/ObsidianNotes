@@ -78,16 +78,12 @@ Wiki/
 
 ### 3.3 Lint(体检)
 
-人类说"帮我 lint 一下 wiki"时,找出:
+人类说"帮我 lint 一下 wiki"时,**先 Read [[Wiki/_templates/Lint-checklist]]**,按其中 0-10 节 checklist 执行。核心输出:
 
-- 相互矛盾的陈述(列出位置)
-- 被新源推翻的旧陈述
-- 孤儿页(无任何页面链入)
-- 多次被提到但无独立页面的概念
-- 缺失的交叉引用
-- 建议补哪些数据/问题/资料
+- 结构化 lint 报告(§9 的 8 类检查 + 建议处置顺序 🔴🟡🟢)
+- log.md 追加 `## [YYYY-MM-DD] lint | ...`
 
-追加 `log.md`。
+**lint 是诊断不是治疗**——修复前要用户批准。
 
 ### 3.4 读本(主题线性读物)
 
@@ -147,14 +143,15 @@ twin: [[Entities/Project/XXX]]     # 跨仓孪生页,可选
 ---
 ```
 
-**页面结构模板**(创建新页时 Read 对应文件):
+**`Wiki/_templates/`**:LLM 在做特定操作时按需 Read 的 schema 参考。**页面模板**(创建新页用)和**操作 checklist**(执行操作用)都放这里:
 
-| 页面类型 | 模板 | 说明 |
+| 用途 | 触发 | 文件 |
 |---|---|---|
-| Entity / Concept | `Wiki/_templates/Entity-Concept.md` | 单 source 派生的 Code Entity 控制 30-50 行 |
-| Source(非代码) | `Wiki/_templates/Source.md` | raw 在 `Raw/` 下 |
-| Code Source | `Wiki/_templates/Code-Source.md` | 源真相在 code root,含代码片段引用 |
-| Reader(主题读本) | `Wiki/_templates/Reader.md` | §3.4 详细要求 |
+| Entity / Concept 页骨架 | 新建 Entity/Concept | `Wiki/_templates/Entity-Concept.md`(单 source 派生的 Code Entity 控制 30-50 行) |
+| Source(非代码)骨架 | 新建 Source,raw 在 `Raw/` 下 | `Wiki/_templates/Source.md` |
+| Code Source 骨架 | 新建 Source,源真相在 code root | `Wiki/_templates/Code-Source.md` |
+| Reader(主题读本)骨架 | 新建读本,详见 §3.4 | `Wiki/_templates/Reader.md` |
+| Lint 作业 checklist | 执行 §3.3 lint | `Wiki/_templates/Lint-checklist.md` |
 
 **Code Entity 紧凑约定**:单 source 派生时 30-50 行。完整字段清单放 Source,叙事放读本,Entity 只作稳定入口。多 source 引用后可扩展为汇总枢纽,仍精炼,细节下沉。
 

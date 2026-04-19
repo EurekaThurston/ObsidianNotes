@@ -5,6 +5,29 @@
 
 ---
 
+## [2026-04-20] refactor | 新增 Lint checklist — 元规则第二次应用
+
+- 触发:首次 lint 实践后,总结经验固化为可复用 checklist;用户提示"补吧,不过你要考虑好该放在哪"——明确点名让我做元规则分层判断
+- 元规则分层判断(应用 [[CLAUDE]] §7 原则 6):
+  - 每轮对话都要守? ❌ 只在 lint 时才用 → 外移,不进 CLAUDE.md
+  - 候选位置:
+    - (A) `Wiki/_templates/Lint-checklist.md` — 复用现有文件夹,但 `_templates/` 语义需稍扩
+    - (B) 新建 `Wiki/_playbooks/Lint.md` — 语义最准,但为 1 个文件开文件夹过早抽象
+    - (C) CLAUDE.md §3.3 inline — 违反分层,污染 always-load context
+  - **选 A**:`_templates/` 本质是"LLM 在做特定操作时按需 Read 的 schema 参考",页面模板是它的第一子类,操作 checklist 是第二子类;开新文件夹是过早抽象,待累积 ≥3 份操作 playbook 再考虑拆分
+- 新建:[[Wiki/_templates/Lint-checklist]] — 10 节完整作业规程,从前置 inventory → 8 类检查(孤儿 / broken / log 对账 / 缺失概念 / frontmatter / 交叉引用 / 矛盾 / 读本签名) → 报告格式 → 收尾 checklist;含 agent delegation 判断、人工验证硬要求、"诊断不是治疗"原则
+- 更新:
+  - [[CLAUDE]] §3.3 — 从"列 6 条检查项"改为"Read [[Wiki/_templates/Lint-checklist]] 按其执行",核心输出仍留主文件,细节外移
+  - [[CLAUDE]] §4 — `_templates/` 表格从"页面结构模板"改为"schema 参考",增加 Lint-checklist 一行,显式承认了扩展语义
+  - [[README]] — 三层架构图 / Wiki 树 / Schema 分层设计段落三处同步措辞("页面模板" → "schema 参考:页面模板 + 操作 checklist")
+- 副产品/洞察:
+  - 元规则本次应用**不只是"去哪"**,还催生了"要不要开新文件夹"的决策——分层判断扩展到结构层面,不只是内容层面
+  - 首次 lint 的实操经验暴露了几条 checklist 里最重要的条款:§3 filesystem vs log 对账(本次发现 cheatsheet 幽灵文件就靠它)、§0 规模门槛决定是否 delegate agent、收尾"人工验证可疑点"(agent 会误报,本次就手动验证了 cheatsheet 丢失和 Claudian broken)
+  - 未来若出现 Ingest playbook / Synthesis playbook,累积到 ≥3 份时触发 `_templates/` 分拆为 `_templates/` + `_playbooks/`
+- 下一步:以当前 schema 再跑一次 lint(试验 checklist 自身),或直接进入 Niagara Phase 2 ingest
+
+---
+
 ## [2026-04-20] synthesis | lint 🟡🟢 项清理 — 3 个新概念页 + 小问题修补
 
 - 触发:🔴 项完成后用户"黄的也修一下",一口气把 🟡 和 🟢 全部扫清
