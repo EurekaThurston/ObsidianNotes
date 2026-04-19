@@ -53,10 +53,10 @@
   margin: 1em 0;
 }
 
-/* quote / cite 的默认色是中性灰,会和代码块背景撞色,改为暖琥珀色 */
+/* quote / cite 的默认色是中性灰,会和代码块背景撞色,改为墨绿色(学术引用的语义) */
 .markdown-preview-view .callout[data-callout="quote"],
 .markdown-preview-view .callout[data-callout="cite"] {
-  --callout-color: 180, 130, 70;
+  --callout-color: 90, 150, 110;
 }
 
 /* example 默认紫色略饱和,降一档以免和 question 混 */
