@@ -69,7 +69,7 @@ source_commit: b6ab0dee9
 ## 深入阅读
 
 - 全字段清单 + 编译产物三件套详解:[[Wiki/Sources/Stock/NiagaraScript]]
-- 线性叙事(推荐初读):[[Wiki/Syntheses/Niagara/Phase1-asset-layer-导读]] § 4
+- 主题读本(推荐初读):[[Wiki/Syntheses/Niagara/Phase1-asset-layer-读本]] § 4
 
 ## 开放问题
 

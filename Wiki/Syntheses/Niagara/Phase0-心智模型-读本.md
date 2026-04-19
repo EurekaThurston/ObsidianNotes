@@ -2,18 +2,18 @@
 type: synthesis
 created: 2026-04-19
 updated: 2026-04-19
-tags: [niagara, UE4, learning-path, phase-0, reading-guide, foundation]
+tags: [niagara, UE4, learning-path, phase-0, reader, foundation]
 sources: 4
-aliases: [Phase 0 导读, Niagara 心智模型导读, Niagara 前置概念]
+aliases: [Phase 0 读本, Niagara 心智模型读本, Niagara 前置概念]
 ---
 
-# Phase 0 导读 — 上阵前的四层脑内地图
+# Phase 0 读本 — 上阵前的四层脑内地图
 
-> 本页是 Niagara 学习路径 [[Wiki/Syntheses/Niagara/Niagara-learning-path]] Phase 0 的**线性读物**。从头读到尾即可建立 Phase 1+ 需要的全部前置心智模型。
+> 本页是 Niagara 学习路径 [[Wiki/Syntheses/Niagara/Niagara-learning-path]] Phase 0 的**主题读本**——详细、精确、满满当当,一次读完即掌握 Phase 1+ 所需的全部前置心智模型,不需要跳转。
 >
-> 定位:**教科书章节**(零代码,纯概念),与 [[Wiki/Syntheses/Niagara/Phase1-asset-layer-导读|Phase 1 导读]]对偶——Phase 0 建地图,Phase 1 在地图上走路。
+> 定位与 [[Wiki/Syntheses/Niagara/Phase1-asset-layer-读本|Phase 1 读本]]对偶——Phase 0 建地图,Phase 1 在地图上走路。
 >
-> 细节查询请跳到末尾的 [[#深入阅读]] 索引,走对应的 Concept 页。
+> 如需字段级查询或溯源,见末尾的 [[#深入阅读]] 索引。
 
 ---
 
@@ -659,7 +659,7 @@ Phase 0 建地图,Phase 1 在地图上走路。Phase 1 回答:
 - `UNiagaraScript` 同时持有 CPU 字节码(`CachedScriptVM`)和 GPU shader(`ScriptResource`)(§4)
 - ……
 
-读完 Phase 1 的 [[Wiki/Syntheses/Niagara/Phase1-asset-layer-导读|线性导读]],你就能回答 Phase 0 开头那个问题了:**"UNiagaraSystem 资产和 FNiagaraSystemInstance 实例差别在哪?"**
+读完 Phase 1 的 [[Wiki/Syntheses/Niagara/Phase1-asset-layer-读本|读本]],你就能回答 Phase 0 开头那个问题了:**"UNiagaraSystem 资产和 FNiagaraSystemInstance 实例差别在哪?"**
 
 ---
 
@@ -674,7 +674,7 @@ Phase 0 建地图,Phase 1 在地图上走路。Phase 1 回答:
 
 ### 下一 Phase
 
-- [[Wiki/Syntheses/Niagara/Phase1-asset-layer-导读]] — Phase 1 线性读物
+- [[Wiki/Syntheses/Niagara/Phase1-asset-layer-读本]] — Phase 1 读本
 - 原子 Source/Entity 页入口见 [[Wiki/Syntheses/Niagara/Niagara-learning-path]]
 
 ### 总图
@@ -683,4 +683,4 @@ Phase 0 建地图,Phase 1 在地图上走路。Phase 1 回答:
 
 ---
 
-*本导读由 [[Claudian]] 基于 Phase 0 的 4 个概念页综合生成,2026-04-19。*
+*本读本由 [[Claudian]] 基于 Phase 0 的 4 个概念页综合生成,2026-04-19。*

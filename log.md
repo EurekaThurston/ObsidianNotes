@@ -5,8 +5,26 @@
 
 ---
 
+## [2026-04-19] refactor | 导读 → 主题读本,规则泛化到所有议题
+- 触发:用户指出"导读"命名有歧义(听着像摘要),而实际要的是**详细、精确、满满当当、一次读完即掌握全部知识、不用跳来跳去**的长文
+- 同时指出:这种产物不应只存在于结构化学习路径(如 Niagara 各 Phase),**应覆盖所有议题**——任何有深度的 topic(扫盲源、方法论专题、跨源综合)都该有配套的人类阅读入口
+- 改名:`Phase0-心智模型-导读.md` → `Phase0-心智模型-读本.md`;`Phase1-asset-layer-导读.md` → `Phase1-asset-layer-读本.md`(用 `git mv` 保留历史)
+- CLAUDE.md 升级:
+  - §3.4 重写 "Phase 导读" → "**主题读本(Topic 级线性读物)**",**触发条件从"学习路径阶段收尾"泛化到四种**(结构化路径 Phase / 新主题首次入驻 ≥3 原子页 / 多源交叉综合 / 用户显式要求)
+  - 明确界定:"读本不是摘要",四条硬性特征(详细/精确/满满当当/一次读完)
+  - 新增"原子页 vs 读本"分工对照表,明确两者互补不替代
+  - 新增**历史债清单**:AIArt、AIApps、Methodology 三个主题当时 ingest 时没建读本,用户需要时按清单回补
+  - §4.5 模板从 "Phase 导读" 重命名为 "主题读本",改写为通用骨架(适用所有议题,非仅学习路径)
+  - §4.2 "Code Entity 紧凑约定" 中的 "Phase 导读" 改称 "主题读本"
+- 连带同步改链接:
+  - 5 个 Entity 页(Phase 1):`导读 § N` → `主题读本 § N`
+  - [[Wiki/Syntheses/Niagara/Niagara-learning-path]]:Phase 0/1 顶部"线性读物"提示统一改为"主题读本"
+  - [[index]]、[[Wiki/Overview]]:所有 Phase 0/1 链接同步
+- 历史 log 条目(4-19 Phase 0 导读补齐、Phase 1 导读 + 方法论升级)**保留原文**,如实记录当时称"导读"的事实
+- 下一步:Phase 2 按新规则产出 "Phase 2 读本";用户需要时可回补 AIArt / AIApps 主题读本
+
 ## [2026-04-19] synthesis | Niagara Phase 0 导读(补齐)
-- 新建:[[Wiki/Syntheses/Niagara/Phase0-心智模型-导读]] — Phase 0 的线性读物,把四个概念页(UObject / Asset-Instance / Niagara-vs-Cascade / CPU-vs-GPU)编成自下而上一条叙事链
+- 新建:[[Wiki/Syntheses/Niagara/Phase0-心智模型-读本|Phase0-心智模型-导读]] — Phase 0 的线性读物,把四个概念页(UObject / Asset-Instance / Niagara-vs-Cascade / CPU-vs-GPU)编成自下而上一条叙事链  *(注:4-19 晚些时候重命名为"读本",详见本条上方的 refactor 条目)*
 - 叙事结构:四层脑内地图(Layer 1 UObject → Layer 2 Asset/Instance → Layer 3 Niagara 哲学 → Layer 4 CPU/GPU 分叉),每层末尾小结 + 最后一节"四层地图回看"贯通
 - 埋雷:第 2.8 节专门提前钉死"`FNiagaraEmitterHandle::Instance` 不是运行时 Instance"这个 Phase 1 必踩的命名陷阱,让读者到 Phase 1 时有预期
 - 更新:[[Wiki/Syntheses/Niagara/Niagara-learning-path]](Phase 0 节顶加导读链接)、[[index]]、[[Wiki/Overview]]
@@ -14,7 +32,7 @@
 
 ## [2026-04-19] synthesis | Niagara Phase 1 导读 + 方法论升级
 - 触发:用户指出原子化 Source/Entity 页不符合人类线性阅读习惯(频繁跳转、碎片化)
-- 核心产出:[[Wiki/Syntheses/Niagara/Phase1-asset-layer-导读]] — Phase 1 的**教科书章节**,500+ 行线性叙事,从 Content Browser 切入讲到图源抽象基类,关键代码片段 inline,不强制跳转
+- 核心产出:[[Wiki/Syntheses/Niagara/Phase1-asset-layer-读本|Phase1-asset-layer-导读]] — Phase 1 的**教科书章节**,500+ 行线性叙事,从 Content Browser 切入讲到图源抽象基类,关键代码片段 inline,不强制跳转  *(注:4-19 晚些时候重命名为"读本")*
 - 方法论升级(写入 [[CLAUDE]]):
   - 新增 §3.4 "Phase 导读":结构化学习路径每阶段收尾强制产出线性读物,定位"教科书章节"与原子页 spec 角色互补;准确/不遗漏 > 简短,不为压缩而压缩
   - 新增 §4.5 "Phase 导读页结构"模板

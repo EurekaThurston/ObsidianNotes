@@ -3,7 +3,7 @@
 > 本文件是整个 wiki 的内容目录。LLM 每次 ingest 都会更新。
 > 查询时先读这里,再深入相关页面。
 
-最后更新:2026-04-19（+ Niagara Phase 0 导读补齐)
+最后更新:2026-04-19（+ "主题读本" 规则泛化,原 "Phase 导读" 重命名为 "读本")
 
 ---
 
@@ -92,8 +92,8 @@
 
 ### Niagara 源码学习
 - [[Wiki/Syntheses/Niagara/Niagara-learning-path|Niagara 源码学习路径]] — UE 4.26 Niagara 插件 10 阶段学习路线图，含 ~69 个文件待 ingest (stock)
-- [[Wiki/Syntheses/Niagara/Phase0-心智模型-导读|Phase 0 导读 — 上阵前的四层脑内地图]] — 把 UObject / Asset-Instance / Niagara-vs-Cascade / CPU-vs-GPU 四概念编成自下而上一条叙事链 (2026-04-19)
-- [[Wiki/Syntheses/Niagara/Phase1-asset-layer-导读|Phase 1 导读 — Niagara 的资产层]] — 把 5 个 header 讲成一个连贯故事,从 System 到图源抽象基类的线性读物 (2026-04-19)
+- [[Wiki/Syntheses/Niagara/Phase0-心智模型-读本|Phase 0 读本 — 上阵前的四层脑内地图]] — 把 UObject / Asset-Instance / Niagara-vs-Cascade / CPU-vs-GPU 四概念编成自下而上一条叙事链,一次读完掌握 Phase 1+ 所需全部前置 (2026-04-19)
+- [[Wiki/Syntheses/Niagara/Phase1-asset-layer-读本|Phase 1 读本 — Niagara 的资产层]] — 把 5 个 header 讲成一个连贯故事,从 System 到图源抽象基类,一次读完掌握 Asset 层全部心智模型 (2026-04-19)
 
 ---
 

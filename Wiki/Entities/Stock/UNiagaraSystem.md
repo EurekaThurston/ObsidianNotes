@@ -46,7 +46,7 @@ source_commit: b6ab0dee9
 ## 深入阅读
 
 - 全字段清单 + 代码片段:[[Wiki/Sources/Stock/NiagaraSystem]]
-- 线性叙事(推荐初读):[[Wiki/Syntheses/Niagara/Phase1-asset-layer-导读]] § 1
+- 主题读本(推荐初读):[[Wiki/Syntheses/Niagara/Phase1-asset-layer-读本]] § 1
 
 ## 开放问题
 

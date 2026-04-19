@@ -27,8 +27,8 @@ sources: 8
 面向 C++ 零基础、UE 源码零基础的学员，通过 AI 辅助学习 Niagara 插件 749 个文件中的运行时部分（约 286 个文件）。
 
 - 路线：[[Wiki/Syntheses/Niagara/Niagara-learning-path]] — 10 阶段路径
-- **Phase 0 ✅**：心智模型建立 —— 📖 **线性读物**：[[Wiki/Syntheses/Niagara/Phase0-心智模型-导读]] / 原子概念页:[[Wiki/Concepts/UE4/UE4-uobject-系统]]、[[Wiki/Concepts/UE4/UE4-资产与实例]]、[[Wiki/Concepts/Niagara/Niagara-vs-cascade]]、[[Wiki/Concepts/Niagara/Niagara-cpu-vs-gpu模拟]]
-- **Phase 1 ✅**（2026-04-19）：Asset 层三件套 —— 📖 **线性读物**：[[Wiki/Syntheses/Niagara/Phase1-asset-layer-导读]] / 原子页见 [[Wiki/Entities/Stock/UNiagaraSystem]]、[[Wiki/Entities/Stock/UNiagaraEmitter]]、[[Wiki/Entities/Stock/FNiagaraEmitterHandle]]、[[Wiki/Entities/Stock/UNiagaraScript]]、[[Wiki/Entities/Stock/UNiagaraScriptSourceBase]]
+- **Phase 0 ✅**：心智模型建立 —— 📖 **主题读本**：[[Wiki/Syntheses/Niagara/Phase0-心智模型-读本]] / 原子概念页:[[Wiki/Concepts/UE4/UE4-uobject-系统]]、[[Wiki/Concepts/UE4/UE4-资产与实例]]、[[Wiki/Concepts/Niagara/Niagara-vs-cascade]]、[[Wiki/Concepts/Niagara/Niagara-cpu-vs-gpu模拟]]
+- **Phase 1 ✅**（2026-04-19）：Asset 层三件套 —— 📖 **主题读本**：[[Wiki/Syntheses/Niagara/Phase1-asset-layer-读本]] / 原子页见 [[Wiki/Entities/Stock/UNiagaraSystem]]、[[Wiki/Entities/Stock/UNiagaraEmitter]]、[[Wiki/Entities/Stock/FNiagaraEmitterHandle]]、[[Wiki/Entities/Stock/UNiagaraScript]]、[[Wiki/Entities/Stock/UNiagaraScriptSourceBase]]
 - Phase 2-10 等待逐文件 ingest
 
 **Phase 1 的关键收获**（从 5 个 header 里提炼）：
