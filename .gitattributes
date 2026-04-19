@@ -1,2 +1,13 @@
-# Auto detect text files and perform LF normalization
-* text=auto
+# 统一用 LF 结尾,避免 Windows 下 git 不断刷 CRLF 警告
+* text=auto eol=lf
+*.md text eol=lf
+*.css text eol=lf
+*.json text eol=lf
+
+# 二进制资产保持原样
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.pdf binary

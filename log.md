@@ -5,6 +5,32 @@
 
 ---
 
+## [2026-04-20] refactor | vault 使用 / 视觉 5 项改进(post-lint 打磨)
+
+- 触发:用户问"这个 vault 使用和视觉上还能怎么改",我给了三档建议,用户挑了真值得改的 4 项 + 开放问题汇总机制,一口气都做掉
+- 新建:
+  - `.gitattributes`(覆盖原仅 1 行版本)— 强制 `eol=lf` + 给常见文本/二进制类型显式标注,消除 Windows 下 git 刷屏的 CRLF 警告
+  - [[.obsidian/snippets/readers.css]] — reading mode 专用 CSS:820px 行宽 + 1.75 行距 + H1/H2 底线分隔 + H3 accent 色 + callout 圆角 + 表格斑马条。启用方式:Obsidian 设置 → Appearance → CSS snippets → 打开"readers"
+- 更新:
+  - [[CLAUDE]] §3.1 — ingest 流程补第 9 步"自验(强制)":对本轮 log 里所有"新建 [[...]]"路径跑一次 Glob,差异立即停下告诉用户。解决这次 lint 发现的 cheatsheet 幽灵文件类型问题(即便本次是用户主动删除,自验一样会触发复核)。属 always-apply,进 CLAUDE.md 内嵌而非外移
+  - [[Wiki/_templates/Lint-checklist]] 新增 §11"开放问题汇总"— 周期性扩展动作(不进标准 0-10 强制项),用 grep 抓全仓 `## 开放问题` 节聚合为临时快照页,让用户一次过一遍决定"已解 / 保留 / 升级为下次 ingest 目标"。建议频率:每月 1 次或每 5 次 lint 一次。元规则记录:没做成独立 op,因为与 lint 逻辑连续;满足"能复用就不新开操作"
+  - [[Wiki/_templates/Reader]] 模板 — 引入 Obsidian Callouts 约定作为读本标准写法:9 类 callout(warning/question/abstract/quote/tip/note/example/info/折叠语法)替代裸 emoji,从此生成读本时直接按此约定产出
+  - [[Wiki/Readers/Niagara/Phase1-asset-layer-读本]] — 做 4 处示范性 callout 转换:第 0 节 Phase 要回答的问题 → `[!question]`、§2.5 命名陷阱(原 ⚠️)→ `[!warning]`、§2.6 Handle 本质归纳 → `[!abstract]`、§3 UNiagaraEmitter 源码自述 → `[!quote]`。其余 4 个读本暂不批量改,下次 lint 时评估是否需要统一回溯
+- 元规则应用记录(本轮共 3 次分层判断):
+  - `.gitattributes` / CSS snippet → 文件系统级基建,不进 CLAUDE.md,原地落
+  - ingest 自验 → 每次 ingest 都要做 = always-apply → 进 CLAUDE.md §3.1 作为步骤 9
+  - 开放问题汇总 → 周期性使用 = 条件性 → 进 Lint-checklist.md 作为扩展节而非强制节;且选择"复用 lint" 而非"开新 op"
+- 不做的:
+  - 换 Obsidian 主题 / 装美化插件(边际收益低)
+  - Dataview 自动生成 index(人工+LLM 维护的带描述索引质量优于自动列表)
+  - 装 Templater(CLAUDE.md + _templates/ 已替代此角色)
+  - Readers/ 批量改 callout(先看 Phase1 4 处示范的效果;若用户满意再批量)
+- 下一步:
+  - 用户 commit push 后,在 Obsidian 里打开 Phase1 读本,启用 readers.css snippet,对比视觉改善
+  - 若示范满意,可批量把其余 4 个读本的 ⚠️ 和长引用块按新 callout 约定改写
+
+---
+
 ## [2026-04-20] refactor | 新增 Lint checklist — 元规则第二次应用
 
 - 触发:首次 lint 实践后,总结经验固化为可复用 checklist;用户提示"补吧,不过你要考虑好该放在哪"——明确点名让我做元规则分层判断

@@ -1,0 +1,73 @@
+/*
+ * readers.css — 读本 / Wiki 页的阅读版式优化
+ *
+ * 启用:Obsidian 设置 → Appearance → CSS snippets → 打开 readers
+ * 生效范围:reading mode(预览模式)的所有页;editing mode 不受影响
+ *
+ * 设计目标:
+ * - 限制行宽到约 800px,避免超宽屏幕下眼睛横扫太远
+ * - 提升正文行距到 1.75,长篇读本不压迫
+ * - H2/H3 有底线分隔,主题读本的段落节奏清晰
+ * - 内联 code 略小一档,视觉不跳
+ * - Callout 圆角更大,视觉更柔和
+ */
+
+.markdown-preview-view {
+  max-width: 820px;
+  margin: 0 auto;
+  font-size: 16px;
+  line-height: 1.75;
+}
+
+.markdown-preview-view h1 {
+  font-size: 2em;
+  padding-bottom: 0.3em;
+  border-bottom: 2px solid var(--background-modifier-border);
+}
+
+.markdown-preview-view h2 {
+  margin-top: 2em;
+  padding-bottom: 0.25em;
+  border-bottom: 1px solid var(--background-modifier-border);
+}
+
+.markdown-preview-view h3 {
+  margin-top: 1.5em;
+  color: var(--text-accent);
+}
+
+.markdown-preview-view code {
+  font-size: 0.9em;
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+}
+
+.markdown-preview-view pre code {
+  font-size: 0.88em;
+  line-height: 1.55;
+}
+
+/* Callout 圆角稍大,阴影轻,视觉更成熟 */
+.markdown-preview-view .callout {
+  border-radius: 8px;
+  margin: 1em 0;
+}
+
+/* 表格:表头略粗,斑马条 */
+.markdown-preview-view table {
+  font-size: 0.95em;
+}
+.markdown-preview-view thead {
+  font-weight: 600;
+}
+.markdown-preview-view tbody tr:nth-child(even) {
+  background: var(--background-secondary);
+}
+
+/* 段落内引用块(未被 Callout 替换的 > ...)保持克制样式 */
+.markdown-preview-view blockquote {
+  border-left: 3px solid var(--text-accent);
+  color: var(--text-muted);
+  padding-left: 1em;
+  margin-left: 0;
+}

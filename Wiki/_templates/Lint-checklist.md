@@ -198,6 +198,27 @@ Grep  -n "^(type|created|updated|tags|sources|aliases|repo|source_root|source_pa
 
 ---
 
+## 11. 周期性扩展:开放问题汇总(建议每月或每 5 次 lint 做一次)
+
+每个原子页底部的 `## 开放问题 / 待深入` 节平时是沉默的——只有打开具体页才看到,久而久之都忘了。lint 是天然的复盘时点,顺手扫一遍全仓的 open questions,让它们浮出水面。
+
+**执行**:
+```
+Grep "## 开放问题|## 开放问题 / 待深入|## 开放问题 / 矛盾|## 开放问题 / 待补" -A 20 Wiki/
+```
+
+**产出**:一份临时 `Wiki/Syntheses/Open-questions-YYYY-MM.md` 快照(或写进 lint 报告的附录),按议题分组列出,让用户一次过一遍:
+
+- 哪些已自然解决(ingest 新 source 时已答)→ 从原子页删掉
+- 哪些仍有价值但优先级低 → 保留原位
+- 哪些值得升级为下一次 ingest / synthesis 的目标 → 标注 `→ 纳入 YYYY-Q? 计划`
+
+**判断频率**:不强制每次 lint 都做(节奏太快反而让 open questions 没时间沉淀价值);但**每月一次**或 **每 5 次 lint 做一次**是合理节奏。这条**不进标准 0-10 checklist 强制项**——它是"lint 的扩展动作",触发与否由用户或 LLM 按 vault 成熟度判断。
+
+**为什么不做成独立 op**:独立的"open-questions harvest"操作和 lint 逻辑上连续(都是周期性扫全仓、汇总、让用户裁决),合并到 lint 语义一致;没必要再开一个操作动词。满足元规则(§7 原则 6):能复用现有操作就不开新的。
+
+---
+
 ## 与其他 op 的关系
 
 - **ingest** 不 lint:ingest 自带 bookkeeping(§3.1 第 5-8 步),不需要全量扫描
