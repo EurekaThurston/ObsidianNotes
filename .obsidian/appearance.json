@@ -1,12 +1,13 @@
 {
   "cssTheme": "",
-  "baseFontSize": 16,
+  "baseFontSize": 17,
   "theme": "obsidian",
   "accentColor": "#ffa200",
   "enabledCssSnippets": [
     "supercharged-links-gen",
     "Eureka",
-    "RiderDarkCodeColor"
+    "RiderDarkCodeColor",
+    "readers"
   ],
   "showRibbon": false,
   "baseFontSizeAction": true
