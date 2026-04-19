@@ -14,102 +14,65 @@ source_commit: b6ab0dee9
 
 # UNiagaraEmitter
 
-> 一个 Emitter 的**静态描述**:跑哪些脚本、如何渲染、CPU/GPU、是否 local space、是否确定性,以及 Niagara 独有的 **Emitter 继承/merge** 机制。
+> 一个 Emitter 的**静态描述**:跑哪些脚本、如何渲染、CPU/GPU、模拟参数,以及 Niagara 独有的 **Emitter 继承/merge** 机制。
 
-## 概览
+## 一句话角色
 
-`UNiagaraEmitter : public UObject`,`UCLASS(MinimalAPI)`。它是 Niagara 里"粒子行为的描述单元",被 `UNiagaraSystem` 通过 `FNiagaraEmitterHandle` 引用。一个 Emitter 持有:
+`UNiagaraEmitter : public UObject`,`UCLASS(MinimalAPI)`。Niagara 里"粒子行为的描述单元",被 `UNiagaraSystem` 通过 `FNiagaraEmitterHandle` 引用。头文件自述:"**存储 `FNiagaraEmitterInstance` 需要序列化的那部分属性,用于 Instance 初始化**"——纯粹的 Asset-describes-Instance 模型。
 
-- 若干 `UNiagaraScript*`(ParticleSpawn / ParticleUpdate / GPUCompute / N × EventHandler)
-- 若干 `UNiagaraRendererProperties*`(渲染器配置,Phase 6)
-- 若干 `UNiagaraSimulationStageBase*`(Simulation Stages,Phase 10)
-- 一份 `UNiagaraScriptSourceBase* GraphSource`(editor-only,此 Emitter 内所有脚本的共享图源)
-- 模拟参数、scalability 规则、平台过滤、继承关系等
+声明 `friend struct FNiagaraEmitterHandle`,允许 handle 访问内部(merge/rename 等场景)。
 
-> Emitter 与 Instance 的关系:"Emitter stores the attributes of an FNiagaraEmitterInstance that need to be serialized and are used for its initialization."(头文件自述)——明确的 Asset-describes-Instance 模型。
+## 核心字段速查
 
-## 关键事实 / 属性
-
-### 模拟模式与空间(`UPROPERTY`)
+**模拟模式与空间**
 
 | 字段 | 类型 | 说明 |
 |---|---|---|
-| `SimTarget` | `ENiagaraSimTarget` | **CPUSim / GPUComputeSim**,决定走 VectorVM 还是 Compute Shader |
+| `SimTarget` | `ENiagaraSimTarget` | **CPUSim / GPUComputeSim** — 决定走 VectorVM 还是 Compute Shader |
 | `bLocalSpace` | `bool` | 粒子坐标相对 Emitter 还是世界 |
-| `bDeterminism` + `RandomSeed` | 确定性随机(相同 dt 相同输出) |
-| `bInterpolatedSpawning` | 插值 spawn,高 spawn rate / 快速移动下防止节奏感被帧率破坏 |
-| `bRequiresPersistentIDs` | 给粒子分配跨帧唯一 ID |
-| `bLimitDeltaTime` + `MaxDeltaTimePerTick` | 限制单 tick dt |
+| `bDeterminism` + `RandomSeed` | 确定性随机 |
+| `bInterpolatedSpawning` | 插值 spawn(防帧率抖动) |
+| `bRequiresPersistentIDs` | 粒子持久 ID |
+| `bLimitDeltaTime` + `MaxDeltaTimePerTick` | dt 钳制 |
 
-### 内存 / 分配
-
-- `AllocationMode` (`EParticleAllocationMode`) + `PreAllocationCount` — 预分配策略
-- `MemoryRuntimeEstimation` RuntimeEstimation — 运行时反馈的峰值用于下次估算
-- `MaxInstanceCount`(后计算)— Emitter 允许的最大并发实例粒子数
-
-### 脚本集合
+**脚本集合**
 
 | 字段 | 类型 | 角色 |
 |---|---|---|
-| `SpawnScriptProps` | `FNiagaraEmitterScriptProperties` | ParticleSpawnScript |
-| `UpdateScriptProps` | `FNiagaraEmitterScriptProperties` | ParticleUpdateScript |
-| `GPUComputeScript` | `UNiagaraScript*` | GPU 模式下统一的 compute shader 脚本 |
+| `SpawnScriptProps / UpdateScriptProps` | `FNiagaraEmitterScriptProperties` | ParticleSpawn / ParticleUpdate |
+| `GPUComputeScript` | `UNiagaraScript*` | GPU 合并脚本 |
 | `EventHandlerScriptProps` | `TArray<FNiagaraEventScriptProperties>` | N 个事件处理器 |
-| `EmitterSpawnScriptProps / EmitterUpdateScriptProps` (editor-only) | Emitter 级,**不单独编译**,被合并进 System 脚本 |
+| `EmitterSpawnScriptProps / EmitterUpdateScriptProps`(editor-only)| Emitter 级,**不单独编译**,合并进 System 脚本 |
 
-### 渲染与阶段
+**其他**
 
-- `RendererProperties`(`TArray<UNiagaraRendererProperties*>`)— Sprite/Mesh/Ribbon/Light 等(Phase 6)
-- `SimulationStages`(`TArray<UNiagaraSimulationStageBase*>`)— GPU 多 pass 计算(Phase 10)
+- 渲染:`RendererProperties`(Phase 6)
+- SimStage:`SimulationStages`(Phase 10)
+- Scalability:`Platforms` + `ScalabilityOverrides`
+- 继承(editor-only):`Parent` + `ParentAtLastMerge` + `MergeChangesFromParent()`
+- 图源(editor-only):`GraphSource : UNiagaraScriptSourceBase*`
+- 分配:`AllocationMode / PreAllocationCount / MemoryRuntimeEstimation`
 
-### Scalability
-
-- `Platforms`(`FNiagaraPlatformSet`)— 允许的平台/quality 组合
-- `ScalabilityOverrides`(`FNiagaraEmitterScalabilityOverrides`)— 覆盖 EffectType 规则
-- `CurrentScalabilitySettings`(运行时 resolve 后的结果)
-
-### Emitter 继承(editor-only)
-
-这是 Niagara 相对 Cascade 的重要架构升级:
-
-- `Parent`(`UNiagaraEmitter*`)— 此 Emitter 是从哪个模板 duplicate 出来的
-- `ParentAtLastMerge` — 上次 merge 时父的快照(三方 merge 用)
-- `MergeChangesFromParent()` — 把父 Emitter 的增量改动合并下来
-- `CreateWithParentAndOwner / DuplicateWithoutMerging` — 构造入口
-
-### 编辑器源
-
-- `GraphSource`(`UNiagaraScriptSourceBase*`)— 此 Emitter 内部所有脚本共享的图;保存在 `.uasset` 里但运行时不需要
-
-### 事件系统(依赖结构)
-
-`FNiagaraEmitterScriptProperties` 包含 `EventReceivers` / `EventGenerators` 列表,这意味着**事件配置挂在脚本上**,不是挂在 Emitter 上。同一 Emitter 不同脚本可以有独立的事件收发定义。
-
-### 常用方法
-
-- `GetScripts(OutScripts, bCompilableOnly)` — 取所有脚本(过滤可编译性)
-- `GetScript(Usage, UsageId)` — 按 usage 查
-- `ForEachScript(TAction)` / `ForEachEnabledRenderer(TAction)` — 遍历(模板)
-- `AddRenderer / RemoveRenderer / AddEventHandler / RemoveEventHandlerByUsageId / AddSimulationStage / ...`
-- `IsValid / IsReadyToRun / IsAllowedByScalability`
-- `GetMaxParticleCountEstimate()`
+常用方法:`GetScripts / GetScript(Usage, UsageId)` / `ForEachScript / ForEachEnabledRenderer` / `AddRenderer / RemoveRenderer` / `AddEventHandler` / `IsValid / IsReadyToRun / IsAllowedByScalability` / `GetMaxParticleCountEstimate`。
 
 ## 相关
 
 - [[Wiki/Entities/Stock/UNiagaraSystem]] — 容器
-- [[Wiki/Entities/Stock/FNiagaraEmitterHandle]] — System 持有 Emitter 的方式;是此类的 `friend`
+- [[Wiki/Entities/Stock/FNiagaraEmitterHandle]] — 引用方式(`friend` 关系)
 - [[Wiki/Entities/Stock/UNiagaraScript]] — 脚本字段类型
-- [[Wiki/Entities/Stock/UNiagaraScriptSourceBase]] — GraphSource 的类型
-- [[Wiki/Concepts/Niagara/Niagara-cpu-vs-gpu模拟]] — `SimTarget` 是此分叉的字段
-- [[Wiki/Concepts/Niagara/Niagara-vs-cascade]] — Emitter merge 机制是 Niagara 的关键架构改进
+- [[Wiki/Entities/Stock/UNiagaraScriptSourceBase]] — `GraphSource` 类型
+- [[Wiki/Concepts/Niagara/Niagara-cpu-vs-gpu模拟]] — `SimTarget` 是分叉源头
+- [[Wiki/Concepts/Niagara/Niagara-vs-cascade]] — Merge 是 Niagara 架构升级
 
-## 引用来源
+## 深入阅读
 
-- [[Wiki/Sources/Stock/NiagaraEmitter]](`NiagaraEmitter.h` @ `b6ab0dee9`)
+- 全字段清单 + 代码片段:[[Wiki/Sources/Stock/NiagaraEmitter]]
+- 线性叙事(推荐初读):[[Wiki/Syntheses/Niagara/Phase1-asset-layer-导读]] § 3
 
-## 开放问题 / 矛盾
+## 开放问题
 
-- EmitterSpawn/Update 两个 editor-only 脚本的最终归宿:它们被"合并"进 SystemSpawn/UpdateScript 的具体机制,需要在 Phase 5(脚本执行上下文)或 Phase 4 读编译流水线时确认
-- `bSimulationStagesEnabled` 与 `bDeprecatedShaderStagesEnabled` 并存的历史原因;后者按注释叫 "Experimental",实际上是前者的前身
-- `SharedEventGeneratorIds` 的 "shared" 语义:Spawn/Update 都用同一个 generator,还是别的意思?
-- `AttributesToPreserve` × `UNiagaraSystem::bTrimAttributes`:具体 trim 决策在哪个编译阶段发生?
+- EmitterSpawn/Update 合并进 System 的具体编译机制?→ Phase 4/5
+- `bSimulationStagesEnabled` vs `bDeprecatedShaderStagesEnabled` 为何并存?→ Phase 10
+- `MergeChangesFromParent` 能传播什么?→ 编辑器模块加餐
+- `SharedEventGeneratorIds` 的 "shared" 语义?→ Phase 4
+- `AttributesToPreserve` × System 的 `bTrimAttributes` 协作机制?→ Phase 4/5

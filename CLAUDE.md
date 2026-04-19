@@ -102,6 +102,38 @@ Wiki/
 
 追加 log.md 一条 lint 记录。
 
+### 3.4 Phase 导读(结构化学习路径的阶段收尾)
+
+当一个结构化学习路径(如 [[Wiki/Syntheses/Niagara/Niagara-learning-path]])**完成一个 Phase 全部原子 ingest** 后,**在阶段收尾时主动产出一份"导读"综合页**,归档到 `Wiki/Syntheses/<topic>/`(命名约定:`PhaseN-xxx-导读.md`)。
+
+**为什么需要这层**:原子 Source/Entity 页服务 LLM 检索和字段级查询,但不适合人类从头读一遍——跳转频繁、碎片化。导读页填补这个空白,**定位是"教科书章节",与原子页的 "spec/reference" 角色互补**。
+
+**写作要求**:
+
+- **线性叙事**:从头读到尾即完成该 Phase 的心智建模,不强制跳转
+- **准确、不遗漏 > 简短**:长度根据内容定,不为了短而压缩关键信息
+- **关键代码片段 inline**(不靠跳转),重要 aha 点直接引原文 + 行号
+- **问题驱动**的结构,不是字段罗列("为什么要有 Handle?" 优于 "Handle 的字段有...")
+- **重要陷阱 / 易错点用 ⚠️ 高亮**
+- 末尾必有 **"深入阅读"** 章节,指回该 Phase 的所有原子 Source + Entity + 前置 Concept 页
+- 末尾必有 **下一 Phase 预告** + 本 Phase 遗留的 open question 清单
+- 末尾一行:`*本导读由 [[Claudian]] 基于 Phase N 的 X 个原子 Source 页综合生成,YYYY-MM-DD。*`
+
+**Entity 页的协作规则**:
+
+当某 Phase 的 Entity 页是从**单一 Source** 派生(最常见情形:一个 header 定义一个主类),Entity 页保持**紧凑**(~30-50 行):一句话定义 + 核心字段表 + 常用方法 + 相关链接 + 指回 Source 和导读。详细字段清单和代码片段放 Source 页,叙事和心智模型放导读。
+
+当 Entity 后续被多个 Source 引用(Phase 2+ 可能出现),Entity 页可再扩展为"跨 source 汇总入口"——此时也仍然精炼,细节下沉到各自 Source。
+
+**执行时机**:
+
+1. Phase 最后一个文件 ingest 完成
+2. 产出导读页
+3. 追加 log.md 一条 `## [YYYY-MM-DD] synthesis | Phase N 导读`
+4. 在 index.md 的 Syntheses 分区登记
+5. 在学习路径总图(如 [[Wiki/Syntheses/Niagara/Niagara-learning-path]])对应 Phase 节点顶部加导读链接
+6. 视影响更新 [[Wiki/Overview]]
+
 ---
 
 ## 4. 页面格式约定
@@ -134,24 +166,26 @@ twin: [[Entities/Project/XXX]]   # 另一个仓里的孪生页,可选
 
 > 一句话定义。
 
-## 概览
-段落总述。
+## 一句话角色 / 概览
+段落总述(1-2 段,≤5 句)。
 
-## 关键事实 / 属性
-- …
-- …
+## 核心事实 / 字段速查
+- 表格或列表,尽量紧凑
+- 重要陷阱用 ⚠️ 标
 
 ## 相关
 - [[实体/概念 A]] — 关系
 - [[实体/概念 B]] — 关系
 
-## 引用来源
-- [[Wiki/Sources/Topic/xxx]] (raw: [[Raw/Articles/xxx]])
-- …
+## 深入阅读
+- 源摘要(含全字段 + 代码引用):[[Wiki/Sources/Topic/xxx]]
+- 线性叙事(若有):[[Wiki/Syntheses/Topic/PhaseN-xxx-导读]] § N
 
 ## 开放问题 / 矛盾
 - …
 ```
+
+**Code Entity 页的紧凑约定**:当一个 Entity 由单一 Source 派生(典型:一个 header 定义一个主类),该 Entity 页应控制在 **30-50 行**。完整字段清单放 Source 页,叙事/心智模型放对应 Phase 导读,Entity 页只作为**稳定跨 source 入口**。若后续被多 Source 引用,可扩展为汇总枢纽,但仍保持精炼,细节下沉。
 
 ### 4.3 源摘要页结构
 
@@ -214,6 +248,50 @@ twin: [[Entities/Project/XXX]]   # 另一个仓里的孪生页,可选
 
 ## 与另一仓差异(如已 ingest 孪生)
 - 对比见 [[Syntheses/Topic/foo-stock-vs-project]]
+```
+
+### 4.5 Phase 导读页结构(见 §3.4)
+
+```markdown
+# Phase N 导读 — <主题>
+
+> 本页是 <学习路径> Phase N 的**线性读物**,从头读到尾即可建立 ... 的完整心智模型。
+>
+> 定位:**教科书章节**,不是参考手册。细节查询请跳到末尾的 [[#深入阅读]] 索引。
+
+## 0. Phase N 要回答的问题
+- 问题陈述
+- 与前一 Phase 的衔接
+- 本 Phase 的叙事主线(可给一张 ASCII 链条图)
+
+## 1..N. 按叙事顺序讲每个原子
+每节建议结构:
+- 该节回答的问题 / 该原子的角色
+- 关键代码片段 inline(> 引用块 + 行号)
+- 重要陷阱用 ⚠️
+- 节末小结
+
+## 全景回看
+- 把所有原子拼成一张图
+- 回顾整体数据流 / 控制流
+
+## N 条关键洞察
+- 读者带走的核心结论
+
+## Phase N 留下的问题
+- 等后续 Phase 回答的 open question
+
+## 下一 Phase 预告
+
+## 深入阅读
+- 原子 Source 页(逐文件):[[...]] × N
+- Entity 页(按类):[[...]] × N
+- 前置 Concept 页:[[...]] × N
+- 导航:[[<学习路径总图>]]
+
+---
+
+*本导读由 [[Claudian]] 基于 Phase N 的 X 个原子 Source 页综合生成,YYYY-MM-DD。*
 ```
 
 ---

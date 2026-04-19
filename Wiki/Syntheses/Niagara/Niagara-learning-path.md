@@ -80,6 +80,8 @@ Niagara 插件位于 `Engine/Plugins/FX/Niagara/`，共 7 个模块：
 
 ### Phase 1 — 资产层：三件套 Asset ✅
 > **目标**：理解 Niagara 特效的"静态定义"——存在磁盘上的数据结构长什么样。
+>
+> 📖 **线性读物(推荐初读)**：[[Wiki/Syntheses/Niagara/Phase1-asset-layer-导读]] — 把下面 5 个文件讲成一个连贯故事,从 `UNiagaraSystem` 到图源抽象基类一气读完。
 
 | # | 文件 | 模块 | 路径 | 源摘要 → 主实体 |
 |---|---|---|---|---|

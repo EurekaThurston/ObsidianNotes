@@ -5,6 +5,20 @@
 
 ---
 
+## [2026-04-19] synthesis | Niagara Phase 1 导读 + 方法论升级
+- 触发:用户指出原子化 Source/Entity 页不符合人类线性阅读习惯(频繁跳转、碎片化)
+- 核心产出:[[Wiki/Syntheses/Niagara/Phase1-asset-layer-导读]] — Phase 1 的**教科书章节**,500+ 行线性叙事,从 Content Browser 切入讲到图源抽象基类,关键代码片段 inline,不强制跳转
+- 方法论升级(写入 [[CLAUDE]]):
+  - 新增 §3.4 "Phase 导读":结构化学习路径每阶段收尾强制产出线性读物,定位"教科书章节"与原子页 spec 角色互补;准确/不遗漏 > 简短,不为压缩而压缩
+  - 新增 §4.5 "Phase 导读页结构"模板
+  - 修订 §4.2 "Code Entity 页的紧凑约定":单 source 派生的 entity 页控制在 30-50 行,字段细节下沉到 Source,叙事下沉到导读,Entity 只作稳定跨 source 入口
+- Entity 页瘦身(按新约定):[[Wiki/Entities/Stock/UNiagaraSystem]]、[[Wiki/Entities/Stock/UNiagaraEmitter]]、[[Wiki/Entities/Stock/FNiagaraEmitterHandle]]、[[Wiki/Entities/Stock/UNiagaraScript]]、[[Wiki/Entities/Stock/UNiagaraScriptSourceBase]] 全部重写,每页 35-55 行,保留"一句话角色 + 核心字段速查 + 常用方法 + 深入阅读指回 Source/导读 + 开放问题"
+- 更新:[[Wiki/Syntheses/Niagara/Niagara-learning-path]](Phase 1 节顶部加导读链接)、[[index]](Syntheses/Niagara 分区登记导读)、[[Wiki/Overview]](Niagara Phase 1 行加导读引流)
+- 收获:
+  - 原子页(LLM 检索友好)+ 导读(人类阅读友好)的双层产出,今后作为结构化学习路径的标准动作
+  - Entity 的合理边界:单 source 派生时瘦身;多 source 交叉时再扩为汇总枢纽
+- 下一步:Phase 2(Component 层,3 文件)按新模板走,ingest 完收尾产一份简版导读(预计 250 行左右)
+
 ## [2026-04-19] ingest | Niagara Phase 1 — Asset 层三件套(5 文件)
 - 代码源(stock,`b6ab0dee9`,UE 4.26)5 个文件,全部在 `Engine/Plugins/FX/Niagara/Source/Niagara/Classes/`:
   - `NiagaraSystem.h`、`NiagaraEmitter.h`、`NiagaraEmitterHandle.h`、`NiagaraScript.h`、`NiagaraScriptSourceBase.h`

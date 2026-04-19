@@ -14,100 +14,67 @@ source_commit: b6ab0dee9
 
 # UNiagaraScript
 
-> **编译后的脚本资产**。连接 editor 图源与运行时执行体的核心单元。Niagara 里几乎所有"能跑的东西"都是一个 UNiagaraScript。
+> **编译后的脚本资产**。不是源代码,而是 VectorVM 字节码 / GPU compute shader 的容器,由 `Usage` 决定角色。
 
-## 概览
+## 一句话角色
 
-`UNiagaraScript : public UNiagaraScriptBase`,`UCLASS(MinimalAPI)`。角色由 `ENiagaraScriptUsage` 枚举决定,可以是:
+`UNiagaraScript : public UNiagaraScriptBase`,`UCLASS(MinimalAPI)`。Niagara 里"能跑的东西"几乎都是 `UNiagaraScript`——System 脚本、粒子脚本、GPU 合并脚本、模块素材都共用此类。**同一对象同时承载 CPU 字节码(`CachedScriptVM`)与 GPU shader 资源(`ScriptResource`)**,按 Emitter `SimTarget` 分发。
 
-- **素材级**:Function / Module / DynamicInput(编辑器装配用)
-- **粒子级**:ParticleSpawn / ParticleSpawnInterpolated / ParticleUpdate / ParticleEvent / ParticleSimulationStage / ParticleGPUCompute
-- **Emitter 级**:EmitterSpawn / EmitterUpdate(**不可单独编译**,合并进 System 脚本)
-- **System 级**:SystemSpawn / SystemUpdate
+> ⚠️ **关键陷阱**:`Usage == EmitterSpawnScript / EmitterUpdateScript` 的 `IsCompilable()` 返 false——这两种脚本**不独立编译**,被合并进 SystemSpawn/Update 脚本。
 
-每个 `UNiagaraScript` 同时承载:
-- **editor 图源**(`Source : UNiagaraScriptSourceBase*`,editor-only)
-- **编译产物**(`CachedScriptVM : FNiagaraVMExecutableData` + `CachedScriptVMId : FNiagaraVMExecutableDataId`)
-- **GPU shader 资源**(`ScriptResource : TUniquePtr<FNiagaraShaderScript>`,Phase 8)
+## 核心字段速查
 
-## 关键事实 / 属性
+**角色与标识**
 
-### Usage 系统
-
-- `Usage`(`ENiagaraScriptUsage`)+ `UsageId`(`FGuid`)组成唯一角色 key(比如 "ParticleEvent #3")
-- 提供大量 `IsXxxScript()` 成员/静态方法做分发判断
-- `IsCompilable()` 返 false 仅对 `EmitterSpawn/EmitterUpdate`:他们的逻辑被融进 SystemSpawn/SystemUpdate
-- `IsInterpolatedParticleSpawnScript`:特殊 usage `ParticleSpawnScriptInterpolated`,对应 Emitter 的 `bInterpolatedSpawning`
-
-### 编译产物
-
-| 字段 | 类型 | 说明 |
+| 字段 | 类型 | 作用 |
 |---|---|---|
-| `CachedScriptVM` | `FNiagaraVMExecutableData` | 字节码 + 属性列表 + DI 信息 + 外部函数表 + ... |
-| `CachedScriptVMId` | `FNiagaraVMExecutableDataId` | "身份证"(编译器版本、Usage、IDs、开关、基图哈希) |
-| `ScriptResource` | `TUniquePtr<FNiagaraShaderScript>` | RenderThread 端 shader map 资源 |
+| `Usage` | `ENiagaraScriptUsage` | 角色枚举(Particle/Emitter/System × Spawn/Update,+Module/Function/DynamicInput/GPU/SimStage) |
+| `UsageId` | `FGuid` | 同 Usage 多脚本时区分(如多个 EventHandler) |
+| `ModuleUsageBitmask`(editor) | Module 脚本允许的 Usage 上下文 |
+
+**编译产物**
+
+| 字段 | 类型 | 作用 |
+|---|---|---|
+| `CachedScriptVM` | `FNiagaraVMExecutableData` | CPU 字节码 + 属性 + DI 绑定 + 外部函数表 |
+| `CachedScriptVMId` | `FNiagaraVMExecutableDataId` | 身份证 + DDC key |
+| `ScriptResource` | `TUniquePtr<FNiagaraShaderScript>` | GPU shader 资源(Phase 8) |
 | `ScriptShader` | `FComputeShaderRHIRef` | RHI 句柄 |
-| `ScriptExecutionParamStore` | `FNiagaraScriptExecutionParameterStore` | cooked 平台的执行绑定存储 |
-| `ScriptExecutionBoundParameters` | `TArray<FNiagaraBoundParameter>` | 与上条配对 |
-| (editor)`ScriptExecutionParamStoreCPU / GPU` | Transient,未 cook 时用 |
+| `ScriptExecutionParamStore` + `ScriptExecutionBoundParameters` | cooked 平台执行绑定 |
 
-### 用户可调参数
+**参数**
 
-- `RapidIterationParameters`(`FNiagaraParameterStore`):暴露给 UI 快速调节;通常不会触发重编译,除非 `bBakeOutRapidIteration` 开启
+- `RapidIterationParameters`(`FNiagaraParameterStore`)— UI 可调节,不触发重编译;`bBakeOutRapidIteration` 开启时烘死
 
-### DDC(Derived Data Cache)
+**Source(editor-only)**
 
-- `FNiagaraVMExecutableDataId::operator==` + `GetTypeHash` + `BaseScriptCompileHash` 构成 DDC key
-- `BuildNiagaraDDCKeyString(CompileId)` / `GetNiagaraDDCKeyString()`
-- `BinaryToExecData / ExecToBinaryData`:DDC 二进制 ↔ in-memory 结构
+- `Source : UNiagaraScriptSourceBase*` — 指向图源抽象基类
 
-### 编辑器功能
-
-- 重编译:`ComputeVMCompilationId / AreScriptAndSourceSynchronized / RequestCompile / RequestExternallyManagedAsyncCompile / SetVMCompilationResults`
+常用方法:
+- Usage 查询:`IsParticleSpawnScript / IsSystemUpdateScript / IsGPUScript / IsCompilable / IsInterpolatedParticleSpawnScript ...`(含静态版)
+- 依赖:`IsUsageDependentOn(A, B)` / `IsEquivalentUsage` / `ConvertUsageToGroup`
+- 编译:`ComputeVMCompilationId / RequestCompile / SetVMCompilationResults / AreScriptAndSourceSynchronized`
+- DDC:`BuildNiagaraDDCKeyString / GetNiagaraDDCKeyString / BinaryToExecData / ExecToBinaryData`
+- 运行时:`GetVMExecutableData / GetRenderThreadScript / IsReadyToRun(SimTarget) / CanBeRunOnGpu`
 - 委托:`OnVMScriptCompiled / OnGPUScriptCompiled / OnPropertyChanged`
-- 元数据:`Category / bDeprecated / DeprecationRecommendation / bExperimental / LibraryVisibility / ProvidedDependencies / RequiredDependencies / ModuleUsageBitmask / ScriptMetaData`
-
-### 运行时接口
-
-- `GetVMExecutableData()` — 拿 `CachedScriptVM`(`CachedScriptVM.ByteCode` 就是字节码本体)
-- `IsReadyToRun(SimTarget)`
-- `CanBeRunOnGpu()`
-- `GetExecutionReadyParameterStore(SimTarget)`
-- `GetRenderThreadScript()` — 拿 `FNiagaraShaderScript*`(Phase 8)
-
-### Usage 枚举的结构
-
-`IsUsageDependentOn(A, B)` 声明了执行顺序的依赖链。系统的一般 tick 顺序:
-
-```
-SystemSpawnScript → SystemUpdateScript
-  ↓
-每个 Emitter:
-  EmitterSpawnScript(已合并) → EmitterUpdateScript(已合并)
-  ↓
-  ParticleSpawnScript(或 ParticleSpawnScriptInterpolated) → ParticleUpdateScript
-  ↓(GPU)
-  ParticleGPUComputeScript(compute shader)
-  ↓(事件)
-  ParticleEventScript × N
-  ↓(Phase 10)
-  ParticleSimulationStageScript × N
-```
 
 ## 相关
 
-- [[Wiki/Entities/Stock/UNiagaraScriptSourceBase]] — editor Source 字段类型
-- [[Wiki/Entities/Stock/UNiagaraSystem]] — 持有 SystemSpawn/Update
-- [[Wiki/Entities/Stock/UNiagaraEmitter]] — 持有所有粒子脚本 + GPUComputeScript
-- [[Wiki/Concepts/Niagara/Niagara-cpu-vs-gpu模拟]] — Script 的 CPU(VectorVM byte code)/ GPU(Compute Shader)双形态在此类统一
-- [[Wiki/Concepts/Niagara/Niagara-vs-cascade]] — "脚本=显式编译字节码"的实现点
+- [[Wiki/Entities/Stock/UNiagaraScriptSourceBase]] — `Source` 类型
+- [[Wiki/Entities/Stock/UNiagaraSystem]] — 持有 System 脚本
+- [[Wiki/Entities/Stock/UNiagaraEmitter]] — 持有粒子 / GPU / EventHandler 脚本
+- [[Wiki/Concepts/Niagara/Niagara-cpu-vs-gpu模拟]] — CPU(VectorVM)/GPU(Compute Shader)双形态在此类统一
+- [[Wiki/Concepts/Niagara/Niagara-vs-cascade]] — "显式编译字节码" 是相对 Cascade 的质变
 
-## 引用来源
+## 深入阅读
 
-- [[Wiki/Sources/Stock/NiagaraScript]](`NiagaraScript.h` @ `b6ab0dee9`)
+- 全字段清单 + 编译产物三件套详解:[[Wiki/Sources/Stock/NiagaraScript]]
+- 线性叙事(推荐初读):[[Wiki/Syntheses/Niagara/Phase1-asset-layer-导读]] § 4
 
-## 开放问题 / 矛盾
+## 开放问题
 
-- `DIParamInfo` 在 `FNiagaraVMExecutableData` 里但注释作者吐槽"GPU 信息不该在 VM 数据里"——积压的技术债,Phase 7/8 跟进
-- editor/cooked 下三份 ExecutionParamStore(CPU transient / GPU transient / cooked)的切换逻辑在 `GetExecutionReadyParameterStore` 里,Phase 5 细看
-- `ProcessSerializedShaderMaps` 与 `FNiagaraShaderMap` 的协作关系是 Phase 8 的核心,此处只记清楚入口
+- `CachedScriptVM.OptimizedByteCode` 的"平台优化"具体做了什么?→ Phase 5
+- 三种参数存储(`User.*` / `RapidIteration.*` / `Module.*`)的完整协作?→ Phase 5
+- `FNiagaraVMExecutableData::DIParamInfo` 的技术债(GPU 信息不该在 VM 数据)→ Phase 7/8
+- `SynchronizeExecutablesWithMaster` 的 merge 快路径实现?→ 编辑器加餐
+- `ReleasedByRT` 与 `ScriptResource` 的线程安全配合?→ Phase 8

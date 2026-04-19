@@ -3,7 +3,7 @@
 > 本文件是整个 wiki 的内容目录。LLM 每次 ingest 都会更新。
 > 查询时先读这里,再深入相关页面。
 
-最后更新:2026-04-19（+ Niagara Phase 1 — 5 个 Asset 层源 + 5 个 Entity）
+最后更新:2026-04-19（+ Niagara Phase 1 导读 + Entity 页瘦身 + CLAUDE.md §3.4 导读规则）
 
 ---
 
@@ -93,6 +93,7 @@
 
 ### Niagara 源码学习
 - [[Wiki/Syntheses/Niagara/Niagara-learning-path|Niagara 源码学习路径]] — UE 4.26 Niagara 插件 10 阶段学习路线图，含 ~69 个文件待 ingest (stock)
+- [[Wiki/Syntheses/Niagara/Phase1-asset-layer-导读|Phase 1 导读 — Niagara 的资产层]] — 把 5 个 header 讲成一个连贯故事,从 System 到图源抽象基类的线性读物 (2026-04-19)
 
 ---
 
