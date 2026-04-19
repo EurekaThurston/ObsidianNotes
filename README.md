@@ -17,7 +17,12 @@
 │             人 + LLM 共同维护的作业规程                 │
 ├─────────────────────────────────────────────────────────┤
 │  Wiki/      LLM 完全拥有的 markdown 知识库              │
-│             概念 / 实体 / 源摘要 / 跨源综合             │
+│   ├─ Readers/     ⭐ 主题读本(人类阅读首选入口)          │
+│   │               每个议题一份"一次读完即掌握"的长文      │
+│   ├─ Concepts/    概念页 (原子)                         │
+│   ├─ Entities/    实体页 (原子)                         │
+│   ├─ Sources/     源摘要 (原子)                         │
+│   └─ Syntheses/   非读本类的跨源专题                    │
 ├─────────────────────────────────────────────────────────┤
 │  Raw/       人类单向投喂的原始资料（LLM 只读）          │
 │             文章、论文、笔记、书摘、资产                │
@@ -27,37 +32,55 @@
 核心主张：**持续整合 > 查询时检索**。
 普通 RAG 每次查询都在从零拼碎片；这里的 LLM 在 ingest 那一刻就完成交叉引用、矛盾标注、专题综合——查询时读的是已经被 bookkeeping 过的结果。
 
+**双重服务对象**：
+
+- **LLM 检索 / 字段级查询**走原子页(`Concepts/` `Entities/` `Sources/`)——结构化、精确、LLM 友好
+- **人类线性阅读**走主题读本(`Readers/`)——详细、精确、满满当当,打开一页从头读到尾即掌握某议题的全部知识,不用跳来跳去
+
 ---
 
-## 入口文件（按使用频率）
+## 入口文件
+
+**如果你是第一次来的人类读者,推荐先挑一份主题读本直接读**:
+
+| 主题 | 读本 |
+|---|---|
+| 本仓库方法论(想知道"这是什么、为什么存在") | [`Wiki/Readers/Methodology/Llm-wiki-方法论-读本.md`](Wiki/Readers/Methodology/Llm-wiki-方法论-读本.md) |
+| AI 应用生态(LLM / Agent / MCP / Harness / Skills 全貌) | [`Wiki/Readers/AIApps/AI-primer-v2-读本.md`](Wiki/Readers/AIApps/AI-primer-v2-读本.md) |
+| AI 美术生成管线(LoRA / ComfyUI 落地) | [`Wiki/Readers/AIArt/Lora-深度指南-读本.md`](Wiki/Readers/AIArt/Lora-深度指南-读本.md) |
+| Niagara 源码学习 — 心智模型前置 | [`Wiki/Readers/Niagara/Phase0-心智模型-读本.md`](Wiki/Readers/Niagara/Phase0-心智模型-读本.md) |
+| Niagara 源码学习 — Phase 1 资产层 | [`Wiki/Readers/Niagara/Phase1-asset-layer-读本.md`](Wiki/Readers/Niagara/Phase1-asset-layer-读本.md) |
+
+**如果你是 LLM / 想索引 / 想查具体字段**,从下面这些文件进:
 
 | 文件 | 作用 |
 |---|---|
 | [**`index.md`**](index.md) | 全量导航目录——所有 wiki 页面按类别列出 |
 | [**`Wiki/Overview.md`**](Wiki/Overview.md) | 当前知识综合视图——"此刻对整个仓的最佳理解" |
 | [**`CLAUDE.md`**](CLAUDE.md) | 作业规程/schema——LLM 维护本仓的完整操作手册 |
-| [**`log.md`**](log.md) | 追加式时间线——每次 ingest / query / lint 的流水账 |
+| [**`log.md`**](log.md) | 追加式时间线——每次 ingest / query / lint / synthesis / refactor 的流水账 |
 
 ---
 
-## 当前主题（截至 2026-04）
+## 当前主题（截至 2026-04-20）
 
-本仓目前覆盖 4 个互相独立的主题。具体最新状态以 [`Wiki/Overview.md`](Wiki/Overview.md) 为准。
+本仓目前覆盖 4 个互相独立的主题,每个主题都配套一份主题读本。具体最新状态以 [`Wiki/Overview.md`](Wiki/Overview.md) 为准。
 
-1. **知识库方法论（meta / bootstrap）** — 本仓自身的方法论基础，源自 Karpathy 的 LLM Wiki idea file。
-2. **Niagara 源码学习（UE 4.26）** — 面向 C++ 零基础学员的 Niagara 插件 10 阶段学习路径，约 69 个运行时文件待 ingest；Phase 0 已完成。
-3. **AI 美术生成管线（LoRA / ComfyUI）** — 游戏美术从 MidJourney 迁移到自训 LoRA + ComfyUI 的落地方案。
-4. **AI 应用生态（2026-04 新增）** — Prompt → Context → Harness 三段论为主线的 AI 应用扫盲，面向美术 / 策划 / 管理者等非开发角色。
+1. **知识库方法论（meta / bootstrap）** — 本仓自身的方法论基础，源自 Karpathy 的 LLM Wiki idea file。📖 [方法论读本](Wiki/Readers/Methodology/Llm-wiki-方法论-读本.md)。
+2. **Niagara 源码学习（UE 4.26）** — 面向 C++ 零基础学员的 Niagara 插件 10 阶段学习路径,约 69 个运行时文件。**Phase 0(心智模型)✅ + Phase 1(Asset 层,5 文件)✅**,Phase 2-10 按进度推进。📖 [Phase 0 读本](Wiki/Readers/Niagara/Phase0-心智模型-读本.md) · [Phase 1 读本](Wiki/Readers/Niagara/Phase1-asset-layer-读本.md)。
+3. **AI 美术生成管线（LoRA / ComfyUI）** — 游戏美术从 MidJourney 迁移到自训 LoRA + ComfyUI 的落地方案。📖 [LoRA 深度指南读本](Wiki/Readers/AIArt/Lora-深度指南-读本.md)。
+4. **AI 应用生态（2026-04 新增）** — Prompt → Context → Harness 三段论为主线的 AI 应用扫盲,面向美术 / 策划 / 管理者等非开发角色。📖 [AI 应用生态读本](Wiki/Readers/AIApps/AI-primer-v2-读本.md)。
 
 ---
 
-## 三种核心操作
+## 四种核心操作
 
 详见 [`CLAUDE.md`](CLAUDE.md) §3。
 
 - **Ingest**（摄入）：把 `Raw/` 下新资料整合进 `Wiki/`，一次通常触及 5-15 个 wiki 页。
 - **Query**（提问）：基于 wiki 回答，有长期价值的答案回流为 `Wiki/Syntheses/` 页面。
 - **Lint**（体检）：定期扫描矛盾、孤儿页、缺失交叉引用，产出改进清单。
+- **Synthesis / Reader**（主题读本）：任何有深度的议题产出一份"一次读完即完整掌握"的长文,归档到 `Wiki/Readers/<topic>/`。这是本仓区别于普通 LLM Wiki 的关键扩展——见 [`CLAUDE.md`](CLAUDE.md) §3.4。
 
 ---
 
@@ -77,10 +100,14 @@
 
 ## 如果你对方法论本身感兴趣
 
-- 读 [`CLAUDE.md`](CLAUDE.md)——这是这套方法论在我手里的具体落地。
-- 读 [`Wiki/Concepts/Methodology/Llm-wiki-方法论.md`](Wiki/Concepts/Methodology/Llm-wiki-方法论.md)——对方法论的一页总结。
-- 读 Karpathy 的原文（本仓 `Raw/Notes/Karpathy Wiki 方法论.md`）或社交媒体原始帖子。
-- 直接 fork 本仓作为起手式，清空 `Raw/` 和 `Wiki/` 下的内容，保留 `CLAUDE.md` 改成自己的规则——就可以开始运转。
+推荐阅读顺序:
+
+1. 📖 [`Wiki/Readers/Methodology/Llm-wiki-方法论-读本.md`](Wiki/Readers/Methodology/Llm-wiki-方法论-读本.md)——**一次读完即完整掌握**本仓方法论的前因后果(Memex → RAG → LLM Wiki 演进脉络 + 本仓库的具体化实现),推荐作为第一个入口
+2. [`CLAUDE.md`](CLAUDE.md)——读本落地为可执行规则的 schema(维护者视角)
+3. [`Wiki/Concepts/Methodology/Llm-wiki-方法论.md`](Wiki/Concepts/Methodology/Llm-wiki-方法论.md)——方法论的一页原子总结(适合快速回查)
+4. Karpathy 的原文(本仓 `Raw/Notes/Karpathy Wiki 方法论.md`)或社交媒体原始帖子——一手资料
+
+或者直接 fork 本仓作为起手式,清空 `Raw/` 和 `Wiki/` 下的内容,保留 `CLAUDE.md` 改成自己的规则——就可以开始运转。
 
 ---
 
