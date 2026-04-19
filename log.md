@@ -5,6 +5,28 @@
 
 ---
 
+## [2026-04-20] refactor | CLAUDE.md 分层瘦身 — 模板外移,防 context rot
+- 触发:用户关心的不是 token 成本,而是 CLAUDE.md 膨胀导致 context rot(长对话中 schema 内容占用注意力,挤占硬约束的遵守可靠性)
+- 核心洞察:CLAUDE.md 里**每轮对话都要遵守的核心规则** vs **条件性使用的详细模板** 应当分层——前者 always-loaded,后者 on-demand Read
+- 方案:
+  - 新建 `Wiki/_templates/` 目录(4 份模板):
+    - `Entity-Concept.md`(~50 行)— Entity/Concept 页结构
+    - `Source.md`(~36 行)— 非代码 raw source 摘要
+    - `Code-Source.md`(~54 行)— 代码源摘要,含 frontmatter + 代码片段引用
+    - `Reader.md`(~82 行)— 主题读本完整骨架 + header 里嵌入 §3.4 硬性要求备查
+  - CLAUDE.md 瘦身:468 行 / 21 KB → **274 行 / 11 KB**(-41%)
+    - 删除纯考古:§3.4 历史债清单(8 行,事实永久在 log.md)
+    - 删除冗余:§2 各子目录逐条自注释("Methodology/ - 方法论相关概念"等 ~15 行)、§5 log 三示例压到一示例、§3.4 "读本 vs 原子页"表与 §2 分工说明的重复表述
+    - 外移:§4.2-4.5 四份完整 markdown 模板(原 ~130 行)压为 §4 一张"页面类型 → 模板文件"指针表
+    - 压缩:§9.4 VCS 约定文字精简,§2 目录结构去冗余注释
+- 预期收益:
+  - **每轮对话 CLAUDE.md 占用从 ~7K tokens 降到 ~3.7K tokens**(-47%)
+  - 更关键:剩下的 274 行几乎全是 always-apply 规则,噪声比显著下降
+  - 长对话中对 §7 Don'ts、§3.4 读本规则等硬性约束的遵守可靠性应当上升
+  - 代价:创建新页时多一次 `Read Wiki/_templates/<type>.md`(每次 50-80 行),但这是 task-local 聚焦,与"每轮全量加载"完全不同的 attention 经济学
+- 设计原则(写进 CLAUDE.md 头部 preamble):"本文件只含每轮对话都要遵守的核心规则。大块页面模板另存 `Wiki/_templates/`,仅在真的要创建对应页面时 Read"
+- 下一步:观察后续几次 ingest/读本创建的实际体验;如果模板外移后某个模板高频被 Read,考虑把核心一句话约束提回 CLAUDE.md
+
 ## [2026-04-20] refactor | 读本独立顶层目录 Wiki/Readers/
 - 触发:用户指出读本散在 `Syntheses/Methodology/`、`Syntheses/AIArt/`、`Syntheses/AIApps/`、`Syntheses/Niagara/` 四个子目录里,和普通专题(三段论演进、How-to-prompt、学习路径总图)混在一起"有点乱,到处都是"
 - 方案:新增 `Wiki/Readers/` 顶层目录,5 份读本全部迁过去;`Syntheses/` 回归原定位——非读本类的专题综合
