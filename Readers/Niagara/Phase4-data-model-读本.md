@@ -495,6 +495,21 @@ uint32 bUObjectsDirty : 1;      // UObject 换了
 
 ---
 
+## 自检问题(读完回答)
+
+下面这些题需要把"类型系统三路分拣 + SoA 布局 + 命名空间 + 双缓冲 + Persistent ID"全部内化才能答得准。
+
+1. **`FNiagaraBool` 编码的 SIMD 收益**:为什么是 True=-1 / False=0,而不是 True=1 / False=0?试推一段 `bool ? a : b` 在两套编码下的字节码序列——前者能省哪条指令(提示:bit-level mask & select)?为什么这个"小"决定能影响 VM 整体吞吐?
+2. **内存帐**:一个 Emitter 的粒子有 12 个 float 属性 + 4 个 int 属性,`NumInstancesAllocated = 1024`。FloatData / Int32Data 各占多少字节?如果再加一个 `Position2: FVector`,字节量怎么变?如果把 Position 改用 Half,变多少?——这个帐能不能算清,决定了你能不能合理预估 GPU buffer 上限。
+3. **DataBuffer 池为什么是 2-3 个**:理论上 double buffer 2 个就够,第 3 个在 RT 渲染时持 read ref。如果硬要把池砍到 2 个,在什么并发场景下会撞到死锁/写阻塞?(提示:GT 模拟下一帧、RT 还在画上一帧的同时性)
+4. **Persistent ID 的总成本**:假设你把 `bRequiresPersistentIDs` 给所有 Emitter 默认开启,内存(`FreeIDsTable / IDToIndexTable / GPUIDToIndexTable / GPUFreeIDs`)、tick CPU(每帧维护 free list)、GPU buffer(额外两块)各多多少?这个帐解释了为什么默认必须关。
+5. **命名空间 vs 存储位置的耦合**:有人在脚本里写 `User.MyAttr` 想给每个粒子赋值。Niagara 编译器/运行时会怎么响应?(命中错误 / 静默忽略 / 退化为 emitter 级单值 全都可能)——回答能否解释 §5.1 那张命名空间表里"前缀决定存储"的真正含义。
+6. **三路 dirty 合并的损失**:ParameterStore 把 dirty 拆成参数 / DI / UObject 三路,每路 1 bit。如果合并为单路 dirty bit,哪些"局部修改"场景会退化成"全量重传"?把这个想清楚就懂了为什么三路是 minimum split。
+7. **类型系统的拍平极限**:`FNiagaraTypeLayoutInfo` 把任何类型拆成 Float/Int32/Half 三路 component。如果你要在脚本里用 `FString`(变长),Niagara 能拍平吗?如果不能,根本障碍是什么?——这个反例能让你看清"三路分拣"成立的前提条件。
+8. **DataSet vs ParameterStore 的本质差异**:两者都"存数据 + 按 offset 取",看起来很像。但一个是 SoA(每属性一个连续 component 数组),一个是 byte blob(各参数挨着排)。为什么粒子数据用 SoA 而参数用 byte blob?——把 SIMD 访问模式 vs 单值访问模式想清楚。
+
+---
+
 ## Phase 4 留下的问题
 
 - `FNiagaraScriptExecutionContext` 怎么用 ParameterStore 构建 VM constant buffer → **Phase 5**

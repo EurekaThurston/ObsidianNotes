@@ -395,6 +395,21 @@ Fallback 路径,不支持 RW texture buffer 的平台(`FSupportsTextureRW permut
 
 ---
 
+## 自检问题(读完回答)
+
+下面这些题需要把"shader 编译流水线 + Instance Count + Sort + VertexFactory + Draw Indirect"全部串起来。
+
+1. **`bUsesRapidIterationParams` 进 ShaderMapId 的必要性**:这只是 1 个 bit,但任何位变就重编。回到 Phase 1 的 RapidIteration 烘焙开关——为什么烘不烘这一位会让生成的 shader 字节码不同?能不能把它放到 push constant 而不进 shader id?
+2. **共享 count buffer vs per-emitter 独立 count**:Niagara 选共享 buffer + per-emitter offset。如果改用每 emitter 独立 buffer,GPU 性能(memory / descriptor / dispatch)和 CPU 性能(管理代价)各会怎么变?为什么共享是更优解?这个权衡在哪种规模下会反转?
+3. **不支持 compute shader 的平台,GPU sim 怎么办**:`RHIDrawIndexedPrimitiveIndirect` + `DrawIndirectArgsGenCS` 都依赖 compute。在没有 compute 能力的平台,Niagara 是完全禁用 GPU sim,还是有降级路径?(提示:CVar / EmitterPlatformSet / `CanExecuteOnTarget`)
+4. **DI 参数的"双声明"模式**:`UNiagaraDataInterface` 是 UCLASS 有虚函数,但 `FNiagaraDataInterfaceParametersCS` 必须 non-virtual + LAYOUT_FIELD 才能进 shader cache。你想给一个新 DI 加一个 GPU 参数,需要遵循什么严格的"双声明"流程?(`DECLARE_NIAGARA_DI_PARAMETER` / `IMPLEMENT_NIAGARA_DI_PARAMETER` 各做什么)
+5. **`FGPUSortManager` 分工的代价**:Niagara 只生成 (key, particleIndex) 对,radix sort 由通用 manager 做。这个分工的代价是什么?(提示: 排序时机限制 / culling 集成 / 精度选择灵活度)。这个权衡为什么对 Niagara 是值得的?
+6. **"零分支"的 VS 实际成本转移**:Half offset MSB 编码 + Dummy SRV 池让 VertexFactory shader 零运行时分支。这个"零"成本实际转移到了哪里?(shader 编译时间 / 运行时 SRV 数量 / 描述符堆大小 / 内存)——能算清这笔帐才算明白"零分支"的真正含义。
+7. **Draw Indirect 任务双用的精巧**:`NumIndicesPerInstance = -1` 表示 clear task,合并到同一 dispatch。如果不合并,每帧需要多少额外 dispatch?这个 "用一个 magic value 复用 task slot" 在工程上有什么风险?
+8. **GPU sim 的"零拷贝"边界**:数据留在 GPU 显存到渲染——但什么时候必须 readback?(提示:Light renderer / debugger / SkeletalMesh DI 的某些查询)。零拷贝是 Niagara GPU 的核心优势,但理解它的边界才能知道何时该选 CPU sim。
+
+---
+
 ## Phase 8 留下的问题
 
 - Phase 5 `FNiagaraGPUSystemTick` 的 `InstanceData_ParamData_Packed` 具体打包格式 → 看 cpp

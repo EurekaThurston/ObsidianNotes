@@ -377,6 +377,21 @@ Phase 10 完整展开。
 
 ---
 
+## 自检问题(读完回答)
+
+下面这些题需要把"DI 三路代码生成 + per-instance 数据 + 7 种典型 DI 的能力矩阵"全部串起来。
+
+1. **CPU/GPU 实现对齐的"隐患"**:DI 同时支持 CPU(C++ lambda)和 GPU(HLSL 代码生成),共享同一个 `FNiagaraFunctionSignature`。如果某天 CPU 实现里有 bug,导致同一函数 CPU/GPU 结果不一致,Niagara 架构上提供了什么自动检测机制?(提示: 实际上**没有**——这恰恰是开放问题)。这个事实如何影响你写一个新 DI 时的测试策略?
+2. **LUT 特化的反例**:Curve DI 用编译期模板分派(`TCurveUseLUTBinder`)生成 `bUseLUT=true/false` 两种特化,运行时零分支。但代价是函数生成翻倍。在什么场景下你**应该**保留运行时分支(不开 LUT 特化),反而更好?
+3. **SkeletalMesh 共享 SkinningData 的回收链**:`BoneRefToLocals[2]` 双缓冲 + 引用计数。50 个 instance 共享同一 mesh,某个 instance 中途销毁,会触发什么具体的资源回收链?如果在 instance 销毁的同一帧又有 instance 创建并复用 SkinningData,RWLock 怎么保证不出错?
+4. **CollisionQuery 4 路径的取舍**:为"霰弹枪散弹击中地形"特效选哪种碰撞查询?——CPU Sync 的"延迟成本"具体是多少?CPU Async 的"1 帧延迟"会让散弹的命中视觉上滞后吗?为什么 GPU 路径(SceneDepth / DistanceField)不能完全替代 CPU?
+5. **`UNiagaraDataInterfaceRWBase` 的多余接口**:RT2D DI 不继承 `UNiagaraDataInterface` 而继承 `UNiagaraDataInterfaceRWBase`,多了 `GetElementCount` / `AsIterationProxy()`。这两个接口对"被 SimStage 当迭代源"为什么是必需的?(提示:回想 `IterationSource = DataInterface` 模式下 thread 数怎么定)
+6. **CPU Access 关闭 + Scalability LOD 降级**:StaticMesh 没开 CPU Access → 三角形采样只 GPU。如果某低端机进一步降级到完全没 GPU 模拟(全部 CPUSim),这个 mesh 还能用吗?Niagara 怎么响应——静默失败、报错、降级用 socket?
+7. **MPSC 队列在 Camera DI 的存在**:Camera DI 的 `DistanceSortQueue` 用 MPSC——为什么是 MPSC 而不是 SPSC?谁在并发 push?谁单线程消费?如果改成普通 `TArray` + lock,在 50 实例场景下吞吐会降多少量级?
+8. **三路代码生成的实现负担对比**:写一个新 DI,CPU 路径(GetVMExternalFunction 返 lambda)和 GPU 路径(GetParameterDefinitionHLSL + GetFunctionHLSL 拼字符串)各需要写多少代码?为什么 GPU 路径"看起来更原始"(手拼 HLSL 字符串)的设计 Niagara 没改进——技术债还是有意?
+
+---
+
 ## Phase 7 留下的问题
 
 - `UNiagaraDataInterface` 后 490 行(本次未扒)→ 按需 offset 读

@@ -738,6 +738,20 @@ FunctionLibrary 内部:
 
 ---
 
+## 自检问题(读完回答)
+
+下面这些题需要把"3 个文件 + 5 大职责 + Phase 1 的 Asset 模型"互相串起来回答。
+
+1. **API 不对称的隐含信号**:`SetVariableMaterial` 和 `SetVariableTextureRenderTarget` 没有 FString 版本,但 `SetVariableObject` 有。这反映了 BP 拖线场景里材质/RT 引用的什么使用习惯?如果你设计一个新 SetVariable 类型(比如 `USoundCue*`),应不应该补 String 版?判断标准是什么?
+2. **频繁 spawn 的 GC 链路**:`PoolingMethod = None` + `bAutoDestroy = true` 是默认值。在战斗高峰期(每秒 50 次特效)这个组合会造成什么具体的连锁问题?为什么 Pool 系统能修这个问题但又不被设为默认?(从一次性特效 vs 高频特效的统计分布想)
+3. **`bForceSolo` 退化的根本原因**:Phase 2 警告它"性能退化几十倍",但根本原因不是"代码慢了",而是 Niagara 失去了做某件事的机会。这件事是什么?在 50 个同 Asset 实例的场景里,如果其中 20 个开了 `bForceSolo`,剩下 30 个的批量 tick 还正常吗?(回答需要联系 Phase 3 的 Simulation 概念,但 Phase 2 已经埋了线索)
+4. **"延后 Attach 到 Activate"的 Pool 价值**:`SpawnSystemAttached` 把真正的 `AttachToComponent` 推迟到 `Activate()` 而不是立即做。这个延后让 Pool 复用变得可能——为什么?如果在 FunctionLibrary 里直接 attach,Pool 归还/再取出时会撞到什么不一致?
+5. **范式选择题**:你要新增"特效播完时把 Actor 位置打印到 log"的功能。应该改 `ANiagaraActor` 还是 `UNiagaraComponent`?为什么"Actor 只作壳,逻辑全在 Component"的范式让答案非此即彼?——如果反过来在 Actor 里写,会破坏什么?
+6. **两条 spawn 路径的 Component 不等价**:编辑器拖放产生的 `ANiagaraActor` 里的 Component,与 BP `SpawnSystemAtLocation` 产生的"挂在 helper Actor 上的 Component",虽然都是 `UNiagaraComponent`,但在(a)谁负责销毁(b)是否进 Map 序列化(c)Outliner 表现 三方面有什么本质差异?
+7. **"对象型 User 参数走 FunctionLibrary"的关注点分离**:`OverrideSystemUserVariableStaticMesh` 不放进 Component 的 SetVariable 系列,因为它要修改 DI 内部字段。**反过来想**:如果把所有标量 SetVariable 也都搬到 FunctionLibrary,Component 会"更干净"——为什么 Niagara 没这么做?这反映了"DI 触达边界"的设计原则是什么?
+
+---
+
 ## Phase 2 留下的问题
 
 - `FNiagaraSystemInstance` 的状态机、Init、Tick 具体流程 → **Phase 3**

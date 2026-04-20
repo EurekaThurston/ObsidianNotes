@@ -400,6 +400,21 @@ CDO 时自动把本 DI 类型加进 Niagara 类型系统——script 里能用 `
 
 ---
 
+## 自检问题(读完回答)
+
+下面这些题需要把"SimStages 多 pass + Iteration 抽象 + Grid 存储策略 + RW DI 钩子 + Reader 跨 emitter"全部综合起来。
+
+1. **编译器为什么能合并 Iterations 但不能合并 Stage**:`Iterations=40` 一条 SimStage 与"40 条独立 SimStage"最终 dispatch 数量一致,但前者编译产物精简。Niagara 编译器为什么能把同一脚本的多次迭代合并,却不能把不同 Stage 的脚本合并?(提示: pass 间的 IO 依赖图)
+2. **Texture3DArray 假想题**:Grid2D 用 Texture2DArray,Grid3D 用 RWTexture3D + tile 打包。如果 UE 未来 RHI 加了 Texture3DArray,Grid3D 改用之能简化什么 shader/CPU 代码?**会损失**什么(典型场景 / 内存利用率 / 采样性能)?
+3. **`MaxNeighborsPerCell` 的 lossy 哲学**:超容直接 drop 不 warn——另一种选择是动态扩容。在 GPU compute 场景里 lossy 为什么更合理?(原子内存分配的代价 / 一次 pass 内的可预测性 / 调试 vs 性能)。如果坚持要"无损",该用什么数据结构?
+4. **Reader 循环依赖的响应**:两个 `Grid2DCollectionReader` 互相循环引用(A 读 B 的 grid,B 读 A 的 grid),Niagara 如何响应?能跑吗?——`GetEmitterDependencies` 撞到 cycle 时调度器有没有 deadlock 检测?(提示: 用 §4.2 的逻辑反推)
+5. **4 个钩子选哪个做 frame counter**:你要做"每 N 帧只跑一次的 grid 更新"。`PreStage / PostStage / PostSimulate / ResetData` 哪个最合适?为什么不用 `PostStage`?(提示: 调用时机 + 是否每 stage 都触发)
+6. **IterationSource 解决的硬件约束**:Grid3D 32×32×32 = 32768 cells,thread group 64 → dispatch 512 group;Particles=200 → dispatch 4 group。这两个差异说明 SimStage 的"iteration 抽象"解决了什么硬件约束问题?如果不抽象,每种迭代源都要写一套 dispatch 代码,会出现什么具体的代码爆炸?
+7. **SimStages 与 Phase 8 `FSimulationStageMetaData` 的接缝**:本 Phase 的 SimStage Asset 配置如何最终影响 GPU shader 编译?MinStage/MaxStage 区间为什么放在 ShaderMetaData 而不是 SimStage Asset 上?(提示: 编译产物精简 + RHI dispatch 接口)
+8. **Grid 流体 vs 粒子 SPH 的选择**:Phase 10 提供了 Grid(Eulerian)和 NeighborGrid(Lagrangian SPH)两条流体路径。在"小范围爆炸性烟雾" vs "大场景持续烟雾流"上各选哪种?为什么这不是性能选择,而是物理建模选择?
+
+---
+
 ## Phase 10 留下的问题
 
 - `ENiagaraIterationSource` 完整定义在其他头文件 → Phase 10 实际运行细节

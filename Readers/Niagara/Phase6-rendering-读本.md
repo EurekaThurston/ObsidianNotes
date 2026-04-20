@@ -373,6 +373,20 @@ GPU 粒子数据在 GPU 侧,`GatherSimpleLights` 需要 CPU readback——要么
 
 ---
 
+## 自检问题(读完回答)
+
+下面这些题需要把"对偶模式 + GT/RT 隔离 + 4 种 Renderer 的能力矩阵"全部串起来。
+
+1. **Properties + Renderer 一定要分开吗?**:三个理由(性能 / 1-N 关系 / GT-RT 隔离)里如果合一,1-N 怎么破?GT/RT 怎么破?——把"如果合一"想清楚就懂了为什么必须拆。
+2. **Ribbon 和 Light 都 CPU only,但原因不同**:Ribbon 是因为算法依赖跨粒子访问;Light 是因为什么?如果 UE 未来支持 GPU readback 零延迟,Light 能转 GPU 吗?Ribbon 能吗?——能区分"算法限制"和"集成限制"才算理解。
+3. **`bGpuLowLatencyTranslucency` 关闭的视觉症状**:GPU sim 关掉低延迟通路,半透明粒子会和不透明物体之间出现什么具体异常?(提示:粒子位置滞后一帧 / 与物理同步)为什么不透明粒子完全不需要这个开关?
+4. **`FNiagaraDynamicDataBase` union 的并发隐患**:union 同时存 CPU `FNiagaraDataBuffer*` 或 GPU `FNiagaraComputeExecutionContext*` 是因为同 Emitter SimTarget 不会变。但如果未来支持运行时切 SimTarget(Asset 编辑后热重载),union 切换会撞到什么具体的 GT/RT 竞态?
+5. **Half offset MSB 编码的扩展极限**:`Offset |= 1 << 31` 隐含了 "DataSet component 不超过 2^31" 的假设。如果未来粒子数据结构规模翻倍,这个编码方式如何演进才能不破坏 shader 兼容?(直接换 64 位 offset / 加 prefix bit / 全部 half / 还有别的方案吗?)
+6. **Cutout 在 runtime 的"零成本"边界**:Cutout 几何在 editor `CacheDerivedData` 时离线生成,runtime 直接读 derived data。这个"零成本"在哪种情形下会被打破?(提示:动态修改 SubUV 贴图 / 运行时改 BoundingMode)
+7. **17 个 Sprite VF slot 的取舍**:如果你做一个新 Renderer 类型,只需要 5 个属性(Position / Color / Size / Rotation / NormalizedAge),应该继承 Sprite 改通过 attribute binding 关掉 12 个 slot,还是新写一个 Renderer 类?判断标准是什么?
+
+---
+
 ## Phase 6 留下的问题
 
 - `FNiagaraSpriteVertexFactory / RibbonVertexFactory / MeshVertexFactory` shader 绑定细节 → **Phase 8.9-8.12**

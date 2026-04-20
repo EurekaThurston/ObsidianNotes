@@ -369,6 +369,20 @@ void Run(const FNiagaraGPUSystemTick&, const FNiagaraComputeInstanceData*,
 
 ---
 
+## 自检问题(读完回答)
+
+下面这些题需要把"FunctionTable + PerInstanceFunctionHook + Padding + GPU Tick 打包"全部串起来回答,不能在某节里直接抄一句话。
+
+1. **`FunctionTable` 为什么是指针数组**:`TArray<const FVMExternalFunction*>` 而不是 `TArray<FVMExternalFunction>` 值数组。这个间接层在"同 batch 内不同 instance 的 DI 不同"场景下解决了什么具体问题?如果改成值数组,System 脚本一次 dispatch 4 个 instance 的 PerInstanceFunctionHook 会撞到什么?
+2. **Padding 不能运行时现算的原因**:CPU 紧凑 vs GPU 16-byte 对齐的映射用 `FNiagaraScriptExecutionPaddingInfo` 编译期烘焙。为什么不能在每帧 GT→RT 打包时按字段类型现算?(提示: shader cache + DDC + 对齐稳定性)
+3. **两套"双副本"读者-写者模型**:`CopyCurrToPrev`(本 Phase)和 Phase 3 `GlobalParameters[2]` 都是"双副本",但解决问题完全不同。试明确:谁读 prev?谁写 curr?何时翻转?——两条独立的"读者-写者"链路如果搞混会出现什么 bug?
+4. **`PerInstanceFunctionHook` 对纯无状态 DI 的"冗余"**:Curve DI 完全无状态(LUT 在 Asset 共享),理论上可以为它生成"无 hook"特化路径——为什么编译器没做这种优化?(提示:dispatch 表统一 / batch 内异质 DI / 编译复杂度)
+5. **`Batcher` 命名陷阱**:它名字里有 "EmitterInstance",但实际只服务 GPU。CPU 的"批量 tick"是在哪一层、由哪个类完成的?这个误命名为什么没被改正?(提示:历史遗留 + Cascade 对位 + 公共接口)
+6. **GPU Tick 打包的"省一次拷贝"机制**:`InstanceData_ParamData_Packed` 紧贴 ParamData 16-byte 对齐排列,让 ParamData 能"直接 upload 成 UniformBuffer"。如果对齐错了 4 byte,具体哪一步会失败?为什么这个对齐不能让 RHI 自动处理?
+7. **三个 ExecContext 子类的对比**:`FNiagaraScriptExecutionContextBase` / `FNiagaraScriptExecutionContext` / `FNiagaraSystemScriptExecutionContext` 三层。把它们的"输入是什么 / 输出是什么 / 一次 Execute 处理多少粒子"列成一张三栏表。能列清楚才算真懂分工。
+
+---
+
 ## Phase 5 留下的问题
 
 - VectorVM 自身结构(字节码 opcode / 寄存器分配)→ 不在本学习路径,但 `VectorVM.h` 可单独读

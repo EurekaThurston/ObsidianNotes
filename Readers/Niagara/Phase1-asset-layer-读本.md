@@ -658,6 +658,19 @@ class UNiagaraScriptSourceBase : public UObject
 
 ---
 
+## 自检问题(读完回答)
+
+下面这些题,只看本篇某节文字回答不了,需要把"5 个文件 + Phase 0 的脑内地图"拼起来才能想明白。
+
+1. **`IsCompilable() == false` 揭示的设计**:`EmitterSpawn/Update` 的 `Usage` 在编译时返 false,运行时也不存在它们的脚本对象。Niagara 编译期把它们合并进 `SystemSpawn/Update`——这意味着"Emitter 级状态"在运行时如何被定位?如果你在 Emitter UI 里同时改 5 个 Emitter 的 EmitterSpawn 模块,最终编译出几条字节码?
+2. **Handle 设计的"零成本复用"**:你想要一个 Emitter 模板,被两个 System 引用,各起不同显示名 + 独立启用/禁用。Handle 怎么让这成为零额外字段成本?如果直接用 `TArray<UNiagaraEmitter*>` 实现同样需求,你必须额外引入哪几个并行 `TArray<...>` 才能补回来?
+3. **`UNiagaraScriptSourceBase` 的反向用途**:如果它不存在(`UNiagaraScript::Source` 直接是 `UNiagaraScriptSource*`),shipping 包构建时会撞到什么具体的链接 / 包大小问题?这个"抽象基类在 runtime,实现在 editor"的模式,Niagara 内还有第二处类似实现吗(提示: 想想 DI 在 Phase 5 / Phase 7 的 Core/Editor 分离)?
+4. **RapidIteration 的代价**:`RapidIterationParameters` 改值不重编译——这"性能优化"的代价是什么?如果某项目把所有滑块都改用普通 `Module.*` 输入(连线方式),编辑器的拖动滑块体验会出现什么具体症状?反过来,如果烘焙时勾上 `bBakeOutRapidIteration`,运行时少一次什么操作?
+5. **同 Asset 里 CPU+GPU 共存**:一个 `UNiagaraSystem` 里同时放一个 CPU Emitter 和一个 GPU Emitter,它们在 `UNiagaraScript` 字段层面如何区分编译产物?能不能让"同一个 Emitter"同时跑 CPU 和 GPU 模拟?如果不能,根本障碍是什么(数据/调度/接口)?
+6. **`FNiagaraSystemCompiledData` 的存在感**:System 字段里那些 `FNiagaraParameterDataSetBindingCollection SpawnInstanceGlobalBinding ...` 看上去像"把简单事情搞复杂"——但 Phase 1 §1.4 说它们是性能关键。如果删掉这些 binding,运行时脚本访问 `Engine.DeltaTime` 会退化成什么操作?为什么 Niagara 不能把 binding 留给 VM 在执行时按需查表?
+
+---
+
 ## 8. Phase 1 留下的问题(等 Phase 3+ 回答)
 
 读完 Phase 1,下面这些问题还没答案,明确记下,以后 phase 回填:

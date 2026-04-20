@@ -635,6 +635,19 @@ ENiagaraSimTarget SimTarget;  // CPUSim 或 GPUComputeSim
 
 ---
 
+## 自检问题(读完回答)
+
+读完本读本,如果你能用自己的话答出下面这些题,Phase 0 才算真懂——它们都不能在原文里检索一段话直接抄出来,需要把多节内容拼起来或反推。
+
+1. **U 前缀 vs F 前缀的本质,不是命名习惯**:如果有人把 `FNiagaraSystemInstance` 重写成 `UNiagaraSystemInstance`(继承 UObject)以"统一管理",场景里 100 个特效同时跑时会出现哪些**具体**的副作用?(从 GC 扫描、内存、共享、生命周期至少各举一项)
+2. **Cascade 的"黑盒模块"为什么必然导致 GPU 支持有限?**——Niagara 的"可编程数据流"反而能让 GPU 成为一等公民。这个反差不是巧合,试用"显式数据布局"和"统一执行模型"两个角度解释。
+3. **资源帐**:同一个 `UNiagaraSystem`(含 5 个 Emitter、共 10 个 Script)在场景里被 100 个 NiagaraComponent 引用。整体共会有多少份 `UNiagaraScript` 字节码?多少份 `FNiagaraSystemInstance`?多少份运行时粒子内存?这三个数为什么不是同一量级?
+4. **`UPROPERTY()` 的"在不在"是个开关**:你给 `UNiagaraEmitter` 加一个新字段 `EnableNewFeature : 1`,**加** `UPROPERTY()` 标记和**不加**会分别影响哪些子系统(序列化、GC、编辑器面板、蓝图、网络)?Niagara 的"绝大多数字段都标"反映了什么使用预期?
+5. **"`SimTarget` 一字段切换 CPU/GPU 两套路径"是设计胜利,不是设计失败**——为什么?如果 `SimTarget` 设计成"Emitter 子类(CPU Emitter / GPU Emitter)"而非字段,会丢掉什么具体能力?(提示:同一 Emitter 的两种编译产物如何共存)
+6. **回到本读本开篇那个问题**:用一段不超过 5 句话的话,向一个只懂 C++ 不懂 UE4 的人解释清楚 "`UNiagaraSystem` 资产和 `FNiagaraSystemInstance` 实例的本质区别"。能讲清楚就算 Phase 0 通关。
+
+---
+
 ## 7. Phase 0 留下的问题(等后续 Phase 回答)
 
 - **`CDO`(Class Default Object)**:UClass 上有个"默认实例",`GetDefaults()` 返回它。有时你取到的不是运行中的对象,是 CDO——Niagara 的 Emitter merge 机制跟 CDO 相关。Phase 1 / 编辑器加餐时再展开

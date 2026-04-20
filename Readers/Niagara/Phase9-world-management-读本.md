@@ -307,6 +307,20 @@ FNiagaraPlatformSetCVarCondition {
 
 ---
 
+## 自检问题(读完回答)
+
+下面这些题需要把"4 层 scalability 叠加 + WorldManager 中心 + Pool 5 法 + PlatformSet 三态"综合起来回答。
+
+1. **`FNiagaraWorldManager` 不做 UCLASS 的取舍**:它持有大量 UObject 引用,看上去像该用 UObject 管理。为什么设计成"非 UObject + FGCObject"?(per-World 实例化、TMap<UWorld*, Manager*> 索引、UObject GC 扫描成本——把这三点串起来)
+2. **Scalability cull 不发 OnSystemFinished 的语义边界**:如果一个游戏 BP 用 `OnSystemFinished` 来"特效结束后开门",Scalability cull 会让门永远不开吗?Niagara 的"系统决策 vs 用户决策"语义如何避免这个 bug?如果你写 BP 时确实想"任何结束都触发开门",该用什么 delegate 替代?
+3. **`NumInstances` 是"全局"的边界在哪**:PIE 同时打开 3 个 world,某 EffectType 三个 world 各 spawn 100 个,`MaxInstances=200` 会触发 cull 吗?——这取决于 NumInstances 是 per-EffectType-跨 world、per-EffectType-per-world、还是 per-EffectType-per-Asset。Phase 9 的设计是哪种?为什么这种选择反映了 EffectType 的"分类预算"语义?
+4. **`ManualRelease` vs `ManualRelease_OnComplete` 的选错代价**:这两种都是"用户调 ReleaseToPool",但 OnComplete 版多一层"等 complete 才真回池"。如果你给"持续 30 秒的 Buff 特效"选了普通 ManualRelease,玩家中途取消 Buff 立即调 Release,会出现什么问题?反之 OnComplete 选错会怎样?
+5. **PlatformSet 三态双 mask 的"必需性"**:为什么不用单 bit + "默认值反转"?——双 mask(QualityLevelMask + SetQualityLevelMask)给你什么 single bit 不能表达的能力?(提示: 默认 vs 显式 disable 在多层叠加时是不同语义)
+6. **PrimePool 没做的代价**:你忘了 prime,首次战斗的 spawn 会经历什么 cost(allocation / register / RHI buffer 初始化 / shader bind)?为什么后续 spawn 不会有这些 cost?能不能在游戏代码里晚一点 prime(战斗前 1 秒)?会有什么副作用?
+7. **Significance Handler 的扩展点价值**:默认 Distance/Age,自定义 handler 典型是"玩家相关特效更重要"。如果你写一个 "队友的 Buff 比敌人的 Debuff 更重要" 的 handler,需要从哪些 World/Game state 取数据?这个 handler 在 worker 线程跑还是 GT 跑?跨线程访问 GameState 安全吗?
+
+---
+
 ## Phase 9 留下的问题
 
 - `FNiagaraPlatformSet` 后 180 行(实际 IsActive/IsEnabled 逻辑)→ 按需 offset 读

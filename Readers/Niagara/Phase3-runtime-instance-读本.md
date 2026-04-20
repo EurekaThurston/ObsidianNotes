@@ -885,6 +885,21 @@ GT 某个时刻调 FinalizeTick_GameThread
 
 ---
 
+## 自检问题(读完回答)
+
+下面这些题需要把"三层包含关系 + 双状态机 + 三阶段 Tick + 7 组 binding"全部串起来才能答得有根据。
+
+1. **双状态机 vs 多实例数组的"分别解什么"**:SystemInstance 的 Requested/Actual 双状态字段,与 SystemSimulation 的 4 个实例数组 + Promotion 队列,都在描述"实例当前在哪"。它们解决的问题各是什么?如果合并为单一状态字段(去掉 Requested),会让哪类用户语义失效?
+2. **跨线程读 GT 状态的"延迟爆炸"**:Concurrent 阶段被严格规定"只读 `GatheredInstanceParameters` 快照"。如果有人在 Concurrent worker 里调了 `World->GetTimeSeconds()`,单元测试可能不挂——具体在哪些场景才会爆?(并发竞态 / GC / Editor PIE multi-world / Actor destroy 至少各想一个)
+3. **Solo 模式真正损失了什么**:从 §5.2 / §5.6 / §5.8 三处合起来看,`bSolo=true` 让一个 instance 失去了哪 3 类共享(System 脚本 / 7 组 binding / 6 个 DirectBinding)?为什么在"多 Asset 并存"的场景里 Solo vs Batched 差距反而很小?
+4. **Tick Batch=4 不需要 Persistent ID 保护**:Phase 4 的 `FNiagaraID` 用 Index+AcquireTag 双整数防止 "粒子 Index 复用导致的错误引用"。但 Tick Batch=4 也是"批处理多 instance",为什么它不需要类似双整数?——什么机制让"实例间不会错乱"?
+5. **TickGroup Promotion 的迁移目的地**:为什么 promote 不是修改当前 Simulation 的 TickGroup,而是把 instance 迁到"同 Asset 不同 TickGroup 的另一个 Simulation"?如果允许直接改 Simulation 的 TickGroup,会出现什么"半数 instance promotes 了另一半没"的数据不一致?
+6. **`CachedEmitter` 裸指针的"口头协议"**:同一份 SystemInstance 持有 `TWeakObjectPtr<UWorld>` 但 `CachedEmitter` 是裸指针。这个不一致合不合理?要触发它崩溃需要什么具体的运行时事件序列?(提示:Asset 热重载 / GC 时机 / Pool 实例的 bPooled=true)
+7. **DI per-instance 数据"不在 DI 里"的设计**:为什么所有 DI 的 per-instance 数据被集中放在 SystemInstance 的 `DataInterfaceInstanceData` blob,按 offset 切片,而不是让每个 DI 自己管自己的 per-instance 数据?这个集中化对内存对齐 / GPU upload / 缓存命中各有什么具体好处?
+8. **3 阶段 Tick 的可逆性测试**:如果你被迫把 Concurrent 阶段也搬回 GT(完全单线程),Niagara 在 50 个 Instance 的场景下要么帧率掉,要么哪些功能不能用了?反过来,把 Finalize 也搬到 worker 线程,会撞到什么硬性约束?
+
+---
+
 ## Phase 3 留下的问题
 
 - `FNiagaraDataSet` 的内部结构、SoA 布局、双缓冲机制(CurrentData / DestinationData)→ **Phase 4**
