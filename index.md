@@ -3,7 +3,7 @@
 > 本文件是整个 wiki 的内容目录。LLM 每次 ingest 都会更新。
 > 查询时先读这里,再深入相关页面。
 
-最后更新:2026-04-20（+ Phase 8 GPU 模拟入驻:13 Source + 5 Entity + 1 读本,Niagara 学习路径推进到 Phase 8/10 完成）
+最后更新:2026-04-20（+ Phase 9 世界管理入驻:6 Source + 6 Entity + 1 读本,Niagara 学习路径推进到 Phase 9/10 完成）
 
 ---
 
@@ -70,6 +70,12 @@
 - [[Wiki/Entities/Stock/FNiagaraGPUSort|FNiagaraGPUSort 家族]] — GPU 粒子排序;SortInfo + SortKeyGenCS(4 permutation)接入 FGPUSortManager (来源:1)
 - [[Wiki/Entities/Stock/FNiagaraVertexFactory|FNiagaraVertexFactory 家族]] — 3 种 VF(Sprite/Ribbon/Mesh);粒子到像素的桥;Mesh 独占 tessellation (来源:1)
 - [[Wiki/Entities/Stock/FNiagaraDrawIndirect|FNiagaraDrawIndirect 家族]] — Draw indirect args GPU 生成;TaskInfo 双用(gen + clear) (来源:1)
+- [[Wiki/Entities/Stock/FNiagaraWorldManager|FNiagaraWorldManager]] — 每 World 一个;SystemSimulations × TickGroup + ScalabilityManagers × EffectType + Pool + GC hooks (来源:1)
+- [[Wiki/Entities/Stock/FNiagaraScalabilityManager|FNiagaraScalabilityManager]] — 按 EffectType 的 cull 决策;4 类 cull + significance 排序;`bIsScalabilityCull=true` 不触发用户 delegate (来源:1)
+- [[Wiki/Entities/Stock/UNiagaraComponentPool|UNiagaraComponentPool]] — Component 池化;5 种 ENCPoolMethod;按 Asset 分 FNCPool + PrimePool 预热 (来源:1)
+- [[Wiki/Entities/Stock/UNiagaraSettings|UNiagaraSettings]] — 项目级 UDeveloperSettings;DefaultEffectType / QualityLevels / 默认 RT/Grid format (来源:1)
+- [[Wiki/Entities/Stock/UNiagaraEffectType|UNiagaraEffectType]] — 特效分类 + scalability 预算;4 类 ScalabilitySettings + SignificanceHandler + CullReaction (来源:1)
+- [[Wiki/Entities/Stock/FNiagaraPlatformSet|FNiagaraPlatformSet]] — 跨平台 × quality × CVar 决策;双 mask 三态;conflict 检测 (来源:1)
 
 ## Concepts(概念)
 *想法、理论、方法、术语。*
@@ -171,6 +177,12 @@
 - [[Wiki/Sources/Stock/NiagaraMeshVertexFactory]] — NiagaraMeshVertexFactory.h @ b6ab0dee9 (Phase 8.12,198 行)
 - [[Wiki/Sources/Stock/NiagaraSortingGPU]] — NiagaraSortingGPU.h @ b6ab0dee9 (Phase 8.13,SortKeyGenCS,81 行)
 - [[Wiki/Sources/Stock/NiagaraDrawIndirect]] — NiagaraDrawIndirect.h @ b6ab0dee9 (Phase 8.14,DrawIndirectArgsGenCS,130 行)
+- [[Wiki/Sources/Stock/NiagaraWorldManager]] — NiagaraWorldManager.h @ b6ab0dee9 (Phase 9.1,286 行)
+- [[Wiki/Sources/Stock/NiagaraScalabilityManager]] — NiagaraScalabilityManager.h @ b6ab0dee9 (Phase 9.2,140 行)
+- [[Wiki/Sources/Stock/NiagaraComponentPool]] — NiagaraComponentPool.h @ b6ab0dee9 (Phase 9.3,149 行)
+- [[Wiki/Sources/Stock/NiagaraSettings]] — NiagaraSettings.h @ b6ab0dee9 (Phase 9.4,75 行)
+- [[Wiki/Sources/Stock/NiagaraEffectType]] — NiagaraEffectType.h @ b6ab0dee9 (Phase 9.5,337 行)
+- [[Wiki/Sources/Stock/NiagaraPlatformSet]] — NiagaraPlatformSet.h @ b6ab0dee9 (Phase 9.6,378 行,扒前 200)
 
 ## Readers(主题读本)
 *每个议题"一次读完即完整掌握"的线性读物。人类阅读的首选入口,详见 [[CLAUDE]] §3.4。*
@@ -194,6 +206,7 @@
 - [[Readers/Niagara/Phase6-rendering-读本|Phase 6 读本 — Niagara 粒子如何变成屏幕像素]] — Properties/Renderer 对偶 + GT→RT 三阶段数据流 + 4 种类型能力边界(Sprite/Ribbon/Mesh/Light)+ Cutout/Tessellation/SimpleLight 特殊路径 (2026-04-20)
 - [[Readers/Niagara/Phase7-data-interface-读本|Phase 7 读本 — Niagara 的最强扩展点]] — DI 三路代码生成(VM/C++ lambda/HLSL)+ Per-Instance Data 生命周期 + 7 种典型 DI 能力矩阵 + SkeletalMesh 共享 skinning 缓存 + RW DI 预告 (2026-04-20)
 - [[Readers/Niagara/Phase8-gpu-simulation-读本|Phase 8 读本 — Niagara 的 GPU 模拟管线]] — Shader 编译 + 共享 GPU Instance Count + DrawIndirect 生成 + GPU Sort(FGPUSortManager + SortKeyGenCS 4 permutation)+ 3 种 VertexFactory 能力矩阵 (2026-04-20)
+- [[Readers/Niagara/Phase9-world-management-读本|Phase 9 读本 — Niagara 的世界管理与可扩展性]] — 全局状态四层模型 + Scalability 决策引擎(4 类 cull + significance)+ Pool 5 方法取舍 + PlatformSet 三态双 mask 配置 (2026-04-20)
 
 ## Syntheses(综合/专题)
 *跨源分析、对比、专题报告、好答案的沉淀(非读本)。读本见上方 [[#Readers(主题读本)]] 分区。*

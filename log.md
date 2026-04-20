@@ -5,6 +5,28 @@
 
 ---
 
+## [2026-04-20] ingest | Niagara Phase 9 · 世界管理(6 头文件)
+
+- 源(code,stock @ `b6ab0dee9`):合计 1365 行
+  - WorldManager(286)/ScalabilityManager(140)/ComponentPool(149)
+  - Settings(75)/EffectType(337)/PlatformSet(378,扒前 200)
+- 新建(13):6 Source + 6 Entity + 1 读本
+- 要点:
+  - **`FNiagaraWorldManager` 每 World 一个** + FGCObject,集中 SystemSimulations[TickGroup] + ScalabilityManagers[EffectType] + ComponentPool + SkinningData + ViewLocations
+  - **Scalability 四层叠加**:Settings → EffectType → System Override → Platforms 匹配
+  - **cull 与 OnSystemFinished 解耦**:`bIsScalabilityCull=true` 走 Internal 路径,不触发用户 delegate
+  - **4 种 cull**:Distance / VisibleTimeout / EffectTypeInstanceCount / PerSystemInstanceCount
+  - **Significance Handler 扩展点**:默认 Distance/Age,可自定义
+  - **5 种 CullReaction**:Deactivate / Immediate / Resume / ImmediateResume(Kill vs Asleep)
+  - **UpdateFrequency 5 档**:SpawnOnly / Low / Medium / High / Continuous,每 EffectType 独立
+  - **Pool 5 方法**:None / AutoRelease / ManualRelease / ManualRelease_OnComplete / FreeInPool,高频小特效 + AutoRelease 是核心
+  - **PrimePool 预热**:关卡加载时预分配,避免战斗首次 spawn 卡顿
+  - **PlatformSet 三态双 mask**:QualityLevelMask + SetQualityLevelMask 两 bit 表达 Enabled/Disabled/Default 三态
+  - **CVar 条件过滤**:除了 device profile,还可按 CVar 值范围过滤
+- 下一步:Phase 10 高级特性(6 文件,SimStages + Grid DI,最后一个 phase)
+
+---
+
 ## [2026-04-20] ingest | Niagara Phase 8 · GPU 模拟(13 头文件,8.8 已在 Phase 5.5)
 
 - 源(code,stock @ `b6ab0dee9`):合计 2500 行

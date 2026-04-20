@@ -293,8 +293,10 @@ Niagara 插件位于 `Engine/Plugins/FX/Niagara/`，共 7 个模块：
 
 ---
 
-### Phase 9 — 世界管理与可扩展性
+### Phase 9 — 世界管理与可扩展性 ✅
 > **目标**：理解 Niagara 如何管理全局资源、LOD、对象池。
+>
+> 📖 **主题读本**:[[Readers/Niagara/Phase9-world-management-读本]] — 全局状态四层模型 + Scalability 决策引擎 + Pool 5 方法取舍 + PlatformSet 三态配置。
 
 | # | 文件 | 模块 | 路径 |
 |---|---|---|---|
@@ -380,6 +382,7 @@ Niagara 插件位于 `Engine/Plugins/FX/Niagara/`，共 7 个模块：
 **Phase 6 ✅ 完成**（2026-04-20）
 **Phase 7 ✅ 完成**（2026-04-20）
 **Phase 8 ✅ 完成**（2026-04-20）
+**Phase 9 ✅ 完成**（2026-04-20）
 
 ### Phase 0（概念页）
 - [x] [[Wiki/Concepts/UE4/UE4-uobject-系统]]
@@ -460,12 +463,12 @@ Niagara 插件位于 `Engine/Plugins/FX/Niagara/`，共 7 个模块：
 - [x] [[Wiki/Sources/Stock/NiagaraDrawIndirect]] → [[Wiki/Entities/Stock/FNiagaraDrawIndirect]]
 
 ### Phase 9（世界管理）
-- [ ] [[Wiki/Sources/Stock/NiagaraWorldManager]]
-- [ ] [[Wiki/Sources/Stock/NiagaraScalabilityManager]]
-- [ ] [[Wiki/Sources/Stock/NiagaraComponentPool]]
-- [ ] [[Wiki/Sources/Stock/NiagaraSettings]]
-- [ ] [[Wiki/Sources/Stock/NiagaraEffectType]]
-- [ ] [[Wiki/Sources/Stock/NiagaraPlatformSet]]
+- [x] [[Wiki/Sources/Stock/NiagaraWorldManager]] → [[Wiki/Entities/Stock/FNiagaraWorldManager]]
+- [x] [[Wiki/Sources/Stock/NiagaraScalabilityManager]] → [[Wiki/Entities/Stock/FNiagaraScalabilityManager]]
+- [x] [[Wiki/Sources/Stock/NiagaraComponentPool]] → [[Wiki/Entities/Stock/UNiagaraComponentPool]]
+- [x] [[Wiki/Sources/Stock/NiagaraSettings]] → [[Wiki/Entities/Stock/UNiagaraSettings]]
+- [x] [[Wiki/Sources/Stock/NiagaraEffectType]] → [[Wiki/Entities/Stock/UNiagaraEffectType]]
+- [x] [[Wiki/Sources/Stock/NiagaraPlatformSet]] → [[Wiki/Entities/Stock/FNiagaraPlatformSet]]
 
 ### Phase 10（高级特性，选修）
 - [ ] [[Wiki/Sources/Stock/NiagaraSimulationStageBase]]
