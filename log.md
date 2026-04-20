@@ -5,6 +5,29 @@
 
 ---
 
+## [2026-04-20] ingest | Niagara Phase 7 · 数据接口系统(9 头文件,7.1 已在 Phase 5)
+
+- 源(code,stock @ `b6ab0dee9`):合计 2998 行(大文件扒头部)
+  - 主基类:NiagaraDataInterface.h(890,扒前 400)
+  - Curve:CurveBase(251)/ Curve(58)
+  - Camera(107)/ CollisionQuery(93)/ Texture(63)/ RenderTarget2D(138)
+  - StaticMesh(491,扒前 250)/ SkeletalMesh(976,扒前 300)
+- 新建(18):9 Source + 8 Entity + 1 读本
+  - Entity 压缩:Curve 把 Base+Float 合并为一个
+- 要点:
+  - **三路代码生成**:编译期 `GetFunctions` 注册签名,运行时 CPU `GetVMExternalFunction → lambda`,运行时 GPU `GetParameterDefinitionHLSL + GetFunctionHLSL → compute shader 拼接`
+  - **Per-Instance Data blob**:SystemInstance 16-byte 对齐分配,DI 按 offset 读写
+  - **VM 绑定模板族**:`TNDIBinder` 系列 + `DEFINE_NDI_FUNC_BINDER` 宏,声明式注册函数
+  - **Curve LUT + ExposedTexture**:预计算 + 跨系统(脚本/材质)复用
+  - **SkeletalMesh 共享 SkinningData**:世界级 `FNDI_SkeletalMesh_GeneratedData` TMap<MeshComp, TSharedPtr>,引用计数 + RWLock,多 DI 共享
+  - **TickGroup Prereqs**:DI 可强制 System Instance 的 TickGroup(Camera 要晚,Physics 要早)
+  - **RW DI**:`UNiagaraDataInterfaceRenderTarget2D : UNiagaraDataInterfaceRWBase`,继承链不同——Phase 10 基础
+  - **CPU Access 陷阱**:Mesh 没开就只能 GPU 采样三角形/顶点
+  - **GPU only DI**:Texture DI 明确只支持 GPUComputeSim
+- 下一步:Phase 8 GPU 模拟(14 文件,最大 Phase)
+
+---
+
 ## [2026-04-20] ingest | Niagara Phase 6 · 渲染系统(10 头文件)
 
 - 源(code,stock @ `b6ab0dee9`):合计 1776 行,10 文件成对

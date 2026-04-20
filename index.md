@@ -3,7 +3,7 @@
 > 本文件是整个 wiki 的内容目录。LLM 每次 ingest 都会更新。
 > 查询时先读这里,再深入相关页面。
 
-最后更新:2026-04-20（+ Phase 6 渲染系统入驻:10 Source + 6 Entity + 1 读本,Niagara 学习路径推进到 Phase 6/10 完成）
+最后更新:2026-04-20（+ Phase 7 数据接口系统入驻:9 Source + 8 Entity + 1 读本,Niagara 学习路径推进到 Phase 7/10 完成）
 
 ---
 
@@ -57,6 +57,14 @@
 - [[Wiki/Entities/Stock/UNiagaraRibbonRendererProperties|UNiagaraRibbonRendererProperties]] — Ribbon(粒子连成带);CPU only;RibbonId 多带/自适应 tessellation/双 UV channel (来源:1)
 - [[Wiki/Entities/Stock/UNiagaraMeshRendererProperties|UNiagaraMeshRendererProperties]] — Mesh(每粒子 StaticMesh 实例化);14 VF slot;CPU+GPU;全粒子共享 LOD (来源:1)
 - [[Wiki/Entities/Stock/UNiagaraLightRendererProperties|UNiagaraLightRendererProperties]] — Light(每粒子 SimpleLight);CPU only;不产 mesh batch,走 GatherSimpleLights (来源:1)
+- [[Wiki/Entities/Stock/UNiagaraDataInterface|UNiagaraDataInterface]] — DI 主基类(Niagara 主模块);三路代码生成(VM/C++ lambda/HLSL)+ 绑定模板族 (来源:1)
+- [[Wiki/Entities/Stock/UNiagaraDataInterfaceCurve|UNiagaraDataInterfaceCurve]] — 最简单 DI 示例;LUT 烘焙 + 可 Expose 为 UTexture 给材质共享 (来源:1)
+- [[Wiki/Entities/Stock/UNiagaraDataInterfaceCamera|UNiagaraDataInterfaceCamera]] — 相机查询 + 距离排序;TickGroup prereqs + bRequireCurrentFrameData 性能开关 (来源:1)
+- [[Wiki/Entities/Stock/UNiagaraDataInterfaceCollisionQuery|UNiagaraDataInterfaceCollisionQuery]] — 4 种查询(Sync/Async CPU + SceneDepth/DistanceField GPU) (来源:1)
+- [[Wiki/Entities/Stock/UNiagaraDataInterfaceStaticMesh|UNiagaraDataInterfaceStaticMesh]] — StaticMesh 采样;面积加权 + section 过滤;4 种 SourceMode (来源:1)
+- [[Wiki/Entities/Stock/UNiagaraDataInterfaceSkeletalMesh|UNiagaraDataInterfaceSkeletalMesh]] — 最复杂 DI;共享 SkinningData(引用计数+RWLock)+ 3 种 SkinningMode (来源:1)
+- [[Wiki/Entities/Stock/UNiagaraDataInterfaceTexture|UNiagaraDataInterfaceTexture]] — GPU only 2D 纹理采样;最小 DI 模板 (来源:1)
+- [[Wiki/Entities/Stock/UNiagaraDataInterfaceRenderTarget2D|UNiagaraDataInterfaceRenderTarget2D]] — RW DI 第一个示范;继承 UNiagaraDataInterfaceRWBase;Phase 10 基础 (来源:1)
 
 ## Concepts(概念)
 *想法、理论、方法、术语。*
@@ -136,6 +144,15 @@
 - [[Wiki/Sources/Stock/NiagaraRendererMeshes]] — NiagaraRendererMeshes.h @ b6ab0dee9 (Phase 6.8,74 行)
 - [[Wiki/Sources/Stock/NiagaraLightRendererProperties]] — NiagaraLightRendererProperties.h @ b6ab0dee9 (Phase 6.9,98 行)
 - [[Wiki/Sources/Stock/NiagaraRendererLights]] — NiagaraRendererLights.h @ b6ab0dee9 (Phase 6.10,31 行)
+- [[Wiki/Sources/Stock/NiagaraDataInterface]] — NiagaraDataInterface.h @ b6ab0dee9 (Phase 7.2,DI 主基类,890 行,扒前 400)
+- [[Wiki/Sources/Stock/NiagaraDataInterfaceCurve]] — NiagaraDataInterfaceCurve.h @ b6ab0dee9 (Phase 7.3,58 行)
+- [[Wiki/Sources/Stock/NiagaraDataInterfaceCurveBase]] — NiagaraDataInterfaceCurveBase.h @ b6ab0dee9 (Phase 7.4,Curve 基类,251 行)
+- [[Wiki/Sources/Stock/NiagaraDataInterfaceCamera]] — NiagaraDataInterfaceCamera.h @ b6ab0dee9 (Phase 7.5,107 行)
+- [[Wiki/Sources/Stock/NiagaraDataInterfaceCollisionQuery]] — NiagaraDataInterfaceCollisionQuery.h @ b6ab0dee9 (Phase 7.6,93 行)
+- [[Wiki/Sources/Stock/NiagaraDataInterfaceStaticMesh]] — NiagaraDataInterfaceStaticMesh.h @ b6ab0dee9 (Phase 7.7,491 行,扒前 250)
+- [[Wiki/Sources/Stock/NiagaraDataInterfaceSkeletalMesh]] — NiagaraDataInterfaceSkeletalMesh.h @ b6ab0dee9 (Phase 7.8,976 行,扒前 300)
+- [[Wiki/Sources/Stock/NiagaraDataInterfaceTexture]] — NiagaraDataInterfaceTexture.h @ b6ab0dee9 (Phase 7.9,63 行)
+- [[Wiki/Sources/Stock/NiagaraDataInterfaceRenderTarget2D]] — NiagaraDataInterfaceRenderTarget2D.h @ b6ab0dee9 (Phase 7.10,138 行,RW DI)
 
 ## Readers(主题读本)
 *每个议题"一次读完即完整掌握"的线性读物。人类阅读的首选入口,详见 [[CLAUDE]] §3.4。*
@@ -157,6 +174,7 @@
 - [[Readers/Niagara/Phase4-data-model-读本|Phase 4 读本 — Niagara 的数据语言]] — 类型系统(TypeDef/Variable/LayoutInfo)+ SoA 布局 + Double Buffer + Persistent ID 双整数 + 命名空间系统 + ParameterStore 三路 dirty + 绑定图,一次读完掌握 Niagara "数据"全貌 (2026-04-20)
 - [[Readers/Niagara/Phase5-cpu-script-execution-读本|Phase 5 读本 — Niagara 脚本如何"跑起来"]] — CPU VM 上下文 + PerInstanceFunctionHook + CPU/GPU 参数 padding + GPU Tick 打包 + FFXSystemInterface 三阶段 stage,为 Phase 7(DI)/Phase 8(GPU)搭脚手架 (2026-04-20)
 - [[Readers/Niagara/Phase6-rendering-读本|Phase 6 读本 — Niagara 粒子如何变成屏幕像素]] — Properties/Renderer 对偶 + GT→RT 三阶段数据流 + 4 种类型能力边界(Sprite/Ribbon/Mesh/Light)+ Cutout/Tessellation/SimpleLight 特殊路径 (2026-04-20)
+- [[Readers/Niagara/Phase7-data-interface-读本|Phase 7 读本 — Niagara 的最强扩展点]] — DI 三路代码生成(VM/C++ lambda/HLSL)+ Per-Instance Data 生命周期 + 7 种典型 DI 能力矩阵 + SkeletalMesh 共享 skinning 缓存 + RW DI 预告 (2026-04-20)
 
 ## Syntheses(综合/专题)
 *跨源分析、对比、专题报告、好答案的沉淀(非读本)。读本见上方 [[#Readers(主题读本)]] 分区。*

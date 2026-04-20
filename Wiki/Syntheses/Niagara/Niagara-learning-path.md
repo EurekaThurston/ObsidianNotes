@@ -224,28 +224,30 @@ Niagara 插件位于 `Engine/Plugins/FX/Niagara/`，共 7 个模块：
 
 ---
 
-### Phase 7 — 数据接口系统
+### Phase 7 — 数据接口系统 ✅
 > **目标**：理解 Niagara 脚本如何访问"外部数据"（相机、骨骼网格、曲线等）。DataInterface 是 Niagara 最强大也最复杂的扩展点。
+>
+> 📖 **主题读本**:[[Readers/Niagara/Phase7-data-interface-读本]] — DI 三路代码生成(VM/C++ lambda/HLSL)+ Per-Instance Data 生命周期 + 7 种典型 DI 能力矩阵 + 共享 skinning 缓存。
 
 **第一轮：基类**
 
-| # | 文件 | 模块 | 路径 |
-|---|---|---|---|
-| 7.1 | `NiagaraDataInterfaceBase.h` | NiagaraCore | `Public/` |
-| 7.2 | `NiagaraDataInterface.h` | Niagara | `Classes/` |
+| # | 文件 | 模块 | 路径 | 源摘要 |
+|---|---|---|---|---|
+| 7.1 | `NiagaraDataInterfaceBase.h` | NiagaraCore | `Public/` | [[Wiki/Sources/Stock/NiagaraDataInterfaceBase]] (Phase 5.2 已覆盖) |
+| 7.2 | `NiagaraDataInterface.h` | Niagara | `Classes/` | [[Wiki/Sources/Stock/NiagaraDataInterface]] |
 
 **第二轮：典型 DI（由易到难）**
 
-| # | 文件 | 模块 | 说明 |
-|---|---|---|---|
-| 7.3 | `NiagaraDataInterfaceCurve.h` | Niagara | 最简单：读一条浮点曲线 |
-| 7.4 | `NiagaraDataInterfaceCurveBase.h` | Niagara | Curve DI 的公共基类 |
-| 7.5 | `NiagaraDataInterfaceCamera.h` | Niagara | 提供相机位置/方向给脚本 |
-| 7.6 | `NiagaraDataInterfaceCollisionQuery.h` | Niagara | 粒子物理碰撞查询 |
-| 7.7 | `NiagaraDataInterfaceStaticMesh.h` | Niagara | 从静态网格采样位置/法线 |
-| 7.8 | `NiagaraDataInterfaceSkeletalMesh.h` | Niagara | 从骨骼网格采样（最复杂之一） |
-| 7.9 | `NiagaraDataInterfaceTexture.h` | Niagara | 采样 2D 纹理 |
-| 7.10 | `NiagaraDataInterfaceRenderTarget2D.h` | Niagara | 读写 RenderTarget（GPU DI） |
+| # | 文件 | 模块 | 说明 | 源摘要 |
+|---|---|---|---|---|
+| 7.3 | `NiagaraDataInterfaceCurve.h` | Niagara | 最简单：读一条浮点曲线 | [[Wiki/Sources/Stock/NiagaraDataInterfaceCurve]] |
+| 7.4 | `NiagaraDataInterfaceCurveBase.h` | Niagara | Curve DI 的公共基类 | [[Wiki/Sources/Stock/NiagaraDataInterfaceCurveBase]] |
+| 7.5 | `NiagaraDataInterfaceCamera.h` | Niagara | 提供相机位置/方向给脚本 | [[Wiki/Sources/Stock/NiagaraDataInterfaceCamera]] |
+| 7.6 | `NiagaraDataInterfaceCollisionQuery.h` | Niagara | 粒子物理碰撞查询 | [[Wiki/Sources/Stock/NiagaraDataInterfaceCollisionQuery]] |
+| 7.7 | `NiagaraDataInterfaceStaticMesh.h` | Niagara | 从静态网格采样位置/法线 | [[Wiki/Sources/Stock/NiagaraDataInterfaceStaticMesh]] |
+| 7.8 | `NiagaraDataInterfaceSkeletalMesh.h` | Niagara | 从骨骼网格采样（最复杂之一） | [[Wiki/Sources/Stock/NiagaraDataInterfaceSkeletalMesh]] |
+| 7.9 | `NiagaraDataInterfaceTexture.h` | Niagara | 采样 2D 纹理 | [[Wiki/Sources/Stock/NiagaraDataInterfaceTexture]] |
+| 7.10 | `NiagaraDataInterfaceRenderTarget2D.h` | Niagara | 读写 RenderTarget（GPU DI） | [[Wiki/Sources/Stock/NiagaraDataInterfaceRenderTarget2D]] |
 
 **学习要点：**
 - DI 的核心机制：在编辑器中"注册函数名" → 编译时绑定 → 运行时通过函数指针/shader binding 执行
@@ -374,6 +376,7 @@ Niagara 插件位于 `Engine/Plugins/FX/Niagara/`，共 7 个模块：
 **Phase 4 ✅ 完成**（2026-04-20）
 **Phase 5 ✅ 完成**（2026-04-20）
 **Phase 6 ✅ 完成**（2026-04-20）
+**Phase 7 ✅ 完成**（2026-04-20）
 
 ### Phase 0（概念页）
 - [x] [[Wiki/Concepts/UE4/UE4-uobject-系统]]
@@ -427,15 +430,15 @@ Niagara 插件位于 `Engine/Plugins/FX/Niagara/`，共 7 个模块：
 - [x] [[Wiki/Sources/Stock/NiagaraRendererLights]]
 
 ### Phase 7（数据接口）
-- [ ] [[Wiki/Sources/Stock/NiagaraDataInterface]]
-- [ ] [[Wiki/Sources/Stock/NiagaraDataInterfaceCurve]]
-- [ ] [[Wiki/Sources/Stock/NiagaraDataInterfaceCurveBase]]
-- [ ] [[Wiki/Sources/Stock/NiagaraDataInterfaceCamera]]
-- [ ] [[Wiki/Sources/Stock/NiagaraDataInterfaceCollisionQuery]]
-- [ ] [[Wiki/Sources/Stock/NiagaraDataInterfaceStaticMesh]]
-- [ ] [[Wiki/Sources/Stock/NiagaraDataInterfaceSkeletalMesh]]
-- [ ] [[Wiki/Sources/Stock/NiagaraDataInterfaceTexture]]
-- [ ] [[Wiki/Sources/Stock/NiagaraDataInterfaceRenderTarget2D]]
+- [x] [[Wiki/Sources/Stock/NiagaraDataInterface]] → [[Wiki/Entities/Stock/UNiagaraDataInterface]]
+- [x] [[Wiki/Sources/Stock/NiagaraDataInterfaceCurve]] → [[Wiki/Entities/Stock/UNiagaraDataInterfaceCurve]]
+- [x] [[Wiki/Sources/Stock/NiagaraDataInterfaceCurveBase]]
+- [x] [[Wiki/Sources/Stock/NiagaraDataInterfaceCamera]] → [[Wiki/Entities/Stock/UNiagaraDataInterfaceCamera]]
+- [x] [[Wiki/Sources/Stock/NiagaraDataInterfaceCollisionQuery]] → [[Wiki/Entities/Stock/UNiagaraDataInterfaceCollisionQuery]]
+- [x] [[Wiki/Sources/Stock/NiagaraDataInterfaceStaticMesh]] → [[Wiki/Entities/Stock/UNiagaraDataInterfaceStaticMesh]]
+- [x] [[Wiki/Sources/Stock/NiagaraDataInterfaceSkeletalMesh]] → [[Wiki/Entities/Stock/UNiagaraDataInterfaceSkeletalMesh]]
+- [x] [[Wiki/Sources/Stock/NiagaraDataInterfaceTexture]] → [[Wiki/Entities/Stock/UNiagaraDataInterfaceTexture]]
+- [x] [[Wiki/Sources/Stock/NiagaraDataInterfaceRenderTarget2D]] → [[Wiki/Entities/Stock/UNiagaraDataInterfaceRenderTarget2D]]
 
 ### Phase 8（GPU）
 - [ ] [[Wiki/Sources/Stock/NiagaraShared]]
