@@ -13,7 +13,9 @@ source_commit: b6ab0dee9
 
 # Phase 5 读本 — Niagara 脚本如何"跑起来"
 
-> 本页是 Niagara 学习路径 [[Wiki/Syntheses/Niagara/Niagara-learning-path]] Phase 5 的**主题读本**。一次读完掌握 CPU VM 如何 dispatch Niagara 脚本、per-instance DI 机制、GPU 执行上下文与 Tick 打包的形态(GPU 详细等 Phase 8)。
+> 本页是 Niagara 学习路径 [[Wiki/Syntheses/Niagara/Niagara-learning-path]] Phase 5 的**主题读本**。一次读完掌握 CPU VM 如何 dispatch Niagara 脚本、per-instance DI 机制、GPU 执行上下文与 Tick 打包的形态(GPU 详细等 [[Readers/Niagara/Phase8-gpu-simulation-读本|Phase 8]])。
+>
+> 如需字段级查询或溯源,见末尾的 [[#深入阅读]] 索引。
 
 ---
 
@@ -404,15 +406,18 @@ Light                  LightRendererProperties   RendererLights
 - Source × 5:[[Wiki/Sources/Stock/NiagaraCore]] / [[Wiki/Sources/Stock/NiagaraDataInterfaceBase]] / [[Wiki/Sources/Stock/NiagaraScriptExecutionContext]] / [[Wiki/Sources/Stock/NiagaraScriptExecutionParameterStore]] / [[Wiki/Sources/Stock/NiagaraEmitterInstanceBatcher]]
 - Entity × 5:[[Wiki/Entities/Stock/UNiagaraDataInterfaceBase]] / [[Wiki/Entities/Stock/FNiagaraScriptExecutionContext]] / [[Wiki/Entities/Stock/FNiagaraComputeExecutionContext]] / [[Wiki/Entities/Stock/FNiagaraGPUSystemTick]] / [[Wiki/Entities/Stock/NiagaraEmitterInstanceBatcher]]
 
-### 前置
+### 前置议题
 
-- Phase 3 读本 — CPU ExecContext 在此引用但未展开
-- Phase 4 读本 — ParameterStore 基类和类型系统
+- [[Readers/Niagara/Phase3-runtime-instance-读本]] — CPU ExecContext 在 EmitterInstance 被引用但未展开
+- [[Readers/Niagara/Phase4-data-model-读本]] — ParameterStore 基类、类型系统、SoA DataSet
 - [[Wiki/Concepts/Niagara/Niagara-cpu-vs-gpu模拟]] — CPU/GPU 双路径
 
-### 导航
+### 下一步 / 导航
 
-- [[Wiki/Syntheses/Niagara/Niagara-learning-path]]
+- 下一阶段:[[Readers/Niagara/Phase6-rendering-读本]] — 粒子数据 → 像素
+- 深入 GPU 侧:[[Readers/Niagara/Phase8-gpu-simulation-读本]]
+- 学习路径总图:[[Wiki/Syntheses/Niagara/Niagara-learning-path]]
+- 仓综合视图:[[Wiki/Overview]]
 
 ---
 

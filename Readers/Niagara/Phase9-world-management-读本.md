@@ -13,7 +13,9 @@ source_commit: b6ab0dee9
 
 # Phase 9 读本 — Niagara 的世界管理与可扩展性
 
-> 本页是 Phase 9 的**主题读本**。一次读完掌握 Niagara 的 world 级架构 + scalability 决策 + pool + platform 分支。
+> 本页是 Niagara 学习路径 [[Wiki/Syntheses/Niagara/Niagara-learning-path]] Phase 9 的**主题读本**。一次读完掌握 Niagara 的 world 级架构 + scalability 决策 + pool + platform 分支。
+>
+> 如需字段级查询或溯源,见末尾的 [[#深入阅读]] 索引。
 
 ---
 
@@ -321,16 +323,34 @@ FNiagaraPlatformSetCVarCondition {
 
 ## 深入阅读
 
-### 原子页
+### 本议题的原子页
 
-- Source × 6:WorldManager / ScalabilityManager / ComponentPool / Settings / EffectType / PlatformSet
-- Entity × 6:FNiagaraWorldManager / FNiagaraScalabilityManager / UNiagaraComponentPool / UNiagaraSettings / UNiagaraEffectType / FNiagaraPlatformSet
+- 源摘要(Source × 6)
+  - 全局四层:[[Wiki/Sources/Stock/NiagaraWorldManager]] / [[Wiki/Sources/Stock/NiagaraScalabilityManager]] / [[Wiki/Sources/Stock/NiagaraComponentPool]]
+  - 配置家族:[[Wiki/Sources/Stock/NiagaraSettings]] / [[Wiki/Sources/Stock/NiagaraEffectType]] / [[Wiki/Sources/Stock/NiagaraPlatformSet]]
+- 实体(Entity × 6)
+  - [[Wiki/Entities/Stock/FNiagaraWorldManager]]
+  - [[Wiki/Entities/Stock/FNiagaraScalabilityManager]]
+  - [[Wiki/Entities/Stock/UNiagaraComponentPool]]
+  - [[Wiki/Entities/Stock/UNiagaraSettings]]
+  - [[Wiki/Entities/Stock/UNiagaraEffectType]]
+  - [[Wiki/Entities/Stock/FNiagaraPlatformSet]]
 
-### 前置
+### 前置议题
 
-- Phase 2 Component 的 Scalability 接线 + PoolingMethod
-- Phase 3 SystemSimulation 的 (Asset × World × TickGroup) 身份
-- Phase 7 SkeletalMesh 共享数据(World manager 持有)
+- [[Readers/Niagara/Phase2-component-layer-读本]] — Component 的 `PoolingMethod` + Scalability 接线 + AutoDestroy 三方决策
+- [[Readers/Niagara/Phase3-runtime-instance-读本]] — `FNiagaraSystemSimulation` 的 (Asset × World × TickGroup) 身份由 WorldManager 作 key
+- [[Readers/Niagara/Phase7-data-interface-读本]] — SkeletalMesh DI 共享数据由 WorldManager 持有
+
+### 相关概念
+
+- [[Wiki/Concepts/UE4/UE4-资产与实例]] — ComponentPool 正是通过复用"Instance"绕过 GC 的典型
+
+### 下一步 / 导航
+
+- 选修终点:[[Readers/Niagara/Phase10-advanced-features-读本]] — SimStages + Grid 流体模拟
+- 学习路径总图:[[Wiki/Syntheses/Niagara/Niagara-learning-path]]
+- 仓综合视图:[[Wiki/Overview]]
 
 ---
 

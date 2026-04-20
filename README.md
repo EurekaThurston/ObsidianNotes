@@ -69,12 +69,12 @@
 
 ---
 
-## 当前主题（截至 2026-04-20）
+## 当前主题（截至 2026-04-21）
 
 本仓目前覆盖 4 个互相独立的主题,每个主题都配套一份主题读本。具体最新状态以 [`Wiki/Overview.md`](Wiki/Overview.md) 为准。
 
 1. **知识库方法论（meta / bootstrap）** — 本仓自身的方法论基础，源自 Karpathy 的 LLM Wiki idea file。📖 [方法论读本](Readers/Methodology/Llm-wiki-方法论-读本.md)。
-2. **Niagara 源码学习（UE 4.26）** — 面向 C++ 零基础学员的 Niagara 插件 10 阶段学习路径,约 69 个运行时文件。**Phase 0(心智模型)✅ + Phase 1(Asset 层,5 文件)✅**,Phase 2-10 按进度推进。📖 [Phase 0 读本](Readers/Niagara/Phase0-心智模型-读本.md) · [Phase 1 读本](Readers/Niagara/Phase1-asset-layer-读本.md)。
+2. **Niagara 源码学习（UE 4.26）** — 面向 C++ 零基础学员的 Niagara 插件 11 阶段(Phase 0-10)学习路径,~90 个运行时文件 + 11 份主题读本。**Phase 0-10 ✅ 全部完成 🎉**,并已通过 Phase 5-10 分组 targeted lint 质量基线确认。📖 推荐入口:[Phase 0 心智模型读本](Readers/Niagara/Phase0-心智模型-读本.md) / [学习路径总图](Wiki/Syntheses/Niagara/Niagara-learning-path.md)。
 3. **AI 美术生成管线（LoRA / ComfyUI）** — 游戏美术从 MidJourney 迁移到自训 LoRA + ComfyUI 的落地方案。📖 [LoRA 深度指南读本](Readers/AIArt/Lora-深度指南-读本.md)。
 4. **AI 应用生态（2026-04 新增）** — Prompt → Context → Harness 三段论为主线的 AI 应用扫盲,面向美术 / 策划 / 管理者等非开发角色。📖 [AI 应用生态读本](Readers/AIApps/AI-primer-v2-读本.md)。
 

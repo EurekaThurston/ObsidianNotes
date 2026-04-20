@@ -14,7 +14,9 @@ source_commit: b6ab0dee9
 
 # UNiagaraDataInterfaceCurve / CurveBase
 
-> **最简单的 DI 示例**。让脚本采样 `FRichCurve`(float 曲线)。本页合并 Base(251 行)+ Float(58 行)。
+> **最简单的 DI 示例**。让脚本采样 `FRichCurve`(float 曲线)。
+>
+> ⚠️ **合并页说明**:Curve 族有两个类——`UNiagaraDataInterfaceCurveBase`(抽象公共基类,251 行,无独立 Entity 页)与 `UNiagaraDataInterfaceCurve`(float 具体实现,58 行)。本 Entity 页**合并覆盖这两个类**,aliases 字段同时登记两者。对应 Source 有两个:[[Wiki/Sources/Stock/NiagaraDataInterfaceCurveBase]] + [[Wiki/Sources/Stock/NiagaraDataInterfaceCurve]]。
 
 ## 一句话角色
 

@@ -13,7 +13,9 @@ source_commit: b6ab0dee9
 
 # Phase 8 读本 — Niagara 的 GPU 模拟管线
 
-> 本页是 Phase 8 的**主题读本**。一次读完掌握 Niagara GPU 流水线:脚本 → compute shader → instance count → sort → draw indirect 的完整链路。
+> 本页是 Niagara 学习路径 [[Wiki/Syntheses/Niagara/Niagara-learning-path]] Phase 8 的**主题读本**。一次读完掌握 Niagara GPU 流水线:脚本 → compute shader → instance count → sort → draw indirect 的完整链路。本 Phase 是 [[Wiki/Concepts/Niagara/Niagara-cpu-vs-gpu模拟|CPU/GPU 双路径]] 里 GPU 侧的全貌。
+>
+> 如需字段级查询或溯源,见末尾的 [[#深入阅读]] 索引。
 
 ---
 
@@ -106,7 +108,10 @@ PS4 wave 是 64,其他(GCN/RDNA/NV)是 32。HLSL 里 `[numthreads(THREADGROUP_SI
 
 ### 2.4 ShaderMap / ShaderMapId / 缓存
 
+注意:`FNiagaraShaderMapId` 的**物理定义在 `NiagaraShared.h`**(不是 `NiagaraShaderMap.h`)——本节归在 ShaderMap 叙事线下,只因它是 ShaderMap 的 key。
+
 ```cpp
+// 定义:NiagaraShared.h L229-256
 class FNiagaraShaderMapId {
     FGuid CompilerVersionID;
     ERHIFeatureLevel::Type FeatureLevel;
@@ -407,17 +412,38 @@ Fallback 路径,不支持 RW texture buffer 的平台(`FSupportsTextureRW permut
 
 ## 深入阅读
 
-### 原子页
+### 本议题的原子页
 
-- Source × 13(8.1-8.14 除 8.8):Shared / Shader / ShaderType / ShaderMap / ScriptBase / GPUInstanceCountManager / GPUSortInfo / VertexFactory / SpriteVF / RibbonVF / MeshVF / SortingGPU / DrawIndirect
-- Entity × 5:FNiagaraShader(合 4) / FNiagaraGPUInstanceCountManager / FNiagaraGPUSort(合 2) / FNiagaraVertexFactory(合 4) / FNiagaraDrawIndirect
+- 源摘要(Source × 13;8.8 `NiagaraEmitterInstanceBatcher` GPU 侧已在 Phase 5.5 覆盖)
+  - Shader 编译链:[[Wiki/Sources/Stock/NiagaraShared]] / [[Wiki/Sources/Stock/NiagaraShader]] / [[Wiki/Sources/Stock/NiagaraShaderType]] / [[Wiki/Sources/Stock/NiagaraShaderMap]] / [[Wiki/Sources/Stock/NiagaraScriptBase]]
+  - GPU 运行时基础:[[Wiki/Sources/Stock/NiagaraGPUInstanceCountManager]] / [[Wiki/Sources/Stock/NiagaraGPUSortInfo]]
+  - VertexFactory 家族:[[Wiki/Sources/Stock/NiagaraVertexFactory]] / [[Wiki/Sources/Stock/NiagaraSpriteVertexFactory]] / [[Wiki/Sources/Stock/NiagaraRibbonVertexFactory]] / [[Wiki/Sources/Stock/NiagaraMeshVertexFactory]]
+  - 排序与间接绘制:[[Wiki/Sources/Stock/NiagaraSortingGPU]] / [[Wiki/Sources/Stock/NiagaraDrawIndirect]]
+  - (CPU 侧 Batcher/Tick:[[Wiki/Sources/Stock/NiagaraEmitterInstanceBatcher]] 在 Phase 5)
+- 实体(Entity × 5,部分类型做了合并)
+  - [[Wiki/Entities/Stock/FNiagaraShader]](合并 ShaderType/ShaderMap/ScriptBase/Shared 的 4 个头文件)
+  - [[Wiki/Entities/Stock/FNiagaraGPUInstanceCountManager]]
+  - [[Wiki/Entities/Stock/FNiagaraGPUSort]](合并 GPUSortInfo + SortingGPU 2 文件)
+  - [[Wiki/Entities/Stock/FNiagaraVertexFactory]](合并 Sprite/Ribbon/Mesh 4 文件)
+  - [[Wiki/Entities/Stock/FNiagaraDrawIndirect]]
 
-### 前置
+### 前置议题
 
-- Phase 4 DataSet(GPUBufferFloat/Int/Half)
-- Phase 5 CPU 脚本执行 + GPU Tick 打包 + Batcher
-- Phase 6 Renderer(持 VF)
-- Phase 7 DI(GPU shader 参数生成)
+- [[Readers/Niagara/Phase4-data-model-读本]] — `FNiagaraDataBuffer` 的 `GPUBufferFloat/Int/Half`、ParameterStore padding 映射
+- [[Readers/Niagara/Phase5-cpu-script-execution-读本]] — CPU 脚本执行、GPU Tick 打包、Batcher 主循环
+- [[Readers/Niagara/Phase6-rendering-读本]] — Renderer 如何持 VertexFactory、Dummy SRV、GPU DynamicData
+- [[Readers/Niagara/Phase7-data-interface-读本]] — DI 的 GPU shader 参数生成(`FNiagaraDataInterfaceParametersCS`)
+
+### 相关概念
+
+- [[Wiki/Concepts/Niagara/Niagara-cpu-vs-gpu模拟]] — GPU 侧的全貌就是本 Phase
+
+### 下一步 / 导航
+
+- 下一阶段:[[Readers/Niagara/Phase9-world-management-读本]] — World 级全局调度、Scalability、Pool
+- 选修进阶:[[Readers/Niagara/Phase10-advanced-features-读本]] — SimStages 多 pass 和 Grid DI
+- 学习路径总图:[[Wiki/Syntheses/Niagara/Niagara-learning-path]]
+- 仓综合视图:[[Wiki/Overview]]
 
 ---
 

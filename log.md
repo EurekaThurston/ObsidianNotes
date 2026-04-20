@@ -5,6 +5,35 @@
 
 ---
 
+## [2026-04-21] lint | Niagara Phase 5-10 分组 targeted 全量检查 + 3 处微修复
+
+- 触发:学习路径 Phase 0-10 全部完成后的质量基线确认(Phase 0-4 先前已稳定,本轮重点 5-10)
+- 方法:按 Phase 分组套用 [[Wiki/_templates/Lint-checklist]] 的思路,**不做全 vault 扫描**,只扫每 Phase 相关原子页 + 读本 + 学习路径对应章节 + log 对账 + index 登记。每 Phase 派一个 Explore agent 并行检查 6 类(frontmatter / broken wikilinks / fs-log 对账 / 交叉引用闭合 / 读本签名与模板痕迹 / Phase 特有一致性)
+- 覆盖规模:
+  - Phase 5(CPU 脚本执行):11 文件(5 Source + 5 Entity + 1 Reader)
+  - Phase 6(渲染系统):17 文件(10 Source + 6 Entity + 1 Reader)
+  - Phase 7(数据接口):18 文件(9 Source + 8 Entity + 1 Reader)
+  - Phase 8(GPU 模拟):19 文件(13 Source + 5 Entity + 1 Reader)
+  - Phase 9(世界管理):13 文件(6 Source + 6 Entity + 1 Reader)
+  - Phase 10(高级特性):12 文件(6 Source + 5 Entity + 1 Reader)
+  - **合计:90 文件全扫**,全部绿色通过(0 broken / 0 模板残留 / 0 log 对账差异 / commit 统一 `b6ab0dee9`)
+- 微修复(3 处,均为 🟢 低优化:Source→Entity 方向的头部显式链接,提升导航可发现性):
+  - 修改:[[Wiki/Sources/Stock/NiagaraScriptExecutionContext]] L23-26 — 头部新增"派生 Entity"小节,列出块 B/C/D 对应的 3 个 Entity wikilink
+  - 修改:[[Wiki/Sources/Stock/NiagaraDataInterface]] L23-32 — 头部新增"主实体 + Phase 7 直接子类 Entity(×7)+ Phase 10 分支"三节,显式闭合 DI 主基类到 7 子类的 Source→Entity 链接,并标注 RW 基类分叉
+  - 修改:[[Wiki/Entities/Stock/UNiagaraDataInterfaceCurve]] L17-19 — 标题导语升级为带 ⚠️ 的"合并页说明",明确 Curve Entity 覆盖 `UNiagaraDataInterfaceCurveBase`(无独立 Entity)+ `UNiagaraDataInterfaceCurve` 两个类,并显式下链两个对应 Source
+- 关键发现:
+  - Phase 6、Phase 8 满分通过(零建议),质量基线最稳
+  - Phase 5/7 各有一个 Source→Entity 头部显式链的缺口(上游信息可推断但需跳转),本轮已补
+  - 跨 Phase 继承链完整:DI 链 Phase 5 Base → Phase 7 UNiagaraDataInterface → Phase 7 七子类 / Phase 10 RWBase → Phase 10 三 Grid/NeighborGrid,全部双向闭合
+  - 读本签名 6/6 合格(含 commit hash + Claudian 签名 + 日期)
+  - Phase 8.8 NiagaraEmitterInstanceBatcher 的跨 Phase 引用(Phase 5 ↔ Phase 8)措辞一致,无重复摄入
+- 不处理的:
+  - 源码原注释的 TODO(ComponentPool FIFO / EffectType ScreenFraction):已在 Phase 9 读本"留下的问题"段落显式 backlog,不算残留
+  - 4.26 未涉 RDG,技术栈一致,无须标注
+- 下一步:本次 lint 确认学习路径 Phase 5-10 质量基线稳固,可作为长期检索 / 人类线性阅读的可信基础。后续若对 Phase 0-4 也做同样 targeted 检查,可进一步补全全路径 lint 记录
+
+---
+
 ## [2026-04-20] ingest | Niagara Phase 10 · 高级特性(6 头文件,**学习路径终点**)
 
 - 源(code,stock @ `b6ab0dee9`):合计 944 行
@@ -648,3 +677,65 @@
 - 要点:10 阶段学习路径，Phase 0(概念)→ Phase 9(世界管理)+ Phase 10(高级选修)，共约 69 个文件；每阶段含文件清单、学习要点、难度评级、进度 checkbox
 - 下一步:从 Phase 0 概念页开始，或直接从 Phase 1 `NiagaraSystem.h` 开始逐文件 ingest
 
+## [2026-04-20] refactor | Niagara Readers Phase 3-10 复查修正
+- 背景:Phase 3-10 读本在上次 ingest 时 context 顶到 90%+,需要二次核查
+- 方法:4 个 sub-agent 并行(P3+4 / P5+6 / P7+8 / P9+10),按源码 cross-check,再由主线挑战 agent 误报、直接访问源码验证
+- 修正 4 个读本:
+  - [[Readers/Niagara/Phase3-runtime-instance-读本]] §0 + §深入阅读 + 末尾签名:文件行数 574/239/429 → 573/238/428(off-by-one 修正)
+  - [[Readers/Niagara/Phase6-rendering-读本]] §5.3:**删除编造的 5 个 Ribbon `mutable` tessellation 字段**(TessellationCurvature 等在 4.26 头文件里不存在);只保留真实配置字段 + 警告注释
+  - [[Readers/Niagara/Phase6-rendering-读本]] §5.4:`ScaledUsingSegmentLength` → `ScaledUsingRibbonSegmentLength`(枚举真名)
+  - [[Readers/Niagara/Phase8-gpu-simulation-读本]] §2.4:注明 `FNiagaraShaderMapId` 物理定义在 `NiagaraShared.h`,本节归在 ShaderMap 叙事下只因它是 Map 的 key
+  - [[Readers/Niagara/Phase10-advanced-features-读本]] §6.2:补 `NeighborGrid3DRWInstanceData::bool SetGridFromCellSize` 字段 + 双驱动模式说明
+- 确认无需改:Phase 3 `ENiagaraGPUTickHandlingMode = 5 值`(agent 误报 4)、Phase 5 `PaddedParameterSize uint32`(agent 误报 uint16)——已在源码直接 grep 反证
+- 链接完整性:4 个 agent 独立 Glob 验证,全部 `[[...]]` 可解析,**零断链**
+- 要点:重要教训——context 窗口爆满时容易幻觉字段名;复查必须跑到源码一行一行核对。sub-agent 也会误报,主线必须挑战其结论
+- 下一步:Phase 11+? 学习路径已标记完结;若要扩充,可考虑 Editor 模块(NiagaraEditor)或 Niagara 材质/渲染与 UE 渲染管线的集成专题
+
+## [2026-04-20] refactor | Niagara Readers Phase 4-10 补链接(结构性漏链)
+- 背景:用户指出"断链"只是浅层,更严重的是**该写 wikilink 却没写**(只写纯文本)。以 [[Readers/Niagara/Phase0-心智模型-读本]]、[[Readers/Niagara/Phase1-asset-layer-读本]] 为标准复检
+- 发现:Phase 6 仅 2 链、Phase 7/8/9 仅 1 链(只签名行的 Claudian)、Phase 10 的 Source/Entity 列表也是纯文本。远低于 Phase 1 的 21 链基线
+- 修正涉及 7 个读本:
+  - [[Readers/Niagara/Phase4-data-model-读本]]:Entity×7 文本 → wikilink;前置段补 Phase 0/1/2/3 跨读本链接 + Concept 链接;加 [[#深入阅读]] 指针
+  - [[Readers/Niagara/Phase5-cpu-script-execution-读本]]:前置段"Phase 3 读本"/"Phase 4 读本"文本 → wikilink;新增下一步 Phase 6/8 链接 + Overview;加 [[#深入阅读]] 指针 + Phase 8 内联链接
+  - [[Readers/Niagara/Phase6-rendering-读本]]:深入阅读整块重写,Source×10 / Entity×6 全部 wikilink,增加 Phase 2/3/4/5 前置跨读本链接、Phase 7 下一步链接、Concept 链接、Overview;header 加学习路径链接 + Asset/Instance Concept 内联链接 + [[#深入阅读]] 指针
+  - [[Readers/Niagara/Phase7-data-interface-读本]]:同样重写,Source×9 / Entity×8 全 wikilink;补 Phase 2/3/4/5 前置、Phase 8 下一步、Phase 10 后续深入、CPU/GPU Concept 链接;header 加学习路径链接 + CPU/GPU Concept 内联链接 + [[#深入阅读]] 指针
+  - [[Readers/Niagara/Phase8-gpu-simulation-读本]]:Source×13 / Entity×5 全 wikilink;分组呈现(Shader 编译链/GPU 基础/VertexFactory/Sort&Indirect);补 Phase 4/5/6/7 前置、Phase 9/10 下一步;header 加学习路径链接 + CPU/GPU Concept 内联 + [[#深入阅读]] 指针
+  - [[Readers/Niagara/Phase9-world-management-读本]]:Source×6 / Entity×6 全 wikilink;补 Phase 2/3/7 前置、Phase 10 终点链接、Asset/Instance Concept 链接;header 补全
+  - [[Readers/Niagara/Phase10-advanced-features-读本]]:Source×6 / Entity×5 全 wikilink;重构前置段用真实读本 wikilink;header 补全学习路径链接 + [[#深入阅读]] 指针
+- 指标:wikilink 占用数从 Phase 6=2 / 7=1 / 8=1 / 9=1 涨到 20/30/31/21;Phase 4=15→24, Phase 5=11→20, Phase 10=12→27
+- 全量校验(Python 脚本跑 Phase 0-10,共 247 条 wikilink 实例):**零断链**(仅 `[[Claudian]]` 依赖 Obsidian shortest-path 解析,实际文件在 Wiki/Entities/Claudian.md)
+- 要点:上一轮复查只检查"已有链接是否断",漏了"该写却没写"的结构性缺失。**Lint 心智应包含"链接密度是否符合读本模板"**。未来 ingest 时注意 Reader 模板 §7 的"深入阅读"必须含 Source×N / Entity×N / 前置议题 / 下一步导航 / Claudian 签名 5 块结构
+- 下一步:考虑给 [[Wiki/_templates/Reader]] 补一条"深入阅读必须完整 wikilink 化"的硬性要求
+
+## [2026-04-20] refactor | Niagara Phase 3 读本全量核查与补完
+- 方法:不再抽查,读完读本全部 683 行 + 3 个源文件全部内容(NiagaraEmitterInstance.h 238 + NiagaraSystemInstance.h 573 + NiagaraSystemSimulation.h 428 = 1239 行),逐条对比
+- 修正 [[Readers/Niagara/Phase3-runtime-instance-读本]]:
+  - **硬错误 × 2**
+    - §5.6 binding 计数 "6 组" 与展示的 7 字段矛盾 → 改为 "2 + 5 共 7 组",解释方向(Component→System vs System→Emitter)
+    - §4.6 `FEventInstanceData` 漏列 `UpdateEventGeneratorIsSharedByIndex` / `SpawnEventGeneratorIsSharedByIndex` 2 字段 → 补全并注释用途
+  - **关键漏点 × 5(crit)**
+    - §4.8 新增 **Emitter 自身的 ExecutionState**(单态机)—— Phase 3 叫"状态机"却只讲了 System 双态机,Emitter 单态机完全漏掉。含 `IsDisabled/IsInactive/IsComplete` + `ShouldTick` + `bResetPending`
+    - §5.2 新增 **bSolo + bForceSolo 双标志**——和 RequestedState/ActualState 完全平行的"用户意图 vs 系统实际"设计,Simulation 自己也有 `bIsSolo`,三者协同
+    - §5.1 补全 Simulation **4 数组 + 1 升级队列**的实例成员管理(SystemInstances / SpawningInstances / PausedSystemInstances / PendingSystemInstances / PendingTickGroupPromotions),不是简化的单 TArray
+    - §5.4 新增 **Tick Group Promotion 机制**——Phase 3 的核心话题之一,原读本零字提及。含 `UpdateTickGroups_GameThread / AddTickGroupPromotion / CalculateTickGroup / UpdatePrereqs / TickBehavior`,解释为什么 WorldManager 索引键包含 TickGroup
+    - §2.5 新增 **DI per-instance data blob 登记**——虽然细节 Phase 7 讲,但 SystemInstance 上的 `DataInterfaceInstanceData` 16 字节对齐 byte blob + `PreTick/PostTick` 数组 + `PerInstanceDIFunctions[ScriptType]` 数组,Phase 3 必须登记存储形态
+  - **次要补充 × 15(nice)**
+    - §2.1 补 `Deactivate / Complete / OnPooledReuse` 三种结束 API 的区别 + `bPooled` 对 Unbind 流程的影响
+    - §2.4 `ManualTick` vs `AdvanceSimulation` 区分(两个不同方法,读本原来措辞容易混淆),加 `RequiresDistanceFieldData/DepthBuffer/EarlyViewData/ViewUniformBuffer` + `FeatureLevel`
+    - §3.1 展开 `FInstanceParameters` 结构(ComponentTrans/DeltaSeconds/TimeSeconds/RealTimeSeconds/EmitterCount/NumAlive/TransformMatchCount/RequestedExecutionState)+ 说明"Concurrent 只读快照不回读"约束
+    - §3.2 补 **Simulation 层 Wait**(`WaitForSystemTickComplete / WaitForInstancesTickComplete`),解释 Instance 级 Wait 与 Simulation 级 Wait 的分工
+    - §4.5 补 **Emitter DirectBinding 快捷通道**(`SpawnIntervalBinding` / `InterpSpawnStartBinding` / `SpawnGroupBinding` / `SpawnExecCountBinding` / `UpdateExecCountBinding`)—— "无字符串查表" 的另一形态
+    - §4.7 补 `CachedEmitterCompiledData TSharedPtr`——Asset→Instance 的编译产物快照桥,Pool 场景必要
+    - §4.9 新增 **Emitter 运行时统计与 bitfield**(EmitterAge/InstanceSeed/TickCount/TotalSpawnedParticles/CPUTimeCycles/MaxRuntimeAllocation 等)
+    - §5.5 展开 **Tick / Spawn 两条并列 pipeline** + `FNiagaraSystemSimulationTickContext` 结构(Owner/System/Instances/DataSet/DeltaSeconds/SpawnNum/EffectsQuality/...)+ 双工厂 `MakeContextForTicking / MakeContextForSpawning`
+    - §5.6 补 `FNiagaraConstantBufferToDataSetBinding`(与 `FNiagaraParameterStoreToDataSetBinding` 并列的另一套)+ **6 个 Engine DirectBinding**(`SpawnNumSystemInstancesParam / UpdateNumSystemInstancesParam / SpawnGlobalSpawnCountScaleParam / ...`)—— Scalability 全局 scale 直写底层 byte buffer 的路径
+    - §5.7 修 `SpawningDataSet` 描述从"level streaming 情境"改为"any out-of-tick spawn"(源码注释原文就是 outside of tick,不限 streaming)
+  - §0 "10 条关键洞察"(原 7 条)—— 新增 Emitter 单态机 / Tick Group Promotion / 2+5+6 绑定总览 / DI blob 不归 DI 管 4 条新洞察
+- 节结构:§4 现有 9 小节(新增 4.8 Emitter 状态机 + 4.9 运行时统计);§5 现有 9 小节(新增 5.2 Solo 双标志 + 5.4 Tick Group Promotion)
+- 校验:
+  - 15 条 wikilink / 14 unique,**零断链**
+  - Python 脚本跑 26 个 subsection 编号,**无重号**,连续排列 2.1-2.5 / 3.1-3.3 / 4.1-4.9 / 5.1-5.9
+  - 抽检 25+ 条技术声明(类签名 / 字段 offset / 方法签名 / enum 值)与源码完全一致
+- 行数:683 → 940(+257 行,+37%)
+- 要点:上轮"抽查"错过的最大漏点**不是具体字段错,而是整段机制缺位**(Emitter 状态机、Tick Group Promotion)。全量读的工作量:主 agent 读 ~1900 行(读本 683 + 3 源 1239),对价是发现 2 硬错 + 5 crit 漏点 + 15 nice
+- 下一步:用户指示 Phase 3 后继续 Phase 4-10 的全量核查;节奏建议每 Phase 单独开工(读本 + 对应源文件),避免单 agent 上下文撑爆

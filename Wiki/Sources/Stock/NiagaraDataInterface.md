@@ -20,6 +20,16 @@ source_commit: b6ab0dee9
 - **文件规模**: 890 行(本次扒了前 400 行的核心部分)
 - **Ingest 日期**: 2026-04-20
 - **学习阶段**: Phase 7 — 数据接口系统 7.2(**主基类**,继承 Phase 5 的 `UNiagaraDataInterfaceBase`)
+- **主实体**:[[Wiki/Entities/Stock/UNiagaraDataInterface]](本 Source 定义的主基类)
+- **Phase 7 直接子类 Entity**(按 7.3-7.10):
+  - [[Wiki/Entities/Stock/UNiagaraDataInterfaceCurve]](合并 CurveBase + Curve)
+  - [[Wiki/Entities/Stock/UNiagaraDataInterfaceCamera]]
+  - [[Wiki/Entities/Stock/UNiagaraDataInterfaceCollisionQuery]]
+  - [[Wiki/Entities/Stock/UNiagaraDataInterfaceStaticMesh]]
+  - [[Wiki/Entities/Stock/UNiagaraDataInterfaceSkeletalMesh]]
+  - [[Wiki/Entities/Stock/UNiagaraDataInterfaceTexture]]
+  - [[Wiki/Entities/Stock/UNiagaraDataInterfaceRenderTarget2D]]
+- **Phase 10 分支**(RW DI 族,另走 `UNiagaraDataInterfaceRWBase`):见 [[Wiki/Entities/Stock/UNiagaraDataInterfaceRWBase]]
 
 ## 职责
 

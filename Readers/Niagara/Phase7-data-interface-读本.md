@@ -13,7 +13,9 @@ source_commit: b6ab0dee9
 
 # Phase 7 读本 — Niagara 的最强扩展点
 
-> 本页是 Niagara 学习路径 Phase 7 的**主题读本**。一次读完掌握 DI 生态:主基类机制 + 7 种典型 DI 的能力与陷阱 + CPU/GPU 双路径 + per-instance data 生命周期。
+> 本页是 Niagara 学习路径 [[Wiki/Syntheses/Niagara/Niagara-learning-path]] Phase 7 的**主题读本**。一次读完掌握 DI 生态:主基类机制 + 7 种典型 DI 的能力与陷阱 + [[Wiki/Concepts/Niagara/Niagara-cpu-vs-gpu模拟|CPU/GPU 双路径]] + per-instance data 生命周期。
+>
+> 如需字段级查询或溯源,见末尾的 [[#深入阅读]] 索引。
 
 ---
 
@@ -392,17 +394,42 @@ Phase 10 完整展开。
 
 ## 深入阅读
 
-### 原子页
+### 本议题的原子页
 
-- Source × 9(7.1 已在 Phase 5.2):NiagaraDataInterface / CurveBase / Curve / Camera / CollisionQuery / StaticMesh / SkeletalMesh / Texture / RenderTarget2D
-- Entity × 8:UNiagaraDataInterface / UNiagaraDataInterfaceCurve(合 Base)/ Camera / CollisionQuery / StaticMesh / SkeletalMesh / Texture / RenderTarget2D
+- 源摘要(Source × 9;7.1 `NiagaraDataInterfaceBase` 已在 Phase 5.2 覆盖)
+  - 运行时基类:[[Wiki/Sources/Stock/NiagaraDataInterface]]
+  - Curve 家族:[[Wiki/Sources/Stock/NiagaraDataInterfaceCurveBase]] / [[Wiki/Sources/Stock/NiagaraDataInterfaceCurve]]
+  - 场景数据:[[Wiki/Sources/Stock/NiagaraDataInterfaceCamera]] / [[Wiki/Sources/Stock/NiagaraDataInterfaceCollisionQuery]]
+  - Mesh 家族:[[Wiki/Sources/Stock/NiagaraDataInterfaceStaticMesh]] / [[Wiki/Sources/Stock/NiagaraDataInterfaceSkeletalMesh]]
+  - 纹理家族:[[Wiki/Sources/Stock/NiagaraDataInterfaceTexture]] / [[Wiki/Sources/Stock/NiagaraDataInterfaceRenderTarget2D]]
+  - (编译期基类 [[Wiki/Sources/Stock/NiagaraDataInterfaceBase]] 在 Phase 5)
+- 实体(Entity × 8,Curve 合并 Base)
+  - [[Wiki/Entities/Stock/UNiagaraDataInterface]]
+  - [[Wiki/Entities/Stock/UNiagaraDataInterfaceCurve]]
+  - [[Wiki/Entities/Stock/UNiagaraDataInterfaceCamera]]
+  - [[Wiki/Entities/Stock/UNiagaraDataInterfaceCollisionQuery]]
+  - [[Wiki/Entities/Stock/UNiagaraDataInterfaceStaticMesh]]
+  - [[Wiki/Entities/Stock/UNiagaraDataInterfaceSkeletalMesh]]
+  - [[Wiki/Entities/Stock/UNiagaraDataInterfaceTexture]]
+  - [[Wiki/Entities/Stock/UNiagaraDataInterfaceRenderTarget2D]]
 
-### 前置
+### 前置议题
 
-- Phase 5 CPU 脚本执行(DI 基类首次出现)
-- Phase 4 参数系统(DI 参数存储)
-- Phase 3 SystemInstance DataInterfaceInstanceData blob
-- Phase 2 FunctionLibrary DI 重型覆盖 API
+- [[Readers/Niagara/Phase2-component-layer-读本]] — FunctionLibrary 里 Component 覆盖 DI 的重型 API
+- [[Readers/Niagara/Phase3-runtime-instance-读本]] — SystemInstance 的 `DataInterfaceInstanceData` blob 布局
+- [[Readers/Niagara/Phase4-data-model-读本]] — ParameterStore 里 DI 的存储
+- [[Readers/Niagara/Phase5-cpu-script-execution-读本]] — DI 基类 + VM Dispatch + GPU Shader Parameters 首次出场
+
+### 相关概念
+
+- [[Wiki/Concepts/Niagara/Niagara-cpu-vs-gpu模拟]] — CPU DI(C++ lambda)vs GPU DI(HLSL 代码生成)的双路径根源
+
+### 下一步 / 导航
+
+- 下一阶段:[[Readers/Niagara/Phase8-gpu-simulation-读本]] — Shader 编译 + GPU 实例计数 + VertexFactory
+- 后续深入:[[Readers/Niagara/Phase10-advanced-features-读本]] — RW DI 四钩子 + Grid2D/3D/NeighborGrid3D
+- 学习路径总图:[[Wiki/Syntheses/Niagara/Niagara-learning-path]]
+- 仓综合视图:[[Wiki/Overview]]
 
 ---
 

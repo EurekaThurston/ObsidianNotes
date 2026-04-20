@@ -20,6 +20,10 @@ source_commit: b6ab0dee9
 - **文件规模**: 531 行
 - **Ingest 日期**: 2026-04-20
 - **学习阶段**: Phase 5 — CPU 脚本执行 5.3(**核心**)
+- **派生 Entity**(见下文 4 大块):
+  - 块 B(CPU VM) → [[Wiki/Entities/Stock/FNiagaraScriptExecutionContext]]
+  - 块 C(GPU 计算) → [[Wiki/Entities/Stock/FNiagaraComputeExecutionContext]]
+  - 块 D(GPU Tick 打包) → [[Wiki/Entities/Stock/FNiagaraGPUSystemTick]]
 
 ## 职责
 

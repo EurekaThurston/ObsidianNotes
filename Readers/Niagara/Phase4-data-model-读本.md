@@ -14,6 +14,8 @@ source_commit: b6ab0dee9
 # Phase 4 读本 — Niagara 的数据语言
 
 > 本页是 Niagara 学习路径 [[Wiki/Syntheses/Niagara/Niagara-learning-path]] Phase 4 的**主题读本**——详细、精确、一次读完即完整掌握 Niagara 如何表示"数据"(类型 → 变量 → 布局 → 数据集 → 参数存储),不需要跳转。
+>
+> 如需字段级查询或溯源,见末尾的 [[#深入阅读]] 索引。
 
 ---
 
@@ -525,17 +527,21 @@ uint32 bUObjectsDirty : 1;      // UObject 换了
   - [[Wiki/Sources/Stock/NiagaraConstants]]
   - [[Wiki/Sources/Stock/NiagaraDataSet]] / [[Wiki/Sources/Stock/NiagaraDataSetAccessor]]
   - [[Wiki/Sources/Stock/NiagaraParameters]] / [[Wiki/Sources/Stock/NiagaraParameterStore]]
-- Entity × 7:`FNiagaraTypeDefinition` / `FNiagaraVariable` / `FNiagaraTypeLayoutInfo` / `FNiagaraConstants` / `FNiagaraDataSet` / `FNiagaraDataSetAccessor` / `FNiagaraParameterStore`
+- Entity × 7:[[Wiki/Entities/Stock/FNiagaraTypeDefinition]] / [[Wiki/Entities/Stock/FNiagaraVariable]] / [[Wiki/Entities/Stock/FNiagaraTypeLayoutInfo]] / [[Wiki/Entities/Stock/FNiagaraConstants]] / [[Wiki/Entities/Stock/FNiagaraDataSet]] / [[Wiki/Entities/Stock/FNiagaraDataSetAccessor]] / [[Wiki/Entities/Stock/FNiagaraParameterStore]]
 
-### 前置
+### 前置议题
 
-- Phase 0-3 读本(尤其 Phase 3 里反复出现 ParameterStore/DataSet)
-- [[Wiki/Concepts/Niagara/Niagara-cpu-vs-gpu模拟]]
+- [[Readers/Niagara/Phase0-心智模型-读本]] — Asset/Instance、UObject 前缀
+- [[Readers/Niagara/Phase1-asset-layer-读本]] — `FNiagaraVariable` 在资产里的存储
+- [[Readers/Niagara/Phase2-component-layer-读本]] — `FNiagaraUserRedirectionParameterStore` 在 Component 里的暴露
+- [[Readers/Niagara/Phase3-runtime-instance-读本]] — ParameterStore/DataSet 反复出现的消费者
+- [[Wiki/Concepts/Niagara/Niagara-cpu-vs-gpu模拟]] — Half 类型降级的动机
 
-### 导航
+### 下一步 / 导航
 
-- [[Wiki/Syntheses/Niagara/Niagara-learning-path]]
-- [[Wiki/Overview]]
+- 下一阶段:[[Readers/Niagara/Phase5-cpu-script-execution-读本]] — CPU 脚本如何消费本 Phase 的数据结构
+- 学习路径总图:[[Wiki/Syntheses/Niagara/Niagara-learning-path]]
+- 仓综合视图:[[Wiki/Overview]]
 
 ---
 
