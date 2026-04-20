@@ -318,17 +318,19 @@ Niagara 插件位于 `Engine/Plugins/FX/Niagara/`，共 7 个模块：
 
 ---
 
-### Phase 10 — 高级特性（选修）
+### Phase 10 — 高级特性（选修）✅
 > **目标**：了解 Niagara 的前沿能力——Simulation Stages 与 Grid 流体模拟。
+>
+> 📖 **主题读本**:[[Readers/Niagara/Phase10-advanced-features-读本]] — SimStages 多 pass 架构 + RW DI 四钩子 + Grid 2D/3D 存储策略差异 + NeighborGrid 空间哈希 + Reader 跨 emitter 数据交互。
 
-| # | 文件 | 模块 | 路径 |
-|---|---|---|---|
-| 10.1 | `NiagaraSimulationStageBase.h` | Niagara | `Public/` |
-| 10.2 | `NiagaraDataInterfaceRW.h` | Niagara | `Classes/` |
-| 10.3 | `NiagaraDataInterfaceGrid2DCollection.h` | Niagara | `Classes/` |
-| 10.4 | `NiagaraDataInterfaceGrid2DCollectionReader.h` | Niagara | `Classes/` |
-| 10.5 | `NiagaraDataInterfaceGrid3DCollection.h` | Niagara | `Classes/` |
-| 10.6 | `NiagaraDataInterfaceNeighborGrid3D.h` | Niagara | `Classes/` |
+| # | 文件 | 模块 | 路径 | 源摘要 |
+|---|---|---|---|---|
+| 10.1 | `NiagaraSimulationStageBase.h` | Niagara | `Public/` | [[Wiki/Sources/Stock/NiagaraSimulationStageBase]] |
+| 10.2 | `NiagaraDataInterfaceRW.h` | Niagara | `Classes/` | [[Wiki/Sources/Stock/NiagaraDataInterfaceRW]] |
+| 10.3 | `NiagaraDataInterfaceGrid2DCollection.h` | Niagara | `Classes/` | [[Wiki/Sources/Stock/NiagaraDataInterfaceGrid2DCollection]] |
+| 10.4 | `NiagaraDataInterfaceGrid2DCollectionReader.h` | Niagara | `Classes/` | [[Wiki/Sources/Stock/NiagaraDataInterfaceGrid2DCollectionReader]] |
+| 10.5 | `NiagaraDataInterfaceGrid3DCollection.h` | Niagara | `Classes/` | [[Wiki/Sources/Stock/NiagaraDataInterfaceGrid3DCollection]] |
+| 10.6 | `NiagaraDataInterfaceNeighborGrid3D.h` | Niagara | `Classes/` | [[Wiki/Sources/Stock/NiagaraDataInterfaceNeighborGrid3D]] |
 
 **学习要点：**
 - `UNiagaraSimulationStageBase`：在一次 Emitter Tick 内，定义多次 Dispatch pass，实现 Iteration 式计算
@@ -383,6 +385,7 @@ Niagara 插件位于 `Engine/Plugins/FX/Niagara/`，共 7 个模块：
 **Phase 7 ✅ 完成**（2026-04-20）
 **Phase 8 ✅ 完成**（2026-04-20）
 **Phase 9 ✅ 完成**（2026-04-20）
+**Phase 10 ✅ 完成**（2026-04-20)—— **学习路径至此完结!**
 
 ### Phase 0（概念页）
 - [x] [[Wiki/Concepts/UE4/UE4-uobject-系统]]
@@ -471,12 +474,12 @@ Niagara 插件位于 `Engine/Plugins/FX/Niagara/`，共 7 个模块：
 - [x] [[Wiki/Sources/Stock/NiagaraPlatformSet]] → [[Wiki/Entities/Stock/FNiagaraPlatformSet]]
 
 ### Phase 10（高级特性，选修）
-- [ ] [[Wiki/Sources/Stock/NiagaraSimulationStageBase]]
-- [ ] [[Wiki/Sources/Stock/NiagaraDataInterfaceRW]]
-- [ ] [[Wiki/Sources/Stock/NiagaraDataInterfaceGrid2DCollection]]
-- [ ] [[Wiki/Sources/Stock/NiagaraDataInterfaceGrid2DCollectionReader]]
-- [ ] [[Wiki/Sources/Stock/NiagaraDataInterfaceGrid3DCollection]]
-- [ ] [[Wiki/Sources/Stock/NiagaraDataInterfaceNeighborGrid3D]]
+- [x] [[Wiki/Sources/Stock/NiagaraSimulationStageBase]] → [[Wiki/Entities/Stock/UNiagaraSimulationStage]]
+- [x] [[Wiki/Sources/Stock/NiagaraDataInterfaceRW]] → [[Wiki/Entities/Stock/UNiagaraDataInterfaceRWBase]]
+- [x] [[Wiki/Sources/Stock/NiagaraDataInterfaceGrid2DCollection]] → [[Wiki/Entities/Stock/UNiagaraDataInterfaceGrid2DCollection]]
+- [x] [[Wiki/Sources/Stock/NiagaraDataInterfaceGrid2DCollectionReader]]
+- [x] [[Wiki/Sources/Stock/NiagaraDataInterfaceGrid3DCollection]] → [[Wiki/Entities/Stock/UNiagaraDataInterfaceGrid3DCollection]]
+- [x] [[Wiki/Sources/Stock/NiagaraDataInterfaceNeighborGrid3D]] → [[Wiki/Entities/Stock/UNiagaraDataInterfaceNeighborGrid3D]]
 
 ---
 

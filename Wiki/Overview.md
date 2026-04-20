@@ -39,7 +39,8 @@ sources: 9
 - **Phase 7 ✅**（2026-04-20）:数据接口系统(DI 生态 + 7 种典型 DI)—— 📖 **主题读本**:[[Readers/Niagara/Phase7-data-interface-读本]] / 原子页见 [[Wiki/Entities/Stock/UNiagaraDataInterface]]、[[Wiki/Entities/Stock/UNiagaraDataInterfaceCurve]]、[[Wiki/Entities/Stock/UNiagaraDataInterfaceCamera]]、[[Wiki/Entities/Stock/UNiagaraDataInterfaceCollisionQuery]]、[[Wiki/Entities/Stock/UNiagaraDataInterfaceStaticMesh]]、[[Wiki/Entities/Stock/UNiagaraDataInterfaceSkeletalMesh]]、[[Wiki/Entities/Stock/UNiagaraDataInterfaceTexture]]、[[Wiki/Entities/Stock/UNiagaraDataInterfaceRenderTarget2D]]
 - **Phase 8 ✅**（2026-04-20）:GPU 模拟(Shader 编译 + Sort + Count + VF + DrawIndirect)—— 📖 **主题读本**:[[Readers/Niagara/Phase8-gpu-simulation-读本]] / 原子页见 [[Wiki/Entities/Stock/FNiagaraShader]]、[[Wiki/Entities/Stock/FNiagaraGPUInstanceCountManager]]、[[Wiki/Entities/Stock/FNiagaraGPUSort]]、[[Wiki/Entities/Stock/FNiagaraVertexFactory]]、[[Wiki/Entities/Stock/FNiagaraDrawIndirect]]
 - **Phase 9 ✅**（2026-04-20）:世界管理(WorldMgr + Scalability + Pool + Settings + EffectType + PlatformSet)—— 📖 **主题读本**:[[Readers/Niagara/Phase9-world-management-读本]] / 原子页见 [[Wiki/Entities/Stock/FNiagaraWorldManager]]、[[Wiki/Entities/Stock/FNiagaraScalabilityManager]]、[[Wiki/Entities/Stock/UNiagaraComponentPool]]、[[Wiki/Entities/Stock/UNiagaraSettings]]、[[Wiki/Entities/Stock/UNiagaraEffectType]]、[[Wiki/Entities/Stock/FNiagaraPlatformSet]]
-- Phase 10 等待最后 ingest(选修)
+- **Phase 10 ✅**（2026-04-20）:**高级特性**(SimStages + Grid 2D/3D + NeighborGrid)—— 📖 **主题读本**:[[Readers/Niagara/Phase10-advanced-features-读本]] / 原子页见 [[Wiki/Entities/Stock/UNiagaraSimulationStage]]、[[Wiki/Entities/Stock/UNiagaraDataInterfaceRWBase]]、[[Wiki/Entities/Stock/UNiagaraDataInterfaceGrid2DCollection]]、[[Wiki/Entities/Stock/UNiagaraDataInterfaceGrid3DCollection]]、[[Wiki/Entities/Stock/UNiagaraDataInterfaceNeighborGrid3D]]
+- 🎉 **Niagara 学习路径 10 Phases 全部完成!**(2026-04-20 一日内从 Phase 3 推到 Phase 10)
 
 **Phase 1 的关键收获**（从 5 个 header 里提炼）：
 - **Asset 链路定型**：System →（`TArray<FNiagaraEmitterHandle>`）→ Handle(Id+Name+enabled+Instance) → Emitter →（脚本 / 渲染器 / SimStages）→ Script（字节码 + GPU shader）
@@ -117,7 +118,7 @@ Niagara 源码学习 (UE 4.26)
     │   ├── FNiagaraSystemInstance    ← 单实例状态机 + 三阶段 Tick
     │   ├── FNiagaraEmitterInstance   ← Emitter 粒子数据 + Exec 上下文
     │   └── FNiagaraSystemSimulation  ← 同 Asset 多实例批量 Tick 调度
-    └── Niagara 学习路径 (10 阶段, Phase 0-9 ✅)
+    └── Niagara 学习路径 (10 阶段, **Phase 0-10 全部完成 ✅**)
 
 AI 美术 (LoRA/ComfyUI)
     ├── 概念：LoRA / 基座选型 / Caption / Trigger Word / Multi-LoRA
@@ -150,7 +151,7 @@ AI 应用生态 (2026-04 新增)
 
 ### 关于 Niagara 路径
 
-- **Phase 10 启动时机**:用户要求一口气推完 Phase 3-10,正在按序推进。下一步是 Phase 10 高级特性(6 文件,最后一个)
+- **Niagara 学习路径已完结**(2026-04-20):10 Phase 全通,用户"一口气推完 Phase 3-10"目标达成。新增 ~160 原子页 + 10 篇读本。下一步可以 lint 一次 + 把 open questions 按需深入。
 - **Code root 本机可用性**:已登记 `stock`(F:\UnrealEngine-4.26,2026-04-20 验证可用),`project-*` 本机未登记
 - **Phase 1 遗留的 open question**(等 Phase 3+ 回答):
   - `EmitterExecutionOrder.kStartNewOverlapGroupBit` 的 parallel tick 消费点
@@ -195,7 +196,7 @@ AI 应用生态 (2026-04 新增)
 
 ## 下一步建议
 
-- **Niagara Phase 10**(选修,最后一个):高级特性(6 文件,SimStages + Grid DI,⭐⭐⭐⭐⭐)
+- ~~**Niagara Phase 10**~~ 已完成。Niagara 学习路径 10 Phase 全部打通。
 - **AI 美术**：验证本机 kohya_ss 环境，跑第一个 MVP LoRA
 - **AI 应用**：按需补建 Transformer / Function Calling / Spec Coding 等剩余待建页(Embedding / Vibe Coding 已在 2026-04-20 补建)
 - **lint**：运行 "帮我 lint 一下 wiki"，检查 4 个主题的内部一致性、特别是新建 AIApps 主题的交叉引用闭环、Phase 1 新增 10 页的 back-link 情况

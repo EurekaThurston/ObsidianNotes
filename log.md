@@ -5,6 +5,28 @@
 
 ---
 
+## [2026-04-20] ingest | Niagara Phase 10 · 高级特性(6 头文件,**学习路径终点**)
+
+- 源(code,stock @ `b6ab0dee9`):合计 944 行
+  - SimulationStageBase(78)/ DataInterfaceRW(246,RW DI 基础)
+  - Grid2DCollection(268)/ Grid2DCollectionReader(95)
+  - Grid3DCollection(158)/ NeighborGrid3D(99)
+- 新建(12):6 Source + 5 Entity + 1 读本
+- 要点:
+  - **SimStages 多 pass 架构**:每 emitter 多 stage,每 stage 独立 script + IterationSource(Particles | DataInterface)+ Iterations 次数
+  - **`Iterations` × `MinStage/MaxStage` 收合**:Jacobi 等迭代式用一条 stage + Iterations=N 代替 N 条(Phase 8.5 shader 侧元数据)
+  - **RW DI 四钩子**:`PreStage / PostStage / PostSimulate / ResetData` —— 每 SimStage 四时点回调
+  - **`AsIterationProxy = this`** 让 SimStage 识别 DI 可作 iteration source;`GetElementCount` 告诉 dispatch 多少 thread
+  - **Grid2D vs Grid3D 存储策略差异**:2D 用 Texture2DArray(每 slice 一个 attribute),3D 用 RWTexture3D + tile 打包(RHI 没 Texture3DArray)
+  - **Grid 共享 HLSL 函数族**:NumCells / CellSize / UnitToIndex 等,所有 Grid DI 共用 API
+  - **Grid2DCollectionReader** 跨 emitter 数据交互;`GetEmitterDependencies` 声明 tick 依赖
+  - **NeighborGrid3D ≠ Grid3DCollection**:前者存对象列表(粒子索引,SPH/boids),后者存场(烟雾密度)
+  - **`MaxNeighborsPerCell` lossy 设计**:超容 drop 不 warn,SPH 精度风险
+- **Niagara 学习路径 10/10 全通**!一日内从 Phase 3 推到 Phase 10(8 Phase,~120 原子页 + 8 读本)
+- 下一步:lint 扫一次 wiki,按需深入 open questions
+
+---
+
 ## [2026-04-20] ingest | Niagara Phase 9 · 世界管理(6 头文件)
 
 - 源(code,stock @ `b6ab0dee9`):合计 1365 行

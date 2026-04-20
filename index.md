@@ -3,7 +3,7 @@
 > 本文件是整个 wiki 的内容目录。LLM 每次 ingest 都会更新。
 > 查询时先读这里,再深入相关页面。
 
-最后更新:2026-04-20（+ Phase 9 世界管理入驻:6 Source + 6 Entity + 1 读本,Niagara 学习路径推进到 Phase 9/10 完成）
+最后更新:2026-04-20（+ Phase 10 高级特性入驻:6 Source + 5 Entity + 1 读本,**Niagara 学习路径 10/10 全部完成** 🎉）
 
 ---
 
@@ -76,6 +76,11 @@
 - [[Wiki/Entities/Stock/UNiagaraSettings|UNiagaraSettings]] — 项目级 UDeveloperSettings;DefaultEffectType / QualityLevels / 默认 RT/Grid format (来源:1)
 - [[Wiki/Entities/Stock/UNiagaraEffectType|UNiagaraEffectType]] — 特效分类 + scalability 预算;4 类 ScalabilitySettings + SignificanceHandler + CullReaction (来源:1)
 - [[Wiki/Entities/Stock/FNiagaraPlatformSet|FNiagaraPlatformSet]] — 跨平台 × quality × CVar 决策;双 mask 三态;conflict 检测 (来源:1)
+- [[Wiki/Entities/Stock/UNiagaraSimulationStage|UNiagaraSimulationStage]] — SimStages 多 pass 架构;IterationSource(Particles/DataInterface)+ Iterations 迭代数 (来源:1)
+- [[Wiki/Entities/Stock/UNiagaraDataInterfaceRWBase|UNiagaraDataInterfaceRWBase]] — RW DI 基础;含 Grid2D/Grid3D abstract 基类 + ProxyRW(GetElementCount + 4 SimStage 钩子) (来源:1)
+- [[Wiki/Entities/Stock/UNiagaraDataInterfaceGrid2DCollection|UNiagaraDataInterfaceGrid2DCollection]] — 2D 场网格(Texture2DArray);含 Reader 只读版跨 emitter 交互 (来源:1)
+- [[Wiki/Entities/Stock/UNiagaraDataInterfaceGrid3DCollection|UNiagaraDataInterfaceGrid3DCollection]] — 3D 体积场(RWTexture3D + tile 打包) (来源:1)
+- [[Wiki/Entities/Stock/UNiagaraDataInterfaceNeighborGrid3D|UNiagaraDataInterfaceNeighborGrid3D]] — 空间哈希,SPH/邻域查询基础;MaxNeighborsPerCell lossy (来源:1)
 
 ## Concepts(概念)
 *想法、理论、方法、术语。*
@@ -183,6 +188,12 @@
 - [[Wiki/Sources/Stock/NiagaraSettings]] — NiagaraSettings.h @ b6ab0dee9 (Phase 9.4,75 行)
 - [[Wiki/Sources/Stock/NiagaraEffectType]] — NiagaraEffectType.h @ b6ab0dee9 (Phase 9.5,337 行)
 - [[Wiki/Sources/Stock/NiagaraPlatformSet]] — NiagaraPlatformSet.h @ b6ab0dee9 (Phase 9.6,378 行,扒前 200)
+- [[Wiki/Sources/Stock/NiagaraSimulationStageBase]] — NiagaraSimulationStageBase.h @ b6ab0dee9 (Phase 10.1,78 行)
+- [[Wiki/Sources/Stock/NiagaraDataInterfaceRW]] — NiagaraDataInterfaceRW.h @ b6ab0dee9 (Phase 10.2,RW DI 基础,246 行)
+- [[Wiki/Sources/Stock/NiagaraDataInterfaceGrid2DCollection]] — NiagaraDataInterfaceGrid2DCollection.h @ b6ab0dee9 (Phase 10.3,268 行)
+- [[Wiki/Sources/Stock/NiagaraDataInterfaceGrid2DCollectionReader]] — NiagaraDataInterfaceGrid2DCollectionReader.h @ b6ab0dee9 (Phase 10.4,95 行)
+- [[Wiki/Sources/Stock/NiagaraDataInterfaceGrid3DCollection]] — NiagaraDataInterfaceGrid3DCollection.h @ b6ab0dee9 (Phase 10.5,158 行)
+- [[Wiki/Sources/Stock/NiagaraDataInterfaceNeighborGrid3D]] — NiagaraDataInterfaceNeighborGrid3D.h @ b6ab0dee9 (Phase 10.6,99 行)
 
 ## Readers(主题读本)
 *每个议题"一次读完即完整掌握"的线性读物。人类阅读的首选入口,详见 [[CLAUDE]] §3.4。*
@@ -207,6 +218,7 @@
 - [[Readers/Niagara/Phase7-data-interface-读本|Phase 7 读本 — Niagara 的最强扩展点]] — DI 三路代码生成(VM/C++ lambda/HLSL)+ Per-Instance Data 生命周期 + 7 种典型 DI 能力矩阵 + SkeletalMesh 共享 skinning 缓存 + RW DI 预告 (2026-04-20)
 - [[Readers/Niagara/Phase8-gpu-simulation-读本|Phase 8 读本 — Niagara 的 GPU 模拟管线]] — Shader 编译 + 共享 GPU Instance Count + DrawIndirect 生成 + GPU Sort(FGPUSortManager + SortKeyGenCS 4 permutation)+ 3 种 VertexFactory 能力矩阵 (2026-04-20)
 - [[Readers/Niagara/Phase9-world-management-读本|Phase 9 读本 — Niagara 的世界管理与可扩展性]] — 全局状态四层模型 + Scalability 决策引擎(4 类 cull + significance)+ Pool 5 方法取舍 + PlatformSet 三态双 mask 配置 (2026-04-20)
+- [[Readers/Niagara/Phase10-advanced-features-读本|Phase 10 读本 — Niagara 的高级特性]](**学习路径终点**)— SimStages 多 pass + IterationSource 二选一 + RW DI 四钩子 + Grid 2D/3D 存储策略差异(Texture2DArray vs RWTexture3D tile 打包)+ NeighborGrid 空间哈希 + Reader 跨 emitter 交互 (2026-04-20)
 
 ## Syntheses(综合/专题)
 *跨源分析、对比、专题报告、好答案的沉淀(非读本)。读本见上方 [[#Readers(主题读本)]] 分区。*
