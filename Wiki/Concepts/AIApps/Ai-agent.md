@@ -71,6 +71,7 @@ aliases: [Agent, AI Agent, 智能体]
 - 主题读本(推荐通读):[[Readers/AIApps/AI-primer-v2-读本]]
 - 原子 source:[[Wiki/Sources/AIApps/AI-primer-v2]] (raw: [[Raw/Articles/AI 应用技术发展脉络与核心概念扫盲手册 v2]])
 - 原子 source(subagent 深度):[[Wiki/Sources/AIApps/Multi-agent-conversation]] (raw: [[Raw/Notes/Multi-agent 对话]])
+- 主题读本(subagent 专题):[[Readers/AIApps/Multi-agent-读本]]
 
 ## 开放问题
 

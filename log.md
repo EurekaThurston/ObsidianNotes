@@ -5,6 +5,26 @@
 
 ---
 
+## [2026-04-21] synthesis | Multi-agent / Subagent 架构读本
+
+- 触发:用户显式要求"还是写一个读本吧"(命中 [[CLAUDE]] §3.4 触发条件 4)
+- 新建:[[Readers/AIApps/Multi-agent-读本]] — 7 节主体(三种病 / 第一性原理 / 子 agent 本质 / 四个次级收益 / 链路拓扑 / 并行 vs 串行 / 决策与实例)+ 全景回看 + 10 条关键洞察 + 8 题自检(均为综合/反推/取舍/假设题,非检索题)+ 留下的问题 + 下一步预告 + 深入阅读 + 签名
+- 更新:
+  - [[Wiki/Concepts/AIApps/Multi-agent]] — 引用来源区顶部加读本链接
+  - [[Wiki/Concepts/AIApps/Ai-agent]] — 引用来源区加读本链接
+  - [[Wiki/Sources/AIApps/Multi-agent-conversation]] — "与既有 wiki 的关系"加配套读本条目
+  - [[index]] — Readers 分区登记 + footer 更新(+1 读本)
+- 关键叙事选择:
+  - 开题用"反直觉 Q":上下文有限=切多 agent 的理由(反着)
+  - 主线 7 节按"病 → 原理 → 机制 → 收益 → 拓扑 → 调度 → 决策"递进,不是按概念罗列
+  - 代码/prompt 示例 inline(派活 prompt 骨架、模型分工表、拓扑 ASCII 图)
+  - 陷阱用 `> [!warning]`,本质归纳用 `> [!abstract]`,Anthropic 原话用 `> [!quote]`
+  - 自检 8 题每题都需要跨 2-3 节串联才能答,特别是第 6 题("5 句话给文科朋友解释"——真懂才讲得出)和第 8 题("给一个多 agent 反而更糟的场景"——反向测试)
+- 不处理的:
+  - "agent 数量 vs 质量非线性"拐点的定量研究仍空白,读本记为 open question
+  - "子 agent 上下文快照 + 事后追问"机制 Anthropic API 暂无,读本记为 open question
+- 自验:Glob [[Readers/AIApps/Multi-agent-读本]] 通过
+
 ## [2026-04-21] ingest | Multi-agent 对话 — Claudian 自解多 agent 工作机制
 
 - source: [[Raw/Notes/Multi-agent 对话]](对话归纳,非逐字)

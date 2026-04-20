@@ -88,6 +88,7 @@ Claudian 决策:读很多文件、中间噪音大 → 派 Explore agent,prompt �
 
 ## 引用来源
 
+- 主题读本(推荐通读):[[Readers/AIApps/Multi-agent-读本]]
 - 原子 source:[[Wiki/Sources/AIApps/Multi-agent-conversation]] (raw: [[Raw/Notes/Multi-agent 对话]])
 
 ## 开放问题

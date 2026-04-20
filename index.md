@@ -3,7 +3,7 @@
 > 本文件是整个 wiki 的内容目录。LLM 每次 ingest 都会更新。
 > 查询时先读这里,再深入相关页面。
 
-最后更新:2026-04-21（+ Multi-agent 对话 ingest:1 Raw + 1 Source + 1 Concept,subagent 架构从"Ai-agent 一小节"升级为独立概念页）
+最后更新:2026-04-21（+ Multi-agent 对话 ingest:1 Raw + 1 Source + 1 Concept + 1 读本,subagent 架构从"Ai-agent 一小节"升级为独立概念页 + 配套读本）
 
 ---
 
@@ -208,6 +208,7 @@
 
 ### AI 应用生态
 - [[Readers/AIApps/AI-primer-v2-读本|AI 应用生态读本]] — AI Primer v2 主题读本,从 LLM 本质到 2026 技术栈三层全景,一次读完掌握整条主线 (2026-04-20)
+- [[Readers/AIApps/Multi-agent-读本|Multi-agent / Subagent 架构读本]] — "为什么上下文有限反而是必须切多 agent 的理由";三种病 / 第一性原理 / 子 agent 本质 / 四个次级收益 / 扁平扇出 / 决策矩阵 (2026-04-21)
 
 ### Niagara 源码学习
 - [[Readers/Niagara/Phase0-心智模型-读本|Phase 0 读本 — 上阵前的四层脑内地图]] — 把 UObject / Asset-Instance / Niagara-vs-Cascade / CPU-vs-GPU 四概念编成自下而上一条叙事链,一次读完掌握 Phase 1+ 所需全部前置 (2026-04-19)
