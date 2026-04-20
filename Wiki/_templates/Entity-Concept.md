@@ -43,7 +43,7 @@ aliases: [别名1, 别名2]
 
 ## 深入阅读
 - 源摘要(含全字段 + 代码引用):[[Wiki/Sources/Topic/xxx]]
-- 主题读本(若有):[[Wiki/Readers/Topic/<议题>-读本]] § N
+- 主题读本(若有):[[Readers/Topic/<议题>-读本]] § N
 
 ## 开放问题 / 矛盾
 - …

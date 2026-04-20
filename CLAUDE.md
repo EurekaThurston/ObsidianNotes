@@ -1,23 +1,26 @@
 # CLAUDE.md — Wiki Schema & Operating Instructions
 
 > 本文档是 LLM(Claude/Claudian)维护本仓库的"作业规程"。
-> 灵感来自 Karpathy 的 LLM Wiki 方法论(源见 [[Raw/Notes/Karpathy Wiki 方法论]]、概念见 [[Wiki/Concepts/Methodology/Llm-wiki-方法论]]、完整演进脉络见 [[Wiki/Readers/Methodology/Llm-wiki-方法论-读本]])。
+> 灵感来自 Karpathy 的 LLM Wiki 方法论(源见 [[Raw/Notes/Karpathy Wiki 方法论]]、概念见 [[Wiki/Concepts/Methodology/Llm-wiki-方法论]]、完整演进脉络见 [[Readers/Methodology/Llm-wiki-方法论-读本]])。
 > 人类负责:提供原始资料、提问、指方向。LLM 负责:读、写、归档、交叉引用、维护。
 >
 > **本文件只含每轮对话都要遵守的核心规则。大块页面模板另存于 `Wiki/_templates/`,仅在真的要创建对应页面时 Read(降低每轮上下文噪声,防 context rot)。**
 
 ---
 
-## 1. 三层架构
+## 1. 顶层架构
 
-| 层 | 路径 | 所有者 | 可变性 |
-|---|---|---|---|
-| **Raw sources(原始资料)** | `Raw/` | 人类 | 只读(LLM 绝不修改) |
-| **Wiki(知识库)** | `Wiki/` | LLM | LLM 完全拥有,持续更新 |
-| **Schema(本文件)** | `CLAUDE.md` | 人 + LLM 共同演进 | 谨慎修改 |
+| 层 | 路径 | 所有者 | 可变性 | 服务对象 |
+|---|---|---|---|---|
+| **Raw sources(原始资料)** | `Raw/` | 人类 | 只读(LLM 绝不修改) | LLM 溯源 |
+| **Wiki(原子知识库)** | `Wiki/` | LLM | LLM 完全拥有,持续更新 | LLM 检索、字段级查询 |
+| **Readers(主题读本)** | `Readers/` | LLM | LLM 完全拥有,持续更新 | 人类线性阅读、一次读完即掌握 |
+| **Schema(本文件)** | `CLAUDE.md` | 人 + LLM 共同演进 | 谨慎修改 | 作业规程 |
+
+> Wiki 和 Readers 都由 LLM 拥有,分开只是为了"原子 vs 读本"的服务对象差异(详见 §3.4)——Wiki 装结构化原子页给 LLM 查,Readers 装线性长文给人读。两者配套产出,互为索引。
 
 特殊文件:
-- `index.md` — 内容目录(按类别列所有 wiki 页)
+- `index.md` — 内容目录(按类别列所有 wiki / reader 页)
 - `log.md` — 时间线日志(追加式)
 - `Wiki/Overview.md` — 顶层综合视图
 
@@ -39,15 +42,17 @@ Wiki/
   Entities/<主题>/    实体页:人、组织、产品、代码类
   Sources/<主题>/     源摘要:每个 raw 文件 / 代码源一页
   Syntheses/<主题>/   非读本类的跨源专题(对比、指南、学习路径总图)
-  Readers/<主题>/     主题读本:每议题"一次读完即掌握"线性读物(§3.4)
   _templates/         ⭐ 页面模板,创建新页时 Read 对应文件
+
+Readers/
+  <主题>/             主题读本:每议题"一次读完即掌握"线性读物(§3.4)
 ```
 
 **目录约定**:
 
 - 按**主题**建子目录(大写开头);新主题时新增
 - `Entities/` 和 `Sources/` 的 `Stock/` / `Project/` 子目录专用于代码(§9)
-- **`Syntheses/` vs `Readers/`**:Readers 是每议题必有的"人类首选入口";Syntheses 是非读本类专题(跨主题对比、指南、总图)。一议题通常一份读本 + 零到多份专题
+- **`Syntheses/` vs `Readers/`**:Readers 是每议题必有的"人类首选入口",独立于 Wiki 顶层;Syntheses 是 Wiki 内部的非读本类专题(跨主题对比、指南、总图)。一议题通常一份读本 + 零到多份专题
 
 ---
 
@@ -88,7 +93,7 @@ Wiki/
 
 ### 3.4 读本(主题线性读物)
 
-**每个有深度的议题都必须配套产出一份主题读本**,归档 `Wiki/Readers/<topic>/`。模板 `Wiki/_templates/Reader.md` 含完整骨架 + 硬性要求清单。
+**每个有深度的议题都必须配套产出一份主题读本**,归档 `Readers/<topic>/`。模板 `Wiki/_templates/Reader.md` 含完整骨架 + 硬性要求清单。
 
 **定义**:读本是"**详细、精确、满满当当、一次读完即完整掌握该议题**"的长文。**不是摘要**。人类不跳转就能拿走全部知识。
 

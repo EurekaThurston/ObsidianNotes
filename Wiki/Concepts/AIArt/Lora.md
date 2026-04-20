@@ -100,7 +100,7 @@ LoRA 本身只是技术，要落地还涉及几个串联决策：
 
 ## 引用来源
 
-- 主题读本(推荐通读):[[Wiki/Readers/AIArt/Lora-深度指南-读本]]
+- 主题读本(推荐通读):[[Readers/AIArt/Lora-深度指南-读本]]
 - 原子 source:[[Wiki/Sources/AIArt/Lora-deep-dive]]（raw: [[Raw/Notes/Lora_Deep_Dive]]）
 
 ## 开放问题 / 待深入

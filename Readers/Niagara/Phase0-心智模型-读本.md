@@ -11,7 +11,7 @@ aliases: [Phase 0 读本, Niagara 心智模型读本, Niagara 前置概念]
 
 > 本页是 Niagara 学习路径 [[Wiki/Syntheses/Niagara/Niagara-learning-path]] Phase 0 的**主题读本**——详细、精确、满满当当,一次读完即掌握 Phase 1+ 所需的全部前置心智模型,不需要跳转。
 >
-> 定位与 [[Wiki/Readers/Niagara/Phase1-asset-layer-读本|Phase 1 读本]]对偶——Phase 0 建地图,Phase 1 在地图上走路。
+> 定位与 [[Readers/Niagara/Phase1-asset-layer-读本|Phase 1 读本]]对偶——Phase 0 建地图,Phase 1 在地图上走路。
 >
 > 如需字段级查询或溯源,见末尾的 [[#深入阅读]] 索引。
 
@@ -659,7 +659,7 @@ Phase 0 建地图,Phase 1 在地图上走路。Phase 1 回答:
 - `UNiagaraScript` 同时持有 CPU 字节码(`CachedScriptVM`)和 GPU shader(`ScriptResource`)(§4)
 - ……
 
-读完 Phase 1 的 [[Wiki/Readers/Niagara/Phase1-asset-layer-读本|读本]],你就能回答 Phase 0 开头那个问题了:**"UNiagaraSystem 资产和 FNiagaraSystemInstance 实例差别在哪?"**
+读完 Phase 1 的 [[Readers/Niagara/Phase1-asset-layer-读本|读本]],你就能回答 Phase 0 开头那个问题了:**"UNiagaraSystem 资产和 FNiagaraSystemInstance 实例差别在哪?"**
 
 ---
 
@@ -674,7 +674,7 @@ Phase 0 建地图,Phase 1 在地图上走路。Phase 1 回答:
 
 ### 下一 Phase
 
-- [[Wiki/Readers/Niagara/Phase1-asset-layer-读本]] — Phase 1 读本
+- [[Readers/Niagara/Phase1-asset-layer-读本]] — Phase 1 读本
 - 原子 Source/Entity 页入口见 [[Wiki/Syntheses/Niagara/Niagara-learning-path]]
 
 ### 总图

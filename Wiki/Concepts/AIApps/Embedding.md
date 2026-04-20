@@ -79,7 +79,7 @@ Embedding 的应用远不止检索:
 
 ## 深入阅读
 
-- 主题读本:[[Wiki/Readers/AIApps/AI-primer-v2-读本]](第四章 RAG / Embedding)
+- 主题读本:[[Readers/AIApps/AI-primer-v2-读本]](第四章 RAG / Embedding)
 - 相关概念:[[Wiki/Concepts/Methodology/Rag]] 的"Embedding 向量嵌入"一节
 
 ## 引用来源

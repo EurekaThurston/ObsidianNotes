@@ -2,9 +2,21 @@
 type: synthesis
 created: 2026-04-20
 updated: 2026-04-20
-tags: [ai, primer, methodology, agent, harness, skills, mcp, reader]
+tags:
+  - ai
+  - primer
+  - methodology
+  - agent
+  - harness
+  - skills
+  - mcp
+  - reader
 sources: 11
-aliases: [AI 应用生态读本, AI Primer v2 读本, AIApps 读本, AI 扫盲读本]
+aliases:
+  - AI 应用生态读本
+  - AI Primer v2 读本
+  - AIApps 读本
+  - AI 扫盲读本
 ---
 
 # AI 应用生态 读本 — 从 LLM 基础到 2026 技术栈三层全景
@@ -235,7 +247,7 @@ Step 3: RLHF(Reinforcement Learning from Human Feedback)
 
 - **重要决策不能靠"一次问了就信"**,多问几次/换问法交叉验证
 - 代码、法律、财务等需要**确定性**的场景,要把采样参数调到最保守(或用辅助机制锁定)
-- 团队协作时,**同一问题每个人得到的答案可能不同**——这是 wiki(见 [[Wiki/Readers/Methodology/Llm-wiki-方法论-读本|方法论读本]])的价值之一:沉淀确定答案
+- 团队协作时,**同一问题每个人得到的答案可能不同**——这是 wiki(见 [[Readers/Methodology/Llm-wiki-方法论-读本|方法论读本]])的价值之一:沉淀确定答案
 
 ### 2.4 小结:三个怪癖
 
@@ -307,7 +319,7 @@ Step 3: RLHF(Reinforcement Learning from Human Feedback)
 对美术/设计岗位意义重大:
 
 - **图 → 描述 / 评分 / 修改建议**:把一张 concept art 丢给 AI,让它分析构图、配色、风格
-- **描述 → 图 / 视频**:text-to-image / text-to-video(包括 Diffusion 系列,见 [[Wiki/Readers/AIArt/Lora-深度指南-读本|AIArt 读本]])
+- **描述 → 图 / 视频**:text-to-image / text-to-video(包括 Diffusion 系列,见 [[Readers/AIArt/Lora-深度指南-读本|AIArt 读本]])
 - **音频 → 文字**:会议转写、视频字幕
 
 本读本不深入展开多模态技术细节(属于 AIArt / AI 视觉等主题),但需知道**它已经是 2026 年的 baseline 能力**。
@@ -450,7 +462,7 @@ RAG 检索的底层机制是 **Embedding(向量嵌入)**:
 #### 5.2.4 局限
 
 - **查询时现找**,无长期积累(RAG 的根本限制)
-- 对此问题的另一种解法:**LLM Wiki 方法论**(见 [[Wiki/Readers/Methodology/Llm-wiki-方法论-读本|方法论读本]])
+- 对此问题的另一种解法:**LLM Wiki 方法论**(见 [[Readers/Methodology/Llm-wiki-方法论-读本|方法论读本]])
 - 一个更直接的对比表:
 
 | 维度 | RAG | [[Wiki/Concepts/Methodology/Llm-wiki-方法论\|LLM Wiki]] |
@@ -733,7 +745,7 @@ Harness 的**常见组件**:在关键决策点**强制让人按确认键**。
 
 ### 8.6 本仓库就是一个活生生的应用
 
-本仓库的 `CLAUDE.md` §3.4 "主题读本"规则(见 [[Wiki/Readers/Methodology/Llm-wiki-方法论-读本|方法论读本]])本质上就是一个**专业化的项目 Skill** ——它告诉 Claudian"本仓库特有的做事方式",通过 Ingest/Query/Lint 三操作把 LLM Wiki 方法论落地。
+本仓库的 `CLAUDE.md` §3.4 "主题读本"规则(见 [[Readers/Methodology/Llm-wiki-方法论-读本|方法论读本]])本质上就是一个**专业化的项目 Skill** ——它告诉 Claudian"本仓库特有的做事方式",通过 Ingest/Query/Lint 三操作把 LLM Wiki 方法论落地。
 
 ---
 
@@ -833,7 +845,7 @@ Harness 的**常见组件**:在关键决策点**强制让人按确认键**。
 |---|---|
 | 2025 | **Context Engineering 倡导者**(§6.3) — 把焦点从"措辞"转向"完整信息环境" |
 | 2025-02 | **Vibe Coding 命名**(§12) — 在推文里首次命名"你主导决策,AI 负责执行"的编程范式 |
-| 2026-04 | **LLM Wiki 方法论**(见 [[Wiki/Readers/Methodology/Llm-wiki-方法论-读本|方法论读本]]) — 个人知识库的新范式 |
+| 2026-04 | **LLM Wiki 方法论**(见 [[Readers/Methodology/Llm-wiki-方法论-读本|方法论读本]]) — 个人知识库的新范式 |
 
 **底层共通判断**:
 
@@ -926,7 +938,7 @@ Harness 的**常见组件**:在关键决策点**强制让人按确认键**。
 5. **模型层正在商品化,真正的差异在 Harness 和 Skills 两层**——LangChain Terminal Bench 不改模型只优化 Harness,排名第 30→5,这是铁证
 6. **Harness 四大支柱**:上下文管理 / 架构约束 / 反馈回路 / 熵管理。Hashimoto 的核心原则:**每次 Agent 犯错,都要建一个机制让它不再犯同样错**
 7. **Agent Skills 的渐进式披露**是当前对抗 Context Rot 最成熟的方案——元数据(始终)+ SKILL.md(相关时)+ 资源(执行中),**可挂几十上百个 Skill 也不影响性能**
-8. **你的专属资产是 CLAUDE.md + Skills + wiki,LLM 是可替换后端**——这也是为什么本仓库值得存在(见 [[Wiki/Readers/Methodology/Llm-wiki-方法论-读本|方法论读本]])
+8. **你的专属资产是 CLAUDE.md + Skills + wiki,LLM 是可替换后端**——这也是为什么本仓库值得存在(见 [[Readers/Methodology/Llm-wiki-方法论-读本|方法论读本]])
 
 ---
 
@@ -1032,8 +1044,8 @@ v2 未深入:
 
 ### 跨主题联系
 
-- [[Wiki/Readers/Methodology/Llm-wiki-方法论-读本|方法论读本]] — 本仓库的组织哲学,本读本是其在"AI 应用扫盲"场景的应用
-- [[Wiki/Readers/AIArt/Lora-深度指南-读本|AIArt 读本]] — AI 应用在美术生成场景的具体落地,§7 三件套(记忆+主动+行动)与 OpenClaw 呼应
+- [[Readers/Methodology/Llm-wiki-方法论-读本|方法论读本]] — 本仓库的组织哲学,本读本是其在"AI 应用扫盲"场景的应用
+- [[Readers/AIArt/Lora-深度指南-读本|AIArt 读本]] — AI 应用在美术生成场景的具体落地,§7 三件套(记忆+主动+行动)与 OpenClaw 呼应
 - [[Wiki/Entities/Methodology/Karpathy]] — §11 展开过的人物
 - [[Wiki/Concepts/Methodology/Rag]] — §5 详讲过
 

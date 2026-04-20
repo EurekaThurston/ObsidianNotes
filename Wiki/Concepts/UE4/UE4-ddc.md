@@ -43,7 +43,7 @@ Niagara 是 DDC 的重度用户——节点图编译非常耗时:
 - key 的构成:基础版本号 + `BaseScriptCompileHash`(图本体哈希) + `ReferencedCompileHashes`(所有被引用子图哈希) + editor-only 元信息
 - 两个人在不同机器打开**同一个**未改动的 NiagaraSystem,`operator==` 判等 → DDC 命中 → 第二个人跳过编译。**Niagara 团队协作的流畅度很依赖这个缓存**
 - 相关函数:`BuildNiagaraDDCKeyString / GetNiagaraDDCKeyString`(生成 key)、`BinaryToExecData / ExecToBinaryData`(二进制 ↔ `FNiagaraVMExecutableData` 结构体)
-- 详见 [[Wiki/Sources/Stock/NiagaraScript]] 的 DDC 一节 + [[Wiki/Readers/Niagara/Phase1-asset-layer-读本]] § 5
+- 详见 [[Wiki/Sources/Stock/NiagaraScript]] 的 DDC 一节 + [[Readers/Niagara/Phase1-asset-layer-读本]] § 5
 
 ## 其他典型用户
 
@@ -62,7 +62,7 @@ Niagara 是 DDC 的重度用户——节点图编译非常耗时:
 ## 深入阅读
 
 - 源引用:[[Wiki/Sources/Stock/NiagaraScript]] — Niagara DDC key 构造的代码级细节
-- 主题读本:[[Wiki/Readers/Niagara/Phase1-asset-layer-读本]] § 5(UNiagaraScript)
+- 主题读本:[[Readers/Niagara/Phase1-asset-layer-读本]] § 5(UNiagaraScript)
 
 ## 开放问题 / 待深入
 
