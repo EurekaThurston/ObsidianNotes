@@ -5,6 +5,31 @@
 
 ---
 
+## [2026-04-20] ingest | Niagara Phase 8 · GPU 模拟(13 头文件,8.8 已在 Phase 5.5)
+
+- 源(code,stock @ `b6ab0dee9`):合计 2500 行
+  - Shader 编译(5):NiagaraShared(902,扒前 400)/Shader(168)/ShaderType(160)/ShaderMap(8 stub)/ScriptBase(53)
+  - GPU Count + Draw(2):GPUInstanceCountManager(127)/DrawIndirect(130)
+  - GPU Sort(2):GPUSortInfo(76)/SortingGPU(81)
+  - VertexFactory(4):VF base(135)/Sprite(223)/Ribbon(239)/Mesh(198)
+- 新建(19):13 Source + 5 Entity + 1 读本
+  - Entity 合并度高:Shader 家族合 4 → 1,Sort 合 2 → 1,VF 合 4 → 1,DrawIndirect 合 3 → 1,InstanceCountMgr 独立
+  - 读本:[[Readers/Niagara/Phase8-gpu-simulation-读本]](8 节 + 9 条洞察)
+- 要点:
+  - **NiagaraShader 模块分离**:接口/实现,让 RHI/Shader 不拉 Niagara 主模块
+  - **FNiagaraShader 30+ LAYOUT_FIELD**:粒子 Buffer(Float/Int/Half × SRV/UAV)+ 5 种 ConstantBuffer[2] + SimStage + Event × 4 + DI
+  - **`FNiagaraDataInterfaceParamRef` non-virtual + binary memory image**:支持 shader cache 序列化
+  - **共享 CountBuffer + DrawIndirect**:GPU count 不 readback,`RHIDrawIndexedPrimitiveIndirect` + GPU 自动生成 args
+  - **`FNiagaraDrawIndirectArgGenTaskInfo` 双用**:`NumIndicesPerInstance = -1` 做 clear,同一 dispatch 合并
+  - **GPU Sort 架构**:Niagara 只做 key 生成(`FNiagaraSortKeyGenCS`,4 permutation),radix 由 UE `FGPUSortManager`
+  - **`FSimulationStageMetaData MinStage/MaxStage 区间**:一条元数据覆盖 N 次迭代(Jacobi 等)——Phase 10 预告
+  - **3 种 VF 能力矩阵**:Mesh 独占 tessellation + 需 StaticMesh 顶点数据;Sprite/Ribbon 全 SRV-based
+  - **Half offset MSB 编码** + Half/Float SRV 双路径:shader 按位选 SRV,零分支
+  - **`CheckAndUpdateLastFrame`** 避免多 view 重复绑定
+- 下一步:Phase 9 世界管理(6 文件,⭐⭐⭐)
+
+---
+
 ## [2026-04-20] ingest | Niagara Phase 7 · 数据接口系统(9 头文件,7.1 已在 Phase 5)
 
 - 源(code,stock @ `b6ab0dee9`):合计 2998 行(大文件扒头部)

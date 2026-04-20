@@ -3,7 +3,7 @@
 > 本文件是整个 wiki 的内容目录。LLM 每次 ingest 都会更新。
 > 查询时先读这里,再深入相关页面。
 
-最后更新:2026-04-20（+ Phase 7 数据接口系统入驻:9 Source + 8 Entity + 1 读本,Niagara 学习路径推进到 Phase 7/10 完成）
+最后更新:2026-04-20（+ Phase 8 GPU 模拟入驻:13 Source + 5 Entity + 1 读本,Niagara 学习路径推进到 Phase 8/10 完成）
 
 ---
 
@@ -65,6 +65,11 @@
 - [[Wiki/Entities/Stock/UNiagaraDataInterfaceSkeletalMesh|UNiagaraDataInterfaceSkeletalMesh]] — 最复杂 DI;共享 SkinningData(引用计数+RWLock)+ 3 种 SkinningMode (来源:1)
 - [[Wiki/Entities/Stock/UNiagaraDataInterfaceTexture|UNiagaraDataInterfaceTexture]] — GPU only 2D 纹理采样;最小 DI 模板 (来源:1)
 - [[Wiki/Entities/Stock/UNiagaraDataInterfaceRenderTarget2D|UNiagaraDataInterfaceRenderTarget2D]] — RW DI 第一个示范;继承 UNiagaraDataInterfaceRWBase;Phase 10 基础 (来源:1)
+- [[Wiki/Entities/Stock/FNiagaraShader|FNiagaraShader 家族]] — Niagara GPU compute shader 体系;ShaderMapId / ShaderMap / ShaderType / DI 参数绑定 (来源:1)
+- [[Wiki/Entities/Stock/FNiagaraGPUInstanceCountManager|FNiagaraGPUInstanceCountManager]] — 全局 GPU 粒子计数管理器;共享 CountBuffer + DrawIndirect 解决 CPU 不知 GPU count (来源:1)
+- [[Wiki/Entities/Stock/FNiagaraGPUSort|FNiagaraGPUSort 家族]] — GPU 粒子排序;SortInfo + SortKeyGenCS(4 permutation)接入 FGPUSortManager (来源:1)
+- [[Wiki/Entities/Stock/FNiagaraVertexFactory|FNiagaraVertexFactory 家族]] — 3 种 VF(Sprite/Ribbon/Mesh);粒子到像素的桥;Mesh 独占 tessellation (来源:1)
+- [[Wiki/Entities/Stock/FNiagaraDrawIndirect|FNiagaraDrawIndirect 家族]] — Draw indirect args GPU 生成;TaskInfo 双用(gen + clear) (来源:1)
 
 ## Concepts(概念)
 *想法、理论、方法、术语。*
@@ -153,6 +158,19 @@
 - [[Wiki/Sources/Stock/NiagaraDataInterfaceSkeletalMesh]] — NiagaraDataInterfaceSkeletalMesh.h @ b6ab0dee9 (Phase 7.8,976 行,扒前 300)
 - [[Wiki/Sources/Stock/NiagaraDataInterfaceTexture]] — NiagaraDataInterfaceTexture.h @ b6ab0dee9 (Phase 7.9,63 行)
 - [[Wiki/Sources/Stock/NiagaraDataInterfaceRenderTarget2D]] — NiagaraDataInterfaceRenderTarget2D.h @ b6ab0dee9 (Phase 7.10,138 行,RW DI)
+- [[Wiki/Sources/Stock/NiagaraShared]] — NiagaraShared.h @ b6ab0dee9 (Phase 8.1,Shader 共享基础,902 行,扒前 400)
+- [[Wiki/Sources/Stock/NiagaraShader]] — NiagaraShader.h @ b6ab0dee9 (Phase 8.2,FNiagaraShader compute shader,168 行)
+- [[Wiki/Sources/Stock/NiagaraShaderType]] — NiagaraShaderType.h @ b6ab0dee9 (Phase 8.3,160 行)
+- [[Wiki/Sources/Stock/NiagaraShaderMap]] — NiagaraShaderMap.h @ b6ab0dee9 (Phase 8.4,stub 文件,8 行)
+- [[Wiki/Sources/Stock/NiagaraScriptBase]] — NiagaraScriptBase.h @ b6ab0dee9 (Phase 8.5,UNiagaraScriptBase + SimStageMetaData,53 行)
+- [[Wiki/Sources/Stock/NiagaraGPUInstanceCountManager]] — NiagaraGPUInstanceCountManager.h @ b6ab0dee9 (Phase 8.6,127 行)
+- [[Wiki/Sources/Stock/NiagaraGPUSortInfo]] — NiagaraGPUSortInfo.h @ b6ab0dee9 (Phase 8.7,76 行)
+- [[Wiki/Sources/Stock/NiagaraVertexFactory]] — NiagaraVertexFactory.h @ b6ab0dee9 (Phase 8.9,VF 基类,135 行)
+- [[Wiki/Sources/Stock/NiagaraSpriteVertexFactory]] — NiagaraSpriteVertexFactory.h @ b6ab0dee9 (Phase 8.10,223 行)
+- [[Wiki/Sources/Stock/NiagaraRibbonVertexFactory]] — NiagaraRibbonVertexFactory.h @ b6ab0dee9 (Phase 8.11,239 行)
+- [[Wiki/Sources/Stock/NiagaraMeshVertexFactory]] — NiagaraMeshVertexFactory.h @ b6ab0dee9 (Phase 8.12,198 行)
+- [[Wiki/Sources/Stock/NiagaraSortingGPU]] — NiagaraSortingGPU.h @ b6ab0dee9 (Phase 8.13,SortKeyGenCS,81 行)
+- [[Wiki/Sources/Stock/NiagaraDrawIndirect]] — NiagaraDrawIndirect.h @ b6ab0dee9 (Phase 8.14,DrawIndirectArgsGenCS,130 行)
 
 ## Readers(主题读本)
 *每个议题"一次读完即完整掌握"的线性读物。人类阅读的首选入口,详见 [[CLAUDE]] §3.4。*
@@ -175,6 +193,7 @@
 - [[Readers/Niagara/Phase5-cpu-script-execution-读本|Phase 5 读本 — Niagara 脚本如何"跑起来"]] — CPU VM 上下文 + PerInstanceFunctionHook + CPU/GPU 参数 padding + GPU Tick 打包 + FFXSystemInterface 三阶段 stage,为 Phase 7(DI)/Phase 8(GPU)搭脚手架 (2026-04-20)
 - [[Readers/Niagara/Phase6-rendering-读本|Phase 6 读本 — Niagara 粒子如何变成屏幕像素]] — Properties/Renderer 对偶 + GT→RT 三阶段数据流 + 4 种类型能力边界(Sprite/Ribbon/Mesh/Light)+ Cutout/Tessellation/SimpleLight 特殊路径 (2026-04-20)
 - [[Readers/Niagara/Phase7-data-interface-读本|Phase 7 读本 — Niagara 的最强扩展点]] — DI 三路代码生成(VM/C++ lambda/HLSL)+ Per-Instance Data 生命周期 + 7 种典型 DI 能力矩阵 + SkeletalMesh 共享 skinning 缓存 + RW DI 预告 (2026-04-20)
+- [[Readers/Niagara/Phase8-gpu-simulation-读本|Phase 8 读本 — Niagara 的 GPU 模拟管线]] — Shader 编译 + 共享 GPU Instance Count + DrawIndirect 生成 + GPU Sort(FGPUSortManager + SortKeyGenCS 4 permutation)+ 3 种 VertexFactory 能力矩阵 (2026-04-20)
 
 ## Syntheses(综合/专题)
 *跨源分析、对比、专题报告、好答案的沉淀(非读本)。读本见上方 [[#Readers(主题读本)]] 分区。*

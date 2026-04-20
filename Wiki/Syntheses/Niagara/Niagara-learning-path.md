@@ -259,8 +259,10 @@ Niagara 插件位于 `Engine/Plugins/FX/Niagara/`，共 7 个模块：
 
 ---
 
-### Phase 8 — GPU 模拟
+### Phase 8 — GPU 模拟 ✅
 > **目标**：理解 GPU Simulation 的完整管线——脚本如何变成 Compute Shader，粒子数据如何在 GPU 上流转。
+>
+> 📖 **主题读本**:[[Readers/Niagara/Phase8-gpu-simulation-读本]] — Shader 编译 + GPU Instance Count + Sort + VertexFactory + Draw Indirect 完整链路。
 
 | # | 文件 | 模块 | 路径 |
 |---|---|---|---|
@@ -377,6 +379,7 @@ Niagara 插件位于 `Engine/Plugins/FX/Niagara/`，共 7 个模块：
 **Phase 5 ✅ 完成**（2026-04-20）
 **Phase 6 ✅ 完成**（2026-04-20）
 **Phase 7 ✅ 完成**（2026-04-20）
+**Phase 8 ✅ 完成**（2026-04-20）
 
 ### Phase 0（概念页）
 - [x] [[Wiki/Concepts/UE4/UE4-uobject-系统]]
@@ -441,20 +444,20 @@ Niagara 插件位于 `Engine/Plugins/FX/Niagara/`，共 7 个模块：
 - [x] [[Wiki/Sources/Stock/NiagaraDataInterfaceRenderTarget2D]] → [[Wiki/Entities/Stock/UNiagaraDataInterfaceRenderTarget2D]]
 
 ### Phase 8（GPU）
-- [ ] [[Wiki/Sources/Stock/NiagaraShared]]
-- [ ] [[Wiki/Sources/Stock/NiagaraShader]]
-- [ ] [[Wiki/Sources/Stock/NiagaraShaderType]]
-- [ ] [[Wiki/Sources/Stock/NiagaraShaderMap]]
-- [ ] [[Wiki/Sources/Stock/NiagaraScriptBase]]
-- [ ] [[Wiki/Sources/Stock/NiagaraGPUInstanceCountManager]]
-- [ ] [[Wiki/Sources/Stock/NiagaraGPUSortInfo]]
-- [ ] [[Wiki/Sources/Stock/NiagaraEmitterInstanceBatcher-gpu]]
-- [ ] [[Wiki/Sources/Stock/NiagaraVertexFactory]]
-- [ ] [[Wiki/Sources/Stock/NiagaraSpriteVertexFactory]]
-- [ ] [[Wiki/Sources/Stock/NiagaraRibbonVertexFactory]]
-- [ ] [[Wiki/Sources/Stock/NiagaraMeshVertexFactory]]
-- [ ] [[Wiki/Sources/Stock/NiagaraSortingGPU]]
-- [ ] [[Wiki/Sources/Stock/NiagaraDrawIndirect]]
+- [x] [[Wiki/Sources/Stock/NiagaraShared]]
+- [x] [[Wiki/Sources/Stock/NiagaraShader]] → [[Wiki/Entities/Stock/FNiagaraShader]]
+- [x] [[Wiki/Sources/Stock/NiagaraShaderType]]
+- [x] [[Wiki/Sources/Stock/NiagaraShaderMap]] (stub)
+- [x] [[Wiki/Sources/Stock/NiagaraScriptBase]]
+- [x] [[Wiki/Sources/Stock/NiagaraGPUInstanceCountManager]] → [[Wiki/Entities/Stock/FNiagaraGPUInstanceCountManager]]
+- [x] [[Wiki/Sources/Stock/NiagaraGPUSortInfo]] → [[Wiki/Entities/Stock/FNiagaraGPUSort]]
+- [x] [[Wiki/Sources/Stock/NiagaraEmitterInstanceBatcher]] (Phase 5.5 已覆盖 GPU 侧)
+- [x] [[Wiki/Sources/Stock/NiagaraVertexFactory]] → [[Wiki/Entities/Stock/FNiagaraVertexFactory]]
+- [x] [[Wiki/Sources/Stock/NiagaraSpriteVertexFactory]]
+- [x] [[Wiki/Sources/Stock/NiagaraRibbonVertexFactory]]
+- [x] [[Wiki/Sources/Stock/NiagaraMeshVertexFactory]]
+- [x] [[Wiki/Sources/Stock/NiagaraSortingGPU]]
+- [x] [[Wiki/Sources/Stock/NiagaraDrawIndirect]] → [[Wiki/Entities/Stock/FNiagaraDrawIndirect]]
 
 ### Phase 9（世界管理）
 - [ ] [[Wiki/Sources/Stock/NiagaraWorldManager]]
