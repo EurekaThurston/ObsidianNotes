@@ -33,7 +33,8 @@ sources: 9
 - **Phase 1 ✅**（2026-04-19）：Asset 层三件套 —— 📖 **主题读本**：[[Readers/Niagara/Phase1-asset-layer-读本]] / 原子页见 [[Wiki/Entities/Stock/UNiagaraSystem]]、[[Wiki/Entities/Stock/UNiagaraEmitter]]、[[Wiki/Entities/Stock/FNiagaraEmitterHandle]]、[[Wiki/Entities/Stock/UNiagaraScript]]、[[Wiki/Entities/Stock/UNiagaraScriptSourceBase]]
 - **Phase 2 ✅**（2026-04-20）:Component 层 —— 📖 **主题读本**:[[Readers/Niagara/Phase2-component-layer-读本]] / 原子页见 [[Wiki/Entities/Stock/UNiagaraComponent]]、[[Wiki/Entities/Stock/ANiagaraActor]]、[[Wiki/Entities/Stock/UNiagaraFunctionLibrary]]
 - **Phase 3 ✅**（2026-04-20）:运行时实例层(心脏)—— 📖 **主题读本**:[[Readers/Niagara/Phase3-runtime-instance-读本]] / 原子页见 [[Wiki/Entities/Stock/FNiagaraSystemInstance]]、[[Wiki/Entities/Stock/FNiagaraEmitterInstance]]、[[Wiki/Entities/Stock/FNiagaraSystemSimulation]]
-- Phase 4-10 等待逐文件 ingest
+- **Phase 4 ✅**（2026-04-20）:数据模型(类型系统 + SoA + 参数存储)—— 📖 **主题读本**:[[Readers/Niagara/Phase4-data-model-读本]] / 原子页见 [[Wiki/Entities/Stock/FNiagaraTypeDefinition]]、[[Wiki/Entities/Stock/FNiagaraVariable]]、[[Wiki/Entities/Stock/FNiagaraTypeLayoutInfo]]、[[Wiki/Entities/Stock/FNiagaraConstants]]、[[Wiki/Entities/Stock/FNiagaraDataSet]]、[[Wiki/Entities/Stock/FNiagaraDataSetAccessor]]、[[Wiki/Entities/Stock/FNiagaraParameterStore]]
+- Phase 5-10 等待逐文件 ingest
 
 **Phase 1 的关键收获**（从 5 个 header 里提炼）：
 - **Asset 链路定型**：System →（`TArray<FNiagaraEmitterHandle>`）→ Handle(Id+Name+enabled+Instance) → Emitter →（脚本 / 渲染器 / SimStages）→ Script（字节码 + GPU shader）
@@ -111,7 +112,7 @@ Niagara 源码学习 (UE 4.26)
     │   ├── FNiagaraSystemInstance    ← 单实例状态机 + 三阶段 Tick
     │   ├── FNiagaraEmitterInstance   ← Emitter 粒子数据 + Exec 上下文
     │   └── FNiagaraSystemSimulation  ← 同 Asset 多实例批量 Tick 调度
-    └── Niagara 学习路径 (10 阶段, Phase 0 ✅ / Phase 1 ✅ / Phase 2 ✅ / Phase 3 ✅)
+    └── Niagara 学习路径 (10 阶段, Phase 0-4 ✅)
 
 AI 美术 (LoRA/ComfyUI)
     ├── 概念：LoRA / 基座选型 / Caption / Trigger Word / Multi-LoRA
@@ -144,7 +145,7 @@ AI 应用生态 (2026-04 新增)
 
 ### 关于 Niagara 路径
 
-- **Phase 4 启动时机**:用户要求一口气推完 Phase 3-10,正在按序推进。下一步是 Phase 4 数据模型(7 文件)
+- **Phase 5 启动时机**:用户要求一口气推完 Phase 3-10,正在按序推进。下一步是 Phase 5 CPU 脚本执行(5 文件)
 - **Code root 本机可用性**:已登记 `stock`(F:\UnrealEngine-4.26,2026-04-20 验证可用),`project-*` 本机未登记
 - **Phase 1 遗留的 open question**(等 Phase 3+ 回答):
   - `EmitterExecutionOrder.kStartNewOverlapGroupBit` 的 parallel tick 消费点
@@ -189,7 +190,7 @@ AI 应用生态 (2026-04 新增)
 
 ## 下一步建议
 
-- **Niagara Phase 4**:读 `NiagaraTypes.h` / `NiagaraCommon.h` / `NiagaraConstants.h` / `NiagaraDataSet.h` / `NiagaraDataSetAccessor.h` / `NiagaraParameters.h` / `NiagaraParameterStore.h`(7 文件,数据模型,SoA 布局为核)
+- **Niagara Phase 5**:CPU 脚本执行(5 文件,VM / ExecutionContext / Batcher CPU 侧)
 - **AI 美术**：验证本机 kohya_ss 环境，跑第一个 MVP LoRA
 - **AI 应用**：按需补建 Transformer / Function Calling / Spec Coding 等剩余待建页(Embedding / Vibe Coding 已在 2026-04-20 补建)
 - **lint**：运行 "帮我 lint 一下 wiki"，检查 4 个主题的内部一致性、特别是新建 AIApps 主题的交叉引用闭环、Phase 1 新增 10 页的 back-link 情况

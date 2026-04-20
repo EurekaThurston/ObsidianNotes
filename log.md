@@ -5,6 +5,34 @@
 
 ---
 
+## [2026-04-20] ingest | Niagara Phase 4 · 数据模型(7 头文件)
+
+- 源(code,stock @ `b6ab0dee9`):合计 5663 行
+  - `NiagaraTypes.h`(1739)、`NiagaraCommon.h`(1200)、`NiagaraConstants.h`(209)
+  - `NiagaraDataSet.h`(554)、`NiagaraDataSetAccessor.h`(619)
+  - `NiagaraParameters.h`(82)、`NiagaraParameterStore.h`(1260)
+- 新建(15):7 Source + 7 Entity + 1 读本
+  - Source:NiagaraTypes / NiagaraCommon / NiagaraConstants / NiagaraDataSet / NiagaraDataSetAccessor / NiagaraParameters / NiagaraParameterStore
+  - Entity:FNiagaraTypeDefinition / FNiagaraVariable / FNiagaraTypeLayoutInfo / FNiagaraConstants / FNiagaraDataSet / FNiagaraDataSetAccessor / FNiagaraParameterStore
+  - 读本:[[Readers/Niagara/Phase4-data-model-读本]](8 节 + 8 条洞察)
+- 更新:learning-path / Overview / index / log
+- 要点:
+  - Niagara **自建类型系统**(`FNiagaraTypeDefinition`),不直接用 UStruct—— 为了把任何类型拍成 Float/Int32/Half 三路 component,适配 VM 和 GPU
+  - **`FNiagaraBool` 是 int32**,True=-1 / False=0(VM compare+select 友好)
+  - **SoA 内存图像**:`FNiagaraDataBuffer::FloatData` 按 component 为主序组织,`FloatStride = NumInstancesAllocated × 4`
+  - **Double buffer + 池化**:2-3 个 DataBuffer,`CurrentData` 读 / `DestinationData` 写 / RT 读那个单独保留
+  - **`FNiagaraSharedObject`** 原子 ReadRefCount(INDEX_NONE 作写锁)+ 延迟删除队列解决 GT/RT 并发
+  - **Persistent ID 双整数**(Index + AcquireTag)—— Index 复用,AcquireTag 区别历史;只在需要跨帧追踪时才开
+  - **参数命名空间**(User./Engine./Particles./Emitter./Module./Initial./Previous./Constants.)—— 命名决定存储位置
+  - **ParameterStore 三路 dirty**(参数/DI/UObject)—— 改一个参数不重传 200 个 DI,增量推送
+  - **`FNiagaraParameters` vs `FNiagaraParameterStore`** 遗留技术债 —— editor 用前者,运行时用后者
+- 上下文管理:
+  - 本次采用"小/中文件全读 + 大文件(Types/Common/ParameterStore)读前 400 行"的策略。大文件后半(约 1600 行)未扒,读本已标注"按需 offset 读"
+  - 原子页规模压缩:Source 150-250 行,Entity 30-50 行(比 Phase 2/3 略紧凑)
+- 下一步:Phase 5 CPU 脚本执行(5 文件:NiagaraCore / NiagaraDataInterfaceBase / NiagaraScriptExecutionContext / NiagaraScriptExecutionParameterStore / NiagaraEmitterInstanceBatcher CPU 侧)
+
+---
+
 ## [2026-04-20] ingest | Niagara Phase 3 · 运行时实例层(3 头文件)
 
 - 源(code,stock @ `b6ab0dee9`):

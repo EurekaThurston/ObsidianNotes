@@ -145,18 +145,20 @@ Niagara 插件位于 `Engine/Plugins/FX/Niagara/`，共 7 个模块：
 
 ---
 
-### Phase 4 — 数据基础：类型与数据集
+### Phase 4 — 数据基础：类型与数据集 ✅
 > **目标**：理解 Niagara 的"数据语言"——粒子属性如何定义、存储、访问。
+>
+> 📖 **主题读本**:[[Readers/Niagara/Phase4-data-model-读本]] — 从共享常量到类型系统、SoA 布局、参数存储绑定图,一次读完掌握 Niagara 的数据语言全貌。
 
-| # | 文件 | 模块 | 路径 |
-|---|---|---|---|
-| 4.1 | `NiagaraTypes.h` | Niagara | `Public/` |
-| 4.2 | `NiagaraCommon.h` | Niagara | `Public/` |
-| 4.3 | `NiagaraConstants.h` | Niagara | `Classes/` |
-| 4.4 | `NiagaraDataSet.h` | Niagara | `Classes/` |
-| 4.5 | `NiagaraDataSetAccessor.h` | Niagara | `Classes/` |
-| 4.6 | `NiagaraParameters.h` | Niagara | `Public/` |
-| 4.7 | `NiagaraParameterStore.h` | Niagara | `Public/` |
+| # | 文件 | 模块 | 路径 | 源摘要 |
+|---|---|---|---|---|
+| 4.1 | `NiagaraTypes.h` | Niagara | `Public/` | [[Wiki/Sources/Stock/NiagaraTypes]] |
+| 4.2 | `NiagaraCommon.h` | Niagara | `Public/` | [[Wiki/Sources/Stock/NiagaraCommon]] |
+| 4.3 | `NiagaraConstants.h` | Niagara | `Classes/` | [[Wiki/Sources/Stock/NiagaraConstants]] |
+| 4.4 | `NiagaraDataSet.h` | Niagara | `Classes/` | [[Wiki/Sources/Stock/NiagaraDataSet]] |
+| 4.5 | `NiagaraDataSetAccessor.h` | Niagara | `Classes/` | [[Wiki/Sources/Stock/NiagaraDataSetAccessor]] |
+| 4.6 | `NiagaraParameters.h` | Niagara | `Public/` | [[Wiki/Sources/Stock/NiagaraParameters]] |
+| 4.7 | `NiagaraParameterStore.h` | Niagara | `Public/` | [[Wiki/Sources/Stock/NiagaraParameterStore]] |
 
 **学习要点：**
 - `FNiagaraTypeDefinition`：Niagara 的类型系统（Float、Vector3、Int32 等），是所有属性的"身份证"
@@ -365,6 +367,7 @@ Niagara 插件位于 `Engine/Plugins/FX/Niagara/`，共 7 个模块：
 **Phase 1 ✅ 完成**（2026-04-19）
 **Phase 2 ✅ 完成**（2026-04-20）
 **Phase 3 ✅ 完成**（2026-04-20）
+**Phase 4 ✅ 完成**（2026-04-20）
 
 ### Phase 0（概念页）
 - [x] [[Wiki/Concepts/UE4/UE4-uobject-系统]]
@@ -390,13 +393,13 @@ Niagara 插件位于 `Engine/Plugins/FX/Niagara/`，共 7 个模块：
 - [x] [[Wiki/Sources/Stock/NiagaraSystemSimulation]] → [[Wiki/Entities/Stock/FNiagaraSystemSimulation]]
 
 ### Phase 4（数据模型）
-- [ ] [[Wiki/Sources/Stock/NiagaraTypes]]
-- [ ] [[Wiki/Sources/Stock/NiagaraCommon]]
-- [ ] [[Wiki/Sources/Stock/NiagaraConstants]]
-- [ ] [[Wiki/Sources/Stock/NiagaraDataSet]]
-- [ ] [[Wiki/Sources/Stock/NiagaraDataSetAccessor]]
-- [ ] [[Wiki/Sources/Stock/NiagaraParameters]]
-- [ ] [[Wiki/Sources/Stock/NiagaraParameterStore]]
+- [x] [[Wiki/Sources/Stock/NiagaraTypes]] → [[Wiki/Entities/Stock/FNiagaraTypeDefinition]] / [[Wiki/Entities/Stock/FNiagaraVariable]] / [[Wiki/Entities/Stock/FNiagaraTypeLayoutInfo]]
+- [x] [[Wiki/Sources/Stock/NiagaraCommon]]
+- [x] [[Wiki/Sources/Stock/NiagaraConstants]] → [[Wiki/Entities/Stock/FNiagaraConstants]]
+- [x] [[Wiki/Sources/Stock/NiagaraDataSet]] → [[Wiki/Entities/Stock/FNiagaraDataSet]]
+- [x] [[Wiki/Sources/Stock/NiagaraDataSetAccessor]] → [[Wiki/Entities/Stock/FNiagaraDataSetAccessor]]
+- [x] [[Wiki/Sources/Stock/NiagaraParameters]]
+- [x] [[Wiki/Sources/Stock/NiagaraParameterStore]] → [[Wiki/Entities/Stock/FNiagaraParameterStore]]
 
 ### Phase 5（CPU VM）
 - [ ] [[Wiki/Sources/Stock/NiagaraCore]]
