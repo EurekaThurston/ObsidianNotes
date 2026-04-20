@@ -171,16 +171,18 @@ Niagara 插件位于 `Engine/Plugins/FX/Niagara/`，共 7 个模块：
 
 ---
 
-### Phase 5 — 脚本执行：CPU 虚拟机
+### Phase 5 — 脚本执行：CPU 虚拟机 ✅
 > **目标**：理解 Niagara 脚本（Spawn/Update/Event）如何在 CPU 上被逐粒子执行。
+>
+> 📖 **主题读本**:[[Readers/Niagara/Phase5-cpu-script-execution-读本]] — CPU VM 主路径清晰,GPU 部分作 Phase 8 预告。含 System 脚本的 PerInstanceFunctionHook 机制、CPU/GPU 参数布局 padding 映射、5 种 UniformBuffer 的用法。
 
-| # | 文件 | 模块 | 路径 |
-|---|---|---|---|
-| 5.1 | `NiagaraCore.h` | NiagaraCore | `Public/` |
-| 5.2 | `NiagaraDataInterfaceBase.h` | NiagaraCore | `Public/` |
-| 5.3 | `NiagaraScriptExecutionContext.h` | Niagara | `Classes/` |
-| 5.4 | `NiagaraScriptExecutionParameterStore.h` | Niagara | `Public/` |
-| 5.5 | `NiagaraEmitterInstanceBatcher.h` *(CPU 侧)* | Niagara | `Classes/` |
+| # | 文件 | 模块 | 路径 | 源摘要 |
+|---|---|---|---|---|
+| 5.1 | `NiagaraCore.h` | NiagaraCore | `Public/` | [[Wiki/Sources/Stock/NiagaraCore]] |
+| 5.2 | `NiagaraDataInterfaceBase.h` | NiagaraCore | `Public/` | [[Wiki/Sources/Stock/NiagaraDataInterfaceBase]] |
+| 5.3 | `NiagaraScriptExecutionContext.h` | Niagara | `Classes/` | [[Wiki/Sources/Stock/NiagaraScriptExecutionContext]] |
+| 5.4 | `NiagaraScriptExecutionParameterStore.h` | Niagara | `Public/` | [[Wiki/Sources/Stock/NiagaraScriptExecutionParameterStore]] |
+| 5.5 | `NiagaraEmitterInstanceBatcher.h` *(实际是 GPU Batcher,Phase 8 详)* | Niagara | `Classes/` | [[Wiki/Sources/Stock/NiagaraEmitterInstanceBatcher]] |
 
 **学习要点：**
 - Niagara CPU 脚本最终跑在 **VectorVM**（`Engine/Source/Runtime/VectorVM`，引擎内置，不在插件）上——一个 SIMD 批量计算虚拟机
@@ -368,6 +370,7 @@ Niagara 插件位于 `Engine/Plugins/FX/Niagara/`，共 7 个模块：
 **Phase 2 ✅ 完成**（2026-04-20）
 **Phase 3 ✅ 完成**（2026-04-20）
 **Phase 4 ✅ 完成**（2026-04-20）
+**Phase 5 ✅ 完成**（2026-04-20）
 
 ### Phase 0（概念页）
 - [x] [[Wiki/Concepts/UE4/UE4-uobject-系统]]
@@ -402,11 +405,11 @@ Niagara 插件位于 `Engine/Plugins/FX/Niagara/`，共 7 个模块：
 - [x] [[Wiki/Sources/Stock/NiagaraParameterStore]] → [[Wiki/Entities/Stock/FNiagaraParameterStore]]
 
 ### Phase 5（CPU VM）
-- [ ] [[Wiki/Sources/Stock/NiagaraCore]]
-- [ ] [[Wiki/Sources/Stock/NiagaraDataInterfaceBase]]
-- [ ] [[Wiki/Sources/Stock/NiagaraScriptExecutionContext]]
-- [ ] [[Wiki/Sources/Stock/NiagaraScriptExecutionParameterStore]]
-- [ ] [[Wiki/Sources/Stock/NiagaraEmitterInstanceBatcher-cpu]]
+- [x] [[Wiki/Sources/Stock/NiagaraCore]]
+- [x] [[Wiki/Sources/Stock/NiagaraDataInterfaceBase]] → [[Wiki/Entities/Stock/UNiagaraDataInterfaceBase]]
+- [x] [[Wiki/Sources/Stock/NiagaraScriptExecutionContext]] → [[Wiki/Entities/Stock/FNiagaraScriptExecutionContext]] / [[Wiki/Entities/Stock/FNiagaraComputeExecutionContext]] / [[Wiki/Entities/Stock/FNiagaraGPUSystemTick]]
+- [x] [[Wiki/Sources/Stock/NiagaraScriptExecutionParameterStore]]
+- [x] [[Wiki/Sources/Stock/NiagaraEmitterInstanceBatcher]] → [[Wiki/Entities/Stock/NiagaraEmitterInstanceBatcher]]
 
 ### Phase 6（渲染）
 - [ ] [[Wiki/Sources/Stock/NiagaraRendererProperties]]

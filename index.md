@@ -3,7 +3,7 @@
 > 本文件是整个 wiki 的内容目录。LLM 每次 ingest 都会更新。
 > 查询时先读这里,再深入相关页面。
 
-最后更新:2026-04-20（+ Phase 4 数据模型入驻:7 Source + 7 Entity + 1 读本,Niagara 学习路径推进到 Phase 4/10 完成）
+最后更新:2026-04-20（+ Phase 5 CPU 脚本执行入驻:5 Source + 5 Entity + 1 读本,Niagara 学习路径推进到 Phase 5/10 完成）
 
 ---
 
@@ -46,6 +46,11 @@
 - [[Wiki/Entities/Stock/FNiagaraDataSet|FNiagaraDataSet]] — 粒子数据 SoA 存储;CurrentData/DestinationData 双 buffer + 2-3 buffer 池 + Persistent ID 系统 (来源:1)
 - [[Wiki/Entities/Stock/FNiagaraDataSetAccessor|FNiagaraDataSetAccessor]] — 类型安全模板家族;Float/Int32/Struct 三家族 + Half 自动降级 (来源:1)
 - [[Wiki/Entities/Stock/FNiagaraParameterStore|FNiagaraParameterStore]] — 运行时参数存储;参数 byte + DI + UObject 三类 + 绑定图 + 三路 dirty (来源:1)
+- [[Wiki/Entities/Stock/UNiagaraDataInterfaceBase|UNiagaraDataInterfaceBase]] — DI 抽象基类;住在 NiagaraCore 模块方便 Shader 依赖;CS 参数绑定 non-virtual + LAYOUT_FIELD (来源:1)
+- [[Wiki/Entities/Stock/FNiagaraScriptExecutionContext|FNiagaraScriptExecutionContext]] — CPU VM 执行上下文;Script + FunctionTable + Parameters + DataSetInfo;System 版带 PerInstanceFunctionHook (来源:1)
+- [[Wiki/Entities/Stock/FNiagaraComputeExecutionContext|FNiagaraComputeExecutionContext]] — GPU 执行上下文(Phase 8 详);MainDataSet + GPUScript_RT + CombinedParamStore + SimStageInfo (来源:1)
+- [[Wiki/Entities/Stock/FNiagaraGPUSystemTick|FNiagaraGPUSystemTick]] — GT→RT 的 GPU tick 打包;InstanceData_ParamData_Packed + 5 种 UniformBuffer (来源:1)
+- [[Wiki/Entities/Stock/NiagaraEmitterInstanceBatcher|NiagaraEmitterInstanceBatcher]] — RT 驻留的 GPU 总调度器;三 stage dispatch + InstanceCountMgr + SortMgr (来源:1)
 
 ## Concepts(概念)
 *想法、理论、方法、术语。*
@@ -110,6 +115,11 @@
 - [[Wiki/Sources/Stock/NiagaraDataSetAccessor]] — NiagaraDataSetAccessor.h @ b6ab0dee9 (Phase 4.5,类型安全 accessor,619 行)
 - [[Wiki/Sources/Stock/NiagaraParameters]] — NiagaraParameters.h @ b6ab0dee9 (Phase 4.6,editor-only 参数列表,82 行)
 - [[Wiki/Sources/Stock/NiagaraParameterStore]] — NiagaraParameterStore.h @ b6ab0dee9 (Phase 4.7,运行时参数存储,1260 行)
+- [[Wiki/Sources/Stock/NiagaraCore]] — NiagaraCore.h @ b6ab0dee9 (Phase 5.1,模块入口,6 行)
+- [[Wiki/Sources/Stock/NiagaraDataInterfaceBase]] — NiagaraDataInterfaceBase.h @ b6ab0dee9 (Phase 5.2,DI 抽象基类,136 行)
+- [[Wiki/Sources/Stock/NiagaraScriptExecutionContext]] — NiagaraScriptExecutionContext.h @ b6ab0dee9 (Phase 5.3,CPU VM + GPU 上下文,531 行)
+- [[Wiki/Sources/Stock/NiagaraScriptExecutionParameterStore]] — NiagaraScriptExecutionParameterStore.h @ b6ab0dee9 (Phase 5.4,VM 参数 padding,195 行)
+- [[Wiki/Sources/Stock/NiagaraEmitterInstanceBatcher]] — NiagaraEmitterInstanceBatcher.h @ b6ab0dee9 (Phase 5.5 / 实际 GPU Batcher,317 行)
 
 ## Readers(主题读本)
 *每个议题"一次读完即完整掌握"的线性读物。人类阅读的首选入口,详见 [[CLAUDE]] §3.4。*
@@ -129,6 +139,7 @@
 - [[Readers/Niagara/Phase2-component-layer-读本|Phase 2 读本 — Niagara 的 Component 层]] — 把 Component/Actor/FunctionLibrary 三文件讲成从"资产到场景里跑着"的完整控制流,涵盖三入口/五职责/四生命周期源/Pool-Scalability-AutoDestroy 三方决策 (2026-04-20)
 - [[Readers/Niagara/Phase3-runtime-instance-读本|Phase 3 读本 — Niagara 的心脏]] — 运行时实例层:三阶段 Tick + 双状态机 + 4-instance TickBatch + 参数双缓冲 + ParameterStore↔DataSet 绑定,含 `bForceSolo` 5-20× 退化定量估算 (2026-04-20)
 - [[Readers/Niagara/Phase4-data-model-读本|Phase 4 读本 — Niagara 的数据语言]] — 类型系统(TypeDef/Variable/LayoutInfo)+ SoA 布局 + Double Buffer + Persistent ID 双整数 + 命名空间系统 + ParameterStore 三路 dirty + 绑定图,一次读完掌握 Niagara "数据"全貌 (2026-04-20)
+- [[Readers/Niagara/Phase5-cpu-script-execution-读本|Phase 5 读本 — Niagara 脚本如何"跑起来"]] — CPU VM 上下文 + PerInstanceFunctionHook + CPU/GPU 参数 padding + GPU Tick 打包 + FFXSystemInterface 三阶段 stage,为 Phase 7(DI)/Phase 8(GPU)搭脚手架 (2026-04-20)
 
 ## Syntheses(综合/专题)
 *跨源分析、对比、专题报告、好答案的沉淀(非读本)。读本见上方 [[#Readers(主题读本)]] 分区。*

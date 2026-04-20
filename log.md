@@ -5,6 +5,31 @@
 
 ---
 
+## [2026-04-20] ingest | Niagara Phase 5 · CPU 脚本执行(5 头文件)
+
+- 源(code,stock @ `b6ab0dee9`):合计 1185 行
+  - `NiagaraCore/Public/NiagaraCore.h`(6 行,仅 typedef)
+  - `NiagaraCore/Public/NiagaraDataInterfaceBase.h`(136 行)
+  - `Niagara/Classes/NiagaraScriptExecutionContext.h`(531 行,核心)
+  - `Niagara/Public/NiagaraScriptExecutionParameterStore.h`(195 行)
+  - `Niagara/Classes/NiagaraEmitterInstanceBatcher.h`(317 行,**实际是 GPU Batcher**)
+- 新建(11):5 Source + 5 Entity + 1 读本
+  - Source:NiagaraCore / NiagaraDataInterfaceBase / NiagaraScriptExecutionContext / NiagaraScriptExecutionParameterStore / NiagaraEmitterInstanceBatcher
+  - Entity:UNiagaraDataInterfaceBase / FNiagaraScriptExecutionContext / FNiagaraComputeExecutionContext / FNiagaraGPUSystemTick / NiagaraEmitterInstanceBatcher
+  - 读本:[[Readers/Niagara/Phase5-cpu-script-execution-读本]](7 节 + 7 条洞察)
+- 要点:
+  - `NiagaraCore` 模块只有 3 个文件,**接口/实现分离**:让 NiagaraShader / NiagaraVertexFactories 依赖 DI 接口不拖累主模块
+  - **CPU VM Execute** 核心:把 `Parameters / FunctionTable / UserPtrTable / DataSetInfo / ConstantBufferTable` 喂给引擎内置 VectorVM 的 `Exec(Context, ByteCode, NumInstances)`
+  - **System 脚本的 PerInstanceFunctionHook** 解决"一批 instance 的 User DI 不同"—— VM 遇到 DI 调用 → hook → 按当前 instance 索引查该 instance 的 DI 函数
+  - **CPU 紧凑布局 vs GPU 对齐布局**的映射由 `FNiagaraScriptExecutionPaddingInfo` 编译期生成,4 个 uint16(SrcOffset/DestOffset/SrcSize/DestSize)
+  - **`CopyCurrToPrev` vs Phase 3 `GlobalParameters[2]` 双缓冲是两件事**:前者服务脚本内读 `Previous.*` 命名空间,后者服务 GT/RT 跨线程
+  - **`FNiagaraGPUSystemTick::InstanceData_ParamData_Packed`** 紧凑 byte 布局 + 16-byte 对齐,让 ParamData 能直接 upload 成 UniformBuffer
+  - **`NiagaraEmitterInstanceBatcher` 不是 CPU batcher**,而是 RT 驻留的 GPU compute 总调度器,分 PreInitViews/PostInitViews/PostOpaqueRender 三 stage dispatch —— 文件名有误导,Phase 8 完整展开
+  - 5 种 UniformBuffer(`UBT_Global / System / Owner / Emitter / External`)
+- 下一步:Phase 6 渲染系统(10 文件,Sprite/Ribbon/Mesh/Light × Properties+Renderer)
+
+---
+
 ## [2026-04-20] ingest | Niagara Phase 4 · 数据模型(7 头文件)
 
 - 源(code,stock @ `b6ab0dee9`):合计 5663 行
