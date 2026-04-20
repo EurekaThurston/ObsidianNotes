@@ -1,9 +1,9 @@
 ---
 type: concept
 created: 2026-04-19
-updated: 2026-04-19
+updated: 2026-04-21
 tags: [ai, agent, automation]
-sources: 1
+sources: 2
 aliases: [Agent, AI Agent, 智能体]
 ---
 
@@ -40,14 +40,11 @@ aliases: [Agent, AI Agent, 智能体]
 
 ## Subagent（多 Agent 协作）
 
-2025 年起主流做法：**主 Agent 拆任务、派给多个 Subagent 各自专攻**，最后主 Agent 汇总。
+2025 年起主流做法：**主 Agent 拆任务、派给多个 Subagent 各自专攻**，最后主 Agent 汇总。典型实现：Claude Code 的 subagent 机制、CrewAI、AutoGen。
 
-好处：
-- 每个子 Agent 只管自己那一小摊，**[[Wiki/Concepts/AIApps/Context-window|上下文窗口]]不会被撑爆**（对抗 Context Rot）
-- 可以并行执行，速度更快
-- 失败可以局部重试
+**第一性原理是"上下文隔离"，不是分工并行**——子 agent 在一次性干净上下文里读 40 文件、生成 80K token 中间思考，最后只返回 300 字结论，主 agent 上下文只长 300 字。把"有效上下文"从单窗口 200K 放大到 N × 200K。
 
-典型：Claude Code 的 subagent 机制、CrewAI、AutoGen。
+完整展开（包工头隐喻、链路拓扑、派活 prompt 工程、四个次级收益、Anthropic 观察的 agent 数与质量非线性关系）见独立概念页 → [[Wiki/Concepts/AIApps/Multi-agent|Multi-agent / Subagent 架构]]。
 
 ## 与相关概念的区别
 
@@ -62,6 +59,7 @@ aliases: [Agent, AI Agent, 智能体]
 ## 相关
 
 - [[Wiki/Concepts/AIApps/Llm|LLM]] — Agent 的底层大脑
+- [[Wiki/Concepts/AIApps/Multi-agent|Multi-agent / Subagent 架构]] — 主 Agent 派活给子 Agent 的完整模型
 - [[Wiki/Concepts/AIApps/Mcp|MCP]] — Agent 调外部工具的协议
 - [[Wiki/Concepts/AIApps/Harness-engineering|Harness Engineering]] — 围绕 Agent 的工程方法论
 - [[Wiki/Concepts/AIApps/Agent-skills|Agent Skills]] — 给 Agent 挂的专家模块
@@ -72,6 +70,7 @@ aliases: [Agent, AI Agent, 智能体]
 
 - 主题读本(推荐通读):[[Readers/AIApps/AI-primer-v2-读本]]
 - 原子 source:[[Wiki/Sources/AIApps/AI-primer-v2]] (raw: [[Raw/Articles/AI 应用技术发展脉络与核心概念扫盲手册 v2]])
+- 原子 source(subagent 深度):[[Wiki/Sources/AIApps/Multi-agent-conversation]] (raw: [[Raw/Notes/Multi-agent 对话]])
 
 ## 开放问题
 

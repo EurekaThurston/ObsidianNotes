@@ -5,6 +5,27 @@
 
 ---
 
+## [2026-04-21] ingest | Multi-agent 对话 — Claudian 自解多 agent 工作机制
+
+- source: [[Raw/Notes/Multi-agent 对话]](对话归纳,非逐字)
+- 新建:
+  - [[Raw/Notes/Multi-agent 对话]] — 原始对话归纳
+  - [[Wiki/Sources/AIApps/Multi-agent-conversation]] — 源摘要
+  - [[Wiki/Concepts/AIApps/Multi-agent]] — 独立概念页,从 [[Wiki/Concepts/AIApps/Ai-agent]] 里只有 4 行概述的 Subagent 小节升格为完整概念
+- 更新:
+  - [[Wiki/Concepts/AIApps/Ai-agent]] — Subagent 小节精简并下链新概念页;sources 1→2;相关区新增 Multi-agent 链接
+  - [[Wiki/Concepts/AIApps/Context-window]] — "subagent 是应对 Context Rot 的手段"升级为"多 agent 存在的第一性原理",相关区新增独立链接
+  - [[index]] — 新增 Multi-agent 概念登记 + Multi-agent-conversation source 登记 + 头部 footer 更新
+- 要点:
+  - 反直觉核心:"上下文有限,切多 agent 才有意义"——反过来说才对。多 agent 的第一性原理是**上下文隔离**,不是分工并行
+  - 三个病机动:Context Rot / Prompt Cache 5 分钟 TTL / 指令漂移
+  - 有效上下文 = N × 200K,代价是 agent 间通信必须压缩
+  - 四个次级收益:角色专用 system prompt+工具集 / 模型分工(Opus+Haiku) / 独立审视视角 / 失败隔离
+  - 链路拓扑衰减:扁平扇出 > 深度嵌套;Anthropic 观察 agent 数量 vs 质量非线性
+  - 子 agent 字面=一次全新 Claude 对话,派 prompt 要像对刚入职同事,强制压缩汇报防信息倾倒
+- 不产读本:本轮只 2 原子页,未命中 [[CLAUDE]] §3.4 触发(<3 原子页、非新主题首次入驻、用户未显式要求)
+- 自验:对本条 log 声称的 3 个新建路径各跑 Glob,已全部存在(见下一步之前的验证)
+
 ## [2026-04-21] lint | Niagara Phase 5-10 分组 targeted 全量检查 + 3 处微修复
 
 - 触发:学习路径 Phase 0-10 全部完成后的质量基线确认(Phase 0-4 先前已稳定,本轮重点 5-10)

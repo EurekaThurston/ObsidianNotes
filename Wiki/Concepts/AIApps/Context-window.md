@@ -37,7 +37,7 @@ aliases: [上下文窗口, Context Window, Context Rot, 上下文腐烂]
 - 不是给 AI 越多信息越好，而是要**精准地只给当下需要的那一份**。
 - 这就是 [[Wiki/Concepts/AIApps/Agent-skills|Agent Skills]] 采用"渐进式披露"的根本动机。
 - 也是 [[Wiki/Concepts/AIApps/Harness-engineering|Harness Engineering]] 四大支柱之一"上下文管理"的核心问题。
-- 也是 [[Wiki/Concepts/AIApps/Ai-agent|Agent]] 采用 subagent 分工的动机——让每个子 Agent 只看自己那一小摊。
+- 也是 [[Wiki/Concepts/AIApps/Multi-agent|Multi-agent / Subagent 架构]]存在的**第一性原理**——让每个子 Agent 在一次性干净上下文里干脏活,只返回压缩结论,把有效上下文从单窗口 200K 放大到 N × 200K。
 
 ## Token：计量单位
 
@@ -56,7 +56,8 @@ aliases: [上下文窗口, Context Window, Context Rot, 上下文腐烂]
 - [[Wiki/Concepts/AIApps/Llm|LLM]] — 上下文窗口是 LLM 的"视力范围"
 - [[Wiki/Concepts/AIApps/Agent-skills|Agent Skills]] — 渐进式披露直接对抗 Context Rot
 - [[Wiki/Concepts/AIApps/Harness-engineering|Harness Engineering]] — "上下文管理"是其四大支柱之一
-- [[Wiki/Concepts/AIApps/Ai-agent|AI Agent]] — Subagent 分工也是应对 Context Rot 的手段
+- [[Wiki/Concepts/AIApps/Ai-agent|AI Agent]] — Agent 循环的通用基础
+- [[Wiki/Concepts/AIApps/Multi-agent|Multi-agent / Subagent]] — Context Rot 是它存在的第一性原理
 - [[Wiki/Concepts/Methodology/Rag|RAG]] — 通过检索把"最相关的部分"塞进上下文
 
 ## 引用来源

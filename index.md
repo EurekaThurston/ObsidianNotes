@@ -3,7 +3,7 @@
 > 本文件是整个 wiki 的内容目录。LLM 每次 ingest 都会更新。
 > 查询时先读这里,再深入相关页面。
 
-最后更新:2026-04-20（+ Phase 10 高级特性入驻:6 Source + 5 Entity + 1 读本,**Niagara 学习路径 10/10 全部完成** 🎉）
+最后更新:2026-04-21（+ Multi-agent 对话 ingest:1 Raw + 1 Source + 1 Concept,subagent 架构从"Ai-agent 一小节"升级为独立概念页）
 
 ---
 
@@ -113,7 +113,8 @@
 - [[Wiki/Concepts/AIApps/Hallucination|幻觉]] — AI 一本正经胡说的结构性毛病;用户第一纪律:具体事实必核验 (来源:1)
 - [[Wiki/Concepts/AIApps/Context-window|上下文窗口 & Context Rot]] — AI 的视力范围,塞满反而变笨;Skills 渐进式披露的根本动机 (来源:1)
 - [[Wiki/Concepts/AIApps/Reasoning-model|推理模型]] — o1/R1/Extended Thinking,先打草稿再答题 (来源:1)
-- [[Wiki/Concepts/AIApps/Ai-agent|AI Agent]] — 给 LLM 装手脚,思考→行动→观察的循环;Subagent 分工 (来源:1)
+- [[Wiki/Concepts/AIApps/Ai-agent|AI Agent]] — 给 LLM 装手脚,思考→行动→观察的循环 (来源:2)
+- [[Wiki/Concepts/AIApps/Multi-agent|Multi-agent / Subagent 架构]] — 主 Agent 派活给一次性子 Agent;第一性原理是上下文隔离,不是分工并行 (来源:1)
 - [[Wiki/Concepts/AIApps/Mcp|MCP]] — Model Context Protocol,AI 世界的 USB-C 协议 (来源:1)
 - [[Wiki/Concepts/AIApps/Harness-engineering|Harness Engineering]] — AI 的操作系统;四大支柱:上下文/约束/反馈/熵管理 (来源:1)
 - [[Wiki/Concepts/AIApps/Agent-skills|Agent Skills]] — 专业知识打包为可复用模块,渐进式披露三层加载 (来源:1)
@@ -122,6 +123,7 @@
 *每个 raw 文件或代码源对应一页摘要。按时间倒序。*
 
 ### 文章 / 笔记
+- [[Wiki/Sources/AIApps/Multi-agent-conversation]] — Multi-agent 对话,Claudian 解释自己的多 agent 工作机制 (2026-04,note)
 - [[Wiki/Sources/AIApps/AI-primer-v2]] — AI 应用技术发展脉络与核心概念扫盲手册 v2 (2026-04,article)
 - [[Wiki/Sources/Methodology/Karpathy-llm-wiki]] — Karpathy 的 LLM Wiki idea file (2026-04,note)
 - [[Wiki/Sources/AIArt/Lora-deep-dive]] — LoRA 深度指南：给鸣潮美术向流水线的落地方案 (2026-04,note)
