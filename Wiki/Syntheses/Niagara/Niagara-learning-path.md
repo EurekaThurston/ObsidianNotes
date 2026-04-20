@@ -194,21 +194,23 @@ Niagara 插件位于 `Engine/Plugins/FX/Niagara/`，共 7 个模块：
 
 ---
 
-### Phase 6 — 渲染系统
+### Phase 6 — 渲染系统 ✅
 > **目标**：理解粒子数据如何变成屏幕上的像素。
+>
+> 📖 **主题读本**:[[Readers/Niagara/Phase6-rendering-读本]] — Properties/Renderer 对偶 + 4 种类型能力边界 + GT→RT 数据流 + Cutout/Tessellation/SimpleLight 各自的特殊路径。
 
-| # | 文件 | 模块 | 路径 |
-|---|---|---|---|
-| 6.1 | `NiagaraRendererProperties.h` | Niagara | `Public/` |
-| 6.2 | `NiagaraRenderer.h` | Niagara | `Public/` |
-| 6.3 | `NiagaraSpriteRendererProperties.h` | Niagara | `Public/` |
-| 6.4 | `NiagaraRendererSprites.h` | Niagara | `Public/` |
-| 6.5 | `NiagaraRibbonRendererProperties.h` | Niagara | `Public/` |
-| 6.6 | `NiagaraRendererRibbons.h` | Niagara | `Public/` |
-| 6.7 | `NiagaraMeshRendererProperties.h` | Niagara | `Public/` |
-| 6.8 | `NiagaraRendererMeshes.h` | Niagara | `Public/` |
-| 6.9 | `NiagaraLightRendererProperties.h` | Niagara | `Public/` |
-| 6.10 | `NiagaraRendererLights.h` | Niagara | `Public/` |
+| # | 文件 | 模块 | 路径 | 源摘要 |
+|---|---|---|---|---|
+| 6.1 | `NiagaraRendererProperties.h` | Niagara | `Public/` | [[Wiki/Sources/Stock/NiagaraRendererProperties]] |
+| 6.2 | `NiagaraRenderer.h` | Niagara | `Public/` | [[Wiki/Sources/Stock/NiagaraRenderer]] |
+| 6.3 | `NiagaraSpriteRendererProperties.h` | Niagara | `Public/` | [[Wiki/Sources/Stock/NiagaraSpriteRendererProperties]] |
+| 6.4 | `NiagaraRendererSprites.h` | Niagara | `Public/` | [[Wiki/Sources/Stock/NiagaraRendererSprites]] |
+| 6.5 | `NiagaraRibbonRendererProperties.h` | Niagara | `Public/` | [[Wiki/Sources/Stock/NiagaraRibbonRendererProperties]] |
+| 6.6 | `NiagaraRendererRibbons.h` | Niagara | `Public/` | [[Wiki/Sources/Stock/NiagaraRendererRibbons]] |
+| 6.7 | `NiagaraMeshRendererProperties.h` | Niagara | `Public/` | [[Wiki/Sources/Stock/NiagaraMeshRendererProperties]] |
+| 6.8 | `NiagaraRendererMeshes.h` | Niagara | `Public/` | [[Wiki/Sources/Stock/NiagaraRendererMeshes]] |
+| 6.9 | `NiagaraLightRendererProperties.h` | Niagara | `Public/` | [[Wiki/Sources/Stock/NiagaraLightRendererProperties]] |
+| 6.10 | `NiagaraRendererLights.h` | Niagara | `Public/` | [[Wiki/Sources/Stock/NiagaraRendererLights]] |
 
 **学习要点：**
 - `UNiagaraRendererProperties`（Asset 侧）vs `NiagaraRenderer`（运行时侧）：同样的 Asset/Instance 对偶
@@ -371,6 +373,7 @@ Niagara 插件位于 `Engine/Plugins/FX/Niagara/`，共 7 个模块：
 **Phase 3 ✅ 完成**（2026-04-20）
 **Phase 4 ✅ 完成**（2026-04-20）
 **Phase 5 ✅ 完成**（2026-04-20）
+**Phase 6 ✅ 完成**（2026-04-20）
 
 ### Phase 0（概念页）
 - [x] [[Wiki/Concepts/UE4/UE4-uobject-系统]]
@@ -412,16 +415,16 @@ Niagara 插件位于 `Engine/Plugins/FX/Niagara/`，共 7 个模块：
 - [x] [[Wiki/Sources/Stock/NiagaraEmitterInstanceBatcher]] → [[Wiki/Entities/Stock/NiagaraEmitterInstanceBatcher]]
 
 ### Phase 6（渲染）
-- [ ] [[Wiki/Sources/Stock/NiagaraRendererProperties]]
-- [ ] [[Wiki/Sources/Stock/NiagaraRenderer]]
-- [ ] [[Wiki/Sources/Stock/NiagaraSpriteRendererProperties]]
-- [ ] [[Wiki/Sources/Stock/NiagaraRendererSprites]]
-- [ ] [[Wiki/Sources/Stock/NiagaraRibbonRendererProperties]]
-- [ ] [[Wiki/Sources/Stock/NiagaraRendererRibbons]]
-- [ ] [[Wiki/Sources/Stock/NiagaraMeshRendererProperties]]
-- [ ] [[Wiki/Sources/Stock/NiagaraRendererMeshes]]
-- [ ] [[Wiki/Sources/Stock/NiagaraLightRendererProperties]]
-- [ ] [[Wiki/Sources/Stock/NiagaraRendererLights]]
+- [x] [[Wiki/Sources/Stock/NiagaraRendererProperties]] → [[Wiki/Entities/Stock/UNiagaraRendererProperties]]
+- [x] [[Wiki/Sources/Stock/NiagaraRenderer]] → [[Wiki/Entities/Stock/FNiagaraRenderer]]
+- [x] [[Wiki/Sources/Stock/NiagaraSpriteRendererProperties]] → [[Wiki/Entities/Stock/UNiagaraSpriteRendererProperties]]
+- [x] [[Wiki/Sources/Stock/NiagaraRendererSprites]]
+- [x] [[Wiki/Sources/Stock/NiagaraRibbonRendererProperties]] → [[Wiki/Entities/Stock/UNiagaraRibbonRendererProperties]]
+- [x] [[Wiki/Sources/Stock/NiagaraRendererRibbons]]
+- [x] [[Wiki/Sources/Stock/NiagaraMeshRendererProperties]] → [[Wiki/Entities/Stock/UNiagaraMeshRendererProperties]]
+- [x] [[Wiki/Sources/Stock/NiagaraRendererMeshes]]
+- [x] [[Wiki/Sources/Stock/NiagaraLightRendererProperties]] → [[Wiki/Entities/Stock/UNiagaraLightRendererProperties]]
+- [x] [[Wiki/Sources/Stock/NiagaraRendererLights]]
 
 ### Phase 7（数据接口）
 - [ ] [[Wiki/Sources/Stock/NiagaraDataInterface]]

@@ -5,6 +5,34 @@
 
 ---
 
+## [2026-04-20] ingest | Niagara Phase 6 · 渲染系统(10 头文件)
+
+- 源(code,stock @ `b6ab0dee9`):合计 1776 行,10 文件成对
+  - 基类:NiagaraRendererProperties(259)/ NiagaraRenderer(144)
+  - Sprite:SpriteRendererProperties(316)/ RendererSprites(102)
+  - Ribbon:RibbonRendererProperties(361)/ RendererRibbons(103)
+  - Mesh:MeshRendererProperties(288)/ RendererMeshes(74)
+  - Light:LightRendererProperties(98)/ RendererLights(31)
+- 新建(17):10 Source + 6 Entity + 1 读本
+  - Entity 压缩为 6 个(Properties 和 Renderer 成对合并一个 Entity)
+  - 读本:[[Readers/Niagara/Phase6-rendering-读本]](8 节 + 8 条洞察)
+- 要点:
+  - **Properties/Renderer 对偶**:Asset 侧 UObject,Runtime 侧非 UObject,通过 CreateEmitterRenderer 工厂连接
+  - **一个 Emitter 可多 Renderer**(火焰 = Sprite + Light + Mesh 叠加)
+  - **GT→RT 三阶段**:GenerateDynamicData(GT)→ SetDynamicData_RenderThread(桥)→ GetDynamicMeshElements(RT)
+  - **`FNiagaraDynamicDataBase::Data` union**:CPU sim 存 `DataBuffer*`,GPU sim 存 `ComputeExecutionContext*`,按 SimTarget 选
+  - **`FNiagaraRendererLayout` GT+RT 双 copy**,Finalize 时拷贝,RT 只读
+  - **Half type 编码到 offset 最高位**(`Offset |= 1 << 31`)—— shader 按位判断类型
+  - **`bGpuLowLatencyTranslucency`** 走 TranslucentDataToRender 低延迟通路(半透明 + 不透明同步)
+  - **4 种类型能力矩阵**:
+    - Sprite:通用,CPU+GPU,17 VF slot,5 种 facing,Cutout 优化,VR 稳定 facing
+    - Ribbon:**CPU only**,多带 per emitter,RibbonId+LinkOrder,自适应 tessellation,双 UV channel
+    - Mesh:CPU+GPU,StaticMesh 实例化,14 VF slot,全粒子共享 LOD(不支持 per-instance LOD)
+    - Light:**CPU only**,不产 mesh batch,走 GatherSimpleLights,bAffectsTranslucency 严重开销警告
+- 下一步:Phase 7 数据接口系统(10 文件:DI 基类 × 2 + 典型 DI × 8)
+
+---
+
 ## [2026-04-20] ingest | Niagara Phase 5 · CPU 脚本执行(5 头文件)
 
 - 源(code,stock @ `b6ab0dee9`):合计 1185 行

@@ -35,7 +35,8 @@ sources: 9
 - **Phase 3 ✅**（2026-04-20）:运行时实例层(心脏)—— 📖 **主题读本**:[[Readers/Niagara/Phase3-runtime-instance-读本]] / 原子页见 [[Wiki/Entities/Stock/FNiagaraSystemInstance]]、[[Wiki/Entities/Stock/FNiagaraEmitterInstance]]、[[Wiki/Entities/Stock/FNiagaraSystemSimulation]]
 - **Phase 4 ✅**（2026-04-20）:数据模型(类型系统 + SoA + 参数存储)—— 📖 **主题读本**:[[Readers/Niagara/Phase4-data-model-读本]] / 原子页见 [[Wiki/Entities/Stock/FNiagaraTypeDefinition]]、[[Wiki/Entities/Stock/FNiagaraVariable]]、[[Wiki/Entities/Stock/FNiagaraTypeLayoutInfo]]、[[Wiki/Entities/Stock/FNiagaraConstants]]、[[Wiki/Entities/Stock/FNiagaraDataSet]]、[[Wiki/Entities/Stock/FNiagaraDataSetAccessor]]、[[Wiki/Entities/Stock/FNiagaraParameterStore]]
 - **Phase 5 ✅**（2026-04-20）:CPU 脚本执行(VM + ExecContext + Padding)—— 📖 **主题读本**:[[Readers/Niagara/Phase5-cpu-script-execution-读本]] / 原子页见 [[Wiki/Entities/Stock/UNiagaraDataInterfaceBase]]、[[Wiki/Entities/Stock/FNiagaraScriptExecutionContext]]、[[Wiki/Entities/Stock/FNiagaraComputeExecutionContext]]、[[Wiki/Entities/Stock/FNiagaraGPUSystemTick]]、[[Wiki/Entities/Stock/NiagaraEmitterInstanceBatcher]]
-- Phase 6-10 等待逐文件 ingest
+- **Phase 6 ✅**（2026-04-20）:渲染系统(Sprite/Ribbon/Mesh/Light 5 对)—— 📖 **主题读本**:[[Readers/Niagara/Phase6-rendering-读本]] / 原子页见 [[Wiki/Entities/Stock/UNiagaraRendererProperties]]、[[Wiki/Entities/Stock/FNiagaraRenderer]]、[[Wiki/Entities/Stock/UNiagaraSpriteRendererProperties]]、[[Wiki/Entities/Stock/UNiagaraRibbonRendererProperties]]、[[Wiki/Entities/Stock/UNiagaraMeshRendererProperties]]、[[Wiki/Entities/Stock/UNiagaraLightRendererProperties]]
+- Phase 7-10 等待逐文件 ingest
 
 **Phase 1 的关键收获**（从 5 个 header 里提炼）：
 - **Asset 链路定型**：System →（`TArray<FNiagaraEmitterHandle>`）→ Handle(Id+Name+enabled+Instance) → Emitter →（脚本 / 渲染器 / SimStages）→ Script（字节码 + GPU shader）
@@ -113,7 +114,7 @@ Niagara 源码学习 (UE 4.26)
     │   ├── FNiagaraSystemInstance    ← 单实例状态机 + 三阶段 Tick
     │   ├── FNiagaraEmitterInstance   ← Emitter 粒子数据 + Exec 上下文
     │   └── FNiagaraSystemSimulation  ← 同 Asset 多实例批量 Tick 调度
-    └── Niagara 学习路径 (10 阶段, Phase 0-5 ✅)
+    └── Niagara 学习路径 (10 阶段, Phase 0-6 ✅)
 
 AI 美术 (LoRA/ComfyUI)
     ├── 概念：LoRA / 基座选型 / Caption / Trigger Word / Multi-LoRA
@@ -146,7 +147,7 @@ AI 应用生态 (2026-04 新增)
 
 ### 关于 Niagara 路径
 
-- **Phase 6 启动时机**:用户要求一口气推完 Phase 3-10,正在按序推进。下一步是 Phase 6 渲染系统(10 文件)
+- **Phase 7 启动时机**:用户要求一口气推完 Phase 3-10,正在按序推进。下一步是 Phase 7 数据接口系统(10 文件)
 - **Code root 本机可用性**:已登记 `stock`(F:\UnrealEngine-4.26,2026-04-20 验证可用),`project-*` 本机未登记
 - **Phase 1 遗留的 open question**(等 Phase 3+ 回答):
   - `EmitterExecutionOrder.kStartNewOverlapGroupBit` 的 parallel tick 消费点
@@ -191,7 +192,7 @@ AI 应用生态 (2026-04 新增)
 
 ## 下一步建议
 
-- **Niagara Phase 6**:渲染系统(10 文件,Properties+Renderer × 5 种:Sprite/Ribbon/Mesh/Light + 基类)
+- **Niagara Phase 7**:数据接口系统(10 文件,DI 基类 + 典型 DI:Curve/Camera/CollisionQuery/StaticMesh/SkeletalMesh/Texture/RenderTarget2D)
 - **AI 美术**：验证本机 kohya_ss 环境，跑第一个 MVP LoRA
 - **AI 应用**：按需补建 Transformer / Function Calling / Spec Coding 等剩余待建页(Embedding / Vibe Coding 已在 2026-04-20 补建)
 - **lint**：运行 "帮我 lint 一下 wiki"，检查 4 个主题的内部一致性、特别是新建 AIApps 主题的交叉引用闭环、Phase 1 新增 10 页的 back-link 情况

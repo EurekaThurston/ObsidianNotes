@@ -3,7 +3,7 @@
 > 本文件是整个 wiki 的内容目录。LLM 每次 ingest 都会更新。
 > 查询时先读这里,再深入相关页面。
 
-最后更新:2026-04-20（+ Phase 5 CPU 脚本执行入驻:5 Source + 5 Entity + 1 读本,Niagara 学习路径推进到 Phase 5/10 完成）
+最后更新:2026-04-20（+ Phase 6 渲染系统入驻:10 Source + 6 Entity + 1 读本,Niagara 学习路径推进到 Phase 6/10 完成）
 
 ---
 
@@ -51,6 +51,12 @@
 - [[Wiki/Entities/Stock/FNiagaraComputeExecutionContext|FNiagaraComputeExecutionContext]] — GPU 执行上下文(Phase 8 详);MainDataSet + GPUScript_RT + CombinedParamStore + SimStageInfo (来源:1)
 - [[Wiki/Entities/Stock/FNiagaraGPUSystemTick|FNiagaraGPUSystemTick]] — GT→RT 的 GPU tick 打包;InstanceData_ParamData_Packed + 5 种 UniformBuffer (来源:1)
 - [[Wiki/Entities/Stock/NiagaraEmitterInstanceBatcher|NiagaraEmitterInstanceBatcher]] — RT 驻留的 GPU 总调度器;三 stage dispatch + InstanceCountMgr + SortMgr (来源:1)
+- [[Wiki/Entities/Stock/UNiagaraRendererProperties|UNiagaraRendererProperties]] — Renderer Asset 基类(abstract);Platforms/SortOrderHint/AttributeBindings + 4 纯虚工厂 (来源:1)
+- [[Wiki/Entities/Stock/FNiagaraRenderer|FNiagaraRenderer]] — Renderer 运行时基类;GenerateDynamicData→SetDynamicData_RT→GetDynamicMeshElements 三阶段流程 (来源:1)
+- [[Wiki/Entities/Stock/UNiagaraSpriteRendererProperties|UNiagaraSpriteRendererProperties]] — Sprite(每粒子 billboard quad);17 VF slot/5 facing/Cutout/SubUV;CPU+GPU (来源:1)
+- [[Wiki/Entities/Stock/UNiagaraRibbonRendererProperties|UNiagaraRibbonRendererProperties]] — Ribbon(粒子连成带);CPU only;RibbonId 多带/自适应 tessellation/双 UV channel (来源:1)
+- [[Wiki/Entities/Stock/UNiagaraMeshRendererProperties|UNiagaraMeshRendererProperties]] — Mesh(每粒子 StaticMesh 实例化);14 VF slot;CPU+GPU;全粒子共享 LOD (来源:1)
+- [[Wiki/Entities/Stock/UNiagaraLightRendererProperties|UNiagaraLightRendererProperties]] — Light(每粒子 SimpleLight);CPU only;不产 mesh batch,走 GatherSimpleLights (来源:1)
 
 ## Concepts(概念)
 *想法、理论、方法、术语。*
@@ -120,6 +126,16 @@
 - [[Wiki/Sources/Stock/NiagaraScriptExecutionContext]] — NiagaraScriptExecutionContext.h @ b6ab0dee9 (Phase 5.3,CPU VM + GPU 上下文,531 行)
 - [[Wiki/Sources/Stock/NiagaraScriptExecutionParameterStore]] — NiagaraScriptExecutionParameterStore.h @ b6ab0dee9 (Phase 5.4,VM 参数 padding,195 行)
 - [[Wiki/Sources/Stock/NiagaraEmitterInstanceBatcher]] — NiagaraEmitterInstanceBatcher.h @ b6ab0dee9 (Phase 5.5 / 实际 GPU Batcher,317 行)
+- [[Wiki/Sources/Stock/NiagaraRendererProperties]] — NiagaraRendererProperties.h @ b6ab0dee9 (Phase 6.1,Renderer Asset 基类,259 行)
+- [[Wiki/Sources/Stock/NiagaraRenderer]] — NiagaraRenderer.h @ b6ab0dee9 (Phase 6.2,Renderer 运行时基类,144 行)
+- [[Wiki/Sources/Stock/NiagaraSpriteRendererProperties]] — NiagaraSpriteRendererProperties.h @ b6ab0dee9 (Phase 6.3,316 行)
+- [[Wiki/Sources/Stock/NiagaraRendererSprites]] — NiagaraRendererSprites.h @ b6ab0dee9 (Phase 6.4,102 行)
+- [[Wiki/Sources/Stock/NiagaraRibbonRendererProperties]] — NiagaraRibbonRendererProperties.h @ b6ab0dee9 (Phase 6.5,361 行)
+- [[Wiki/Sources/Stock/NiagaraRendererRibbons]] — NiagaraRendererRibbons.h @ b6ab0dee9 (Phase 6.6,103 行)
+- [[Wiki/Sources/Stock/NiagaraMeshRendererProperties]] — NiagaraMeshRendererProperties.h @ b6ab0dee9 (Phase 6.7,288 行)
+- [[Wiki/Sources/Stock/NiagaraRendererMeshes]] — NiagaraRendererMeshes.h @ b6ab0dee9 (Phase 6.8,74 行)
+- [[Wiki/Sources/Stock/NiagaraLightRendererProperties]] — NiagaraLightRendererProperties.h @ b6ab0dee9 (Phase 6.9,98 行)
+- [[Wiki/Sources/Stock/NiagaraRendererLights]] — NiagaraRendererLights.h @ b6ab0dee9 (Phase 6.10,31 行)
 
 ## Readers(主题读本)
 *每个议题"一次读完即完整掌握"的线性读物。人类阅读的首选入口,详见 [[CLAUDE]] §3.4。*
@@ -140,6 +156,7 @@
 - [[Readers/Niagara/Phase3-runtime-instance-读本|Phase 3 读本 — Niagara 的心脏]] — 运行时实例层:三阶段 Tick + 双状态机 + 4-instance TickBatch + 参数双缓冲 + ParameterStore↔DataSet 绑定,含 `bForceSolo` 5-20× 退化定量估算 (2026-04-20)
 - [[Readers/Niagara/Phase4-data-model-读本|Phase 4 读本 — Niagara 的数据语言]] — 类型系统(TypeDef/Variable/LayoutInfo)+ SoA 布局 + Double Buffer + Persistent ID 双整数 + 命名空间系统 + ParameterStore 三路 dirty + 绑定图,一次读完掌握 Niagara "数据"全貌 (2026-04-20)
 - [[Readers/Niagara/Phase5-cpu-script-execution-读本|Phase 5 读本 — Niagara 脚本如何"跑起来"]] — CPU VM 上下文 + PerInstanceFunctionHook + CPU/GPU 参数 padding + GPU Tick 打包 + FFXSystemInterface 三阶段 stage,为 Phase 7(DI)/Phase 8(GPU)搭脚手架 (2026-04-20)
+- [[Readers/Niagara/Phase6-rendering-读本|Phase 6 读本 — Niagara 粒子如何变成屏幕像素]] — Properties/Renderer 对偶 + GT→RT 三阶段数据流 + 4 种类型能力边界(Sprite/Ribbon/Mesh/Light)+ Cutout/Tessellation/SimpleLight 特殊路径 (2026-04-20)
 
 ## Syntheses(综合/专题)
 *跨源分析、对比、专题报告、好答案的沉淀(非读本)。读本见上方 [[#Readers(主题读本)]] 分区。*
