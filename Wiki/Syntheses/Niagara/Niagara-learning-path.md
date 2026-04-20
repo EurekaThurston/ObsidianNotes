@@ -124,14 +124,16 @@ Niagara 插件位于 `Engine/Plugins/FX/Niagara/`，共 7 个模块：
 
 ---
 
-### Phase 3 — 运行时实例层
+### Phase 3 — 运行时实例层 ✅
 > **目标**：理解特效"活着"时的状态机与 Tick 流程。这是 Niagara 的心脏。
+>
+> 📖 **主题读本(推荐初读)**:[[Readers/Niagara/Phase3-runtime-instance-读本]] — 三个类由内到外讲清楚:EmitterInstance(最内粒子数据 + ExecContext)→ SystemInstance(中间状态机 + 三阶段 Tick)→ SystemSimulation(最外批量调度 + 4-instance Tick Batch)。读完能算出 `bForceSolo` 的定量退化。
 
-| # | 文件 | 模块 | 路径 |
-|---|---|---|---|
-| 3.1 | `NiagaraSystemInstance.h` | Niagara | `Public/` |
-| 3.2 | `NiagaraEmitterInstance.h` | Niagara | `Classes/` |
-| 3.3 | `NiagaraSystemSimulation.h` | Niagara | `Public/` |
+| # | 文件 | 模块 | 路径 | 源摘要 → 主实体 |
+|---|---|---|---|---|
+| 3.1 | `NiagaraSystemInstance.h` | Niagara | `Public/` | [[Wiki/Sources/Stock/NiagaraSystemInstance]] → [[Wiki/Entities/Stock/FNiagaraSystemInstance]] |
+| 3.2 | `NiagaraEmitterInstance.h` | Niagara | `Classes/` | [[Wiki/Sources/Stock/NiagaraEmitterInstance]] → [[Wiki/Entities/Stock/FNiagaraEmitterInstance]] |
+| 3.3 | `NiagaraSystemSimulation.h` | Niagara | `Public/` | [[Wiki/Sources/Stock/NiagaraSystemSimulation]] → [[Wiki/Entities/Stock/FNiagaraSystemSimulation]] |
 
 **学习要点：**
 - `FNiagaraSystemInstance` 持有 `TArray<TSharedRef<FNiagaraEmitterInstance>>`，管理所有 Emitter 实例
@@ -362,6 +364,7 @@ Niagara 插件位于 `Engine/Plugins/FX/Niagara/`，共 7 个模块：
 **Phase 0 ✅ 完成**（2026-04-18）
 **Phase 1 ✅ 完成**（2026-04-19）
 **Phase 2 ✅ 完成**（2026-04-20）
+**Phase 3 ✅ 完成**（2026-04-20）
 
 ### Phase 0（概念页）
 - [x] [[Wiki/Concepts/UE4/UE4-uobject-系统]]
@@ -382,9 +385,9 @@ Niagara 插件位于 `Engine/Plugins/FX/Niagara/`，共 7 个模块：
 - [x] [[Wiki/Sources/Stock/NiagaraFunctionLibrary]] → [[Wiki/Entities/Stock/UNiagaraFunctionLibrary]]
 
 ### Phase 3（运行时实例）
-- [ ] [[Wiki/Sources/Stock/NiagaraSystemInstance]]
-- [ ] [[Wiki/Sources/Stock/NiagaraEmitterInstance]]
-- [ ] [[Wiki/Sources/Stock/NiagaraSystemSimulation]]
+- [x] [[Wiki/Sources/Stock/NiagaraSystemInstance]] → [[Wiki/Entities/Stock/FNiagaraSystemInstance]]
+- [x] [[Wiki/Sources/Stock/NiagaraEmitterInstance]] → [[Wiki/Entities/Stock/FNiagaraEmitterInstance]]
+- [x] [[Wiki/Sources/Stock/NiagaraSystemSimulation]] → [[Wiki/Entities/Stock/FNiagaraSystemSimulation]]
 
 ### Phase 4（数据模型）
 - [ ] [[Wiki/Sources/Stock/NiagaraTypes]]

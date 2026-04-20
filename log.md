@@ -5,7 +5,27 @@
 
 ---
 
-## [2026-04-20] ingest | Niagara Phase 2 · Component 层(3 头文件)
+## [2026-04-20] ingest | Niagara Phase 3 · 运行时实例层(3 头文件)
+
+- 源(code,stock @ `b6ab0dee9`):
+  - `Engine/Plugins/FX/Niagara/Source/Niagara/Public/NiagaraSystemInstance.h`(574 行)
+  - `Engine/Plugins/FX/Niagara/Source/Niagara/Classes/NiagaraEmitterInstance.h`(239 行)
+  - `Engine/Plugins/FX/Niagara/Source/Niagara/Public/NiagaraSystemSimulation.h`(429 行)
+- 新建(7):
+  - Source × 3:[[Wiki/Sources/Stock/NiagaraSystemInstance]]、[[Wiki/Sources/Stock/NiagaraEmitterInstance]]、[[Wiki/Sources/Stock/NiagaraSystemSimulation]]
+  - Entity × 3:[[Wiki/Entities/Stock/FNiagaraSystemInstance]]、[[Wiki/Entities/Stock/FNiagaraEmitterInstance]]、[[Wiki/Entities/Stock/FNiagaraSystemSimulation]]
+  - 读本:[[Readers/Niagara/Phase3-runtime-instance-读本]](7 节 + 7 条洞察 + 完整 Tick 时序图)
+- 更新:learning-path / Overview / index / log
+- 要点:
+  - 三类都非 UObject(性能选择);生命周期靠 `TUniquePtr`/`TSharedRef`,UObject 引用靠 `TWeakObjectPtr`/`FGCObject`
+  - **双状态机** Requested vs Actual 解耦用户意图与实际状态
+  - **三阶段 Tick** GT/Concurrent/Finalize,避免 GT 阻塞但保持 DI 后处理顺序
+  - **Tick Batch = 4**,同 Asset 多实例批量 tick 的具体实现
+  - **参数双缓冲** `[2]` 数组 + `CurrentFrameIndex:1` 位翻转,解决 RT 读上一帧与 GT 写当前帧的竞态
+  - **`FNiagaraParameterStoreToDataSetBinding`** 是 Phase 1 编译产物的运行时消费者,实现"无字符串查表"memcpy
+  - **`bForceSolo` 退化 5-20×** 给出定量估算(50 实例场景)
+  - **Emitter event 通讯** 靠 SystemInstance::EmitterEventDataSetMap (`TMap<(EmitterName,EventName), DataSet*>`)
+- 下一步:Phase 4 数据模型(7 文件,SoA 布局为核)
 
 - 源(code,stock @ `b6ab0dee9`,branch `Eureka`):
   - `Engine/Plugins/FX/Niagara/Source/Niagara/Public/NiagaraComponent.h`(741 行)

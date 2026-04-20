@@ -3,7 +3,7 @@
 > 本文件是整个 wiki 的内容目录。LLM 每次 ingest 都会更新。
 > 查询时先读这里,再深入相关页面。
 
-最后更新:2026-04-20（+ Phase 2 Component 层入驻:3 Source + 3 Entity + 1 读本,Niagara 学习路径推进到 Phase 2/10 完成）
+最后更新:2026-04-20（+ Phase 3 运行时实例层入驻:3 Source + 3 Entity + 1 读本,Niagara 学习路径推进到 Phase 3/10 完成）
 
 ---
 
@@ -36,6 +36,9 @@
 - [[Wiki/Entities/Stock/UNiagaraComponent|UNiagaraComponent]] — Niagara 承载层组件;Asset 持有 + Instance 管理 + 参数覆盖 + 场景集成 + 生命周期调度 五职责 (来源:1)
 - [[Wiki/Entities/Stock/ANiagaraActor|ANiagaraActor]] — 纯 ComponentWrapperClass;仅作 Component 挂载壳 + "播完自销毁" observer (来源:1)
 - [[Wiki/Entities/Stock/UNiagaraFunctionLibrary|UNiagaraFunctionLibrary]] — Niagara BP 静态工具集;Spawn / 重型 DI 覆盖 / ParameterCollection / VM FastPath 四组 (来源:1)
+- [[Wiki/Entities/Stock/FNiagaraSystemInstance|FNiagaraSystemInstance]] — Niagara 运行时心脏;双状态机 + 三阶段 Tick + Emitter 容器;非 UObject (来源:1)
+- [[Wiki/Entities/Stock/FNiagaraEmitterInstance|FNiagaraEmitterInstance]] — Emitter 运行时;持粒子 DataSet + Spawn/Update ExecContext(或 GPU Context) (来源:1)
+- [[Wiki/Entities/Stock/FNiagaraSystemSimulation|FNiagaraSystemSimulation]] — 同 Asset 多实例批量 Tick 调度器;身份 (Asset, World, TickGroup);TickBatch=4 (来源:1)
 
 ## Concepts(概念)
 *想法、理论、方法、术语。*
@@ -90,6 +93,9 @@
 - [[Wiki/Sources/Stock/NiagaraComponent]] — NiagaraComponent.h @ b6ab0dee9 (Phase 2.1,承载层主角,741 行)
 - [[Wiki/Sources/Stock/NiagaraActor]] — NiagaraActor.h @ b6ab0dee9 (Phase 2.2,ComponentWrapperClass,66 行)
 - [[Wiki/Sources/Stock/NiagaraFunctionLibrary]] — NiagaraFunctionLibrary.h @ b6ab0dee9 (Phase 2.3,BP 静态工具集)
+- [[Wiki/Sources/Stock/NiagaraSystemInstance]] — NiagaraSystemInstance.h @ b6ab0dee9 (Phase 3.1,单实例心脏,574 行)
+- [[Wiki/Sources/Stock/NiagaraEmitterInstance]] — NiagaraEmitterInstance.h @ b6ab0dee9 (Phase 3.2,Emitter 运行时,239 行)
+- [[Wiki/Sources/Stock/NiagaraSystemSimulation]] — NiagaraSystemSimulation.h @ b6ab0dee9 (Phase 3.3,批量 Tick 调度器,429 行)
 
 ## Readers(主题读本)
 *每个议题"一次读完即完整掌握"的线性读物。人类阅读的首选入口,详见 [[CLAUDE]] §3.4。*
@@ -107,6 +113,7 @@
 - [[Readers/Niagara/Phase0-心智模型-读本|Phase 0 读本 — 上阵前的四层脑内地图]] — 把 UObject / Asset-Instance / Niagara-vs-Cascade / CPU-vs-GPU 四概念编成自下而上一条叙事链,一次读完掌握 Phase 1+ 所需全部前置 (2026-04-19)
 - [[Readers/Niagara/Phase1-asset-layer-读本|Phase 1 读本 — Niagara 的资产层]] — 把 5 个 header 讲成一个连贯故事,从 System 到图源抽象基类,一次读完掌握 Asset 层全部心智模型 (2026-04-19)
 - [[Readers/Niagara/Phase2-component-layer-读本|Phase 2 读本 — Niagara 的 Component 层]] — 把 Component/Actor/FunctionLibrary 三文件讲成从"资产到场景里跑着"的完整控制流,涵盖三入口/五职责/四生命周期源/Pool-Scalability-AutoDestroy 三方决策 (2026-04-20)
+- [[Readers/Niagara/Phase3-runtime-instance-读本|Phase 3 读本 — Niagara 的心脏]] — 运行时实例层:三阶段 Tick + 双状态机 + 4-instance TickBatch + 参数双缓冲 + ParameterStore↔DataSet 绑定,含 `bForceSolo` 5-20× 退化定量估算 (2026-04-20)
 
 ## Syntheses(综合/专题)
 *跨源分析、对比、专题报告、好答案的沉淀(非读本)。读本见上方 [[#Readers(主题读本)]] 分区。*
