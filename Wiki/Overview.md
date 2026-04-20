@@ -1,16 +1,16 @@
 ---
 type: overview
 created: 2026-04-17
-updated: 2026-04-19
+updated: 2026-04-20
 tags: [overview]
-sources: 8
+sources: 9
 ---
 
 # Overview
 
 > Wiki 的顶层综合视图。每次 ingest 有重大影响时,LLM 会在这里更新"当前的最佳理解"。
 
-最后更新：2026-04-19
+最后更新：2026-04-20
 
 ---
 
@@ -20,7 +20,7 @@ sources: 8
 
 自举阶段的产出：基于 [[Raw/Notes/Karpathy Wiki 方法论]] 建的三层架构（Raw / Wiki / Schema）；详见 [[Wiki/Concepts/Methodology/Llm-wiki-方法论|LLM Wiki 方法论]]。
 
-📖 **主题读本（推荐初读）**：[[Wiki/Readers/Methodology/Llm-wiki-方法论-读本]] — 把本仓库的起点、历史源流、RAG 对比、Karpathy 三里程碑、本仓库如何具体化编成一篇线性读物。
+📖 **主题读本（推荐初读）**：[[Readers/Methodology/Llm-wiki-方法论-读本]] — 把本仓库的起点、历史源流、RAG 对比、Karpathy 三里程碑、本仓库如何具体化编成一篇线性读物。
 
 **核心主张**：持续整合 > 查询时检索。RAG 每次查询都在从零发现知识，LLM Wiki 则在 ingest 时就完成跨源整合、交叉引用、矛盾标注。
 
@@ -29,21 +29,30 @@ sources: 8
 面向 C++ 零基础、UE 源码零基础的学员，通过 AI 辅助学习 Niagara 插件 749 个文件中的运行时部分（约 286 个文件）。
 
 - 路线：[[Wiki/Syntheses/Niagara/Niagara-learning-path]] — 10 阶段路径
-- **Phase 0 ✅**：心智模型建立 —— 📖 **主题读本**：[[Wiki/Readers/Niagara/Phase0-心智模型-读本]] / 原子概念页:[[Wiki/Concepts/UE4/UE4-uobject-系统]]、[[Wiki/Concepts/UE4/UE4-资产与实例]]、[[Wiki/Concepts/Niagara/Niagara-vs-cascade]]、[[Wiki/Concepts/Niagara/Niagara-cpu-vs-gpu模拟]]
-- **Phase 1 ✅**（2026-04-19）：Asset 层三件套 —— 📖 **主题读本**：[[Wiki/Readers/Niagara/Phase1-asset-layer-读本]] / 原子页见 [[Wiki/Entities/Stock/UNiagaraSystem]]、[[Wiki/Entities/Stock/UNiagaraEmitter]]、[[Wiki/Entities/Stock/FNiagaraEmitterHandle]]、[[Wiki/Entities/Stock/UNiagaraScript]]、[[Wiki/Entities/Stock/UNiagaraScriptSourceBase]]
-- Phase 2-10 等待逐文件 ingest
+- **Phase 0 ✅**：心智模型建立 —— 📖 **主题读本**：[[Readers/Niagara/Phase0-心智模型-读本]] / 原子概念页:[[Wiki/Concepts/UE4/UE4-uobject-系统]]、[[Wiki/Concepts/UE4/UE4-资产与实例]]、[[Wiki/Concepts/Niagara/Niagara-vs-cascade]]、[[Wiki/Concepts/Niagara/Niagara-cpu-vs-gpu模拟]]
+- **Phase 1 ✅**（2026-04-19）：Asset 层三件套 —— 📖 **主题读本**：[[Readers/Niagara/Phase1-asset-layer-读本]] / 原子页见 [[Wiki/Entities/Stock/UNiagaraSystem]]、[[Wiki/Entities/Stock/UNiagaraEmitter]]、[[Wiki/Entities/Stock/FNiagaraEmitterHandle]]、[[Wiki/Entities/Stock/UNiagaraScript]]、[[Wiki/Entities/Stock/UNiagaraScriptSourceBase]]
+- **Phase 2 ✅**（2026-04-20）:Component 层 —— 📖 **主题读本**:[[Readers/Niagara/Phase2-component-layer-读本]] / 原子页见 [[Wiki/Entities/Stock/UNiagaraComponent]]、[[Wiki/Entities/Stock/ANiagaraActor]]、[[Wiki/Entities/Stock/UNiagaraFunctionLibrary]]
+- Phase 3-10 等待逐文件 ingest
 
 **Phase 1 的关键收获**（从 5 个 header 里提炼）：
 - **Asset 链路定型**：System →（`TArray<FNiagaraEmitterHandle>`）→ Handle(Id+Name+enabled+Instance) → Emitter →（脚本 / 渲染器 / SimStages）→ Script（字节码 + GPU shader）
 - **命名陷阱**：`FNiagaraEmitterHandle::Instance` 仍在 Asset 层（Emitter 资产副本），与 Phase 3 的 `FNiagaraEmitterInstance`（运行时粒子模拟）**完全不是一回事**
 - **EmitterSpawn/EmitterUpdate 脚本不独立编译**，被合并进 System 脚本（`UNiagaraScript::IsCompilable()` 对这两者返 false）
-- **editor/runtime 解耦点**：`UNiagaraScriptSourceBase` 抽象基类在 runtime 模块，真正的图实现 `UNiagaraScriptSource + UNiagaraGraph` 在 NiagaraEditor 模块，使 runtime 能持图指针但不 link editor
+- **editor/runtime 解耦点**：`UNiagaraScriptSourceBase` 抽象基类在 runtime 模块，真正的图实现 `UNiagaraScriptSource + UNiagaraGraph` 在 NiagaraEditor 模块,使 runtime 能持图指针但不 link editor
+
+**Phase 2 的关键收获**(从 3 个 header 里提炼):
+- **`UNiagaraComponent` 是唯一主角**:Actor/FunctionLibrary 加起来不到 Component 的 1/5(741 行 vs 66+93),三种入口路径最终全部汇于一个 Component 实例
+- **Asset ↔ Instance 是一对多**:`TUniquePtr<FNiagaraSystemInstance> SystemInstance` 独占,N 个 Component 引用同 Asset 就有 N 份独立实例
+- **参数覆盖分层**:标量走 Component 的 18 个 `SetVariableXxx`,对象型(Mesh/Texture)走 `UNiagaraFunctionLibrary::Override*` —— DI 关注点分离
+- **生命周期四源汇合**:UActorComponent / UFXSystemComponent / 用户语义 / Scalability 四条生命周期源全部在 `TickComponent` 和 `OnSystemComplete` 收口
+- **`bForceSolo` 性能陷阱**:绕开 `FNiagaraSystemSimulation` 批量 Tick,"同 Asset 多实例" 典型场景性能退化可能数十倍
+- **`ANiagaraActor` 是纯 observer 模式示例**:66 行的 ComponentWrapperClass,只订阅 Component 的 `OnSystemFinished` 一个 delegate 决定生死,不持任何运行时状态
 
 ### 3. AI 美术生成管线（LoRA / ComfyUI）
 
 面向鸣潮美术向 TA 的落地方案，从 MidJourney + tag 库逐步迁移到 ComfyUI + 自训 LoRA。
 
-📖 **主题读本（推荐初读）**：[[Wiki/Readers/AIArt/Lora-深度指南-读本]] — 从战略（离开 MJ 的三个结构性动因）到技术（LoRA 原理 + 基座选型 + caption 反常识 + 多 LoRA 组合）到工具（kohya_ss + ComfyUI）到工程落地（6 个月路线图 + 合规），一次读完掌握全链路。
+📖 **主题读本（推荐初读）**：[[Readers/AIArt/Lora-深度指南-读本]] — 从战略（离开 MJ 的三个结构性动因）到技术（LoRA 原理 + 基座选型 + caption 反常识 + 多 LoRA 组合）到工具（kohya_ss + ComfyUI）到工程落地（6 个月路线图 + 合规），一次读完掌握全链路。
 
 - 核心源：[[Wiki/Sources/AIArt/Lora-deep-dive]]（2026-04，Eureka × Claude 撰写）
 - 技术路径：[[Wiki/Concepts/AIArt/Lora|LoRA]] + [[Wiki/Entities/AIArt/Illustrious-XL|Illustrious/NoobAI]] 基座 + [[Wiki/Entities/AIArt/Kohya-ss|kohya_ss]] 训练 + [[Wiki/Entities/AIArt/ComfyUI|ComfyUI]] 部署
@@ -54,7 +63,7 @@ sources: 8
 
 **面向**：对 AI 完全没概念的非开发角色（美术、设计、策划、管理者）+ 开发者的主线脉络梳理。
 
-📖 **主题读本（推荐初读）**：[[Wiki/Readers/AIApps/AI-primer-v2-读本]] — 从 LLM 本质到 2026 技术栈三层全景的完整读物,覆盖三个怪癖/推理模型/Agent/MCP/RAG/三段论/Harness 四柱/Skills/OpenClaw/Vibe-Spec-Harness Coding,一次读完。
+📖 **主题读本（推荐初读）**：[[Readers/AIApps/AI-primer-v2-读本]] — 从 LLM 本质到 2026 技术栈三层全景的完整读物,覆盖三个怪癖/推理模型/Agent/MCP/RAG/三段论/Harness 四柱/Skills/OpenClaw/Vibe-Spec-Harness Coding,一次读完。
 
 - 核心源：[[Wiki/Sources/AIApps/AI-primer-v2]]（2026-04-19，Eureka × Claude 撰写，v2）
 - 专题综合：[[Wiki/Syntheses/AIApps/Prompt-context-harness-evolution|Prompt → Context → Harness 三段论]](方法论演进专题)
@@ -93,7 +102,11 @@ Niagara 源码学习 (UE 4.26)
     │   ├── FNiagaraEmitterHandle   ← System→Emitter 引用包装
     │   ├── UNiagaraScript          ← 编译后脚本(字节码 + GPU shader)
     │   └── UNiagaraScriptSourceBase ← 图源抽象基类
-    └── Niagara 学习路径 (10 阶段, Phase 0 ✅ / Phase 1 ✅)
+    ├── stock 代码实体 (Component 层)
+    │   ├── UNiagaraComponent       ← 承载层主角(五职责)
+    │   ├── ANiagaraActor           ← ComponentWrapperClass
+    │   └── UNiagaraFunctionLibrary ← BP 静态工具集
+    └── Niagara 学习路径 (10 阶段, Phase 0 ✅ / Phase 1 ✅ / Phase 2 ✅)
 
 AI 美术 (LoRA/ComfyUI)
     ├── 概念：LoRA / 基座选型 / Caption / Trigger Word / Multi-LoRA
@@ -126,13 +139,21 @@ AI 应用生态 (2026-04 新增)
 
 ### 关于 Niagara 路径
 
-- **Phase 2 启动时机**：等待用户指令，下一步是 `NiagaraComponent.h / NiagaraActor.h / NiagaraFunctionLibrary.h`（从场景入口视角把 Asset 连到 World）
-- **Code root 本机可用性**：已登记 `stock`（D:\UE\...），`project-*` 本机未登记
-- **Phase 1 遗留的 open question**（等 Phase 3+ 回答）：
+- **Phase 3 启动时机**:等待用户指令,下一步是 `NiagaraSystemInstance.h / NiagaraEmitterInstance.h / NiagaraSystemSimulation.h`(运行时实例层,状态机 + Tick 流程,Niagara 的心脏)
+- **Code root 本机可用性**:已登记 `stock`(F:\UnrealEngine-4.26,2026-04-20 验证可用),`project-*` 本机未登记
+- **Phase 1 遗留的 open question**(等 Phase 3+ 回答):
   - `EmitterExecutionOrder.kStartNewOverlapGroupBit` 的 parallel tick 消费点
   - `RapidIterationParameters` vs `ExposedParameters` vs `User.*` 命名空间的协作关系
-  - `FNiagaraVMExecutableData::DIParamInfo` 的技术债（GPU 信息不该在 VM 数据里）
+  - `FNiagaraVMExecutableData::DIParamInfo` 的技术债(GPU 信息不该在 VM 数据里)
   - `UNiagaraEmitter::Parent / ParentAtLastMerge` 的 merge 语义能传播什么
+- **Phase 2 遗留的 open question**(等 Phase 3/6/7/9 回答):
+  - `FNiagaraSystemSimulation` 批量 Tick 具体做了什么 / 与 `bForceSolo` 对比 → Phase 3
+  - `FNiagaraSystemInstance` 状态机、Init、Tick 流程 → Phase 3
+  - `ENCPoolMethod` 五取值决策表 + `UNiagaraComponentPool` 实现 → Phase 9
+  - `FNiagaraScalabilityManager` PreCull / 运行时 cull 决策 → Phase 9
+  - `FNiagaraSceneProxy` 的 GT↔RT 数据流 → Phase 6
+  - `OverrideSystemUserVariableStaticMesh`(给 `UStaticMesh*` 而非 Component)的 transform 采样处理 → Phase 7
+  - `VectorVM FastPath` 注册了哪些算子 → Phase 5
 
 ### 关于 AI 美术
 
@@ -163,7 +184,7 @@ AI 应用生态 (2026-04 新增)
 
 ## 下一步建议
 
-- **Niagara Phase 2**：读 `NiagaraComponent.h` / `NiagaraActor.h` / `NiagaraFunctionLibrary.h`（3 文件，Component 层，把 Asset 连到场景 / BP）
+- **Niagara Phase 3**:读 `NiagaraSystemInstance.h` / `NiagaraEmitterInstance.h` / `NiagaraSystemSimulation.h`(3 文件,运行时实例层,状态机 + Tick 流程,本路径首个 ⭐⭐⭐ 难度阶段)
 - **AI 美术**：验证本机 kohya_ss 环境，跑第一个 MVP LoRA
 - **AI 应用**：按需补建 Transformer / Function Calling / Spec Coding 等剩余待建页(Embedding / Vibe Coding 已在 2026-04-20 补建)
 - **lint**：运行 "帮我 lint 一下 wiki"，检查 4 个主题的内部一致性、特别是新建 AIApps 主题的交叉引用闭环、Phase 1 新增 10 页的 back-link 情况

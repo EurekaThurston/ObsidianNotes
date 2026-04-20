@@ -1,7 +1,7 @@
 ﻿---
 type: synthesis
 created: 2026-04-18
-updated: 2026-04-19
+updated: 2026-04-20
 tags: [niagara, UE4, learning-path, source-code, roadmap]
 sources: 0
 aliases: [Niagara 学习路径, niagara 源码路径]
@@ -69,7 +69,7 @@ Niagara 插件位于 `Engine/Plugins/FX/Niagara/`，共 7 个模块：
 ### Phase 0 — 上阵前：基础心智模型 ✅
 > **无需读代码。** 这一阶段通过概念建立正确的"脑内地图"，避免后面读代码时迷失。
 >
-> 📖 **主题读本(推荐初读)**：[[Wiki/Readers/Niagara/Phase0-心智模型-读本]] — 把四个概念自下而上(UObject → Asset/Instance → Niagara vs Cascade → CPU/GPU)编成一条叙事链,一次读完掌握 Phase 1+ 所需全部前置。
+> 📖 **主题读本(推荐初读)**：[[Readers/Niagara/Phase0-心智模型-读本]] — 把四个概念自下而上(UObject → Asset/Instance → Niagara vs Cascade → CPU/GPU)编成一条叙事链,一次读完掌握 Phase 1+ 所需全部前置。
 
 - [[Wiki/Concepts/UE4/UE4-uobject-系统]] *(已完成)* — UCLASS / USTRUCT / UPROPERTY 宏是什么，UObject 为什么重要
 - [[Wiki/Concepts/UE4/UE4-资产与实例]] *(已完成)* — Asset（Content Browser 里的文件）vs Instance（运行时对象）的本质区别
@@ -83,7 +83,7 @@ Niagara 插件位于 `Engine/Plugins/FX/Niagara/`，共 7 个模块：
 ### Phase 1 — 资产层：三件套 Asset ✅
 > **目标**：理解 Niagara 特效的"静态定义"——存在磁盘上的数据结构长什么样。
 >
-> 📖 **主题读本(推荐初读)**：[[Wiki/Readers/Niagara/Phase1-asset-layer-读本]] — 把下面 5 个文件讲成一个连贯故事,从 `UNiagaraSystem` 到图源抽象基类一气读完。
+> 📖 **主题读本(推荐初读)**：[[Readers/Niagara/Phase1-asset-layer-读本]] — 把下面 5 个文件讲成一个连贯故事,从 `UNiagaraSystem` 到图源抽象基类一气读完。
 
 | # | 文件 | 模块 | 路径 | 源摘要 → 主实体 |
 |---|---|---|---|---|
@@ -103,14 +103,16 @@ Niagara 插件位于 `Engine/Plugins/FX/Niagara/`，共 7 个模块：
 
 ---
 
-### Phase 2 — 场景入口：Component 层
+### Phase 2 — 场景入口：Component 层 ✅
 > **目标**：理解特效如何被放入游戏世界，以及 Blueprint 如何调用。
+>
+> 📖 **主题读本(推荐初读)**：[[Readers/Niagara/Phase2-component-layer-读本]] — 把 Component/Actor/FunctionLibrary 三文件讲成一个完整故事,从三种入口路径到 Component 的 5 大职责、生命周期四源、Pool/Scalability/AutoDestroy 三方决策,一次读完掌握"特效如何从资产变成场景里跑着的东西"。
 
-| # | 文件 | 模块 | 路径 |
-|---|---|---|---|
-| 2.1 | `NiagaraComponent.h` | Niagara | `Public/` |
-| 2.2 | `NiagaraActor.h` | Niagara | `Public/` |
-| 2.3 | `NiagaraFunctionLibrary.h` | Niagara | `Public/` |
+| # | 文件 | 模块 | 路径 | 源摘要 → 主实体 |
+|---|---|---|---|---|
+| 2.1 | `NiagaraComponent.h` | Niagara | `Public/` | [[Wiki/Sources/Stock/NiagaraComponent]] → [[Wiki/Entities/Stock/UNiagaraComponent]] |
+| 2.2 | `NiagaraActor.h` | Niagara | `Public/` | [[Wiki/Sources/Stock/NiagaraActor]] → [[Wiki/Entities/Stock/ANiagaraActor]] |
+| 2.3 | `NiagaraFunctionLibrary.h` | Niagara | `Public/` | [[Wiki/Sources/Stock/NiagaraFunctionLibrary]] → [[Wiki/Entities/Stock/UNiagaraFunctionLibrary]] |
 
 **学习要点：**
 - `UNiagaraComponent` 继承自 `UFXSystemComponent`，持有一个 `NiagaraSystemInstance`
@@ -359,6 +361,7 @@ Niagara 插件位于 `Engine/Plugins/FX/Niagara/`，共 7 个模块：
 
 **Phase 0 ✅ 完成**（2026-04-18）
 **Phase 1 ✅ 完成**（2026-04-19）
+**Phase 2 ✅ 完成**（2026-04-20）
 
 ### Phase 0（概念页）
 - [x] [[Wiki/Concepts/UE4/UE4-uobject-系统]]
@@ -374,9 +377,9 @@ Niagara 插件位于 `Engine/Plugins/FX/Niagara/`，共 7 个模块：
 - [x] [[Wiki/Sources/Stock/NiagaraScriptSourceBase]] → [[Wiki/Entities/Stock/UNiagaraScriptSourceBase]]
 
 ### Phase 2（Component 层）
-- [ ] [[Wiki/Sources/Stock/NiagaraComponent]]
-- [ ] [[Wiki/Sources/Stock/NiagaraActor]]
-- [ ] [[Wiki/Sources/Stock/NiagaraFunctionLibrary]]
+- [x] [[Wiki/Sources/Stock/NiagaraComponent]] → [[Wiki/Entities/Stock/UNiagaraComponent]]
+- [x] [[Wiki/Sources/Stock/NiagaraActor]] → [[Wiki/Entities/Stock/ANiagaraActor]]
+- [x] [[Wiki/Sources/Stock/NiagaraFunctionLibrary]] → [[Wiki/Entities/Stock/UNiagaraFunctionLibrary]]
 
 ### Phase 3（运行时实例）
 - [ ] [[Wiki/Sources/Stock/NiagaraSystemInstance]]

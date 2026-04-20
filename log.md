@@ -5,10 +5,61 @@
 
 ---
 
+## [2026-04-20] ingest | Niagara Phase 2 · Component 层(3 头文件)
+
+- 源(code,stock @ `b6ab0dee9`,branch `Eureka`):
+  - `Engine/Plugins/FX/Niagara/Source/Niagara/Public/NiagaraComponent.h`(741 行)
+  - `Engine/Plugins/FX/Niagara/Source/Niagara/Public/NiagaraActor.h`(66 行)
+  - `Engine/Plugins/FX/Niagara/Source/Niagara/Public/NiagaraFunctionLibrary.h`(93 行)
+- 新建(7):
+  - Source 页 ×3:[[Wiki/Sources/Stock/NiagaraComponent]]、[[Wiki/Sources/Stock/NiagaraActor]]、[[Wiki/Sources/Stock/NiagaraFunctionLibrary]]
+  - Entity 页 ×3(紧凑 30-50 行):[[Wiki/Entities/Stock/UNiagaraComponent]]、[[Wiki/Entities/Stock/ANiagaraActor]]、[[Wiki/Entities/Stock/UNiagaraFunctionLibrary]]
+  - 读本 ×1:[[Readers/Niagara/Phase2-component-layer-读本]](8 节 + 9 条洞察 + open questions + 深入阅读)
+- 更新(3):
+  - [[Wiki/Syntheses/Niagara/Niagara-learning-path]]:Phase 2 区标 ✅,文件表补 Source/Entity 链接,进度追踪 3 个 checkbox 全勾
+  - [[Wiki/Overview]]:Phase 2 条目 + "Phase 2 的关键收获" 6 条 + 知识图增 Component 层块 + open questions 补 Phase 2 遗留 + "下一步建议" 换为 Phase 3
+  - [[index.md]]:最后更新注释 + Entities/Sources/Readers 三分区各登记新页
+- 要点(Phase 2 的核心心智):
+  - **`UNiagaraComponent` 是唯一主角**,Actor/FunctionLibrary 加起来不到 1/5(66+93 vs 741)
+  - **Asset ↔ Instance 一对多**:`TUniquePtr<FNiagaraSystemInstance>` 独占,N Component 引用同 Asset = N 份独立 Instance
+  - **Component 五职责**:Asset 持有 / Instance 管理 / 参数覆盖层 / 场景集成 / 生命周期调度
+  - **参数覆盖分层**:标量走 Component 18 个 `SetVariableXxx`,对象型(Mesh/Texture)走 FunctionLibrary `Override*`(DI 关注点分离)
+  - **生命周期四源汇于一点**:UActorComponent / UFXSystemComponent / 用户语义 / Scalability 四源全部在 `TickComponent` + `OnSystemComplete` 收口
+  - **`bForceSolo` 性能陷阱**:绕开 `FNiagaraSystemSimulation` 批量 Tick,"同 Asset 多实例" 典型场景退化数十倍——读本 § 4 和 Entity 页 `[!warning]` 都强调了
+  - **`ANiagaraActor` 是纯 observer 范式**:66 行的 ComponentWrapperClass,只订阅 `OnSystemFinished` 一个 delegate 决定生死
+  - **`SpawnSystemAttached` 的 auto-attachment 子系统**:6 字段 + 3 保存槽,实现 "生成时挂载、结束时解绑并还原 transform" 的工程细节
+  - **Phase 2 遗留 open questions**:`FNiagaraSystemSimulation`(→P3)、`FNiagaraSystemInstance` 状态机(→P3)、`ENCPoolMethod` 决策(→P9)、`FNiagaraScalabilityManager`(→P9)、`FNiagaraSceneProxy` GT↔RT(→P6)、`VectorVM FastPath`(→P5)
+- 方法论验证:
+  - 本次首次把 `FNiagaraSceneProxy`(定义在 Component.h 末尾)和 `VectorVM FastPath`(定义在 FunctionLibrary 末尾)两个"物理位置在本 Phase 但职责在其他 Phase"的内容,按约定"记存在 + 指向正确 Phase"处理——既不污染叙事,也不漏
+  - Ingest 前先与用户对齐 4 个边界问题(Proxy/VM/Age/ForceSolo),用户 OK 后一口气产出所有原子页 + 读本 + bookkeeping,没有回头返工——说明"先对齐要点、再一次产出"的工作流是有效的
+- 下一步:
+  - Phase 3(运行时实例层,3 文件):`NiagaraSystemInstance.h` / `NiagaraEmitterInstance.h` / `NiagaraSystemSimulation.h`,首个 ⭐⭐⭐ 难度阶段,状态机复杂度显著提升。等用户指令启动
+
+---
+
+## [2026-04-20] refactor | Readers 提升为顶层目录(与 Raw/Wiki 同级)
+
+- 触发:用户请求把 `Readers/` 从 `Wiki/` 里移出来,放到与 `Raw/` / `Wiki/` 同级
+- 动机:Readers 服务"人类线性阅读"、Wiki 服务"LLM 原子检索",服务对象不同;物理分层到顶层可让首次来访者在仓库根直接看到"给人读的入口",降低发现成本
+- 操作:
+  - `git mv Wiki/Readers Readers`(5 个读本全部保持目录结构平移:AIApps / AIArt / Methodology / Niagara)
+  - 全库批量替换 `Wiki/Readers` → `Readers`,共 33 个 markdown 文件链接更新(log / index / Overview / 概念页 / 实体页 / 读本内部引用 / 模板等)
+  - 更新 [[CLAUDE.md]] §1 "三层架构"→"顶层架构",4 行表格(加 Readers 一行 + 服务对象列)
+  - 更新 [[CLAUDE.md]] §2 目录结构树:Readers 单列顶层块;`Syntheses/` vs `Readers/` 对比说明加一句"独立于 Wiki 顶层"
+  - 更新 [[README.md]] 顶层架构 ASCII 图:Readers 独立块,插在 Schema 和 Wiki 之间,强调"与 Wiki 同级"
+- 不变的:
+  - Readers 仍由 LLM 拥有(与 Wiki 同属 LLM 产物),只是物理分层
+  - §3.4 读本产出流程、模板位置(`Wiki/_templates/Reader.md`)、触发条件全部不变
+  - 现存读本 frontmatter / 内容无需改动
+- 验证:`grep -r "Wiki/Readers"` 返回 0 匹配,`ls Readers/` 看到 4 个主题子目录 + 5 个读本文件完整
+- 下一步:无后续任务,本次是纯结构调整
+
+---
+
 ## [2026-04-20] refactor | 4 个读本批量刷 Callouts(收尾)
 
 - 触发:昨天 Phase 1 读本 4 处示范看下来视觉满意,用户请求把其余 4 个读本也统一刷一遍
-- 范围:[[Wiki/Readers/Methodology/Llm-wiki-方法论-读本]]、[[Wiki/Readers/Niagara/Phase0-心智模型-读本]]、[[Wiki/Readers/AIApps/AI-primer-v2-读本]]、[[Wiki/Readers/AIArt/Lora-深度指南-读本]]
+- 范围:[[Readers/Methodology/Llm-wiki-方法论-读本]]、[[Readers/Niagara/Phase0-心智模型-读本]]、[[Readers/AIApps/AI-primer-v2-读本]]、[[Readers/AIArt/Lora-深度指南-读本]]
 - 策略:heading 级 ⚠️ 标题转 `[!warning]` callout(heading 去 emoji,配标题短语);inline ⚠️ 标记(bullet / table cell / numbered list)**保留不动**——精准点标记不适合整块 callout
 - 统计:
   - Methodology 读本:2 个 heading ⚠️ → warning callout(§3.7 刻意抽象、§4.4 事实追溯)
@@ -34,7 +85,7 @@
   - [[CLAUDE]] §3.1 — ingest 流程补第 9 步"自验(强制)":对本轮 log 里所有"新建 [[...]]"路径跑一次 Glob,差异立即停下告诉用户。解决这次 lint 发现的 cheatsheet 幽灵文件类型问题(即便本次是用户主动删除,自验一样会触发复核)。属 always-apply,进 CLAUDE.md 内嵌而非外移
   - [[Wiki/_templates/Lint-checklist]] 新增 §11"开放问题汇总"— 周期性扩展动作(不进标准 0-10 强制项),用 grep 抓全仓 `## 开放问题` 节聚合为临时快照页,让用户一次过一遍决定"已解 / 保留 / 升级为下次 ingest 目标"。建议频率:每月 1 次或每 5 次 lint 一次。元规则记录:没做成独立 op,因为与 lint 逻辑连续;满足"能复用就不新开操作"
   - [[Wiki/_templates/Reader]] 模板 — 引入 Obsidian Callouts 约定作为读本标准写法:9 类 callout(warning/question/abstract/quote/tip/note/example/info/折叠语法)替代裸 emoji,从此生成读本时直接按此约定产出
-  - [[Wiki/Readers/Niagara/Phase1-asset-layer-读本]] — 做 4 处示范性 callout 转换:第 0 节 Phase 要回答的问题 → `[!question]`、§2.5 命名陷阱(原 ⚠️)→ `[!warning]`、§2.6 Handle 本质归纳 → `[!abstract]`、§3 UNiagaraEmitter 源码自述 → `[!quote]`。其余 4 个读本暂不批量改,下次 lint 时评估是否需要统一回溯
+  - [[Readers/Niagara/Phase1-asset-layer-读本]] — 做 4 处示范性 callout 转换:第 0 节 Phase 要回答的问题 → `[!question]`、§2.5 命名陷阱(原 ⚠️)→ `[!warning]`、§2.6 Handle 本质归纳 → `[!abstract]`、§3 UNiagaraEmitter 源码自述 → `[!quote]`。其余 4 个读本暂不批量改,下次 lint 时评估是否需要统一回溯
 - 元规则应用记录(本轮共 3 次分层判断):
   - `.gitattributes` / CSS snippet → 文件系统级基建,不进 CLAUDE.md,原地落
   - ingest 自验 → 每次 ingest 都要做 = always-apply → 进 CLAUDE.md §3.1 作为步骤 9
@@ -85,7 +136,7 @@
   - [[Wiki/Concepts/Methodology/Rag]] 正文的"Embedding（向量嵌入）"改为 wikilink + 相关节增一条
   - [[Wiki/Entities/Stock/UNiagaraScript]] 相关节增一条 DDC 回链
   - [[Wiki/Sources/Stock/NiagaraScript]] 涉及实体节增一条 DDC 回链
-  - [[Wiki/Readers/Niagara/Phase1-asset-layer-读本]] 第 472 行首次提到 DDC 改为 wikilink
+  - [[Readers/Niagara/Phase1-asset-layer-读本]] 第 472 行首次提到 DDC 改为 wikilink
   - [[Wiki/Syntheses/AIApps/Prompt-context-harness-evolution]] 相关节增一条 Vibe Coding 链
 - 🟢 小问题修补:
   - [[Wiki/Syntheses/Niagara/Niagara-learning-path]] line 16 `[[Wiki/Sources/Stock/]]` 目录式死链改为普通 code 样式
@@ -107,8 +158,8 @@
 - 触发:2026-04-20 lint 后用户决策:(1) Claudian 选方案 a 建实体页;(2) cheatsheet 已人工删除,清理所有残留引用
 - 新建: [[Wiki/Entities/Claudian]] — 本仓 LLM 作者身份实体页,固化签名约定和运行模型,同时消解读本模板 Reader.md 的 `[[Claudian]]` 占位问题(原 6 处读本签名 + 1 处 learning-path 的 broken link 自动解析)
 - 更新(读本回链,13 页,在"引用来源"节新增"主题读本(推荐通读)"行):
-  - AIApps 8 页: [[Wiki/Concepts/AIApps/Llm]]、[[Wiki/Concepts/AIApps/Hallucination]]、[[Wiki/Concepts/AIApps/Context-window]]、[[Wiki/Concepts/AIApps/Ai-agent]]、[[Wiki/Concepts/AIApps/Mcp]]、[[Wiki/Concepts/AIApps/Harness-engineering]]、[[Wiki/Concepts/AIApps/Agent-skills]]、[[Wiki/Concepts/AIApps/Reasoning-model]] → 全部回链 [[Wiki/Readers/AIApps/AI-primer-v2-读本]]
-  - AIArt 5 页: [[Wiki/Concepts/AIArt/Lora]]、[[Wiki/Concepts/AIArt/Base-model-selection]]、[[Wiki/Concepts/AIArt/Caption-strategy]]、[[Wiki/Concepts/AIArt/Trigger-word]]、[[Wiki/Concepts/AIArt/Multi-lora-composition]] → 全部回链 [[Wiki/Readers/AIArt/Lora-深度指南-读本]]
+  - AIApps 8 页: [[Wiki/Concepts/AIApps/Llm]]、[[Wiki/Concepts/AIApps/Hallucination]]、[[Wiki/Concepts/AIApps/Context-window]]、[[Wiki/Concepts/AIApps/Ai-agent]]、[[Wiki/Concepts/AIApps/Mcp]]、[[Wiki/Concepts/AIApps/Harness-engineering]]、[[Wiki/Concepts/AIApps/Agent-skills]]、[[Wiki/Concepts/AIApps/Reasoning-model]] → 全部回链 [[Readers/AIApps/AI-primer-v2-读本]]
+  - AIArt 5 页: [[Wiki/Concepts/AIArt/Lora]]、[[Wiki/Concepts/AIArt/Base-model-selection]]、[[Wiki/Concepts/AIArt/Caption-strategy]]、[[Wiki/Concepts/AIArt/Trigger-word]]、[[Wiki/Concepts/AIArt/Multi-lora-composition]] → 全部回链 [[Readers/AIArt/Lora-深度指南-读本]]
   - 执行:用 sed 批量替换"## 引用来源"节下的 source 行,7+4 个页面(Llm/Lora 用 Edit 先行完成)
 - 删除引用(cheatsheet 用户已手动删除源文件,清理残留):log.md:230 原条目"[[Wiki/Syntheses/Methodology/How-to-prompt-ai-chat-cheatsheet]] — 一页纸精简版..." 已去除。其余 line 224 的"一页纸简化版"只是"下一步猜测",非实际引用,保留
 - 更新:[[index]] — Entities 方法论分区新增 Claudian 条目
@@ -127,9 +178,9 @@
 ### 关键发现
 
 1. **系统性:读本被孤立** — 13 个 AIApps/AIArt 概念页没有一个回链对应主题读本
-   - AIApps 8 页(Llm/Hallucination/Context-window/Reasoning-model/Ai-agent/Mcp/Harness-engineering/Agent-skills)未回链 [[Wiki/Readers/AIApps/AI-primer-v2-读本]]
-   - AIArt 5 页(Lora/Base-model-selection/Caption-strategy/Trigger-word/Multi-lora-composition)未回链 [[Wiki/Readers/AIArt/Lora-深度指南-读本]]
-   - 结果:[[Wiki/Readers/AIApps/AI-primer-v2-读本]] 全无非索引入链(接近孤儿)
+   - AIApps 8 页(Llm/Hallucination/Context-window/Reasoning-model/Ai-agent/Mcp/Harness-engineering/Agent-skills)未回链 [[Readers/AIApps/AI-primer-v2-读本]]
+   - AIArt 5 页(Lora/Base-model-selection/Caption-strategy/Trigger-word/Multi-lora-composition)未回链 [[Readers/AIArt/Lora-深度指南-读本]]
+   - 结果:[[Readers/AIApps/AI-primer-v2-读本]] 全无非索引入链(接近孤儿)
    - **根因**:本仓的读本范式是在概念页之后才定型的(§3.4),历史概念页尚未按新模板回链
    - **建议**:批量补"深入阅读"节回链,可作为一次小型 refactor
 
@@ -214,19 +265,19 @@
 - 设计原则(写进 CLAUDE.md 头部 preamble):"本文件只含每轮对话都要遵守的核心规则。大块页面模板另存 `Wiki/_templates/`,仅在真的要创建对应页面时 Read"
 - 下一步:观察后续几次 ingest/读本创建的实际体验;如果模板外移后某个模板高频被 Read,考虑把核心一句话约束提回 CLAUDE.md
 
-## [2026-04-20] refactor | 读本独立顶层目录 Wiki/Readers/
+## [2026-04-20] refactor | 读本独立顶层目录 Readers/
 - 触发:用户指出读本散在 `Syntheses/Methodology/`、`Syntheses/AIArt/`、`Syntheses/AIApps/`、`Syntheses/Niagara/` 四个子目录里,和普通专题(三段论演进、How-to-prompt、学习路径总图)混在一起"有点乱,到处都是"
-- 方案:新增 `Wiki/Readers/` 顶层目录,5 份读本全部迁过去;`Syntheses/` 回归原定位——非读本类的专题综合
+- 方案:新增 `Readers/` 顶层目录,5 份读本全部迁过去;`Syntheses/` 回归原定位——非读本类的专题综合
 - 迁移(全部用 `git mv` 保留历史):
-  - `Wiki/Syntheses/Methodology/Llm-wiki-方法论-读本.md` → `Wiki/Readers/Methodology/Llm-wiki-方法论-读本.md`
-  - `Wiki/Syntheses/AIArt/Lora-深度指南-读本.md` → `Wiki/Readers/AIArt/Lora-深度指南-读本.md`(`Wiki/Syntheses/AIArt/` 本来只有读本,搬完即删空目录)
-  - `Wiki/Syntheses/AIApps/AI-primer-v2-读本.md` → `Wiki/Readers/AIApps/AI-primer-v2-读本.md`
-  - `Wiki/Syntheses/Niagara/Phase0-心智模型-读本.md` → `Wiki/Readers/Niagara/Phase0-心智模型-读本.md`
-  - `Wiki/Syntheses/Niagara/Phase1-asset-layer-读本.md` → `Wiki/Readers/Niagara/Phase1-asset-layer-读本.md`
+  - `Wiki/Syntheses/Methodology/Llm-wiki-方法论-读本.md` → `Readers/Methodology/Llm-wiki-方法论-读本.md`
+  - `Wiki/Syntheses/AIArt/Lora-深度指南-读本.md` → `Readers/AIArt/Lora-深度指南-读本.md`(`Wiki/Syntheses/AIArt/` 本来只有读本,搬完即删空目录)
+  - `Wiki/Syntheses/AIApps/AI-primer-v2-读本.md` → `Readers/AIApps/AI-primer-v2-读本.md`
+  - `Wiki/Syntheses/Niagara/Phase0-心智模型-读本.md` → `Readers/Niagara/Phase0-心智模型-读本.md`
+  - `Wiki/Syntheses/Niagara/Phase1-asset-layer-读本.md` → `Readers/Niagara/Phase1-asset-layer-读本.md`
 - CLAUDE.md 更新:
   - §2 目录说明:新增 `Readers/` 顶层目录的完整描述 + 明确 "`Syntheses/` vs `Readers/` 的分工"小节
-  - §3.4:归档路径从 `Wiki/Syntheses/<topic>/` 改为 `Wiki/Readers/<topic>/`,新增"文件命名与路径"具体示例
-  - §4.5:模板标题注明路径 `Wiki/Readers/<topic>/`
+  - §3.4:归档路径从 `Wiki/Syntheses/<topic>/` 改为 `Readers/<topic>/`,新增"文件命名与路径"具体示例
+  - §4.5:模板标题注明路径 `Readers/<topic>/`
   - 历史债清单(§3.4 末尾)3 条 ✅ 条目的链接同步更新到新路径
 - 连带同步改链接(用 sed 跨 12 个文件批量替换):
   - 5 份读本之间的互相引用
@@ -235,14 +286,14 @@
   - [[index]]、[[Wiki/Overview]]、以及历史 log 条目里的 wikilink
 - [[index]] 分区重构:`Readers(主题读本)` 提升为**顶层分区**,与 `Entities / Concepts / Sources / Syntheses` 平级(不再作为 Syntheses 的子分区);Syntheses 分区回到"非读本类专题综合"的精简列表
 - 本条 log 描述时的路径均为**迁移后新路径**(旧路径仅在本条内提到一次)
-- 下一步:读本独立目录生效,路径稳定,之后 Phase 2 读本直接入驻 `Wiki/Readers/Niagara/`
+- 下一步:读本独立目录生效,路径稳定,之后 Phase 2 读本直接入驻 `Readers/Niagara/`
 
 ## [2026-04-20] synthesis | 历史债清算 — 三份主题读本一次性补齐
 - 触发:4-19 CLAUDE.md §3.4 引入"主题读本"规则时,历史上三个主题(方法论/AIArt/AIApps)因 ingest 时规则尚未存在而未产出读本,已在当时钉为"历史债清单"。今日用户命令清算
 - 新建 3 份读本,每份都按 CLAUDE.md §4.5 通用骨架(问题驱动叙事 + 代码/原文 inline + 陷阱 ⚠️ 高亮 + 深入阅读指回原子 + 开放问题):
-  - [[Wiki/Readers/Methodology/Llm-wiki-方法论-读本]] — 方法论议题读本,~500 行,叙事主线"时间线(Memex 1945 → RAG → LLM Wiki 2026)+ 哲学线(关联文档 → 查询时拼碎片 → 持续编译)"交织,五节 Memex/RAG/方法论骨架/Karpathy/本仓库具体化,末尾举 2026-04-17 第一次 ingest 作为完整例子
-  - [[Wiki/Readers/AIArt/Lora-深度指南-读本]] — AI 美术议题读本,~900 行,叙事主线"战略(为什么离开 MJ,三个结构性短板)→ 技术(LoRA 原理 → 基座选型 → Caption 反常识 → Trigger Word → Multi-LoRA)→ 工具(kohya_ss + ComfyUI)→ 工程(6 个月路线图 + 合规 + 硬件 + 评估准则)"
-  - [[Wiki/Readers/AIApps/AI-primer-v2-读本]] — AI 应用生态议题读本,~1000 行,叙事主线"LLM 本质 → 三个怪癖(幻觉/Context Rot/不稳定)→ 新面孔(推理/多模态/Agent)→ 连接外部(MCP/RAG/记忆)→ 三段论演进 → Harness 四柱 → Agent Skills → 2026 技术栈三层 → Karpathy 三节点 → Vibe/Spec/Harness Coding"
+  - [[Readers/Methodology/Llm-wiki-方法论-读本]] — 方法论议题读本,~500 行,叙事主线"时间线(Memex 1945 → RAG → LLM Wiki 2026)+ 哲学线(关联文档 → 查询时拼碎片 → 持续编译)"交织,五节 Memex/RAG/方法论骨架/Karpathy/本仓库具体化,末尾举 2026-04-17 第一次 ingest 作为完整例子
+  - [[Readers/AIArt/Lora-深度指南-读本]] — AI 美术议题读本,~900 行,叙事主线"战略(为什么离开 MJ,三个结构性短板)→ 技术(LoRA 原理 → 基座选型 → Caption 反常识 → Trigger Word → Multi-LoRA)→ 工具(kohya_ss + ComfyUI)→ 工程(6 个月路线图 + 合规 + 硬件 + 评估准则)"
+  - [[Readers/AIApps/AI-primer-v2-读本]] — AI 应用生态议题读本,~1000 行,叙事主线"LLM 本质 → 三个怪癖(幻觉/Context Rot/不稳定)→ 新面孔(推理/多模态/Agent)→ 连接外部(MCP/RAG/记忆)→ 三段论演进 → Harness 四柱 → Agent Skills → 2026 技术栈三层 → Karpathy 三节点 → Vibe/Spec/Harness Coding"
 - 更新:
   - [[CLAUDE]] §3.4 历史债清单全部标 ✅,明确"今后新主题 ingest 同步产出读本,不再累积"
   - [[index]] Syntheses 分区新增方法论/AIArt 两个分类,三份读本各自登记
@@ -273,7 +324,7 @@
 - 下一步:Phase 2 按新规则产出 "Phase 2 读本";用户需要时可回补 AIArt / AIApps 主题读本
 
 ## [2026-04-19] synthesis | Niagara Phase 0 导读(补齐)
-- 新建:[[Wiki/Readers/Niagara/Phase0-心智模型-读本|Phase0-心智模型-导读]] — Phase 0 的线性读物,把四个概念页(UObject / Asset-Instance / Niagara-vs-Cascade / CPU-vs-GPU)编成自下而上一条叙事链  *(注:4-19 晚些时候重命名为"读本",详见本条上方的 refactor 条目)*
+- 新建:[[Readers/Niagara/Phase0-心智模型-读本|Phase0-心智模型-导读]] — Phase 0 的线性读物,把四个概念页(UObject / Asset-Instance / Niagara-vs-Cascade / CPU-vs-GPU)编成自下而上一条叙事链  *(注:4-19 晚些时候重命名为"读本",详见本条上方的 refactor 条目)*
 - 叙事结构:四层脑内地图(Layer 1 UObject → Layer 2 Asset/Instance → Layer 3 Niagara 哲学 → Layer 4 CPU/GPU 分叉),每层末尾小结 + 最后一节"四层地图回看"贯通
 - 埋雷:第 2.8 节专门提前钉死"`FNiagaraEmitterHandle::Instance` 不是运行时 Instance"这个 Phase 1 必踩的命名陷阱,让读者到 Phase 1 时有预期
 - 更新:[[Wiki/Syntheses/Niagara/Niagara-learning-path]](Phase 0 节顶加导读链接)、[[index]]、[[Wiki/Overview]]
@@ -281,7 +332,7 @@
 
 ## [2026-04-19] synthesis | Niagara Phase 1 导读 + 方法论升级
 - 触发:用户指出原子化 Source/Entity 页不符合人类线性阅读习惯(频繁跳转、碎片化)
-- 核心产出:[[Wiki/Readers/Niagara/Phase1-asset-layer-读本|Phase1-asset-layer-导读]] — Phase 1 的**教科书章节**,500+ 行线性叙事,从 Content Browser 切入讲到图源抽象基类,关键代码片段 inline,不强制跳转  *(注:4-19 晚些时候重命名为"读本")*
+- 核心产出:[[Readers/Niagara/Phase1-asset-layer-读本|Phase1-asset-layer-导读]] — Phase 1 的**教科书章节**,500+ 行线性叙事,从 Content Browser 切入讲到图源抽象基类,关键代码片段 inline,不强制跳转  *(注:4-19 晚些时候重命名为"读本")*
 - 方法论升级(写入 [[CLAUDE]]):
   - 新增 §3.4 "Phase 导读":结构化学习路径每阶段收尾强制产出线性读物,定位"教科书章节"与原子页 spec 角色互补;准确/不遗漏 > 简短,不为压缩而压缩
   - 新增 §4.5 "Phase 导读页结构"模板

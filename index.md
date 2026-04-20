@@ -3,7 +3,7 @@
 > 本文件是整个 wiki 的内容目录。LLM 每次 ingest 都会更新。
 > 查询时先读这里,再深入相关页面。
 
-最后更新:2026-04-20（+ 新增 Wiki/Readers/ 顶层目录,5 份读本从 Syntheses/ 迁出）
+最后更新:2026-04-20（+ Phase 2 Component 层入驻:3 Source + 3 Entity + 1 读本,Niagara 学习路径推进到 Phase 2/10 完成）
 
 ---
 
@@ -33,6 +33,9 @@
 - [[Wiki/Entities/Stock/FNiagaraEmitterHandle|FNiagaraEmitterHandle]] — System 引用 Emitter 的 USTRUCT 包装器;Id + Name + enabled + Instance (来源:1)
 - [[Wiki/Entities/Stock/UNiagaraScript|UNiagaraScript]] — 编译后脚本资产;承载 VectorVM 字节码 + GPU shader 双形态 (来源:1)
 - [[Wiki/Entities/Stock/UNiagaraScriptSourceBase|UNiagaraScriptSourceBase]] — 图源抽象基类(editor-only 实现在 NiagaraEditor 模块) (来源:1)
+- [[Wiki/Entities/Stock/UNiagaraComponent|UNiagaraComponent]] — Niagara 承载层组件;Asset 持有 + Instance 管理 + 参数覆盖 + 场景集成 + 生命周期调度 五职责 (来源:1)
+- [[Wiki/Entities/Stock/ANiagaraActor|ANiagaraActor]] — 纯 ComponentWrapperClass;仅作 Component 挂载壳 + "播完自销毁" observer (来源:1)
+- [[Wiki/Entities/Stock/UNiagaraFunctionLibrary|UNiagaraFunctionLibrary]] — Niagara BP 静态工具集;Spawn / 重型 DI 覆盖 / ParameterCollection / VM FastPath 四组 (来源:1)
 
 ## Concepts(概念)
 *想法、理论、方法、术语。*
@@ -84,22 +87,26 @@
 - [[Wiki/Sources/Stock/NiagaraEmitterHandle]] — NiagaraEmitterHandle.h @ b6ab0dee9 (Phase 1.3,System→Emitter 引用包装)
 - [[Wiki/Sources/Stock/NiagaraScript]] — NiagaraScript.h @ b6ab0dee9 (Phase 1.4,编译后脚本 + VMExecutableData)
 - [[Wiki/Sources/Stock/NiagaraScriptSourceBase]] — NiagaraScriptSourceBase.h @ b6ab0dee9 (Phase 1.5,图源抽象基类)
+- [[Wiki/Sources/Stock/NiagaraComponent]] — NiagaraComponent.h @ b6ab0dee9 (Phase 2.1,承载层主角,741 行)
+- [[Wiki/Sources/Stock/NiagaraActor]] — NiagaraActor.h @ b6ab0dee9 (Phase 2.2,ComponentWrapperClass,66 行)
+- [[Wiki/Sources/Stock/NiagaraFunctionLibrary]] — NiagaraFunctionLibrary.h @ b6ab0dee9 (Phase 2.3,BP 静态工具集)
 
 ## Readers(主题读本)
 *每个议题"一次读完即完整掌握"的线性读物。人类阅读的首选入口,详见 [[CLAUDE]] §3.4。*
 
 ### 方法论
-- [[Wiki/Readers/Methodology/Llm-wiki-方法论-读本|方法论读本 — 本仓库为什么存在]] — LLM Wiki 方法论主题读本,详解三层架构/三操作/两文件/Memex-RAG-Wiki 脉络/Karpathy 三里程碑/本仓库如何具体化 (2026-04-20)
+- [[Readers/Methodology/Llm-wiki-方法论-读本|方法论读本 — 本仓库为什么存在]] — LLM Wiki 方法论主题读本,详解三层架构/三操作/两文件/Memex-RAG-Wiki 脉络/Karpathy 三里程碑/本仓库如何具体化 (2026-04-20)
 
 ### AI 美术
-- [[Wiki/Readers/AIArt/Lora-深度指南-读本|LoRA 深度指南读本]] — 鸣潮美术向 LoRA 落地方案主题读本,从战略(离开 MJ)到技术(LoRA/caption/trigger)到工具(kohya+ComfyUI)到落地路线 (2026-04-20)
+- [[Readers/AIArt/Lora-深度指南-读本|LoRA 深度指南读本]] — 鸣潮美术向 LoRA 落地方案主题读本,从战略(离开 MJ)到技术(LoRA/caption/trigger)到工具(kohya+ComfyUI)到落地路线 (2026-04-20)
 
 ### AI 应用生态
-- [[Wiki/Readers/AIApps/AI-primer-v2-读本|AI 应用生态读本]] — AI Primer v2 主题读本,从 LLM 本质到 2026 技术栈三层全景,一次读完掌握整条主线 (2026-04-20)
+- [[Readers/AIApps/AI-primer-v2-读本|AI 应用生态读本]] — AI Primer v2 主题读本,从 LLM 本质到 2026 技术栈三层全景,一次读完掌握整条主线 (2026-04-20)
 
 ### Niagara 源码学习
-- [[Wiki/Readers/Niagara/Phase0-心智模型-读本|Phase 0 读本 — 上阵前的四层脑内地图]] — 把 UObject / Asset-Instance / Niagara-vs-Cascade / CPU-vs-GPU 四概念编成自下而上一条叙事链,一次读完掌握 Phase 1+ 所需全部前置 (2026-04-19)
-- [[Wiki/Readers/Niagara/Phase1-asset-layer-读本|Phase 1 读本 — Niagara 的资产层]] — 把 5 个 header 讲成一个连贯故事,从 System 到图源抽象基类,一次读完掌握 Asset 层全部心智模型 (2026-04-19)
+- [[Readers/Niagara/Phase0-心智模型-读本|Phase 0 读本 — 上阵前的四层脑内地图]] — 把 UObject / Asset-Instance / Niagara-vs-Cascade / CPU-vs-GPU 四概念编成自下而上一条叙事链,一次读完掌握 Phase 1+ 所需全部前置 (2026-04-19)
+- [[Readers/Niagara/Phase1-asset-layer-读本|Phase 1 读本 — Niagara 的资产层]] — 把 5 个 header 讲成一个连贯故事,从 System 到图源抽象基类,一次读完掌握 Asset 层全部心智模型 (2026-04-19)
+- [[Readers/Niagara/Phase2-component-layer-读本|Phase 2 读本 — Niagara 的 Component 层]] — 把 Component/Actor/FunctionLibrary 三文件讲成从"资产到场景里跑着"的完整控制流,涵盖三入口/五职责/四生命周期源/Pool-Scalability-AutoDestroy 三方决策 (2026-04-20)
 
 ## Syntheses(综合/专题)
 *跨源分析、对比、专题报告、好答案的沉淀(非读本)。读本见上方 [[#Readers(主题读本)]] 分区。*
