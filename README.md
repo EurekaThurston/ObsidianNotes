@@ -1,5 +1,7 @@
 # ObsidianNotes — Eureka 的 LLM Wiki
 
+![](Raw/Assets/ReadmeHeader.jpeg)
+
 > 一个用 **Andrej Karpathy 的 [LLM Wiki 方法论](https://karpathy.ai/)** 运行的个人知识库。
 > 人类负责提供原始资料、提问、指方向；LLM（主力是 Claude）负责读、写、归档、交叉引用、维护一致性。
 

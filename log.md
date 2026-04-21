@@ -832,3 +832,36 @@
   - 不在文中给答案,留给读者自测
 - 校验:11 个 Edit 全部 success,各 reader 的"自检问题"章节插入位置一致(均在"留下的问题"前),格式统一
 - 影响:本规约对未来所有读本生产都生效;Niagara 11 篇也补全了
+
+## [2026-04-21] lint | 全仓体检(规模 160 wiki + 15 reader + 4 raw,~1688 wikilink)
+- 触发:用户 `lint`;上次 lint 2026-04-21(Phase 5-10 targeted)。首次在 175 页规模下做全仓扫描
+- 执行:按 [[Wiki/_templates/Lint-checklist]] §0-§8,delegate general-purpose agent 扫全仓(>100 页 per checklist §0)
+- 关键发现:
+  - 🔴 无严重问题(零 orphan、零 frontmatter 不合规、log ↔ fs 对账 0 差异)
+  - 🟡 **11 条 broken wikilink**(全部指向未建 Entity 页,集中在 Niagara Sources):
+    - `FNiagaraDataBuffer`×4(NiagaraDataSet/FNiagaraDataSet/FNiagaraGPUInstanceCountManager/FNiagaraVertexFactory)
+    - `FNiagaraFunctionSignature`、`FNiagaraDataSetID`(NiagaraCommon)
+    - `FNiagaraParameters`(NiagaraParameters)、`FNiagaraVariableBase`(NiagaraParameterStore)
+    - `FSimulationStageMetaData`(NiagaraScriptBase)
+    - `FNiagaraScriptExecutionParameterStore` + `FNiagaraScriptInstanceParameterStore`(NiagaraScriptExecutionParameterStore)
+    - 成因:ingest 时作前瞻链接,后决定不单建页但未改 plain text
+  - 🟡 目录式死链 1 条:`Wiki/Concepts/UE4/UE4-ddc.md:75` 的 `[[Wiki/Sources/Stock/]]`
+  - 🟢 [[Wiki/Overview]] L182 "仍待建页"列表陈旧:**Subagent** 已补建为 [[Wiki/Concepts/AIApps/Multi-agent]],应从列表删除
+  - 🟢 [[Wiki/Concepts/AIApps/Embedding]] 仅 1 条非索引反链(`Rag.md`),枢纽性偏薄
+  - 🟢 `TickGroup` 14 页反复提及无独立概念页——候选建 `Wiki/Concepts/UE4/UE4-tickgroup.md`,非硬需求
+- 人工验证:抽查 4 个声称缺失的 Entity(`FNiagaraDataBuffer`/`FNiagaraParameters`/`FNiagaraVariableBase`/`FSimulationStageMetaData`)全部 fs 确认不存在;Overview L182 确认仍列 Subagent
+- 建议下一步(待用户批准):
+  - 🟡 修 11 条 broken link:建议策略 A(改 plain text + 父 Source 内描述注脚),工作量小,保持原子页紧凑
+  - 🟡 UE4-ddc.md:75 目录链改具体页面或 code 样式
+  - 🟢 更新 Overview L182 删 Subagent
+- 不处理(含理由):
+  - Niagara-vs-cascade / CPU-vs-GPU 对 Cascade GPU 措辞差异(上轮已标"轻微不一致");非矛盾,留到主题 refactor 时一次处理
+  - `_templates/` 内的占位符(预期)
+  - log.md append-only 历史条目用旧 stem 指向已改名读本(有意保留,grep 回溯用)
+
+## [2026-04-22] refactor | README 加头图
+- 触发:用户想给 README 加头图(粘贴了一张鸣潮风格废墟角色图)
+- 改动:
+  - [[README.md]] H1 标题下、blockquote 上插入标准 markdown `![](Raw/Assets/ReadmeHeader.jpeg)`——用 `![]()` 而非 `![[]]` 以兼容 GitHub 渲染
+  - Asset 文件 `Raw/Assets/ReadmeHeader.jpeg`(2.4 MB JPEG,用户命名 PascalCase),放 `Raw/Assets/` 符合 CLAUDE §6 附件约定
+- 影响:`Raw/Assets/` 首次入驻一张图片(之前仅 `.gitkeep`)
