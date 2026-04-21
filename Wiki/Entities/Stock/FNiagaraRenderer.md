@@ -78,4 +78,4 @@ FMaterialRelevance BaseMaterialRelevance_GT;
 ## 深入阅读
 
 - 源摘要:[[Wiki/Sources/Stock/NiagaraRenderer]]
-- 主题读本:[[Readers/Niagara/Phase6-rendering-读本]] § 3
+- 主题读本:[[Readers/Niagara/Phase 6 - Niagara 粒子如何变成屏幕像素]] § 3

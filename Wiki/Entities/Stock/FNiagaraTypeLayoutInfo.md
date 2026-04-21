@@ -52,4 +52,4 @@ static void GenerateLayoutInfo(FNiagaraTypeLayoutInfo& Layout, const UScriptStru
 ## 深入阅读
 
 - 源摘要:[[Wiki/Sources/Stock/NiagaraTypes]]
-- 主题读本:[[Readers/Niagara/Phase4-data-model-读本]] § 3
+- 主题读本:[[Readers/Niagara/Phase 4 - Niagara 的数据语言]] § 3

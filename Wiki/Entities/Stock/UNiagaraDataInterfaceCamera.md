@@ -63,4 +63,4 @@ bool bRequireCurrentFrameData = true;     // false = 用上一帧数据换性能
 ## 深入阅读
 
 - 源:[[Wiki/Sources/Stock/NiagaraDataInterfaceCamera]]
-- 读本:[[Readers/Niagara/Phase7-data-interface-读本]] § 4
+- 读本:[[Readers/Niagara/Phase 7 - 最强扩展点 Data Interface]] § 4

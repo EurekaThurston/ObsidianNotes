@@ -11,9 +11,9 @@ source_ref: "4.26"
 source_commit: b6ab0dee9
 ---
 
-# Phase 5 读本 — Niagara 脚本如何"跑起来"
+# Phase 5 - Niagara 脚本如何跑起来
 
-> 本页是 Niagara 学习路径 [[Wiki/Syntheses/Niagara/Niagara-learning-path]] Phase 5 的**主题读本**。一次读完掌握 CPU VM 如何 dispatch Niagara 脚本、per-instance DI 机制、GPU 执行上下文与 Tick 打包的形态(GPU 详细等 [[Readers/Niagara/Phase8-gpu-simulation-读本|Phase 8]])。
+> 本页是 Niagara 学习路径 [[Wiki/Syntheses/Niagara/Niagara-learning-path]] Phase 5 的**主题读本**。一次读完掌握 CPU VM 如何 dispatch Niagara 脚本、per-instance DI 机制、GPU 执行上下文与 Tick 打包的形态(GPU 详细等 [[Readers/Niagara/Phase 8 - Niagara 的 GPU 模拟管线|Phase 8]])。
 >
 > 如需字段级查询或溯源,见末尾的 [[#深入阅读]] 索引。
 
@@ -422,14 +422,14 @@ Light                  LightRendererProperties   RendererLights
 
 ### 前置议题
 
-- [[Readers/Niagara/Phase3-runtime-instance-读本]] — CPU ExecContext 在 EmitterInstance 被引用但未展开
-- [[Readers/Niagara/Phase4-data-model-读本]] — ParameterStore 基类、类型系统、SoA DataSet
+- [[Readers/Niagara/Phase 3 - Niagara 的心脏]] — CPU ExecContext 在 EmitterInstance 被引用但未展开
+- [[Readers/Niagara/Phase 4 - Niagara 的数据语言]] — ParameterStore 基类、类型系统、SoA DataSet
 - [[Wiki/Concepts/Niagara/Niagara-cpu-vs-gpu模拟]] — CPU/GPU 双路径
 
 ### 下一步 / 导航
 
-- 下一阶段:[[Readers/Niagara/Phase6-rendering-读本]] — 粒子数据 → 像素
-- 深入 GPU 侧:[[Readers/Niagara/Phase8-gpu-simulation-读本]]
+- 下一阶段:[[Readers/Niagara/Phase 6 - Niagara 粒子如何变成屏幕像素]] — 粒子数据 → 像素
+- 深入 GPU 侧:[[Readers/Niagara/Phase 8 - Niagara 的 GPU 模拟管线]]
 - 学习路径总图:[[Wiki/Syntheses/Niagara/Niagara-learning-path]]
 - 仓综合视图:[[Wiki/Overview]]
 

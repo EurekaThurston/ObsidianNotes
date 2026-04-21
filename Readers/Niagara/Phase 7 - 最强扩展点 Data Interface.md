@@ -11,7 +11,7 @@ source_ref: "4.26"
 source_commit: b6ab0dee9
 ---
 
-# Phase 7 读本 — Niagara 的最强扩展点
+# Phase 7 - 最强扩展点 Data Interface
 
 > 本页是 Niagara 学习路径 [[Wiki/Syntheses/Niagara/Niagara-learning-path]] Phase 7 的**主题读本**。一次读完掌握 DI 生态:主基类机制 + 7 种典型 DI 的能力与陷阱 + [[Wiki/Concepts/Niagara/Niagara-cpu-vs-gpu模拟|CPU/GPU 双路径]] + per-instance data 生命周期。
 >
@@ -430,10 +430,10 @@ Phase 10 完整展开。
 
 ### 前置议题
 
-- [[Readers/Niagara/Phase2-component-layer-读本]] — FunctionLibrary 里 Component 覆盖 DI 的重型 API
-- [[Readers/Niagara/Phase3-runtime-instance-读本]] — SystemInstance 的 `DataInterfaceInstanceData` blob 布局
-- [[Readers/Niagara/Phase4-data-model-读本]] — ParameterStore 里 DI 的存储
-- [[Readers/Niagara/Phase5-cpu-script-execution-读本]] — DI 基类 + VM Dispatch + GPU Shader Parameters 首次出场
+- [[Readers/Niagara/Phase 2 - Component 层的五职责]] — FunctionLibrary 里 Component 覆盖 DI 的重型 API
+- [[Readers/Niagara/Phase 3 - Niagara 的心脏]] — SystemInstance 的 `DataInterfaceInstanceData` blob 布局
+- [[Readers/Niagara/Phase 4 - Niagara 的数据语言]] — ParameterStore 里 DI 的存储
+- [[Readers/Niagara/Phase 5 - Niagara 脚本如何跑起来]] — DI 基类 + VM Dispatch + GPU Shader Parameters 首次出场
 
 ### 相关概念
 
@@ -441,8 +441,8 @@ Phase 10 完整展开。
 
 ### 下一步 / 导航
 
-- 下一阶段:[[Readers/Niagara/Phase8-gpu-simulation-读本]] — Shader 编译 + GPU 实例计数 + VertexFactory
-- 后续深入:[[Readers/Niagara/Phase10-advanced-features-读本]] — RW DI 四钩子 + Grid2D/3D/NeighborGrid3D
+- 下一阶段:[[Readers/Niagara/Phase 8 - Niagara 的 GPU 模拟管线]] — Shader 编译 + GPU 实例计数 + VertexFactory
+- 后续深入:[[Readers/Niagara/Phase 10 - Niagara 的高级特性]] — RW DI 四钩子 + Grid2D/3D/NeighborGrid3D
 - 学习路径总图:[[Wiki/Syntheses/Niagara/Niagara-learning-path]]
 - 仓综合视图:[[Wiki/Overview]]
 

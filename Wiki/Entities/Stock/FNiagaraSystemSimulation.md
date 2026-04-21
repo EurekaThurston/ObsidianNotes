@@ -87,7 +87,7 @@ enum class ENiagaraGPUTickHandlingMode {
 ## 深入阅读
 
 - 全字段清单 + 代码片段:[[Wiki/Sources/Stock/NiagaraSystemSimulation]]
-- 主题读本:[[Readers/Niagara/Phase3-runtime-instance-读本]] § 5-6
+- 主题读本:[[Readers/Niagara/Phase 3 - Niagara 的心脏]] § 5-6
 
 ## 开放问题
 

@@ -5,6 +5,41 @@
 
 ---
 
+## [2026-04-21] refactor | 读本全量改名 — 去 `-读本` 后缀 + 文章标题式带空格文件名
+
+- 触发:用户反馈原文件名格式"看着难受",要求改成文章标题式(如 `Phase 7 - 最强扩展点 Data Interface`、`从 Memex 到 LLM Wiki`)
+- 规则变更(写入 [[CLAUDE]] §6):
+  - **Wiki 原子页**(Concepts/Entities/Sources)仍是小写+连字符(不变)
+  - **Readers 主题读本**:文章标题式,带空格,不加 `读本` 后缀;H1 与文件名(去 `.md`)完全一致
+  - Niagara 学习路径保留 `Phase N - 标题` 序列前缀
+- 重命名(15 文件,git mv 保留历史):
+  - `Readers/Methodology/Llm-wiki-方法论-读本.md` → `从 Memex 到 LLM Wiki.md`
+  - `Readers/AIArt/Lora-深度指南-读本.md` → `LoRA 深度指南.md`
+  - `Readers/AIApps/AI-primer-v2-读本.md` → `AI 应用生态全景 2026.md`
+  - `Readers/AIApps/Multi-agent-读本.md` → `为什么上下文有限反而必须切多 Agent.md`
+  - `Readers/Niagara/Phase0-心智模型-读本.md` → `Phase 0 - 上阵前的四层脑内地图.md`
+  - `Readers/Niagara/Phase1-asset-layer-读本.md` → `Phase 1 - 从 System 到图源抽象基类.md`
+  - `Readers/Niagara/Phase2-component-layer-读本.md` → `Phase 2 - Component 层的五职责.md`
+  - `Readers/Niagara/Phase3-runtime-instance-读本.md` → `Phase 3 - Niagara 的心脏.md`
+  - `Readers/Niagara/Phase4-data-model-读本.md` → `Phase 4 - Niagara 的数据语言.md`
+  - `Readers/Niagara/Phase5-cpu-script-execution-读本.md` → `Phase 5 - Niagara 脚本如何跑起来.md`
+  - `Readers/Niagara/Phase6-rendering-读本.md` → `Phase 6 - Niagara 粒子如何变成屏幕像素.md`
+  - `Readers/Niagara/Phase7-data-interface-读本.md` → `Phase 7 - 最强扩展点 Data Interface.md`
+  - `Readers/Niagara/Phase8-gpu-simulation-读本.md` → `Phase 8 - Niagara 的 GPU 模拟管线.md`
+  - `Readers/Niagara/Phase9-world-management-读本.md` → `Phase 9 - Niagara 的世界管理与可扩展性.md`
+  - `Readers/Niagara/Phase10-advanced-features-读本.md` → `Phase 10 - Niagara 的高级特性.md`
+- 批量更新(PowerShell 脚本一次性处理):
+  - 每个读本 H1 替换(去"读本"+换成新单标题)
+  - 全仓 .md 文件(除 log.md)的旧 stem wikilink 替换 → 新 stem
+  - 总计修改 91 文件:CLAUDE.md / README.md / index.md / Wiki/Overview.md / 所有 15 读本 / Niagara-learning-path synthesis / 所有 Niagara Entity + Concept + Source 页 / 所有 AIApps + AIArt + Methodology Concept 页 / 引用 AI 应用生态的 UE4-ddc 等
+- 模板同步更新:[[Wiki/_templates/Reader.md]] 路径示例 + H1 示例 + alias 模板
+- 不处理:[[log.md]] 所有历史条目保留旧 stem(append-only 历史,grep 回溯用)
+- 自验:
+  - Glob `Readers/**/*.md` → 15 新路径全部存在 ✓
+  - Grep 旧 stem 模式 → 只在 log.md 命中(预期) ✓
+
+---
+
 ## [2026-04-21] synthesis | Multi-agent / Subagent 架构读本
 
 - 触发:用户显式要求"还是写一个读本吧"(命中 [[CLAUDE]] §3.4 触发条件 4)

@@ -67,4 +67,4 @@ System 脚本跑 50 instance 时,每个 instance 的 DI 可能不同。VM 遇到
 ## 深入阅读
 
 - 源摘要:[[Wiki/Sources/Stock/NiagaraScriptExecutionContext]]
-- 主题读本:[[Readers/Niagara/Phase5-cpu-script-execution-读本]] § 2-3
+- 主题读本:[[Readers/Niagara/Phase 5 - Niagara 脚本如何跑起来]] § 2-3

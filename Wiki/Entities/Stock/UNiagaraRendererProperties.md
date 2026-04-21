@@ -62,4 +62,4 @@ source_commit: b6ab0dee9
 ## 深入阅读
 
 - 源摘要:[[Wiki/Sources/Stock/NiagaraRendererProperties]]
-- 主题读本:[[Readers/Niagara/Phase6-rendering-读本]] § 1-2
+- 主题读本:[[Readers/Niagara/Phase 6 - Niagara 粒子如何变成屏幕像素]] § 1-2

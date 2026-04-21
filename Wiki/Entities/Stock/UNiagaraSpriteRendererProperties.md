@@ -59,4 +59,4 @@ FNiagaraCutoutVertexBuffer CutoutVertexBuffer;
 
 - Properties 源:[[Wiki/Sources/Stock/NiagaraSpriteRendererProperties]]
 - Renderer 源:[[Wiki/Sources/Stock/NiagaraRendererSprites]]
-- 主题读本:[[Readers/Niagara/Phase6-rendering-读本]] § 4
+- 主题读本:[[Readers/Niagara/Phase 6 - Niagara 粒子如何变成屏幕像素]] § 4

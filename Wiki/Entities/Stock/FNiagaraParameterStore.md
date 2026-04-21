@@ -74,7 +74,7 @@ Tick 时按标记增量 push——改了参数不重传 DI,反之亦然。性能
 ## 深入阅读
 
 - 全字段:[[Wiki/Sources/Stock/NiagaraParameterStore]]
-- 主题读本:[[Readers/Niagara/Phase4-data-model-读本]] § 7
+- 主题读本:[[Readers/Niagara/Phase 4 - Niagara 的数据语言]] § 7
 
 ## 开放问题
 

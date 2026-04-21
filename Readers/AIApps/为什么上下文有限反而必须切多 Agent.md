@@ -7,7 +7,7 @@ sources: 2
 aliases: [Multi-agent 读本, Subagent 读本, 多 Agent 读本]
 ---
 
-# Multi-agent / Subagent 架构读本 — 为什么"上下文有限"反而是"必须切多 agent"的理由
+# 为什么上下文有限反而必须切多 Agent
 
 > 本页是 Multi-agent / Subagent 架构的**主题读本**——详细、精确、满满当当,一次读完即完整掌握"多 agent 到底为什么存在、怎么跑、什么时候派什么时候不派",不需要跳转。
 >
@@ -515,7 +515,7 @@ Claudian 的决策链:
 ### 导航 / 总图
 
 - [[Wiki/Overview]] — 顶层综合视图
-- [[Readers/AIApps/AI-primer-v2-读本]] — AI 应用生态总读本,本议题在其"从 Chat 到 Agent"那一节有简短提及
+- [[Readers/AIApps/AI 应用生态全景 2026]] — AI 应用生态总读本,本议题在其"从 Chat 到 Agent"那一节有简短提及
 
 ### 跨主题联系
 

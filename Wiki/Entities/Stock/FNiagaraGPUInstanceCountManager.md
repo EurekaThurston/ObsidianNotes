@@ -71,4 +71,4 @@ struct { uint32 IndexCountPerInstance, InstanceCount, StartIndex, BaseVertex, St
 ## 深入阅读
 
 - 源:[[Wiki/Sources/Stock/NiagaraGPUInstanceCountManager]]
-- 读本:[[Readers/Niagara/Phase8-gpu-simulation-读本]] § 4
+- 读本:[[Readers/Niagara/Phase 8 - Niagara 的 GPU 模拟管线]] § 4

@@ -46,7 +46,7 @@ source_commit: b6ab0dee9
 ## 深入阅读
 
 - 全字段清单 + 代码片段:[[Wiki/Sources/Stock/NiagaraSystem]]
-- 主题读本(推荐初读):[[Readers/Niagara/Phase1-asset-layer-读本]] § 1
+- 主题读本(推荐初读):[[Readers/Niagara/Phase 1 - 从 System 到图源抽象基类]] § 1
 
 ## 开放问题
 

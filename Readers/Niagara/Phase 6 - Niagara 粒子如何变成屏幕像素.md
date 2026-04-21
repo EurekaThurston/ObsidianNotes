@@ -11,7 +11,7 @@ source_ref: "4.26"
 source_commit: b6ab0dee9
 ---
 
-# Phase 6 读本 — Niagara 粒子如何变成屏幕像素
+# Phase 6 - Niagara 粒子如何变成屏幕像素
 
 > 本页是 Niagara 学习路径 [[Wiki/Syntheses/Niagara/Niagara-learning-path]] Phase 6 的**主题读本**。一次读完掌握 Niagara Renderer 家族:[[Wiki/Concepts/UE4/UE4-资产与实例|Asset/Instance]] 对偶、GT→RT 数据流、4 种具体类型(Sprite/Ribbon/Mesh/Light)的能力边界与陷阱。
 >
@@ -420,10 +420,10 @@ GPU 粒子数据在 GPU 侧,`GatherSimpleLights` 需要 CPU readback——要么
 
 ### 前置议题
 
-- [[Readers/Niagara/Phase2-component-layer-读本]] — Component Render Pool、Activate/Deactivate 对 Renderer 的影响
-- [[Readers/Niagara/Phase3-runtime-instance-读本]] — Emitter Instance 的 `RendererBindings` 参数存储
-- [[Readers/Niagara/Phase4-data-model-读本]] — `FNiagaraDataSet` + `FNiagaraDataSetAccessor` 是本 Phase 所有 `GetParticleData*` 的源
-- [[Readers/Niagara/Phase5-cpu-script-execution-读本]] — CPU 脚本写入粒子后才轮到 Renderer 读
+- [[Readers/Niagara/Phase 2 - Component 层的五职责]] — Component Render Pool、Activate/Deactivate 对 Renderer 的影响
+- [[Readers/Niagara/Phase 3 - Niagara 的心脏]] — Emitter Instance 的 `RendererBindings` 参数存储
+- [[Readers/Niagara/Phase 4 - Niagara 的数据语言]] — `FNiagaraDataSet` + `FNiagaraDataSetAccessor` 是本 Phase 所有 `GetParticleData*` 的源
+- [[Readers/Niagara/Phase 5 - Niagara 脚本如何跑起来]] — CPU 脚本写入粒子后才轮到 Renderer 读
 
 ### 相关概念
 
@@ -432,7 +432,7 @@ GPU 粒子数据在 GPU 侧,`GatherSimpleLights` 需要 CPU readback——要么
 
 ### 下一步 / 导航
 
-- 下一阶段:[[Readers/Niagara/Phase7-data-interface-读本]] — DI 让脚本吃外部数据
+- 下一阶段:[[Readers/Niagara/Phase 7 - 最强扩展点 Data Interface]] — DI 让脚本吃外部数据
 - 学习路径总图:[[Wiki/Syntheses/Niagara/Niagara-learning-path]]
 - 仓综合视图:[[Wiki/Overview]]
 

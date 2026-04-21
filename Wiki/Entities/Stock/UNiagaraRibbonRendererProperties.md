@@ -91,4 +91,4 @@ FNiagaraDataSetAccessor<FNiagaraID> RibbonFullID;
 ## 深入阅读
 
 - 源:[[Wiki/Sources/Stock/NiagaraRibbonRendererProperties]] / [[Wiki/Sources/Stock/NiagaraRendererRibbons]]
-- 读本:[[Readers/Niagara/Phase6-rendering-读本]] § 5
+- 读本:[[Readers/Niagara/Phase 6 - Niagara 粒子如何变成屏幕像素]] § 5

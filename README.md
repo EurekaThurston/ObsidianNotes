@@ -52,11 +52,11 @@
 
 | 主题 | 读本 |
 |---|---|
-| 本仓库方法论(想知道"这是什么、为什么存在") | [`Readers/Methodology/Llm-wiki-方法论-读本.md`](Readers/Methodology/Llm-wiki-方法论-读本.md) |
-| AI 应用生态(LLM / Agent / MCP / Harness / Skills 全貌) | [`Readers/AIApps/AI-primer-v2-读本.md`](Readers/AIApps/AI-primer-v2-读本.md) |
-| AI 美术生成管线(LoRA / ComfyUI 落地) | [`Readers/AIArt/Lora-深度指南-读本.md`](Readers/AIArt/Lora-深度指南-读本.md) |
-| Niagara 源码学习 — 心智模型前置 | [`Readers/Niagara/Phase0-心智模型-读本.md`](Readers/Niagara/Phase0-心智模型-读本.md) |
-| Niagara 源码学习 — Phase 1 资产层 | [`Readers/Niagara/Phase1-asset-layer-读本.md`](Readers/Niagara/Phase1-asset-layer-读本.md) |
+| 本仓库方法论(想知道"这是什么、为什么存在") | [`Readers/Methodology/从 Memex 到 LLM Wiki.md`](Readers/Methodology/从 Memex 到 LLM Wiki.md) |
+| AI 应用生态(LLM / Agent / MCP / Harness / Skills 全貌) | [`Readers/AIApps/AI 应用生态全景 2026.md`](Readers/AIApps/AI 应用生态全景 2026.md) |
+| AI 美术生成管线(LoRA / ComfyUI 落地) | [`Readers/AIArt/LoRA 深度指南.md`](Readers/AIArt/LoRA 深度指南.md) |
+| Niagara 源码学习 — 心智模型前置 | [`Readers/Niagara/Phase 0 - 上阵前的四层脑内地图.md`](Readers/Niagara/Phase 0 - 上阵前的四层脑内地图.md) |
+| Niagara 源码学习 — Phase 1 资产层 | [`Readers/Niagara/Phase 1 - 从 System 到图源抽象基类.md`](Readers/Niagara/Phase 1 - 从 System 到图源抽象基类.md) |
 
 **如果你是 LLM / 想索引 / 想查具体字段**,从下面这些文件进:
 
@@ -73,10 +73,10 @@
 
 本仓目前覆盖 4 个互相独立的主题,每个主题都配套一份主题读本。具体最新状态以 [`Wiki/Overview.md`](Wiki/Overview.md) 为准。
 
-1. **知识库方法论（meta / bootstrap）** — 本仓自身的方法论基础，源自 Karpathy 的 LLM Wiki idea file。📖 [方法论读本](Readers/Methodology/Llm-wiki-方法论-读本.md)。
-2. **Niagara 源码学习（UE 4.26）** — 面向 C++ 零基础学员的 Niagara 插件 11 阶段(Phase 0-10)学习路径,~90 个运行时文件 + 11 份主题读本。**Phase 0-10 ✅ 全部完成 🎉**,并已通过 Phase 5-10 分组 targeted lint 质量基线确认。📖 推荐入口:[Phase 0 心智模型读本](Readers/Niagara/Phase0-心智模型-读本.md) / [学习路径总图](Wiki/Syntheses/Niagara/Niagara-learning-path.md)。
-3. **AI 美术生成管线（LoRA / ComfyUI）** — 游戏美术从 MidJourney 迁移到自训 LoRA + ComfyUI 的落地方案。📖 [LoRA 深度指南读本](Readers/AIArt/Lora-深度指南-读本.md)。
-4. **AI 应用生态（2026-04 新增）** — Prompt → Context → Harness 三段论为主线的 AI 应用扫盲,面向美术 / 策划 / 管理者等非开发角色。📖 [AI 应用生态读本](Readers/AIApps/AI-primer-v2-读本.md)。
+1. **知识库方法论（meta / bootstrap）** — 本仓自身的方法论基础，源自 Karpathy 的 LLM Wiki idea file。📖 [方法论读本](Readers/Methodology/从 Memex 到 LLM Wiki.md)。
+2. **Niagara 源码学习（UE 4.26）** — 面向 C++ 零基础学员的 Niagara 插件 11 阶段(Phase 0-10)学习路径,~90 个运行时文件 + 11 份主题读本。**Phase 0-10 ✅ 全部完成 🎉**,并已通过 Phase 5-10 分组 targeted lint 质量基线确认。📖 推荐入口:[Phase 0 心智模型读本](Readers/Niagara/Phase 0 - 上阵前的四层脑内地图.md) / [学习路径总图](Wiki/Syntheses/Niagara/Niagara-learning-path.md)。
+3. **AI 美术生成管线（LoRA / ComfyUI）** — 游戏美术从 MidJourney 迁移到自训 LoRA + ComfyUI 的落地方案。📖 [LoRA 深度指南读本](Readers/AIArt/LoRA 深度指南.md)。
+4. **AI 应用生态（2026-04 新增）** — Prompt → Context → Harness 三段论为主线的 AI 应用扫盲,面向美术 / 策划 / 管理者等非开发角色。📖 [AI 应用生态读本](Readers/AIApps/AI 应用生态全景 2026.md)。
 
 ---
 
@@ -109,7 +109,7 @@
 
 推荐阅读顺序:
 
-1. 📖 [`Readers/Methodology/Llm-wiki-方法论-读本.md`](Readers/Methodology/Llm-wiki-方法论-读本.md)——**一次读完即完整掌握**本仓方法论的前因后果(Memex → RAG → LLM Wiki 演进脉络 + 本仓库的具体化实现),推荐作为第一个入口
+1. 📖 [`Readers/Methodology/从 Memex 到 LLM Wiki.md`](Readers/Methodology/从 Memex 到 LLM Wiki.md)——**一次读完即完整掌握**本仓方法论的前因后果(Memex → RAG → LLM Wiki 演进脉络 + 本仓库的具体化实现),推荐作为第一个入口
 2. [`CLAUDE.md`](CLAUDE.md)——读本落地为可执行规则的 schema(维护者视角)
 3. [`Wiki/Concepts/Methodology/Llm-wiki-方法论.md`](Wiki/Concepts/Methodology/Llm-wiki-方法论.md)——方法论的一页原子总结(适合快速回查)
 4. Karpathy 的原文(本仓 `Raw/Notes/Karpathy Wiki 方法论.md`)或社交媒体原始帖子——一手资料

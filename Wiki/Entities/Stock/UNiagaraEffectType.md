@@ -118,4 +118,4 @@ future:perf-based dynamic budget(TODO 注释)。
 ## 深入阅读
 
 - 源:[[Wiki/Sources/Stock/NiagaraEffectType]]
-- 读本:[[Readers/Niagara/Phase9-world-management-读本]]
+- 读本:[[Readers/Niagara/Phase 9 - Niagara 的世界管理与可扩展性]]

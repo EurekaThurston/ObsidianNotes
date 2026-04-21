@@ -20,7 +20,7 @@ sources: 9
 
 自举阶段的产出：基于 [[Raw/Notes/Karpathy Wiki 方法论]] 建的三层架构（Raw / Wiki / Schema）；详见 [[Wiki/Concepts/Methodology/Llm-wiki-方法论|LLM Wiki 方法论]]。
 
-📖 **主题读本（推荐初读）**：[[Readers/Methodology/Llm-wiki-方法论-读本]] — 把本仓库的起点、历史源流、RAG 对比、Karpathy 三里程碑、本仓库如何具体化编成一篇线性读物。
+📖 **主题读本（推荐初读）**：[[Readers/Methodology/从 Memex 到 LLM Wiki]] — 把本仓库的起点、历史源流、RAG 对比、Karpathy 三里程碑、本仓库如何具体化编成一篇线性读物。
 
 **核心主张**：持续整合 > 查询时检索。RAG 每次查询都在从零发现知识，LLM Wiki 则在 ingest 时就完成跨源整合、交叉引用、矛盾标注。
 
@@ -29,17 +29,17 @@ sources: 9
 面向 C++ 零基础、UE 源码零基础的学员，通过 AI 辅助学习 Niagara 插件 749 个文件中的运行时部分（约 286 个文件）。
 
 - 路线：[[Wiki/Syntheses/Niagara/Niagara-learning-path]] — 10 阶段路径
-- **Phase 0 ✅**：心智模型建立 —— 📖 **主题读本**：[[Readers/Niagara/Phase0-心智模型-读本]] / 原子概念页:[[Wiki/Concepts/UE4/UE4-uobject-系统]]、[[Wiki/Concepts/UE4/UE4-资产与实例]]、[[Wiki/Concepts/Niagara/Niagara-vs-cascade]]、[[Wiki/Concepts/Niagara/Niagara-cpu-vs-gpu模拟]]
-- **Phase 1 ✅**（2026-04-19）：Asset 层三件套 —— 📖 **主题读本**：[[Readers/Niagara/Phase1-asset-layer-读本]] / 原子页见 [[Wiki/Entities/Stock/UNiagaraSystem]]、[[Wiki/Entities/Stock/UNiagaraEmitter]]、[[Wiki/Entities/Stock/FNiagaraEmitterHandle]]、[[Wiki/Entities/Stock/UNiagaraScript]]、[[Wiki/Entities/Stock/UNiagaraScriptSourceBase]]
-- **Phase 2 ✅**（2026-04-20）:Component 层 —— 📖 **主题读本**:[[Readers/Niagara/Phase2-component-layer-读本]] / 原子页见 [[Wiki/Entities/Stock/UNiagaraComponent]]、[[Wiki/Entities/Stock/ANiagaraActor]]、[[Wiki/Entities/Stock/UNiagaraFunctionLibrary]]
-- **Phase 3 ✅**（2026-04-20）:运行时实例层(心脏)—— 📖 **主题读本**:[[Readers/Niagara/Phase3-runtime-instance-读本]] / 原子页见 [[Wiki/Entities/Stock/FNiagaraSystemInstance]]、[[Wiki/Entities/Stock/FNiagaraEmitterInstance]]、[[Wiki/Entities/Stock/FNiagaraSystemSimulation]]
-- **Phase 4 ✅**（2026-04-20）:数据模型(类型系统 + SoA + 参数存储)—— 📖 **主题读本**:[[Readers/Niagara/Phase4-data-model-读本]] / 原子页见 [[Wiki/Entities/Stock/FNiagaraTypeDefinition]]、[[Wiki/Entities/Stock/FNiagaraVariable]]、[[Wiki/Entities/Stock/FNiagaraTypeLayoutInfo]]、[[Wiki/Entities/Stock/FNiagaraConstants]]、[[Wiki/Entities/Stock/FNiagaraDataSet]]、[[Wiki/Entities/Stock/FNiagaraDataSetAccessor]]、[[Wiki/Entities/Stock/FNiagaraParameterStore]]
-- **Phase 5 ✅**（2026-04-20）:CPU 脚本执行(VM + ExecContext + Padding)—— 📖 **主题读本**:[[Readers/Niagara/Phase5-cpu-script-execution-读本]] / 原子页见 [[Wiki/Entities/Stock/UNiagaraDataInterfaceBase]]、[[Wiki/Entities/Stock/FNiagaraScriptExecutionContext]]、[[Wiki/Entities/Stock/FNiagaraComputeExecutionContext]]、[[Wiki/Entities/Stock/FNiagaraGPUSystemTick]]、[[Wiki/Entities/Stock/NiagaraEmitterInstanceBatcher]]
-- **Phase 6 ✅**（2026-04-20）:渲染系统(Sprite/Ribbon/Mesh/Light 5 对)—— 📖 **主题读本**:[[Readers/Niagara/Phase6-rendering-读本]] / 原子页见 [[Wiki/Entities/Stock/UNiagaraRendererProperties]]、[[Wiki/Entities/Stock/FNiagaraRenderer]]、[[Wiki/Entities/Stock/UNiagaraSpriteRendererProperties]]、[[Wiki/Entities/Stock/UNiagaraRibbonRendererProperties]]、[[Wiki/Entities/Stock/UNiagaraMeshRendererProperties]]、[[Wiki/Entities/Stock/UNiagaraLightRendererProperties]]
-- **Phase 7 ✅**（2026-04-20）:数据接口系统(DI 生态 + 7 种典型 DI)—— 📖 **主题读本**:[[Readers/Niagara/Phase7-data-interface-读本]] / 原子页见 [[Wiki/Entities/Stock/UNiagaraDataInterface]]、[[Wiki/Entities/Stock/UNiagaraDataInterfaceCurve]]、[[Wiki/Entities/Stock/UNiagaraDataInterfaceCamera]]、[[Wiki/Entities/Stock/UNiagaraDataInterfaceCollisionQuery]]、[[Wiki/Entities/Stock/UNiagaraDataInterfaceStaticMesh]]、[[Wiki/Entities/Stock/UNiagaraDataInterfaceSkeletalMesh]]、[[Wiki/Entities/Stock/UNiagaraDataInterfaceTexture]]、[[Wiki/Entities/Stock/UNiagaraDataInterfaceRenderTarget2D]]
-- **Phase 8 ✅**（2026-04-20）:GPU 模拟(Shader 编译 + Sort + Count + VF + DrawIndirect)—— 📖 **主题读本**:[[Readers/Niagara/Phase8-gpu-simulation-读本]] / 原子页见 [[Wiki/Entities/Stock/FNiagaraShader]]、[[Wiki/Entities/Stock/FNiagaraGPUInstanceCountManager]]、[[Wiki/Entities/Stock/FNiagaraGPUSort]]、[[Wiki/Entities/Stock/FNiagaraVertexFactory]]、[[Wiki/Entities/Stock/FNiagaraDrawIndirect]]
-- **Phase 9 ✅**（2026-04-20）:世界管理(WorldMgr + Scalability + Pool + Settings + EffectType + PlatformSet)—— 📖 **主题读本**:[[Readers/Niagara/Phase9-world-management-读本]] / 原子页见 [[Wiki/Entities/Stock/FNiagaraWorldManager]]、[[Wiki/Entities/Stock/FNiagaraScalabilityManager]]、[[Wiki/Entities/Stock/UNiagaraComponentPool]]、[[Wiki/Entities/Stock/UNiagaraSettings]]、[[Wiki/Entities/Stock/UNiagaraEffectType]]、[[Wiki/Entities/Stock/FNiagaraPlatformSet]]
-- **Phase 10 ✅**（2026-04-20）:**高级特性**(SimStages + Grid 2D/3D + NeighborGrid)—— 📖 **主题读本**:[[Readers/Niagara/Phase10-advanced-features-读本]] / 原子页见 [[Wiki/Entities/Stock/UNiagaraSimulationStage]]、[[Wiki/Entities/Stock/UNiagaraDataInterfaceRWBase]]、[[Wiki/Entities/Stock/UNiagaraDataInterfaceGrid2DCollection]]、[[Wiki/Entities/Stock/UNiagaraDataInterfaceGrid3DCollection]]、[[Wiki/Entities/Stock/UNiagaraDataInterfaceNeighborGrid3D]]
+- **Phase 0 ✅**：心智模型建立 —— 📖 **主题读本**：[[Readers/Niagara/Phase 0 - 上阵前的四层脑内地图]] / 原子概念页:[[Wiki/Concepts/UE4/UE4-uobject-系统]]、[[Wiki/Concepts/UE4/UE4-资产与实例]]、[[Wiki/Concepts/Niagara/Niagara-vs-cascade]]、[[Wiki/Concepts/Niagara/Niagara-cpu-vs-gpu模拟]]
+- **Phase 1 ✅**（2026-04-19）：Asset 层三件套 —— 📖 **主题读本**：[[Readers/Niagara/Phase 1 - 从 System 到图源抽象基类]] / 原子页见 [[Wiki/Entities/Stock/UNiagaraSystem]]、[[Wiki/Entities/Stock/UNiagaraEmitter]]、[[Wiki/Entities/Stock/FNiagaraEmitterHandle]]、[[Wiki/Entities/Stock/UNiagaraScript]]、[[Wiki/Entities/Stock/UNiagaraScriptSourceBase]]
+- **Phase 2 ✅**（2026-04-20）:Component 层 —— 📖 **主题读本**:[[Readers/Niagara/Phase 2 - Component 层的五职责]] / 原子页见 [[Wiki/Entities/Stock/UNiagaraComponent]]、[[Wiki/Entities/Stock/ANiagaraActor]]、[[Wiki/Entities/Stock/UNiagaraFunctionLibrary]]
+- **Phase 3 ✅**（2026-04-20）:运行时实例层(心脏)—— 📖 **主题读本**:[[Readers/Niagara/Phase 3 - Niagara 的心脏]] / 原子页见 [[Wiki/Entities/Stock/FNiagaraSystemInstance]]、[[Wiki/Entities/Stock/FNiagaraEmitterInstance]]、[[Wiki/Entities/Stock/FNiagaraSystemSimulation]]
+- **Phase 4 ✅**（2026-04-20）:数据模型(类型系统 + SoA + 参数存储)—— 📖 **主题读本**:[[Readers/Niagara/Phase 4 - Niagara 的数据语言]] / 原子页见 [[Wiki/Entities/Stock/FNiagaraTypeDefinition]]、[[Wiki/Entities/Stock/FNiagaraVariable]]、[[Wiki/Entities/Stock/FNiagaraTypeLayoutInfo]]、[[Wiki/Entities/Stock/FNiagaraConstants]]、[[Wiki/Entities/Stock/FNiagaraDataSet]]、[[Wiki/Entities/Stock/FNiagaraDataSetAccessor]]、[[Wiki/Entities/Stock/FNiagaraParameterStore]]
+- **Phase 5 ✅**（2026-04-20）:CPU 脚本执行(VM + ExecContext + Padding)—— 📖 **主题读本**:[[Readers/Niagara/Phase 5 - Niagara 脚本如何跑起来]] / 原子页见 [[Wiki/Entities/Stock/UNiagaraDataInterfaceBase]]、[[Wiki/Entities/Stock/FNiagaraScriptExecutionContext]]、[[Wiki/Entities/Stock/FNiagaraComputeExecutionContext]]、[[Wiki/Entities/Stock/FNiagaraGPUSystemTick]]、[[Wiki/Entities/Stock/NiagaraEmitterInstanceBatcher]]
+- **Phase 6 ✅**（2026-04-20）:渲染系统(Sprite/Ribbon/Mesh/Light 5 对)—— 📖 **主题读本**:[[Readers/Niagara/Phase 6 - Niagara 粒子如何变成屏幕像素]] / 原子页见 [[Wiki/Entities/Stock/UNiagaraRendererProperties]]、[[Wiki/Entities/Stock/FNiagaraRenderer]]、[[Wiki/Entities/Stock/UNiagaraSpriteRendererProperties]]、[[Wiki/Entities/Stock/UNiagaraRibbonRendererProperties]]、[[Wiki/Entities/Stock/UNiagaraMeshRendererProperties]]、[[Wiki/Entities/Stock/UNiagaraLightRendererProperties]]
+- **Phase 7 ✅**（2026-04-20）:数据接口系统(DI 生态 + 7 种典型 DI)—— 📖 **主题读本**:[[Readers/Niagara/Phase 7 - 最强扩展点 Data Interface]] / 原子页见 [[Wiki/Entities/Stock/UNiagaraDataInterface]]、[[Wiki/Entities/Stock/UNiagaraDataInterfaceCurve]]、[[Wiki/Entities/Stock/UNiagaraDataInterfaceCamera]]、[[Wiki/Entities/Stock/UNiagaraDataInterfaceCollisionQuery]]、[[Wiki/Entities/Stock/UNiagaraDataInterfaceStaticMesh]]、[[Wiki/Entities/Stock/UNiagaraDataInterfaceSkeletalMesh]]、[[Wiki/Entities/Stock/UNiagaraDataInterfaceTexture]]、[[Wiki/Entities/Stock/UNiagaraDataInterfaceRenderTarget2D]]
+- **Phase 8 ✅**（2026-04-20）:GPU 模拟(Shader 编译 + Sort + Count + VF + DrawIndirect)—— 📖 **主题读本**:[[Readers/Niagara/Phase 8 - Niagara 的 GPU 模拟管线]] / 原子页见 [[Wiki/Entities/Stock/FNiagaraShader]]、[[Wiki/Entities/Stock/FNiagaraGPUInstanceCountManager]]、[[Wiki/Entities/Stock/FNiagaraGPUSort]]、[[Wiki/Entities/Stock/FNiagaraVertexFactory]]、[[Wiki/Entities/Stock/FNiagaraDrawIndirect]]
+- **Phase 9 ✅**（2026-04-20）:世界管理(WorldMgr + Scalability + Pool + Settings + EffectType + PlatformSet)—— 📖 **主题读本**:[[Readers/Niagara/Phase 9 - Niagara 的世界管理与可扩展性]] / 原子页见 [[Wiki/Entities/Stock/FNiagaraWorldManager]]、[[Wiki/Entities/Stock/FNiagaraScalabilityManager]]、[[Wiki/Entities/Stock/UNiagaraComponentPool]]、[[Wiki/Entities/Stock/UNiagaraSettings]]、[[Wiki/Entities/Stock/UNiagaraEffectType]]、[[Wiki/Entities/Stock/FNiagaraPlatformSet]]
+- **Phase 10 ✅**（2026-04-20）:**高级特性**(SimStages + Grid 2D/3D + NeighborGrid)—— 📖 **主题读本**:[[Readers/Niagara/Phase 10 - Niagara 的高级特性]] / 原子页见 [[Wiki/Entities/Stock/UNiagaraSimulationStage]]、[[Wiki/Entities/Stock/UNiagaraDataInterfaceRWBase]]、[[Wiki/Entities/Stock/UNiagaraDataInterfaceGrid2DCollection]]、[[Wiki/Entities/Stock/UNiagaraDataInterfaceGrid3DCollection]]、[[Wiki/Entities/Stock/UNiagaraDataInterfaceNeighborGrid3D]]
 - 🎉 **Niagara 学习路径 10 Phases 全部完成!**(2026-04-20 一日内从 Phase 3 推到 Phase 10)
 
 **Phase 1 的关键收获**（从 5 个 header 里提炼）：
@@ -60,7 +60,7 @@ sources: 9
 
 面向鸣潮美术向 TA 的落地方案，从 MidJourney + tag 库逐步迁移到 ComfyUI + 自训 LoRA。
 
-📖 **主题读本（推荐初读）**：[[Readers/AIArt/Lora-深度指南-读本]] — 从战略（离开 MJ 的三个结构性动因）到技术（LoRA 原理 + 基座选型 + caption 反常识 + 多 LoRA 组合）到工具（kohya_ss + ComfyUI）到工程落地（6 个月路线图 + 合规），一次读完掌握全链路。
+📖 **主题读本（推荐初读）**：[[Readers/AIArt/LoRA 深度指南]] — 从战略（离开 MJ 的三个结构性动因）到技术（LoRA 原理 + 基座选型 + caption 反常识 + 多 LoRA 组合）到工具（kohya_ss + ComfyUI）到工程落地（6 个月路线图 + 合规），一次读完掌握全链路。
 
 - 核心源：[[Wiki/Sources/AIArt/Lora-deep-dive]]（2026-04，Eureka × Claude 撰写）
 - 技术路径：[[Wiki/Concepts/AIArt/Lora|LoRA]] + [[Wiki/Entities/AIArt/Illustrious-XL|Illustrious/NoobAI]] 基座 + [[Wiki/Entities/AIArt/Kohya-ss|kohya_ss]] 训练 + [[Wiki/Entities/AIArt/ComfyUI|ComfyUI]] 部署
@@ -71,7 +71,7 @@ sources: 9
 
 **面向**：对 AI 完全没概念的非开发角色（美术、设计、策划、管理者）+ 开发者的主线脉络梳理。
 
-📖 **主题读本（推荐初读）**：[[Readers/AIApps/AI-primer-v2-读本]] — 从 LLM 本质到 2026 技术栈三层全景的完整读物,覆盖三个怪癖/推理模型/Agent/MCP/RAG/三段论/Harness 四柱/Skills/OpenClaw/Vibe-Spec-Harness Coding,一次读完。
+📖 **主题读本（推荐初读）**：[[Readers/AIApps/AI 应用生态全景 2026]] — 从 LLM 本质到 2026 技术栈三层全景的完整读物,覆盖三个怪癖/推理模型/Agent/MCP/RAG/三段论/Harness 四柱/Skills/OpenClaw/Vibe-Spec-Harness Coding,一次读完。
 
 - 核心源：[[Wiki/Sources/AIApps/AI-primer-v2]]（2026-04-19，Eureka × Claude 撰写，v2）
 - 专题综合：[[Wiki/Syntheses/AIApps/Prompt-context-harness-evolution|Prompt → Context → Harness 三段论]](方法论演进专题)

@@ -71,4 +71,4 @@ FNiagaraMeshVertexFactory: NIAGARA_MESH_FACTORY=1 + NIAGARA_MESH_INSTANCED=1
 ## 深入阅读
 
 - 源 × 4:[[Wiki/Sources/Stock/NiagaraVertexFactory]] / [[Wiki/Sources/Stock/NiagaraSpriteVertexFactory]] / [[Wiki/Sources/Stock/NiagaraRibbonVertexFactory]] / [[Wiki/Sources/Stock/NiagaraMeshVertexFactory]]
-- 读本:[[Readers/Niagara/Phase8-gpu-simulation-读本]] § 6
+- 读本:[[Readers/Niagara/Phase 8 - Niagara 的 GPU 模拟管线]] § 6

@@ -49,4 +49,4 @@ static const TArray<FNiagaraVariable>& GetStaticSwitchConstants();  // Static sw
 ## 深入阅读
 
 - 源摘要:[[Wiki/Sources/Stock/NiagaraConstants]]
-- 主题读本:[[Readers/Niagara/Phase4-data-model-读本]] § 5
+- 主题读本:[[Readers/Niagara/Phase 4 - Niagara 的数据语言]] § 5

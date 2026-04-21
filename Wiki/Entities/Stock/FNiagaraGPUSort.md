@@ -78,4 +78,4 @@ PreRender 阶段:
 ## 深入阅读
 
 - 源 × 2:[[Wiki/Sources/Stock/NiagaraGPUSortInfo]] / [[Wiki/Sources/Stock/NiagaraSortingGPU]]
-- 读本:[[Readers/Niagara/Phase8-gpu-simulation-读本]] § 5
+- 读本:[[Readers/Niagara/Phase 8 - Niagara 的 GPU 模拟管线]] § 5

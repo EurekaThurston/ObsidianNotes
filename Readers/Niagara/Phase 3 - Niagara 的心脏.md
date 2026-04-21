@@ -11,7 +11,7 @@ source_ref: "4.26"
 source_commit: b6ab0dee9
 ---
 
-# Phase 3 读本 — Niagara 的心脏
+# Phase 3 - Niagara 的心脏
 
 > 本页是 Niagara 学习路径 [[Wiki/Syntheses/Niagara/Niagara-learning-path]] Phase 3 的**主题读本**——详细、精确、满满当当,一次读完即完整掌握 Niagara 的运行时实例层(状态机 + 三阶段 Tick + 批量调度),不需要跳转。
 >
@@ -941,9 +941,9 @@ GT 某个时刻调 FinalizeTick_GameThread
 
 ### 前置议题
 
-- Phase 2 Component 层:[[Readers/Niagara/Phase2-component-layer-读本]] — `UNiagaraComponent::SystemInstance` 的兑付
-- Phase 1 Asset 层:[[Readers/Niagara/Phase1-asset-layer-读本]] — `FNiagaraSystemCompiledData` 的绑定在 §5.4 被消费
-- Phase 0 心智模型:[[Readers/Niagara/Phase0-心智模型-读本]] — CPU/GPU 分叉、Asset/Instance 二元
+- Phase 2 Component 层:[[Readers/Niagara/Phase 2 - Component 层的五职责]] — `UNiagaraComponent::SystemInstance` 的兑付
+- Phase 1 Asset 层:[[Readers/Niagara/Phase 1 - 从 System 到图源抽象基类]] — `FNiagaraSystemCompiledData` 的绑定在 §5.4 被消费
+- Phase 0 心智模型:[[Readers/Niagara/Phase 0 - 上阵前的四层脑内地图]] — CPU/GPU 分叉、Asset/Instance 二元
 
 ### 导航 / 总图
 

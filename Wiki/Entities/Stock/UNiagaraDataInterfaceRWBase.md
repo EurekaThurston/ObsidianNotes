@@ -83,4 +83,4 @@ ExecutionIndexToGridIndex / ExecutionIndexToUnit
 ## 深入阅读
 
 - 源:[[Wiki/Sources/Stock/NiagaraDataInterfaceRW]]
-- 读本:[[Readers/Niagara/Phase10-advanced-features-读本]]
+- 读本:[[Readers/Niagara/Phase 10 - Niagara 的高级特性]]

@@ -11,7 +11,7 @@ source_ref: "4.26"
 source_commit: b6ab0dee9
 ---
 
-# Phase 9 读本 — Niagara 的世界管理与可扩展性
+# Phase 9 - Niagara 的世界管理与可扩展性
 
 > 本页是 Niagara 学习路径 [[Wiki/Syntheses/Niagara/Niagara-learning-path]] Phase 9 的**主题读本**。一次读完掌握 Niagara 的 world 级架构 + scalability 决策 + pool + platform 分支。
 >
@@ -352,9 +352,9 @@ FNiagaraPlatformSetCVarCondition {
 
 ### 前置议题
 
-- [[Readers/Niagara/Phase2-component-layer-读本]] — Component 的 `PoolingMethod` + Scalability 接线 + AutoDestroy 三方决策
-- [[Readers/Niagara/Phase3-runtime-instance-读本]] — `FNiagaraSystemSimulation` 的 (Asset × World × TickGroup) 身份由 WorldManager 作 key
-- [[Readers/Niagara/Phase7-data-interface-读本]] — SkeletalMesh DI 共享数据由 WorldManager 持有
+- [[Readers/Niagara/Phase 2 - Component 层的五职责]] — Component 的 `PoolingMethod` + Scalability 接线 + AutoDestroy 三方决策
+- [[Readers/Niagara/Phase 3 - Niagara 的心脏]] — `FNiagaraSystemSimulation` 的 (Asset × World × TickGroup) 身份由 WorldManager 作 key
+- [[Readers/Niagara/Phase 7 - 最强扩展点 Data Interface]] — SkeletalMesh DI 共享数据由 WorldManager 持有
 
 ### 相关概念
 
@@ -362,7 +362,7 @@ FNiagaraPlatformSetCVarCondition {
 
 ### 下一步 / 导航
 
-- 选修终点:[[Readers/Niagara/Phase10-advanced-features-读本]] — SimStages + Grid 流体模拟
+- 选修终点:[[Readers/Niagara/Phase 10 - Niagara 的高级特性]] — SimStages + Grid 流体模拟
 - 学习路径总图:[[Wiki/Syntheses/Niagara/Niagara-learning-path]]
 - 仓综合视图:[[Wiki/Overview]]
 

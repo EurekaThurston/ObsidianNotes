@@ -66,4 +66,4 @@ struct FNiagaraMeshMaterialOverride {
 ## 深入阅读
 
 - 源:[[Wiki/Sources/Stock/NiagaraMeshRendererProperties]] / [[Wiki/Sources/Stock/NiagaraRendererMeshes]]
-- 读本:[[Readers/Niagara/Phase6-rendering-读本]] § 6
+- 读本:[[Readers/Niagara/Phase 6 - Niagara 粒子如何变成屏幕像素]] § 6

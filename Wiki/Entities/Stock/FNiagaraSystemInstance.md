@@ -65,7 +65,7 @@ enum class EResetMode { ResetAll, ResetSystem, ReInit, None };
 ## 深入阅读
 
 - 全字段清单 + 代码片段:[[Wiki/Sources/Stock/NiagaraSystemInstance]]
-- 主题读本:[[Readers/Niagara/Phase3-runtime-instance-读本]] § 2-3
+- 主题读本:[[Readers/Niagara/Phase 3 - Niagara 的心脏]] § 2-3
 
 ## 开放问题
 

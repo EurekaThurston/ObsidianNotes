@@ -60,4 +60,4 @@ PS4 用 64(wave size),其他用 32(典型 NV/AMD)。
 ## 深入阅读
 
 - 源 × 4:[[Wiki/Sources/Stock/NiagaraShared]] / [[Wiki/Sources/Stock/NiagaraShader]] / [[Wiki/Sources/Stock/NiagaraShaderType]] / [[Wiki/Sources/Stock/NiagaraShaderMap]]
-- 读本:[[Readers/Niagara/Phase8-gpu-simulation-读本]] § 2-3
+- 读本:[[Readers/Niagara/Phase 8 - Niagara 的 GPU 模拟管线]] § 2-3

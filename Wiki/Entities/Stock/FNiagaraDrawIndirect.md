@@ -87,4 +87,4 @@ Renderer GetDynamicMeshElements:
 ## 深入阅读
 
 - 源:[[Wiki/Sources/Stock/NiagaraDrawIndirect]]
-- 读本:[[Readers/Niagara/Phase8-gpu-simulation-读本]] § 7
+- 读本:[[Readers/Niagara/Phase 8 - Niagara 的 GPU 模拟管线]] § 7

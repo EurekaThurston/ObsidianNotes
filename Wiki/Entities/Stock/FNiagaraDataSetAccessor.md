@@ -53,4 +53,4 @@ Float 家族内:`float / Vec2 / Vec3 / Vec4` 支持 half(自动 `LoadHalf` 转 f
 ## 深入阅读
 
 - 源摘要:[[Wiki/Sources/Stock/NiagaraDataSetAccessor]]
-- 主题读本:[[Readers/Niagara/Phase4-data-model-读本]] § 6
+- 主题读本:[[Readers/Niagara/Phase 4 - Niagara 的数据语言]] § 6

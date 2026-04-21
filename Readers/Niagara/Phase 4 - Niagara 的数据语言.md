@@ -11,7 +11,7 @@ source_ref: "4.26"
 source_commit: b6ab0dee9
 ---
 
-# Phase 4 读本 — Niagara 的数据语言
+# Phase 4 - Niagara 的数据语言
 
 > 本页是 Niagara 学习路径 [[Wiki/Syntheses/Niagara/Niagara-learning-path]] Phase 4 的**主题读本**——详细、精确、一次读完即完整掌握 Niagara 如何表示"数据"(类型 → 变量 → 布局 → 数据集 → 参数存储),不需要跳转。
 >
@@ -546,15 +546,15 @@ uint32 bUObjectsDirty : 1;      // UObject 换了
 
 ### 前置议题
 
-- [[Readers/Niagara/Phase0-心智模型-读本]] — Asset/Instance、UObject 前缀
-- [[Readers/Niagara/Phase1-asset-layer-读本]] — `FNiagaraVariable` 在资产里的存储
-- [[Readers/Niagara/Phase2-component-layer-读本]] — `FNiagaraUserRedirectionParameterStore` 在 Component 里的暴露
-- [[Readers/Niagara/Phase3-runtime-instance-读本]] — ParameterStore/DataSet 反复出现的消费者
+- [[Readers/Niagara/Phase 0 - 上阵前的四层脑内地图]] — Asset/Instance、UObject 前缀
+- [[Readers/Niagara/Phase 1 - 从 System 到图源抽象基类]] — `FNiagaraVariable` 在资产里的存储
+- [[Readers/Niagara/Phase 2 - Component 层的五职责]] — `FNiagaraUserRedirectionParameterStore` 在 Component 里的暴露
+- [[Readers/Niagara/Phase 3 - Niagara 的心脏]] — ParameterStore/DataSet 反复出现的消费者
 - [[Wiki/Concepts/Niagara/Niagara-cpu-vs-gpu模拟]] — Half 类型降级的动机
 
 ### 下一步 / 导航
 
-- 下一阶段:[[Readers/Niagara/Phase5-cpu-script-execution-读本]] — CPU 脚本如何消费本 Phase 的数据结构
+- 下一阶段:[[Readers/Niagara/Phase 5 - Niagara 脚本如何跑起来]] — CPU 脚本如何消费本 Phase 的数据结构
 - 学习路径总图:[[Wiki/Syntheses/Niagara/Niagara-learning-path]]
 - 仓综合视图:[[Wiki/Overview]]
 

@@ -11,7 +11,7 @@ source_ref: "4.26"
 source_commit: b6ab0dee9
 ---
 
-# Phase 8 读本 — Niagara 的 GPU 模拟管线
+# Phase 8 - Niagara 的 GPU 模拟管线
 
 > 本页是 Niagara 学习路径 [[Wiki/Syntheses/Niagara/Niagara-learning-path]] Phase 8 的**主题读本**。一次读完掌握 Niagara GPU 流水线:脚本 → compute shader → instance count → sort → draw indirect 的完整链路。本 Phase 是 [[Wiki/Concepts/Niagara/Niagara-cpu-vs-gpu模拟|CPU/GPU 双路径]] 里 GPU 侧的全貌。
 >
@@ -444,10 +444,10 @@ Fallback 路径,不支持 RW texture buffer 的平台(`FSupportsTextureRW permut
 
 ### 前置议题
 
-- [[Readers/Niagara/Phase4-data-model-读本]] — `FNiagaraDataBuffer` 的 `GPUBufferFloat/Int/Half`、ParameterStore padding 映射
-- [[Readers/Niagara/Phase5-cpu-script-execution-读本]] — CPU 脚本执行、GPU Tick 打包、Batcher 主循环
-- [[Readers/Niagara/Phase6-rendering-读本]] — Renderer 如何持 VertexFactory、Dummy SRV、GPU DynamicData
-- [[Readers/Niagara/Phase7-data-interface-读本]] — DI 的 GPU shader 参数生成(`FNiagaraDataInterfaceParametersCS`)
+- [[Readers/Niagara/Phase 4 - Niagara 的数据语言]] — `FNiagaraDataBuffer` 的 `GPUBufferFloat/Int/Half`、ParameterStore padding 映射
+- [[Readers/Niagara/Phase 5 - Niagara 脚本如何跑起来]] — CPU 脚本执行、GPU Tick 打包、Batcher 主循环
+- [[Readers/Niagara/Phase 6 - Niagara 粒子如何变成屏幕像素]] — Renderer 如何持 VertexFactory、Dummy SRV、GPU DynamicData
+- [[Readers/Niagara/Phase 7 - 最强扩展点 Data Interface]] — DI 的 GPU shader 参数生成(`FNiagaraDataInterfaceParametersCS`)
 
 ### 相关概念
 
@@ -455,8 +455,8 @@ Fallback 路径,不支持 RW texture buffer 的平台(`FSupportsTextureRW permut
 
 ### 下一步 / 导航
 
-- 下一阶段:[[Readers/Niagara/Phase9-world-management-读本]] — World 级全局调度、Scalability、Pool
-- 选修进阶:[[Readers/Niagara/Phase10-advanced-features-读本]] — SimStages 多 pass 和 Grid DI
+- 下一阶段:[[Readers/Niagara/Phase 9 - Niagara 的世界管理与可扩展性]] — World 级全局调度、Scalability、Pool
+- 选修进阶:[[Readers/Niagara/Phase 10 - Niagara 的高级特性]] — SimStages 多 pass 和 Grid DI
 - 学习路径总图:[[Wiki/Syntheses/Niagara/Niagara-learning-path]]
 - 仓综合视图:[[Wiki/Overview]]
 

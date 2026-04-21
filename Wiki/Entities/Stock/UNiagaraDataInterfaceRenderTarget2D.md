@@ -83,4 +83,4 @@ struct FNiagaraDataInterfaceProxyRenderTarget2DProxy : FNiagaraDataInterfaceProx
 ## 深入阅读
 
 - 源:[[Wiki/Sources/Stock/NiagaraDataInterfaceRenderTarget2D]]
-- 读本:[[Readers/Niagara/Phase7-data-interface-读本]] § 9
+- 读本:[[Readers/Niagara/Phase 7 - 最强扩展点 Data Interface]] § 9

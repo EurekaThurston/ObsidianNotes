@@ -62,7 +62,7 @@ source_commit: b6ab0dee9
 ## 深入阅读
 
 - 全字段清单 + 代码片段:[[Wiki/Sources/Stock/NiagaraComponent]]
-- 主题读本(推荐初读):[[Readers/Niagara/Phase2-component-layer-读本]] § 3
+- 主题读本(推荐初读):[[Readers/Niagara/Phase 2 - Component 层的五职责]] § 3
 
 ## 开放问题
 

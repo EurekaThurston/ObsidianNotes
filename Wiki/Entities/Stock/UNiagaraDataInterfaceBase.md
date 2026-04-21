@@ -52,7 +52,7 @@ virtual bool HasInternalAttributeReads(const UNiagaraEmitter* OwnerEmitter, cons
 ## 深入阅读
 
 - 源摘要:[[Wiki/Sources/Stock/NiagaraDataInterfaceBase]]
-- 主题读本:[[Readers/Niagara/Phase5-cpu-script-execution-读本]] § 1(Phase 7 完整展开)
+- 主题读本:[[Readers/Niagara/Phase 5 - Niagara 脚本如何跑起来]] § 1(Phase 7 完整展开)
 
 ## 开放问题(Phase 7)
 

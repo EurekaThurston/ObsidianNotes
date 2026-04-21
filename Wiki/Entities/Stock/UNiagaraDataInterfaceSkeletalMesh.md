@@ -94,4 +94,4 @@ struct FSkeletalMeshSkinningDataUsage {
 ## 深入阅读
 
 - 源:[[Wiki/Sources/Stock/NiagaraDataInterfaceSkeletalMesh]](976 行,前 300 扒)
-- 读本:[[Readers/Niagara/Phase7-data-interface-读本]] § 7
+- 读本:[[Readers/Niagara/Phase 7 - 最强扩展点 Data Interface]] § 7

@@ -55,7 +55,7 @@ aliases: [幻觉, Hallucination, AI 胡说]
 
 ## 引用来源
 
-- 主题读本(推荐通读):[[Readers/AIApps/AI-primer-v2-读本]]
+- 主题读本(推荐通读):[[Readers/AIApps/AI 应用生态全景 2026]]
 - 原子 source:[[Wiki/Sources/AIApps/AI-primer-v2]] (raw: [[Raw/Articles/AI 应用技术发展脉络与核心概念扫盲手册 v2]])
 
 ## 开放问题

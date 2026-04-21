@@ -50,4 +50,4 @@ static const FString TextureName, SamplerName, DimensionsBaseName;
 ## 深入阅读
 
 - 源:[[Wiki/Sources/Stock/NiagaraDataInterfaceTexture]]
-- 读本:[[Readers/Niagara/Phase7-data-interface-读本]] § 8
+- 读本:[[Readers/Niagara/Phase 7 - 最强扩展点 Data Interface]] § 8

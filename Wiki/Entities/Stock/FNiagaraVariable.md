@@ -55,4 +55,4 @@ Name 通常带命名空间前缀:
 ## 深入阅读
 
 - 源摘要:[[Wiki/Sources/Stock/NiagaraTypes]]
-- 主题读本:[[Readers/Niagara/Phase4-data-model-读本]] § 2-3
+- 主题读本:[[Readers/Niagara/Phase 4 - Niagara 的数据语言]] § 2-3

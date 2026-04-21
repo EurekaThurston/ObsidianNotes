@@ -82,7 +82,7 @@ aliases: [Multi-LoRA, 多 LoRA 组合, LoRA 叠加]
 
 ## 引用来源
 
-- 主题读本(推荐通读):[[Readers/AIArt/Lora-深度指南-读本]]
+- 主题读本(推荐通读):[[Readers/AIArt/LoRA 深度指南]]
 - 原子 source:[[Wiki/Sources/AIArt/Lora-deep-dive]]（raw: [[Raw/Notes/Lora_Deep_Dive]]）
 
 ## 开放问题 / 待深入

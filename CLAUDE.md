@@ -1,7 +1,7 @@
 # CLAUDE.md — Wiki Schema & Operating Instructions
 
 > 本文档是 LLM(Claude/Claudian)维护本仓库的"作业规程"。
-> 灵感来自 Karpathy 的 LLM Wiki 方法论(源见 [[Raw/Notes/Karpathy Wiki 方法论]]、概念见 [[Wiki/Concepts/Methodology/Llm-wiki-方法论]]、完整演进脉络见 [[Readers/Methodology/Llm-wiki-方法论-读本]])。
+> 灵感来自 Karpathy 的 LLM Wiki 方法论(源见 [[Raw/Notes/Karpathy Wiki 方法论]]、概念见 [[Wiki/Concepts/Methodology/Llm-wiki-方法论]]、完整演进脉络见 [[Readers/Methodology/从 Memex 到 LLM Wiki]])。
 > 人类负责:提供原始资料、提问、指方向。LLM 负责:读、写、归档、交叉引用、维护。
 >
 > **本文件只含每轮对话都要遵守的核心规则。大块页面模板另存于 `Wiki/_templates/`,仅在真的要创建对应页面时 Read(降低每轮上下文噪声,防 context rot)。**
@@ -201,7 +201,9 @@ op 取值:`ingest / query / lint / synthesis / refactor / bootstrap`。
 ## 6. 链接 & 命名
 
 - **内部链接**用 wikilink:`[[Wiki/Concepts/Topic/abc]]` 或 `[[abc]]`(无歧义时)
-- **文件名**小写+连字符:`rag-vs-wiki.md`,避免空格(必要除外)。中文名可,但尽量配英文 alias
+- **文件名**:
+  - **Wiki 原子页**(Concepts/Entities/Sources):小写+连字符,如 `rag-vs-wiki.md`。中文名可,但尽量配英文 alias
+  - **Readers 主题读本**:**文章标题式,带空格,不加 `读本` 后缀**。如 `Phase 7 - 最强扩展点 Data Interface.md` / `从 Memex 到 LLM Wiki.md`。Niagara 学习路径这类序列前缀保留(`Phase N - 标题`),H1 与文件名(去 `.md`)完全一致
 - **指回原始资料**必须标注 `[[Raw/Articles/xxx]]`,让人类一键跳源
 - **图片**用 `![[xxx.png]]`,文件放 `Raw/Assets/`
 

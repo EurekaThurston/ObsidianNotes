@@ -1,4 +1,4 @@
-﻿---
+---
 type: synthesis
 created: 2026-04-18
 updated: 2026-04-20
@@ -69,7 +69,7 @@ Niagara 插件位于 `Engine/Plugins/FX/Niagara/`，共 7 个模块：
 ### Phase 0 — 上阵前：基础心智模型 ✅
 > **无需读代码。** 这一阶段通过概念建立正确的"脑内地图"，避免后面读代码时迷失。
 >
-> 📖 **主题读本(推荐初读)**：[[Readers/Niagara/Phase0-心智模型-读本]] — 把四个概念自下而上(UObject → Asset/Instance → Niagara vs Cascade → CPU/GPU)编成一条叙事链,一次读完掌握 Phase 1+ 所需全部前置。
+> 📖 **主题读本(推荐初读)**：[[Readers/Niagara/Phase 0 - 上阵前的四层脑内地图]] — 把四个概念自下而上(UObject → Asset/Instance → Niagara vs Cascade → CPU/GPU)编成一条叙事链,一次读完掌握 Phase 1+ 所需全部前置。
 
 - [[Wiki/Concepts/UE4/UE4-uobject-系统]] *(已完成)* — UCLASS / USTRUCT / UPROPERTY 宏是什么，UObject 为什么重要
 - [[Wiki/Concepts/UE4/UE4-资产与实例]] *(已完成)* — Asset（Content Browser 里的文件）vs Instance（运行时对象）的本质区别
@@ -83,7 +83,7 @@ Niagara 插件位于 `Engine/Plugins/FX/Niagara/`，共 7 个模块：
 ### Phase 1 — 资产层：三件套 Asset ✅
 > **目标**：理解 Niagara 特效的"静态定义"——存在磁盘上的数据结构长什么样。
 >
-> 📖 **主题读本(推荐初读)**：[[Readers/Niagara/Phase1-asset-layer-读本]] — 把下面 5 个文件讲成一个连贯故事,从 `UNiagaraSystem` 到图源抽象基类一气读完。
+> 📖 **主题读本(推荐初读)**：[[Readers/Niagara/Phase 1 - 从 System 到图源抽象基类]] — 把下面 5 个文件讲成一个连贯故事,从 `UNiagaraSystem` 到图源抽象基类一气读完。
 
 | # | 文件 | 模块 | 路径 | 源摘要 → 主实体 |
 |---|---|---|---|---|
@@ -106,7 +106,7 @@ Niagara 插件位于 `Engine/Plugins/FX/Niagara/`，共 7 个模块：
 ### Phase 2 — 场景入口：Component 层 ✅
 > **目标**：理解特效如何被放入游戏世界，以及 Blueprint 如何调用。
 >
-> 📖 **主题读本(推荐初读)**：[[Readers/Niagara/Phase2-component-layer-读本]] — 把 Component/Actor/FunctionLibrary 三文件讲成一个完整故事,从三种入口路径到 Component 的 5 大职责、生命周期四源、Pool/Scalability/AutoDestroy 三方决策,一次读完掌握"特效如何从资产变成场景里跑着的东西"。
+> 📖 **主题读本(推荐初读)**：[[Readers/Niagara/Phase 2 - Component 层的五职责]] — 把 Component/Actor/FunctionLibrary 三文件讲成一个完整故事,从三种入口路径到 Component 的 5 大职责、生命周期四源、Pool/Scalability/AutoDestroy 三方决策,一次读完掌握"特效如何从资产变成场景里跑着的东西"。
 
 | # | 文件 | 模块 | 路径 | 源摘要 → 主实体 |
 |---|---|---|---|---|
@@ -127,7 +127,7 @@ Niagara 插件位于 `Engine/Plugins/FX/Niagara/`，共 7 个模块：
 ### Phase 3 — 运行时实例层 ✅
 > **目标**：理解特效"活着"时的状态机与 Tick 流程。这是 Niagara 的心脏。
 >
-> 📖 **主题读本(推荐初读)**:[[Readers/Niagara/Phase3-runtime-instance-读本]] — 三个类由内到外讲清楚:EmitterInstance(最内粒子数据 + ExecContext)→ SystemInstance(中间状态机 + 三阶段 Tick)→ SystemSimulation(最外批量调度 + 4-instance Tick Batch)。读完能算出 `bForceSolo` 的定量退化。
+> 📖 **主题读本(推荐初读)**:[[Readers/Niagara/Phase 3 - Niagara 的心脏]] — 三个类由内到外讲清楚:EmitterInstance(最内粒子数据 + ExecContext)→ SystemInstance(中间状态机 + 三阶段 Tick)→ SystemSimulation(最外批量调度 + 4-instance Tick Batch)。读完能算出 `bForceSolo` 的定量退化。
 
 | # | 文件 | 模块 | 路径 | 源摘要 → 主实体 |
 |---|---|---|---|---|
@@ -148,7 +148,7 @@ Niagara 插件位于 `Engine/Plugins/FX/Niagara/`，共 7 个模块：
 ### Phase 4 — 数据基础：类型与数据集 ✅
 > **目标**：理解 Niagara 的"数据语言"——粒子属性如何定义、存储、访问。
 >
-> 📖 **主题读本**:[[Readers/Niagara/Phase4-data-model-读本]] — 从共享常量到类型系统、SoA 布局、参数存储绑定图,一次读完掌握 Niagara 的数据语言全貌。
+> 📖 **主题读本**:[[Readers/Niagara/Phase 4 - Niagara 的数据语言]] — 从共享常量到类型系统、SoA 布局、参数存储绑定图,一次读完掌握 Niagara 的数据语言全貌。
 
 | # | 文件 | 模块 | 路径 | 源摘要 |
 |---|---|---|---|---|
@@ -174,7 +174,7 @@ Niagara 插件位于 `Engine/Plugins/FX/Niagara/`，共 7 个模块：
 ### Phase 5 — 脚本执行：CPU 虚拟机 ✅
 > **目标**：理解 Niagara 脚本（Spawn/Update/Event）如何在 CPU 上被逐粒子执行。
 >
-> 📖 **主题读本**:[[Readers/Niagara/Phase5-cpu-script-execution-读本]] — CPU VM 主路径清晰,GPU 部分作 Phase 8 预告。含 System 脚本的 PerInstanceFunctionHook 机制、CPU/GPU 参数布局 padding 映射、5 种 UniformBuffer 的用法。
+> 📖 **主题读本**:[[Readers/Niagara/Phase 5 - Niagara 脚本如何跑起来]] — CPU VM 主路径清晰,GPU 部分作 Phase 8 预告。含 System 脚本的 PerInstanceFunctionHook 机制、CPU/GPU 参数布局 padding 映射、5 种 UniformBuffer 的用法。
 
 | # | 文件 | 模块 | 路径 | 源摘要 |
 |---|---|---|---|---|
@@ -197,7 +197,7 @@ Niagara 插件位于 `Engine/Plugins/FX/Niagara/`，共 7 个模块：
 ### Phase 6 — 渲染系统 ✅
 > **目标**：理解粒子数据如何变成屏幕上的像素。
 >
-> 📖 **主题读本**:[[Readers/Niagara/Phase6-rendering-读本]] — Properties/Renderer 对偶 + 4 种类型能力边界 + GT→RT 数据流 + Cutout/Tessellation/SimpleLight 各自的特殊路径。
+> 📖 **主题读本**:[[Readers/Niagara/Phase 6 - Niagara 粒子如何变成屏幕像素]] — Properties/Renderer 对偶 + 4 种类型能力边界 + GT→RT 数据流 + Cutout/Tessellation/SimpleLight 各自的特殊路径。
 
 | # | 文件 | 模块 | 路径 | 源摘要 |
 |---|---|---|---|---|
@@ -227,7 +227,7 @@ Niagara 插件位于 `Engine/Plugins/FX/Niagara/`，共 7 个模块：
 ### Phase 7 — 数据接口系统 ✅
 > **目标**：理解 Niagara 脚本如何访问"外部数据"（相机、骨骼网格、曲线等）。DataInterface 是 Niagara 最强大也最复杂的扩展点。
 >
-> 📖 **主题读本**:[[Readers/Niagara/Phase7-data-interface-读本]] — DI 三路代码生成(VM/C++ lambda/HLSL)+ Per-Instance Data 生命周期 + 7 种典型 DI 能力矩阵 + 共享 skinning 缓存。
+> 📖 **主题读本**:[[Readers/Niagara/Phase 7 - 最强扩展点 Data Interface]] — DI 三路代码生成(VM/C++ lambda/HLSL)+ Per-Instance Data 生命周期 + 7 种典型 DI 能力矩阵 + 共享 skinning 缓存。
 
 **第一轮：基类**
 
@@ -262,7 +262,7 @@ Niagara 插件位于 `Engine/Plugins/FX/Niagara/`，共 7 个模块：
 ### Phase 8 — GPU 模拟 ✅
 > **目标**：理解 GPU Simulation 的完整管线——脚本如何变成 Compute Shader，粒子数据如何在 GPU 上流转。
 >
-> 📖 **主题读本**:[[Readers/Niagara/Phase8-gpu-simulation-读本]] — Shader 编译 + GPU Instance Count + Sort + VertexFactory + Draw Indirect 完整链路。
+> 📖 **主题读本**:[[Readers/Niagara/Phase 8 - Niagara 的 GPU 模拟管线]] — Shader 编译 + GPU Instance Count + Sort + VertexFactory + Draw Indirect 完整链路。
 
 | # | 文件 | 模块 | 路径 |
 |---|---|---|---|
@@ -296,7 +296,7 @@ Niagara 插件位于 `Engine/Plugins/FX/Niagara/`，共 7 个模块：
 ### Phase 9 — 世界管理与可扩展性 ✅
 > **目标**：理解 Niagara 如何管理全局资源、LOD、对象池。
 >
-> 📖 **主题读本**:[[Readers/Niagara/Phase9-world-management-读本]] — 全局状态四层模型 + Scalability 决策引擎 + Pool 5 方法取舍 + PlatformSet 三态配置。
+> 📖 **主题读本**:[[Readers/Niagara/Phase 9 - Niagara 的世界管理与可扩展性]] — 全局状态四层模型 + Scalability 决策引擎 + Pool 5 方法取舍 + PlatformSet 三态配置。
 
 | # | 文件 | 模块 | 路径 |
 |---|---|---|---|
@@ -321,7 +321,7 @@ Niagara 插件位于 `Engine/Plugins/FX/Niagara/`，共 7 个模块：
 ### Phase 10 — 高级特性（选修）✅
 > **目标**：了解 Niagara 的前沿能力——Simulation Stages 与 Grid 流体模拟。
 >
-> 📖 **主题读本**:[[Readers/Niagara/Phase10-advanced-features-读本]] — SimStages 多 pass 架构 + RW DI 四钩子 + Grid 2D/3D 存储策略差异 + NeighborGrid 空间哈希 + Reader 跨 emitter 数据交互。
+> 📖 **主题读本**:[[Readers/Niagara/Phase 10 - Niagara 的高级特性]] — SimStages 多 pass 架构 + RW DI 四钩子 + Grid 2D/3D 存储策略差异 + NeighborGrid 空间哈希 + Reader 跨 emitter 数据交互。
 
 | # | 文件 | 模块 | 路径 | 源摘要 |
 |---|---|---|---|---|

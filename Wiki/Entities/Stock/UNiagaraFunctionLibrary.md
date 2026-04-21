@@ -65,7 +65,7 @@ static UNiagaraComponent* SpawnSystemAttached(
 ## 深入阅读
 
 - 全字段清单 + 代码片段:[[Wiki/Sources/Stock/NiagaraFunctionLibrary]]
-- 主题读本:[[Readers/Niagara/Phase2-component-layer-读本]] § 5
+- 主题读本:[[Readers/Niagara/Phase 2 - Component 层的五职责]] § 5
 
 ## 开放问题
 

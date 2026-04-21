@@ -3,7 +3,7 @@
 > 本文件是整个 wiki 的内容目录。LLM 每次 ingest 都会更新。
 > 查询时先读这里,再深入相关页面。
 
-最后更新:2026-04-21（+ Multi-agent 对话 ingest:1 Raw + 1 Source + 1 Concept + 1 读本,subagent 架构从"Ai-agent 一小节"升级为独立概念页 + 配套读本）
+最后更新:2026-04-21（refactor:15 份读本全量改名——`-读本` 后缀移除,改为文章标题式带空格文件名;CLAUDE.md §6 文件名规则相应更新;全仓 ~90 文件 wikilink 批量替换）
 
 ---
 
@@ -201,27 +201,27 @@
 *每个议题"一次读完即完整掌握"的线性读物。人类阅读的首选入口,详见 [[CLAUDE]] §3.4。*
 
 ### 方法论
-- [[Readers/Methodology/Llm-wiki-方法论-读本|方法论读本 — 本仓库为什么存在]] — LLM Wiki 方法论主题读本,详解三层架构/三操作/两文件/Memex-RAG-Wiki 脉络/Karpathy 三里程碑/本仓库如何具体化 (2026-04-20)
+- [[Readers/Methodology/从 Memex 到 LLM Wiki|方法论读本 — 本仓库为什么存在]] — LLM Wiki 方法论主题读本,详解三层架构/三操作/两文件/Memex-RAG-Wiki 脉络/Karpathy 三里程碑/本仓库如何具体化 (2026-04-20)
 
 ### AI 美术
-- [[Readers/AIArt/Lora-深度指南-读本|LoRA 深度指南读本]] — 鸣潮美术向 LoRA 落地方案主题读本,从战略(离开 MJ)到技术(LoRA/caption/trigger)到工具(kohya+ComfyUI)到落地路线 (2026-04-20)
+- [[Readers/AIArt/LoRA 深度指南|LoRA 深度指南读本]] — 鸣潮美术向 LoRA 落地方案主题读本,从战略(离开 MJ)到技术(LoRA/caption/trigger)到工具(kohya+ComfyUI)到落地路线 (2026-04-20)
 
 ### AI 应用生态
-- [[Readers/AIApps/AI-primer-v2-读本|AI 应用生态读本]] — AI Primer v2 主题读本,从 LLM 本质到 2026 技术栈三层全景,一次读完掌握整条主线 (2026-04-20)
-- [[Readers/AIApps/Multi-agent-读本|Multi-agent / Subagent 架构读本]] — "为什么上下文有限反而是必须切多 agent 的理由";三种病 / 第一性原理 / 子 agent 本质 / 四个次级收益 / 扁平扇出 / 决策矩阵 (2026-04-21)
+- [[Readers/AIApps/AI 应用生态全景 2026|AI 应用生态读本]] — AI Primer v2 主题读本,从 LLM 本质到 2026 技术栈三层全景,一次读完掌握整条主线 (2026-04-20)
+- [[Readers/AIApps/为什么上下文有限反而必须切多 Agent|Multi-agent / Subagent 架构读本]] — "为什么上下文有限反而是必须切多 agent 的理由";三种病 / 第一性原理 / 子 agent 本质 / 四个次级收益 / 扁平扇出 / 决策矩阵 (2026-04-21)
 
 ### Niagara 源码学习
-- [[Readers/Niagara/Phase0-心智模型-读本|Phase 0 读本 — 上阵前的四层脑内地图]] — 把 UObject / Asset-Instance / Niagara-vs-Cascade / CPU-vs-GPU 四概念编成自下而上一条叙事链,一次读完掌握 Phase 1+ 所需全部前置 (2026-04-19)
-- [[Readers/Niagara/Phase1-asset-layer-读本|Phase 1 读本 — Niagara 的资产层]] — 把 5 个 header 讲成一个连贯故事,从 System 到图源抽象基类,一次读完掌握 Asset 层全部心智模型 (2026-04-19)
-- [[Readers/Niagara/Phase2-component-layer-读本|Phase 2 读本 — Niagara 的 Component 层]] — 把 Component/Actor/FunctionLibrary 三文件讲成从"资产到场景里跑着"的完整控制流,涵盖三入口/五职责/四生命周期源/Pool-Scalability-AutoDestroy 三方决策 (2026-04-20)
-- [[Readers/Niagara/Phase3-runtime-instance-读本|Phase 3 读本 — Niagara 的心脏]] — 运行时实例层:三阶段 Tick + 双状态机 + 4-instance TickBatch + 参数双缓冲 + ParameterStore↔DataSet 绑定,含 `bForceSolo` 5-20× 退化定量估算 (2026-04-20)
-- [[Readers/Niagara/Phase4-data-model-读本|Phase 4 读本 — Niagara 的数据语言]] — 类型系统(TypeDef/Variable/LayoutInfo)+ SoA 布局 + Double Buffer + Persistent ID 双整数 + 命名空间系统 + ParameterStore 三路 dirty + 绑定图,一次读完掌握 Niagara "数据"全貌 (2026-04-20)
-- [[Readers/Niagara/Phase5-cpu-script-execution-读本|Phase 5 读本 — Niagara 脚本如何"跑起来"]] — CPU VM 上下文 + PerInstanceFunctionHook + CPU/GPU 参数 padding + GPU Tick 打包 + FFXSystemInterface 三阶段 stage,为 Phase 7(DI)/Phase 8(GPU)搭脚手架 (2026-04-20)
-- [[Readers/Niagara/Phase6-rendering-读本|Phase 6 读本 — Niagara 粒子如何变成屏幕像素]] — Properties/Renderer 对偶 + GT→RT 三阶段数据流 + 4 种类型能力边界(Sprite/Ribbon/Mesh/Light)+ Cutout/Tessellation/SimpleLight 特殊路径 (2026-04-20)
-- [[Readers/Niagara/Phase7-data-interface-读本|Phase 7 读本 — Niagara 的最强扩展点]] — DI 三路代码生成(VM/C++ lambda/HLSL)+ Per-Instance Data 生命周期 + 7 种典型 DI 能力矩阵 + SkeletalMesh 共享 skinning 缓存 + RW DI 预告 (2026-04-20)
-- [[Readers/Niagara/Phase8-gpu-simulation-读本|Phase 8 读本 — Niagara 的 GPU 模拟管线]] — Shader 编译 + 共享 GPU Instance Count + DrawIndirect 生成 + GPU Sort(FGPUSortManager + SortKeyGenCS 4 permutation)+ 3 种 VertexFactory 能力矩阵 (2026-04-20)
-- [[Readers/Niagara/Phase9-world-management-读本|Phase 9 读本 — Niagara 的世界管理与可扩展性]] — 全局状态四层模型 + Scalability 决策引擎(4 类 cull + significance)+ Pool 5 方法取舍 + PlatformSet 三态双 mask 配置 (2026-04-20)
-- [[Readers/Niagara/Phase10-advanced-features-读本|Phase 10 读本 — Niagara 的高级特性]](**学习路径终点**)— SimStages 多 pass + IterationSource 二选一 + RW DI 四钩子 + Grid 2D/3D 存储策略差异(Texture2DArray vs RWTexture3D tile 打包)+ NeighborGrid 空间哈希 + Reader 跨 emitter 交互 (2026-04-20)
+- [[Readers/Niagara/Phase 0 - 上阵前的四层脑内地图|Phase 0 读本 — 上阵前的四层脑内地图]] — 把 UObject / Asset-Instance / Niagara-vs-Cascade / CPU-vs-GPU 四概念编成自下而上一条叙事链,一次读完掌握 Phase 1+ 所需全部前置 (2026-04-19)
+- [[Readers/Niagara/Phase 1 - 从 System 到图源抽象基类|Phase 1 读本 — Niagara 的资产层]] — 把 5 个 header 讲成一个连贯故事,从 System 到图源抽象基类,一次读完掌握 Asset 层全部心智模型 (2026-04-19)
+- [[Readers/Niagara/Phase 2 - Component 层的五职责|Phase 2 读本 — Niagara 的 Component 层]] — 把 Component/Actor/FunctionLibrary 三文件讲成从"资产到场景里跑着"的完整控制流,涵盖三入口/五职责/四生命周期源/Pool-Scalability-AutoDestroy 三方决策 (2026-04-20)
+- [[Readers/Niagara/Phase 3 - Niagara 的心脏|Phase 3 读本 — Niagara 的心脏]] — 运行时实例层:三阶段 Tick + 双状态机 + 4-instance TickBatch + 参数双缓冲 + ParameterStore↔DataSet 绑定,含 `bForceSolo` 5-20× 退化定量估算 (2026-04-20)
+- [[Readers/Niagara/Phase 4 - Niagara 的数据语言|Phase 4 读本 — Niagara 的数据语言]] — 类型系统(TypeDef/Variable/LayoutInfo)+ SoA 布局 + Double Buffer + Persistent ID 双整数 + 命名空间系统 + ParameterStore 三路 dirty + 绑定图,一次读完掌握 Niagara "数据"全貌 (2026-04-20)
+- [[Readers/Niagara/Phase 5 - Niagara 脚本如何跑起来|Phase 5 读本 — Niagara 脚本如何"跑起来"]] — CPU VM 上下文 + PerInstanceFunctionHook + CPU/GPU 参数 padding + GPU Tick 打包 + FFXSystemInterface 三阶段 stage,为 Phase 7(DI)/Phase 8(GPU)搭脚手架 (2026-04-20)
+- [[Readers/Niagara/Phase 6 - Niagara 粒子如何变成屏幕像素|Phase 6 读本 — Niagara 粒子如何变成屏幕像素]] — Properties/Renderer 对偶 + GT→RT 三阶段数据流 + 4 种类型能力边界(Sprite/Ribbon/Mesh/Light)+ Cutout/Tessellation/SimpleLight 特殊路径 (2026-04-20)
+- [[Readers/Niagara/Phase 7 - 最强扩展点 Data Interface|Phase 7 读本 — Niagara 的最强扩展点]] — DI 三路代码生成(VM/C++ lambda/HLSL)+ Per-Instance Data 生命周期 + 7 种典型 DI 能力矩阵 + SkeletalMesh 共享 skinning 缓存 + RW DI 预告 (2026-04-20)
+- [[Readers/Niagara/Phase 8 - Niagara 的 GPU 模拟管线|Phase 8 读本 — Niagara 的 GPU 模拟管线]] — Shader 编译 + 共享 GPU Instance Count + DrawIndirect 生成 + GPU Sort(FGPUSortManager + SortKeyGenCS 4 permutation)+ 3 种 VertexFactory 能力矩阵 (2026-04-20)
+- [[Readers/Niagara/Phase 9 - Niagara 的世界管理与可扩展性|Phase 9 读本 — Niagara 的世界管理与可扩展性]] — 全局状态四层模型 + Scalability 决策引擎(4 类 cull + significance)+ Pool 5 方法取舍 + PlatformSet 三态双 mask 配置 (2026-04-20)
+- [[Readers/Niagara/Phase 10 - Niagara 的高级特性|Phase 10 读本 — Niagara 的高级特性]](**学习路径终点**)— SimStages 多 pass + IterationSource 二选一 + RW DI 四钩子 + Grid 2D/3D 存储策略差异(Texture2DArray vs RWTexture3D tile 打包)+ NeighborGrid 空间哈希 + Reader 跨 emitter 交互 (2026-04-20)
 
 ## Syntheses(综合/专题)
 *跨源分析、对比、专题报告、好答案的沉淀(非读本)。读本见上方 [[#Readers(主题读本)]] 分区。*

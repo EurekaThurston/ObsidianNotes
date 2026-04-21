@@ -46,7 +46,7 @@ source_commit: b6ab0dee9
 ## 深入阅读
 
 - 源摘要:[[Wiki/Sources/Stock/NiagaraActor]]
-- 主题读本:[[Readers/Niagara/Phase2-component-layer-读本]] § 6
+- 主题读本:[[Readers/Niagara/Phase 2 - Component 层的五职责]] § 6
 
 ## 开放问题
 

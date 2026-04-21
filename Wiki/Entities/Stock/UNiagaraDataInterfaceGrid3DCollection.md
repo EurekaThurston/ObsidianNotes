@@ -77,4 +77,4 @@ SetValue / GetValue / SampleGrid
 ## 深入阅读
 
 - 源:[[Wiki/Sources/Stock/NiagaraDataInterfaceGrid3DCollection]]
-- 读本:[[Readers/Niagara/Phase10-advanced-features-读本]]
+- 读本:[[Readers/Niagara/Phase 10 - Niagara 的高级特性]]

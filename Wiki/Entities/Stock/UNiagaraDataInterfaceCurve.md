@@ -73,4 +73,4 @@ Curve.SampleCurve(float X) → float Y
 
 - Base 源:[[Wiki/Sources/Stock/NiagaraDataInterfaceCurveBase]]
 - Float 源:[[Wiki/Sources/Stock/NiagaraDataInterfaceCurve]]
-- 读本:[[Readers/Niagara/Phase7-data-interface-读本]] § 3
+- 读本:[[Readers/Niagara/Phase 7 - 最强扩展点 Data Interface]] § 3

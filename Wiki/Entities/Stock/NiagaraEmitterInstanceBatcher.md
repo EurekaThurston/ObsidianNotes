@@ -64,7 +64,7 @@ bool AddSortedGPUSimulation(FNiagaraGPUSortInfo&);            // 注册排序任
 ## 深入阅读
 
 - 源摘要:[[Wiki/Sources/Stock/NiagaraEmitterInstanceBatcher]]
-- 主题读本:[[Readers/Niagara/Phase5-cpu-script-execution-读本]] § 6(Phase 8 主战场)
+- 主题读本:[[Readers/Niagara/Phase 5 - Niagara 脚本如何跑起来]] § 6(Phase 8 主战场)
 
 ## 开放问题(大部分延迟到 Phase 8)
 

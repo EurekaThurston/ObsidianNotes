@@ -11,7 +11,7 @@ source_ref: "4.26"
 source_commit: b6ab0dee9
 ---
 
-# Phase 1 读本 — Niagara 的资产层
+# Phase 1 - 从 System 到图源抽象基类
 
 > 本页是 Niagara 学习路径 [[Wiki/Syntheses/Niagara/Niagara-learning-path]] Phase 1 的**主题读本**——详细、精确、满满当当,一次读完即完整掌握 Niagara Asset 层(System / Emitter / Script)的全部心智模型,不需要跳转。
 >

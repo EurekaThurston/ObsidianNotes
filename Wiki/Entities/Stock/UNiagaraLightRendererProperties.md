@@ -70,4 +70,4 @@ RT: GatherSimpleLights(OutParticleLights) → 提交 FSimpleLightArray
 ## 深入阅读
 
 - 源:[[Wiki/Sources/Stock/NiagaraLightRendererProperties]] / [[Wiki/Sources/Stock/NiagaraRendererLights]]
-- 读本:[[Readers/Niagara/Phase6-rendering-读本]] § 7
+- 读本:[[Readers/Niagara/Phase 6 - Niagara 粒子如何变成屏幕像素]] § 7

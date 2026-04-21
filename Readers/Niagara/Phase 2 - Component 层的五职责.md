@@ -11,7 +11,7 @@ source_ref: "4.26"
 source_commit: b6ab0dee9
 ---
 
-# Phase 2 读本 — Niagara 的 Component 层
+# Phase 2 - Component 层的五职责
 
 > 本页是 Niagara 学习路径 [[Wiki/Syntheses/Niagara/Niagara-learning-path]] Phase 2 的**主题读本**——详细、精确、满满当当,一次读完即完整掌握"特效如何从资产变成场景里跑着的东西",不需要跳转。
 >
@@ -790,8 +790,8 @@ FunctionLibrary 内部:
 
 ### 前置议题
 
-- Phase 0 心智模型:[[Readers/Niagara/Phase0-心智模型-读本]] — UObject / Asset-Instance / Niagara vs Cascade / CPU vs GPU
-- Phase 1 Asset 层:[[Readers/Niagara/Phase1-asset-layer-读本]] — `UNiagaraSystem` / `UNiagaraEmitter` / `UNiagaraScript`
+- Phase 0 心智模型:[[Readers/Niagara/Phase 0 - 上阵前的四层脑内地图]] — UObject / Asset-Instance / Niagara vs Cascade / CPU vs GPU
+- Phase 1 Asset 层:[[Readers/Niagara/Phase 1 - 从 System 到图源抽象基类]] — `UNiagaraSystem` / `UNiagaraEmitter` / `UNiagaraScript`
 - 基础概念:
   - [[Wiki/Concepts/UE4/UE4-资产与实例]] — 一 Asset 多 Instance 的根基
   - [[Wiki/Concepts/UE4/UE4-uobject-系统]] — UCLASS/UPROPERTY/UFUNCTION

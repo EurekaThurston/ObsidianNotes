@@ -70,7 +70,7 @@ void EndSimulate(bool SetCurrentData=true);                          // Current 
 ## 深入阅读
 
 - 源摘要:[[Wiki/Sources/Stock/NiagaraDataSet]]
-- 主题读本:[[Readers/Niagara/Phase4-data-model-读本]] § 4
+- 主题读本:[[Readers/Niagara/Phase 4 - Niagara 的数据语言]] § 4
 
 ## 开放问题
 

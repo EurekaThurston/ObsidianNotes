@@ -54,4 +54,4 @@ HasPostSimulateTick() → true;          // 读回异步结果
 ## 深入阅读
 
 - 源:[[Wiki/Sources/Stock/NiagaraDataInterfaceCollisionQuery]]
-- 读本:[[Readers/Niagara/Phase7-data-interface-读本]] § 5
+- 读本:[[Readers/Niagara/Phase 7 - 最强扩展点 Data Interface]] § 5

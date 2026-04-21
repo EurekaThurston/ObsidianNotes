@@ -114,4 +114,4 @@ Reader 的 proxy 存目标 `FNiagaraDataInterfaceProxyGrid2DCollectionProxy*` �
 ## 深入阅读
 
 - 源 × 2:[[Wiki/Sources/Stock/NiagaraDataInterfaceGrid2DCollection]] / [[Wiki/Sources/Stock/NiagaraDataInterfaceGrid2DCollectionReader]]
-- 读本:[[Readers/Niagara/Phase10-advanced-features-读本]]
+- 读本:[[Readers/Niagara/Phase 10 - Niagara 的高级特性]]

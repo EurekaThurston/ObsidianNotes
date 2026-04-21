@@ -69,4 +69,4 @@ source_commit: b6ab0dee9
 ## 深入阅读
 
 - 源:[[Wiki/Sources/Stock/NiagaraDataInterface]](890 行,本次扒前 400)
-- 读本:[[Readers/Niagara/Phase7-data-interface-读本]]
+- 读本:[[Readers/Niagara/Phase 7 - 最强扩展点 Data Interface]]

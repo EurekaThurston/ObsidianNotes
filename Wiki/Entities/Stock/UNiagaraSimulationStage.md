@@ -61,4 +61,4 @@ Stage 4(Grid DI):把速度写入 Grid2D / Grid3D(可视化)
 ## 深入阅读
 
 - 源:[[Wiki/Sources/Stock/NiagaraSimulationStageBase]]
-- 读本:[[Readers/Niagara/Phase10-advanced-features-读本]]
+- 读本:[[Readers/Niagara/Phase 10 - Niagara 的高级特性]]

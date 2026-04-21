@@ -11,7 +11,7 @@ source_ref: "4.26"
 source_commit: b6ab0dee9
 ---
 
-# Phase 10 读本 — Niagara 的高级特性:SimStages 与 Grid 模拟
+# Phase 10 - Niagara 的高级特性
 
 > 本页是 Niagara 学习路径 [[Wiki/Syntheses/Niagara/Niagara-learning-path]] **最后一个 Phase** 的主题读本。一次读完掌握 Simulation Stages 多 pass 架构 + Grid 2D/3D 场存储 + NeighborGrid 空间哈希 + Emitter 间数据交互。
 >
@@ -447,23 +447,23 @@ CDO 时自动把本 DI 类型加进 Niagara 类型系统——script 里能用 `
 
 ### 前置议题
 
-- [[Readers/Niagara/Phase4-data-model-读本]] — DataSet 双缓冲思路是 RW DI 四钩子的前置
-- [[Readers/Niagara/Phase7-data-interface-读本]] — `UNiagaraDataInterfaceRenderTarget2D` 是首个 RW DI 范例
-- [[Readers/Niagara/Phase8-gpu-simulation-读本]] §3 `FSimulationStageMetaData` — SimStages 的 shader 侧元数据
+- [[Readers/Niagara/Phase 4 - Niagara 的数据语言]] — DataSet 双缓冲思路是 RW DI 四钩子的前置
+- [[Readers/Niagara/Phase 7 - 最强扩展点 Data Interface]] — `UNiagaraDataInterfaceRenderTarget2D` 是首个 RW DI 范例
+- [[Readers/Niagara/Phase 8 - Niagara 的 GPU 模拟管线]] §3 `FSimulationStageMetaData` — SimStages 的 shader 侧元数据
 
 ### 10 个 Phase 导航
 
-- [[Readers/Niagara/Phase0-心智模型-读本]]
-- [[Readers/Niagara/Phase1-asset-layer-读本]]
-- [[Readers/Niagara/Phase2-component-layer-读本]]
-- [[Readers/Niagara/Phase3-runtime-instance-读本]]
-- [[Readers/Niagara/Phase4-data-model-读本]]
-- [[Readers/Niagara/Phase5-cpu-script-execution-读本]]
-- [[Readers/Niagara/Phase6-rendering-读本]]
-- [[Readers/Niagara/Phase7-data-interface-读本]]
-- [[Readers/Niagara/Phase8-gpu-simulation-读本]]
-- [[Readers/Niagara/Phase9-world-management-读本]]
-- **[[Readers/Niagara/Phase10-advanced-features-读本]]**(本页,终点)
+- [[Readers/Niagara/Phase 0 - 上阵前的四层脑内地图]]
+- [[Readers/Niagara/Phase 1 - 从 System 到图源抽象基类]]
+- [[Readers/Niagara/Phase 2 - Component 层的五职责]]
+- [[Readers/Niagara/Phase 3 - Niagara 的心脏]]
+- [[Readers/Niagara/Phase 4 - Niagara 的数据语言]]
+- [[Readers/Niagara/Phase 5 - Niagara 脚本如何跑起来]]
+- [[Readers/Niagara/Phase 6 - Niagara 粒子如何变成屏幕像素]]
+- [[Readers/Niagara/Phase 7 - 最强扩展点 Data Interface]]
+- [[Readers/Niagara/Phase 8 - Niagara 的 GPU 模拟管线]]
+- [[Readers/Niagara/Phase 9 - Niagara 的世界管理与可扩展性]]
+- **[[Readers/Niagara/Phase 10 - Niagara 的高级特性]]**(本页,终点)
 
 ---
 

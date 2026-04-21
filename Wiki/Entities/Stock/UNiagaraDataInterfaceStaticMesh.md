@@ -98,4 +98,4 @@ struct FNDIStaticMesh_InstanceData {
 ## 深入阅读
 
 - 源:[[Wiki/Sources/Stock/NiagaraDataInterfaceStaticMesh]]
-- 读本:[[Readers/Niagara/Phase7-data-interface-读本]] § 6
+- 读本:[[Readers/Niagara/Phase 7 - 最强扩展点 Data Interface]] § 6
