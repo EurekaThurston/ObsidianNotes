@@ -210,6 +210,9 @@
 - [[Readers/AIApps/AI 应用生态全景 2026|AI 应用生态读本]] — AI Primer v2 主题读本,从 LLM 本质到 2026 技术栈三层全景,一次读完掌握整条主线 (2026-04-20)
 - [[Readers/AIApps/为什么上下文有限反而必须切多 Agent|Multi-agent / Subagent 架构读本]] — "为什么上下文有限反而是必须切多 agent 的理由";三种病 / 第一性原理 / 子 agent 本质 / 四个次级收益 / 扁平扇出 / 决策矩阵 (2026-04-21)
 
+### InfoFeeds(自动化推送)
+- [[Readers/InfoFeeds/周期性 Feed 推送系统方案设计|Feed 推送系统方案设计]] — 飞书机器人日度 digest;vault 算主题权重 + 手动覆盖 + ε-greedy 防茧房 + VFX creator 白名单 + GitHub Actions 云端无 Claude;五决策点脉络 + 待办接力棒 (2026-04-22)
+
 ### Niagara 源码学习
 - [[Readers/Niagara/Phase 0 - 上阵前的四层脑内地图|Phase 0 读本 — 上阵前的四层脑内地图]] — 把 UObject / Asset-Instance / Niagara-vs-Cascade / CPU-vs-GPU 四概念编成自下而上一条叙事链,一次读完掌握 Phase 1+ 所需全部前置 (2026-04-19)
 - [[Readers/Niagara/Phase 1 - 从 System 到图源抽象基类|Phase 1 读本 — Niagara 的资产层]] — 把 5 个 header 讲成一个连贯故事,从 System 到图源抽象基类,一次读完掌握 Asset 层全部心智模型 (2026-04-19)

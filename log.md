@@ -5,6 +5,22 @@
 
 ---
 
+## [2026-04-22] synthesis | InfoFeeds 周期性推送系统方案设计
+
+- 触发:用户想"周期性接收新内容推送,与知识库主题和权重相关,推到飞书机器人"
+- 整轮讨论决策点:
+  1. 独立目录 → 进化为**独立 private repo** `F:\Cortex\InfoFeeds`(隐私数据,避免 public vault 暴露阅读指纹)
+  2. 权重计算纳入 Readers + 手动 overrides 覆盖层(读本系数比原子页高 3-5×)
+  3. 防茧房用 ε-greedy 60 核心 / 25 邻接 / 15 远场,creator 白名单 + curated 远场源
+  4. VFX 视觉内容通路:creator 白名单 + 社交度量粗筛 + 飞书卡片带缩略图(MVP 不做 LLM 多模态)
+  5. 云端用 GitHub Actions 但**不调 Claude**——纯 Python 规则,Max 订阅留给本地 Claudian 做重算/归档/体检
+- 新建:[[Readers/InfoFeeds/周期性 Feed 推送系统方案设计]]
+- 更新:[[index.md]](Readers 分区新增 InfoFeeds)、本 log
+- 实际文件系统:`F:\Cortex\` 已建,`F:\Cortex\InfoFeeds\` 已就位;`F:\ObsidianNotes` → `F:\Cortex\ObsidianNotes` 需用户手动完成(Obsidian 进程锁)
+- 下一步:用户完成 vault 迁移 → 新会话 Claudian 读方案文档 §4 阶段 1 → bootstrap topic-profile
+
+---
+
 ## [2026-04-21] refactor | 读本全量改名 — 去 `-读本` 后缀 + 文章标题式带空格文件名
 
 - 触发:用户反馈原文件名格式"看着难受",要求改成文章标题式(如 `Phase 7 - 最强扩展点 Data Interface`、`从 Memex 到 LLM Wiki`)
