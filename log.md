@@ -5,6 +5,116 @@
 
 ---
 
+## [2026-04-23] refactor | 删除全部 Lora / AI 生图相关内容(用户请求)
+
+- 触发:用户"帮我把所有 Lora/生图相关的内容都删了吧"
+- 删除目录(整删):
+  - `Readers/AIArt/`(含 `LoRA 深度指南.md`)
+  - `Wiki/Concepts/AIArt/`(6 页:Lora / Multi-lora-composition / Caption-strategy / Trigger-word / Base-model-selection / Training-vs-inference)
+  - `Wiki/Entities/AIArt/`(6 页:ComfyUI / DreamShaper-XL / Flux / Illustrious-XL / Kohya-ss / NoobAI-XL)
+  - `Wiki/Sources/AIArt/`(`Lora-deep-dive.md`)
+- 删除文件:`Raw/Notes/Lora_Deep_Dive.md` — ⚠️ 属 `Raw/` 只读区(§7.1),破例删除由用户明确授权
+- 更新引用(清理指向已删页面的 wikilink / 主题计数):
+  - [[README]] — 移除 AI 美术管线主题行与读本入口行;主题数 4→3
+  - [[index]] — 移除 AI 美术 Entities / Concepts / Sources / Readers 四个分区;Overview 行主题数 4→3;head 最后更新行改为本次 refactor 说明
+  - [[Wiki/Overview]] — 移除第 3 节"AI 美术生成管线"整节;主题数 4→3;跨主题联系移除 AI 应用↔AI 美术、方法论↔AI 美术两条;知识图移除 "AI 美术" 子树;开放问题移除"关于 AI 美术"整节;入口移除 Lora_Deep_Dive 行;下一步建议移除"AI 美术"行
+  - [[Wiki/Concepts/Methodology/Vibe-coding]] §"对非开发角色的适用" 移除美术 LoRA 示例一行
+  - [[Readers/AIApps/AI 应用生态全景 2026]] §3.2 多模态 Diffusion 括注改为无链注;尾部"跨主题联系"移除 AIArt 读本链
+- 保留:历史 log 条目原样保留(bookkeeping 是灵魂,§7 原则 4);本条作为删除存档
+- 不动:`Raw/Articles/AI 应用技术发展脉络与核心概念扫盲手册 v2.md`(广域 AI 扫盲文,仅顺带提 Stable Diffusion/Midjourney,且是 Raw 只读)
+- 自验:
+  - Glob `**/*{Lora,lora,LoRA,LORA}*` ✓ 无残留(除本 log 条目 + 历史条目)
+  - Glob `Readers/AIArt`、`Wiki/Concepts/AIArt`、`Wiki/Entities/AIArt`、`Wiki/Sources/AIArt` ✓ 四目录已消失
+  - Glob `Raw/Notes/Lora_Deep_Dive.md` ✓ 已消失
+
+## [2026-04-23] synthesis | AI 画图入门地基 — 训练-推理二元模型概念页
+
+- 触发:用户反馈"我对 AI 生图以及训练完全没有任何概念"——发现之前所有讨论都默认了"训练 vs 推理"的心智模型,但读本从未正面讲过。这是 [[CLAUDE]] §3.2 query 沉淀最典型的案例(用户问的不是"找个现成项目",而是"帮我补齐地基")
+- source: 无新 raw(基于对话归纳 + 生活化比方),纯 synthesis
+- 新建(1):
+  - [[Wiki/Concepts/AIArt/Training-vs-inference]] — 训练端 vs 推理端完整心智模型;美术学生比喻 + 烘焙坊比方 + 两端对照表 + 衔接流程图 + 术语对号入座 + 角色分工 + 4 个常见混淆;aliases 含中文(训练-推理二元模型等)
+- 更新:
+  - [[Readers/AIArt/LoRA 深度指南]] — 开头追加 `[!note]+` callout "完全没接触过 AI 画图?先读这个",指向新 Concept 页;footer 追加本轮说明
+  - [[Wiki/Entities/AIArt/Kohya-ss]] — 开头定义 quote 追加"训练-推理二元模型里训练端的代表工具"定位说明
+  - [[Wiki/Entities/AIArt/ComfyUI]] — 开头定义 quote 追加"推理端的代表工具"定位说明
+  - [[index]] — AI 美术 Concepts 分区把新概念放最顶部(地基位置);footer 改为本轮说明
+- 要点:
+  - **训练 vs 推理是两件事**,输入/输出/工具/人员/频率全不同
+  - 训练:TA 跑,月级,吐 `.safetensors` 文件(100-200MB,可拷贝);推理:美术用(经飞书),秒级,吐图
+  - **关键生活化比方**:AI = 刚来的美术学生;训练 = 教;推理 = 用;LoRA = 学徒本身(文件形态)
+  - **交付物思维**:训练端和推理端不同时跑,`.safetensors` 是前者交付给后者的文件,之后推理端吃这份产出直到下一版 LoRA 训好
+  - 所有术语(caption/trigger/prompt/sampler/learning_rate 等)都可以对号入座到训练端或推理端,一次讲清理解就固化
+- 不产读本:本页本身就是**入门概念页**,功能已覆盖"一次读完即掌握";如果未来扩展到 Fine-tuning / DreamBooth / LoRA 变体对比,再考虑独立读本
+- 不产新 Source:无新 raw
+- 不触 `Raw/Notes/Lora_Deep_Dive.md`(§7.1 只读)
+- 自验:
+  - Glob `Wiki/Concepts/AIArt/Training-vs-inference.md` ✓ 新建存在
+  - Grep Reader 的 `[!note]+ 完全没接触过 AI 画图` callout ✓ 存在
+  - Grep Kohya-ss.md 的"训练端的代表工具" ✓ 存在
+  - Grep ComfyUI.md 的"推理端的代表工具" ✓ 存在
+  - Grep index.md 新概念条目 ✓ 存在(AI 美术 Concepts 最顶部)
+
+---
+
+## [2026-04-23] synthesis | LoRA 基座选型二次增量 — 按训练目标分流(角色/场景/综合)+ DreamShaper XL 入库
+
+- 触发:用户给了一张 LoL Wild Rift painterly 场景原画,追问"训练场景哪个模型更好"。发现前一轮增量默认了"角色向"前提,漏了场景这个维度——属于 §3.2 query 沉淀为 synthesis
+- source: 无新 raw(基于对话 + WebSearch 社区共识 + Civitai 场景模型实测数据),纯 synthesis
+- 新建(1):
+  - [[Wiki/Entities/AIArt/DreamShaper-XL]] — SDXL 架构 painterly / concept art 向基座;纯场景 LoRA 首选;30-50 行紧凑约定
+- 更新:
+  - [[Readers/AIArt/LoRA 深度指南]] — 新增 §3.3.5 按训练目标类型分流(角色/场景/综合);§3.7 小结追加场景向主推路径;§13 关键洞察 +1 条(基座选型是两个问题,先选目标类型);footer 追加二次增补说明
+  - [[Wiki/Concepts/AIArt/Base-model-selection]] — 新增"按训练目标类型分流"大节(anime 基座场景弱项机理 + 按目标类型推荐表 + 综合 LoRA 路线 1/2 + 决策流);相关区 5 条改 6 条含 DreamShaper;开放问题 +2
+  - [[Wiki/Entities/AIArt/NoobAI-XL]] — 新增"场景向训练是弱项" warning callout,指向 DreamShaper
+  - [[Wiki/Entities/AIArt/Illustrious-XL]] — 同上场景弱项说明
+  - [[index]] — AIArt Entities 分区新增 DreamShaper-XL 登记;顶部"最后更新"改为本轮说明
+- 要点:
+  - **anime 基座场景是结构性弱项**:NoobAI 的 ~1300 万训练图 90%+ 带角色 tag,纯场景 / 环境 / 建筑先验严重欠采
+  - **painterly 游戏 concept(LoL / 米哈游 / 鸣潮 keyart)更接近 Artstation 分布而非 Pixiv**:anime 基座最不擅长的分布
+  - **场景首选 DreamShaper XL**:专为 concept art / 奇幻场景 fine-tune 过,和游戏 concept 风格最贴
+  - **综合 LoRA 优先走路线 2**(双基座双 LoRA + 生产端 ComfyUI 路由):char → NoobAI / scene → DreamShaper;比单基座混训保真度高得多
+  - **决策流**:纯场景占比 <30% 用路线 1, 30-60% 必须路线 2, >60% 场景基座直接选 DreamShaper
+  - **工具链零迁移成本**:SDXL 架构通用,只换 .safetensors 路径 + caption 格式切自然语言
+- 不产新读本:议题已有 [[Readers/AIArt/LoRA 深度指南]],本轮仍是读本 §3 增量深化
+- 不产新 Source:无新 raw
+- 不触 `Raw/Notes/Lora_Deep_Dive.md`(§7.1 只读)
+- 自验:
+  - Glob `Wiki/Entities/AIArt/DreamShaper-XL.md` ✓ 新建存在
+  - Glob `Readers/AIArt/LoRA 深度指南.md` ✓ 已含 §3.3.5
+  - Glob `Wiki/Concepts/AIArt/Base-model-selection.md` ✓ 已含"按训练目标类型分流"
+  - Grep NoobAI-XL 的"场景向训练是弱项"callout ✓ 存在
+  - Grep Illustrious-XL 的"场景训练同样是弱项" ✓ 存在
+  - Grep index.md DreamShaper-XL 登记条目 ✓ 存在
+
+---
+
+## [2026-04-23] synthesis | LoRA 基座选型增量 — NoobAI vs Illustrious 三维度 + Epsilon/v-pred + 先验反杀
+
+- 触发:用户连续两轮对话深挖"NoobAI 是不是比 Illustrious 更好"+"按出图效果/易用性/风格保持三维度对比",产生有长期价值的综合判断,按 [[CLAUDE]] §3.2 沉淀入 wiki
+- source: 无新 raw(基于对话 + WebSearch 社区共识),纯 synthesis
+- 更新(不 create):
+  - [[Readers/AIArt/LoRA 深度指南]] — §3 基座选型扩展:新增 §3.3.1 三维度对决 / §3.3.2 Epsilon vs v-pred 分岔 / §3.3.3 先验反杀陷阱 / §3.3.4 双基座 A/B 推荐路径;§3.7 小结调整;§13 关键洞察 +1 条(基座先验 vs LoRA 独特性拉锯);footer 追加 2026-04-23 增补说明
+  - [[Wiki/Concepts/AIArt/Base-model-selection]] — 新增三节:三维度决策 / Epsilon vs V-Pred / 先验反杀 + 推荐决策路径;开放问题 +2 条
+  - [[Wiki/Entities/AIArt/NoobAI-XL]] — 新增 "两个变体" 表;"相对于 Illustrious 的优势" 改 3 条为 4 条并加劣势警告 callout;适用场景改写含场景 A/B 判定;aliases +3(Epsilon/V-Pred/nbep11);开放问题 +2
+  - [[Wiki/Entities/AIArt/Illustrious-XL]] — 新增 "反直觉优势:弱先验 → 独特风格 LoRA 更纯净" 一节
+  - [[index]] — 顶部"最后更新"改为 2026-04-23 并说明本次 synthesis 范围
+- 要点:
+  - **三维度赢家**:出图效果 NoobAI ✓ / 易用性 NoobAI Epsilon ✓ / 风格保持 **视数据独特度而定**(反直觉)
+  - **Epsilon vs v-pred 分岔比"NoobAI vs Illustrious"影响更大**:v-pred 需 `--v_parameterization` + `--zero_terminal_snr` + CFG Rescale,非 drop-in
+  - **反直觉点**:NoobAI 见过 1300 万图,先验极强,对独特风格会"反杀" LoRA — 社区 `Style Strength Controller` LoRA 的存在本身印证此问题
+  - **决策方法论**:不要纯理论推,第一轮同数据集双基座 A/B 训两版,半天用事实决策
+- 不产新原子页:所有新洞察都能落在既有 Concept/Entity 页里,避免碎片化;不产 Source(无新 raw);不触 `Raw/Notes/Lora_Deep_Dive.md`(§7.1 只读)
+- 不产读本:议题本身已有 [[Readers/AIArt/LoRA 深度指南]],本轮是对读本 §3 的增量深化,非新读本触发
+- 自验:
+  - Glob `Readers/AIArt/LoRA 深度指南.md` ✓ 存在且已含 §3.3.1-3.3.4 新内容
+  - Glob `Wiki/Concepts/AIArt/Base-model-selection.md` ✓ 存在
+  - Glob `Wiki/Entities/AIArt/NoobAI-XL.md` ✓ 存在
+  - Glob `Wiki/Entities/AIArt/Illustrious-XL.md` ✓ 存在
+  - Glob `index.md` ✓ 存在
+  - `Raw/Notes/Lora_Deep_Dive.md` 未动(§7.1 遵守)
+
+---
+
 ## [2026-04-22] synthesis | InfoFeeds 周期性推送系统方案设计
 
 - 触发:用户想"周期性接收新内容推送,与知识库主题和权重相关,推到飞书机器人"

@@ -65,7 +65,7 @@ Transformer、Token、Embedding、Function Calling、Multimodal、Subagent、HIT
 ## 与既有 wiki 的关系
 
 - **印证**：[[Wiki/Concepts/Methodology/Rag|RAG]] 的定位——文章也把 RAG 视为"开卷考试"式机制，和既有页观点一致；同时补出"Embedding 是检索的底层机制"这一 v1 缺失点。
-- **新增主题**：wiki 第 4 个主题 `AIApps`（AI 应用生态），与既有 Methodology / Niagara / AIArt 三主题并列独立。
+- **新增主题**：wiki 主题 `AIApps`（AI 应用生态），与既有 Methodology / Niagara 并列独立。
 - **对 [[Wiki/Entities/Methodology/Karpathy|Karpathy]] 的扩展**：v2 明确了他在 AI 工程方法论演进中的双重贡献——提出 Context Engineering 概念、命名 Vibe Coding 术语。
 - **矛盾**：v1 原稿里有 3 处事实瑕疵（Vibe Coding 归属 YC、Fowler 三大类 vs 四大支柱自相矛盾、MCP 捐赠细节不准），v2 已修正。
 

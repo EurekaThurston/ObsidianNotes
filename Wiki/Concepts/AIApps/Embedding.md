@@ -75,7 +75,6 @@ Embedding 的应用远不止检索:
 - [[Wiki/Concepts/AIApps/Llm|LLM]] — 和 embedding 模型是**不同**模型,但都属 AI foundation
 - [[Wiki/Concepts/AIApps/Context-window|上下文窗口]] — 如果 context 够大能装下全库,就不需要 embedding 检索;embedding 是为"装不下"而生
 - [[Wiki/Concepts/AIApps/Hallucination|幻觉]] — Embedding-based RAG 是对抗幻觉的主要机制之一
-- [[Wiki/Concepts/AIArt/Base-model-selection|AI 美术基座]] — 图像生成里的 CLIP / T5 编码器本质也是多模态 embedding
 
 ## 深入阅读
 

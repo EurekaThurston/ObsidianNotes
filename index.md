@@ -3,12 +3,12 @@
 > 本文件是整个 wiki 的内容目录。LLM 每次 ingest 都会更新。
 > 查询时先读这里,再深入相关页面。
 
-最后更新:2026-04-21（refactor:15 份读本全量改名——`-读本` 后缀移除,改为文章标题式带空格文件名;CLAUDE.md §6 文件名规则相应更新;全仓 ~90 文件 wikilink 批量替换）
+最后更新:2026-04-23（refactor:按用户要求删除全部 Lora / AI 生图相关内容——`Readers/AIArt/`、`Wiki/Concepts/AIArt/`、`Wiki/Entities/AIArt/`、`Wiki/Sources/AIArt/` 全目录移除;`Raw/Notes/Lora_Deep_Dive.md` 删除;README / Overview / Vibe-coding / AIApps 读本引用清理）
 
 ---
 
 ## Overview
-- [[Wiki/Overview]] — 当前主题:4 大主题并行（方法论自举 / Niagara / AI 美术 / AI 应用生态）
+- [[Wiki/Overview]] — 当前主题:3 大主题并行（方法论自举 / Niagara / AI 应用生态）
 
 ## Entities(实体)
 *人、组织、地点、产品、项目。*
@@ -16,13 +16,6 @@
 ### 方法论相关
 - [[Wiki/Entities/Methodology/Karpathy|Andrej Karpathy]] — AI 研究者;LLM Wiki 方法论提出者、Context Engineering 倡导者、Vibe Coding 命名者 (来源:2)
 - [[Wiki/Entities/Claudian|Claudian]] — 本仓 LLM 作者身份;按 [[CLAUDE]] 规程运行,负责 ingest/query/lint/synthesis 全部 wiki 操作 (来源:1)
-
-### AI 美术（工具与基座）
-- [[Wiki/Entities/AIArt/Illustrious-XL|Illustrious XL]] — SDXL 架构二次元基座,2026 初二次元 SOTA 之一 (来源:1)
-- [[Wiki/Entities/AIArt/NoobAI-XL|NoobAI XL]] — Illustrious 的社区继续训练版,许可更友好 (来源:1)
-- [[Wiki/Entities/AIArt/Flux|Flux.1]] — BFL 的 12B 写实 SOTA,Dev 版非商用 (来源:1)
-- [[Wiki/Entities/AIArt/Kohya-ss|Kohya-ss]] — 主流 LoRA 训练工具,Windows 首选 (来源:1)
-- [[Wiki/Entities/AIArt/ComfyUI|ComfyUI]] — 节点式推理平台,生产管线首选 (来源:1)
 
 ### AI 应用生态（产品 / 项目）
 - [[Wiki/Entities/AIApps/OpenClaw|OpenClaw（小龙虾）]] — 开源的本地部署个人 AI Agent 系统，记忆+主动+行动三件套 (来源:1)
@@ -100,13 +93,6 @@
 - [[Wiki/Concepts/Niagara/Niagara-vs-cascade|Niagara vs Cascade]] — 设计哲学对比：黑盒模块 vs 完全可编程数据流
 - [[Wiki/Concepts/Niagara/Niagara-cpu-vs-gpu模拟|Niagara CPU vs GPU 模拟]] — VectorVM(CPU) 与 Compute Shader(GPU) 的分工、能力边界与源码分叉点
 
-### AI 美术
-- [[Wiki/Concepts/AIArt/Lora|LoRA]] — 冻结主模型,只训低秩矩阵;游戏美术 DNA 固化的核心技术 (来源:1)
-- [[Wiki/Concepts/AIArt/Base-model-selection|基座模型选型]] — Illustrious/NoobAI/Flux 对比,选错全白干 (来源:1)
-- [[Wiki/Concepts/AIArt/Caption-strategy|Caption 策略]] — 想让 LoRA 永远带的不写,按需触发的写清楚（反常识） (来源:1)
-- [[Wiki/Concepts/AIArt/Trigger-word|Trigger Word]] — 激活 LoRA 的独特词,命名约定 (来源:1)
-- [[Wiki/Concepts/AIArt/Multi-lora-composition|Multi-LoRA 组合]] — ComfyUI 真正威力,MJ 做不到的模块化风格控件 (来源:1)
-
 ### AI 应用生态
 - [[Wiki/Concepts/AIApps/Llm|LLM]] — 大语言模型,本质是"词语接龙引擎";三步训练(Pretrain/SFT/RLHF) (来源:1)
 - [[Wiki/Concepts/AIApps/Embedding|Embedding 向量嵌入]] — 把语义变成几何距离;RAG / 语义检索 / 多模态对齐的数学底座 (来源:1)
@@ -126,7 +112,6 @@
 - [[Wiki/Sources/AIApps/Multi-agent-conversation]] — Multi-agent 对话,Claudian 解释自己的多 agent 工作机制 (2026-04,note)
 - [[Wiki/Sources/AIApps/AI-primer-v2]] — AI 应用技术发展脉络与核心概念扫盲手册 v2 (2026-04,article)
 - [[Wiki/Sources/Methodology/Karpathy-llm-wiki]] — Karpathy 的 LLM Wiki idea file (2026-04,note)
-- [[Wiki/Sources/AIArt/Lora-deep-dive]] — LoRA 深度指南：给鸣潮美术向流水线的落地方案 (2026-04,note)
 
 ### 代码源摘要 — stock（UE 4.26 Niagara）
 - [[Wiki/Sources/Stock/NiagaraSystem]] — NiagaraSystem.h @ b6ab0dee9 (Phase 1.1,Asset 层顶点)
@@ -202,9 +187,6 @@
 
 ### 方法论
 - [[Readers/Methodology/从 Memex 到 LLM Wiki|方法论读本 — 本仓库为什么存在]] — LLM Wiki 方法论主题读本,详解三层架构/三操作/两文件/Memex-RAG-Wiki 脉络/Karpathy 三里程碑/本仓库如何具体化 (2026-04-20)
-
-### AI 美术
-- [[Readers/AIArt/LoRA 深度指南|LoRA 深度指南读本]] — 鸣潮美术向 LoRA 落地方案主题读本,从战略(离开 MJ)到技术(LoRA/caption/trigger)到工具(kohya+ComfyUI)到落地路线 (2026-04-20)
 
 ### AI 应用生态
 - [[Readers/AIApps/AI 应用生态全景 2026|AI 应用生态读本]] — AI Primer v2 主题读本,从 LLM 本质到 2026 技术栈三层全景,一次读完掌握整条主线 (2026-04-20)

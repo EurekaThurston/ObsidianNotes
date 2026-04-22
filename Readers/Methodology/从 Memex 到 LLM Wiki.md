@@ -383,7 +383,7 @@ Karpathy 在推文中首次命名:
 | 层 | 本仓库路径 | 说明 |
 |---|---|---|
 | **Raw** | `Raw/Articles/`、`Raw/Notes/`、`Raw/Papers/`、`Raw/Books/`、`Raw/Assets/` | 按源类型分子目录 |
-| **Wiki** | `Wiki/Concepts/`、`Wiki/Entities/`、`Wiki/Sources/`、`Wiki/Syntheses/` | 按页面类型分子目录;每类下按**主题**建子文件夹(`Methodology/` `UE4/` `Niagara/` `AIArt/` `AIApps/` 等) |
+| **Wiki** | `Wiki/Concepts/`、`Wiki/Entities/`、`Wiki/Sources/`、`Wiki/Syntheses/` | 按页面类型分子目录;每类下按**主题**建子文件夹(`Methodology/` `UE4/` `Niagara/` `AIApps/` 等) |
 | **Schema** | `CLAUDE.md`、`code-roots.local.md`(不同步) | `CLAUDE.md` 是主 schema,本文件描述的方法论具体化 |
 
 特殊文件:
@@ -394,7 +394,7 @@ Karpathy 在推文中首次命名:
 **关键特色**(本仓库独有的扩展):
 
 1. **代码仓库纳管**(§9):本仓库纳管多个 UE 代码仓(stock / project-*),代码**不复制进 Raw**,而是从本机磁盘直接读,通过 `code-roots.local.md`(本机专用、不同步)维护绝对路径。这解决了"代码源太大不适合放 Raw,但仍想被 wiki 纳管"的问题
-2. **主题子目录**:`Entities/` 和 `Sources/` 下的 `Stock/` / `Project/` 子目录专门放代码实体/代码源摘要;其他主题(方法论、AIArt、AIApps 等)放 `Methodology/` 等子目录
+2. **主题子目录**:`Entities/` 和 `Sources/` 下的 `Stock/` / `Project/` 子目录专门放代码实体/代码源摘要;其他主题(方法论、AIApps 等)放 `Methodology/` 等子目录
 
 ### 5.2 `CLAUDE.md` 的角色:可执行的方法论
 
@@ -562,7 +562,7 @@ Karpathy 原文提到:index.md 在 **"~100 源、数百页"** 规模下够用,**
 
 ### 8.3 跨仓库引用
 
-不同主题(方法论 / Niagara / AIArt / AIApps)是否该**分开建独立 wiki**,还是**一个大 wiki 用 tag 区分**?
+不同主题(方法论 / Niagara / AIApps)是否该**分开建独立 wiki**,还是**一个大 wiki 用 tag 区分**?
 
 本仓库当前走"一个大 wiki + 主题子目录"路线。优点:跨主题联系(如 Karpathy 同时出现在 Methodology 和 AIApps)自然落地。缺点:单个 wiki 规模触顶更快。
 

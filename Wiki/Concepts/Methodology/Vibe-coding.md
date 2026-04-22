@@ -51,7 +51,6 @@ Vibe Coding 是 AI 编程范式演进 **Vibe → Spec → Harness** 三阶段的
 
 Vibe Coding 的思路在非编程场景也能借鉴,本质是"**先以最低摩擦跑起来,再在失败时加约束**":
 
-- 美术: 先用 MidJourney 随便抽卡(Vibe)→ 发现需要风格锁定时上 LoRA(Spec)→ 落地生产需要多 LoRA 组合 + 版本控制 + 审核(Harness,见 [[Wiki/Concepts/AIArt/Multi-lora-composition]])
 - 策划: 先让 AI 自由帮生成文案(Vibe)→ 发现语气不稳定时写提示词模板(Spec)→ 接入团队术语库 + 事实校验 + 统一风控(Harness)
 - 管理: 面对新业务先"放一组人随便跑"(Vibe),出方向后定 Spec,规模化时建 Harness
 

@@ -14,7 +14,7 @@ sources: 9
 
 ---
 
-## 当前主题（4 个）
+## 当前主题（3 个）
 
 ### 1. 知识库方法论（meta / bootstrap）
 
@@ -56,18 +56,7 @@ sources: 9
 - **`bForceSolo` 性能陷阱**:绕开 `FNiagaraSystemSimulation` 批量 Tick,"同 Asset 多实例" 典型场景性能退化可能数十倍
 - **`ANiagaraActor` 是纯 observer 模式示例**:66 行的 ComponentWrapperClass,只订阅 Component 的 `OnSystemFinished` 一个 delegate 决定生死,不持任何运行时状态
 
-### 3. AI 美术生成管线（LoRA / ComfyUI）
-
-面向鸣潮美术向 TA 的落地方案，从 MidJourney + tag 库逐步迁移到 ComfyUI + 自训 LoRA。
-
-📖 **主题读本（推荐初读）**：[[Readers/AIArt/LoRA 深度指南]] — 从战略（离开 MJ 的三个结构性动因）到技术（LoRA 原理 + 基座选型 + caption 反常识 + 多 LoRA 组合）到工具（kohya_ss + ComfyUI）到工程落地（6 个月路线图 + 合规），一次读完掌握全链路。
-
-- 核心源：[[Wiki/Sources/AIArt/Lora-deep-dive]]（2026-04，Eureka × Claude 撰写）
-- 技术路径：[[Wiki/Concepts/AIArt/Lora|LoRA]] + [[Wiki/Entities/AIArt/Illustrious-XL|Illustrious/NoobAI]] 基座 + [[Wiki/Entities/AIArt/Kohya-ss|kohya_ss]] 训练 + [[Wiki/Entities/AIArt/ComfyUI|ComfyUI]] 部署
-- 关键洞察：[[Wiki/Concepts/AIArt/Caption-strategy|Caption 策略反常识]]
-- **当前阶段：准备期**（评估/选型中，未开始 MVP 训练）
-
-### 4. AI 应用生态（2026-04 新增）
+### 3. AI 应用生态（2026-04 新增）
 
 **面向**：对 AI 完全没概念的非开发角色（美术、设计、策划、管理者）+ 开发者的主线脉络梳理。
 
@@ -86,8 +75,6 @@ sources: 9
 ## 跨主题联系
 
 - **方法论 → AI 应用生态**：本 wiki 正是"LLM Wiki 方法论"本身；AI Primer 则是我们用这套方法论 ingest 的第一份广域综合型源材料。
-- **AI 应用 → AI 美术**：AI Primer 为 AI 美术管线提供了术语和心智模型的全局坐标——LoRA/基座模型都是 LLM/Transformer 生态的应用分支。
-- **方法论 → AI 美术**：同一 wiki 自证了"LLM 可以管理跨领域知识库"的假设。
 - **Niagara ↔ AI**：目前无实质交集，未来可能涉及 Niagara GPU 模拟路径对 AI 推理的借鉴。
 
 ---
@@ -120,10 +107,6 @@ Niagara 源码学习 (UE 4.26)
     │   └── FNiagaraSystemSimulation  ← 同 Asset 多实例批量 Tick 调度
     └── Niagara 学习路径 (10 阶段, **Phase 0-10 全部完成 ✅**)
 
-AI 美术 (LoRA/ComfyUI)
-    ├── 概念：LoRA / 基座选型 / Caption / Trigger Word / Multi-LoRA
-    └── 实体：Illustrious / NoobAI / Flux / Kohya-ss / ComfyUI
-
 AI 应用生态 (2026-04 新增)
     ├── 基础
     │   ├── LLM
@@ -147,7 +130,7 @@ AI 应用生态 (2026-04 新增)
 
 - **规模边界**：当前约 37 页（AIApps 一次性新增 11 页），index.md 还够用；200 页时怎么办？
 - **Concept 页跨仓共享**：`stock` 仓 ingest 时 UE4 概念页能复用多少？
-- **跨主题链接**：AIApps 与 Methodology 已经开始交叉（Karpathy、RAG），而 AIArt / Niagara 仍相对独立——是特性还是可以挖深？
+- **跨主题链接**：AIApps 与 Methodology 已经开始交叉（Karpathy、RAG），而 Niagara 仍相对独立——是特性还是可以挖深？
 
 ### 关于 Niagara 路径
 
@@ -167,12 +150,6 @@ AI 应用生态 (2026-04 新增)
   - `OverrideSystemUserVariableStaticMesh`(给 `UStaticMesh*` 而非 Component)的 transform 采样处理 → Phase 7
   - `VectorVM FastPath` 注册了哪些算子 → Phase 5
 
-### 关于 AI 美术
-
-- **基座选型实时性**：每 3-6 月要重查一次当前 state
-- **许可变动追溯**：Illustrious 条款历史变动是否影响已训 LoRA？
-- ~~**鸣潮团队落地阶段**~~：已确认 = **准备期**（2026-04-19）
-
 ### 关于 AI 应用生态
 
 - **MCP 治理细节**：是否已捐赠基金会/哪个基金会——v2 采取了模糊措辞，待官方公告核实。
@@ -189,7 +166,6 @@ AI 应用生态 (2026-04 新增)
 - 操作规程：[[CLAUDE]]
 - 时间线日志：[[log]]
 - **方法论原文**：[[Raw/Notes/Karpathy Wiki 方法论]]
-- **AI 美术路线源**：[[Raw/Notes/Lora_Deep_Dive]]
 - **AI 扫盲手册 v2**：[[Raw/Articles/AI 应用技术发展脉络与核心概念扫盲手册 v2]]
 
 ---
@@ -197,6 +173,5 @@ AI 应用生态 (2026-04 新增)
 ## 下一步建议
 
 - ~~**Niagara Phase 10**~~ 已完成。Niagara 学习路径 10 Phase 全部打通。
-- **AI 美术**：验证本机 kohya_ss 环境，跑第一个 MVP LoRA
 - **AI 应用**：按需补建 Transformer / Function Calling / Spec Coding 等剩余待建页(Embedding / Vibe Coding 已在 2026-04-20 补建)
-- **lint**：运行 "帮我 lint 一下 wiki"，检查 4 个主题的内部一致性、特别是新建 AIApps 主题的交叉引用闭环、Phase 1 新增 10 页的 back-link 情况
+- **lint**：运行 "帮我 lint 一下 wiki"，检查 3 个主题的内部一致性、特别是新建 AIApps 主题的交叉引用闭环、Phase 1 新增 10 页的 back-link 情况
