@@ -5,129 +5,113 @@
 
 ---
 
-## [2026-04-23] refactor | 删除全部 Lora / AI 生图相关内容(用户请求)
+## [2026-04-24] refactor | AI 特效贴图工具 TextureTool/ → AIApps/ 归并
 
-- 触发:用户"帮我把所有 Lora/生图相关的内容都删了吧"
-- 删除目录(整删):
-  - `Readers/AIArt/`(含 `LoRA 深度指南.md`)
-  - `Wiki/Concepts/AIArt/`(6 页:Lora / Multi-lora-composition / Caption-strategy / Trigger-word / Base-model-selection / Training-vs-inference)
-  - `Wiki/Entities/AIArt/`(6 页:ComfyUI / DreamShaper-XL / Flux / Illustrious-XL / Kohya-ss / NoobAI-XL)
-  - `Wiki/Sources/AIArt/`(`Lora-deep-dive.md`)
-- 删除文件:`Raw/Notes/Lora_Deep_Dive.md` — ⚠️ 属 `Raw/` 只读区(§7.1),破例删除由用户明确授权
-- 更新引用(清理指向已删页面的 wikilink / 主题计数):
-  - [[README]] — 移除 AI 美术管线主题行与读本入口行;主题数 4→3
-  - [[index]] — 移除 AI 美术 Entities / Concepts / Sources / Readers 四个分区;Overview 行主题数 4→3;head 最后更新行改为本次 refactor 说明
-  - [[Wiki/Overview]] — 移除第 3 节"AI 美术生成管线"整节;主题数 4→3;跨主题联系移除 AI 应用↔AI 美术、方法论↔AI 美术两条;知识图移除 "AI 美术" 子树;开放问题移除"关于 AI 美术"整节;入口移除 Lora_Deep_Dive 行;下一步建议移除"AI 美术"行
-  - [[Wiki/Concepts/Methodology/Vibe-coding]] §"对非开发角色的适用" 移除美术 LoRA 示例一行
-  - [[Readers/AIApps/AI 应用生态全景 2026]] §3.2 多模态 Diffusion 括注改为无链注;尾部"跨主题联系"移除 AIArt 读本链
-- 保留:历史 log 条目原样保留(bookkeeping 是灵魂,§7 原则 4);本条作为删除存档
-- 不动:`Raw/Articles/AI 应用技术发展脉络与核心概念扫盲手册 v2.md`(广域 AI 扫盲文,仅顺带提 Stable Diffusion/Midjourney,且是 Raw 只读)
-- 自验:
-  - Glob `**/*{Lora,lora,LoRA,LORA}*` ✓ 无残留(除本 log 条目 + 历史条目)
-  - Glob `Readers/AIArt`、`Wiki/Concepts/AIArt`、`Wiki/Entities/AIArt`、`Wiki/Sources/AIArt` ✓ 四目录已消失
-  - Glob `Raw/Notes/Lora_Deep_Dive.md` ✓ 已消失
+- 触发:用户决定本议题作为"项目级 AI 应用落地"的又一实例,与 [[Wiki/Syntheses/AIApps/Artist-code-qa-bot]] 同族,不单开一级主题目录
+- 移位(2 页):
+  - `Wiki/Syntheses/TextureTool/design.md` → [[Wiki/Syntheses/AIApps/Ai-texture-tool-design]](同时按 §6 改名为小写连字符)
+  - `Readers/TextureTool/让 AI 接特效贴图的长尾需求 - 架构与 GitHub 生态.md` → [[Readers/AIApps/让 AI 接特效贴图的长尾需求 - 架构与 GitHub 生态]](文件名不变)
+- 删除空目录:`Wiki/Syntheses/TextureTool/`、`Readers/TextureTool/`
+- 更新链接:
+  - 读本内 2 处 `[[Wiki/Syntheses/TextureTool/design]]` → 新路径
+  - 综合页 1 处 dead link `[[Raw/Notes/Ai-texture-tool-design-conversation|本次对话]]`(该 Raw 源从未创建)趁重构修为引用 log 条目
+- 更新 [[index]]:
+  - Readers "### 特效贴图 AI 工具" 分区合并进 "### AI 应用生态"
+  - Syntheses 同上
+  - header 更新
+- 历史 log 条目(§3.1 step 9 的"本轮"规则不适用于已归档条目)保留原路径叙述,不追溯修改——以下条目的路径在当时属实:
+  - `[2026-04-24] synthesis | AI 特效贴图工具主题读本` 内 [[Readers/TextureTool/...]]
+  - `[2026-04-24] synthesis | AI 特效贴图工具设计 + GitHub 现成项目调研` 内 [[Wiki/Syntheses/TextureTool/design]]
+- 建议:今后"项目级 AI 应用落地"议题(美术/策划/TA 向 AI 工具)继续归 AIApps/,不新开主题目录,保持与 Concepts/Readers/Syntheses 的 AIApps 分区一致
+- 自验:Grep `TextureTool` 仅剩 log 历史条目;Glob 新路径 2 文件确认存在
 
-## [2026-04-23] synthesis | AI 画图入门地基 — 训练-推理二元模型概念页
+---
 
-- 触发:用户反馈"我对 AI 生图以及训练完全没有任何概念"——发现之前所有讨论都默认了"训练 vs 推理"的心智模型,但读本从未正面讲过。这是 [[CLAUDE]] §3.2 query 沉淀最典型的案例(用户问的不是"找个现成项目",而是"帮我补齐地基")
-- source: 无新 raw(基于对话归纳 + 生活化比方),纯 synthesis
-- 新建(1):
-  - [[Wiki/Concepts/AIArt/Training-vs-inference]] — 训练端 vs 推理端完整心智模型;美术学生比喻 + 烘焙坊比方 + 两端对照表 + 衔接流程图 + 术语对号入座 + 角色分工 + 4 个常见混淆;aliases 含中文(训练-推理二元模型等)
+## [2026-04-24] synthesis | AI 特效贴图工具主题读本
+
+- 触发:用户显式要求"出个读本"(§3.4 触发条件 4)
+- 新建(1 页):
+  - [[Readers/TextureTool/让 AI 接特效贴图的长尾需求 - 架构与 GitHub 生态]] — 线性读本,9 节叙事链(问题→AI 解→三层架构→LLM 做路由→VFX 四重数据语义→GitHub 生态分类→POC→风险→全景与同构)+ 8 题自检(综合/反推/取舍/假设,非检索浅题)+ 留下的问题 + 深入阅读索引
 - 更新:
-  - [[Readers/AIArt/LoRA 深度指南]] — 开头追加 `[!note]+` callout "完全没接触过 AI 画图?先读这个",指向新 Concept 页;footer 追加本轮说明
-  - [[Wiki/Entities/AIArt/Kohya-ss]] — 开头定义 quote 追加"训练-推理二元模型里训练端的代表工具"定位说明
-  - [[Wiki/Entities/AIArt/ComfyUI]] — 开头定义 quote 追加"推理端的代表工具"定位说明
-  - [[index]] — AI 美术 Concepts 分区把新概念放最顶部(地基位置);footer 改为本轮说明
-- 要点:
-  - **训练 vs 推理是两件事**,输入/输出/工具/人员/频率全不同
-  - 训练:TA 跑,月级,吐 `.safetensors` 文件(100-200MB,可拷贝);推理:美术用(经飞书),秒级,吐图
-  - **关键生活化比方**:AI = 刚来的美术学生;训练 = 教;推理 = 用;LoRA = 学徒本身(文件形态)
-  - **交付物思维**:训练端和推理端不同时跑,`.safetensors` 是前者交付给后者的文件,之后推理端吃这份产出直到下一版 LoRA 训好
-  - 所有术语(caption/trigger/prompt/sampler/learning_rate 等)都可以对号入座到训练端或推理端,一次讲清理解就固化
-- 不产读本:本页本身就是**入门概念页**,功能已覆盖"一次读完即掌握";如果未来扩展到 Fine-tuning / DreamBooth / LoRA 变体对比,再考虑独立读本
-- 不产新 Source:无新 raw
-- 不触 `Raw/Notes/Lora_Deep_Dive.md`(§7.1 只读)
-- 自验:
-  - Glob `Wiki/Concepts/AIArt/Training-vs-inference.md` ✓ 新建存在
-  - Grep Reader 的 `[!note]+ 完全没接触过 AI 画图` callout ✓ 存在
-  - Grep Kohya-ss.md 的"训练端的代表工具" ✓ 存在
-  - Grep ComfyUI.md 的"推理端的代表工具" ✓ 存在
-  - Grep index.md 新概念条目 ✓ 存在(AI 美术 Concepts 最顶部)
+  - [[index]] — Readers 新增"特效贴图 AI 工具"分区 + header 更新
+- 关键叙事选择:
+  - 开题用"美术需求长尾 + 你不擅长 DCC 开发"切入,立刻定问题
+  - 反直觉点:"组件齐全,你要写的不到 20%"——避免美术 AI 工具"从零搭"的幻觉
+  - 最致命陷阱单独成节(§4):distortion map 喂 Real-ESRGAN 的完整事故链,作为 data texture guardrail 的情感锚点
+  - 色彩空间错误命名"最隐蔽"——不报错、只"亮度怪怪的"、半年后才爆雷——这是读本级别需要讲清的长周期坑
+  - 全景回看对照 [[Readers/AIApps/给美术做代码问答机器人 - 从 grep 到 wiki 复合记忆]],抽象出"项目级 AI 应用落地通用套路"5 条,提升读本级别的归纳价值
+  - 自检 8 题全部综合/反推/取舍/假设题,典型:事故链反推、基座选型取舍、通用套路抽象、5 句话向非技术解释
+- open questions(读本 §议题留下的问题):
+  - data-aware 超分的学术方案
+  - 与 Niagara/Material 集成
+  - 批处理规划器
+  - ComfyUI vs 自建 UI 的长期取舍
+  - 冷启动信任塑造
 
 ---
 
-## [2026-04-23] synthesis | LoRA 基座选型二次增量 — 按训练目标分流(角色/场景/综合)+ DreamShaper XL 入库
+## [2026-04-24] synthesis | AI 特效贴图工具设计 + GitHub 现成项目调研
 
-- 触发:用户给了一张 LoL Wild Rift painterly 场景原画,追问"训练场景哪个模型更好"。发现前一轮增量默认了"角色向"前提,漏了场景这个维度——属于 §3.2 query 沉淀为 synthesis
-- source: 无新 raw(基于对话 + WebSearch 社区共识 + Civitai 场景模型实测数据),纯 synthesis
-- 新建(1):
-  - [[Wiki/Entities/AIArt/DreamShaper-XL]] — SDXL 架构 painterly / concept art 向基座;纯场景 LoRA 首选;30-50 行紧凑约定
+- 触发:用户提出"想做 AI 特效贴图处理工具,美术需求千奇百怪(缩放/去模糊/四方连续/...),不想每个新需求写代码",显式要求归档设计 + 调研 GitHub 现成项目
+- 新建(1 页):
+  - [[Wiki/Syntheses/TextureTool/design]] — 综合:三层工具架构(L1 原子/L2 模型/L3 代码沙箱)+ VFX 数据语义 guardrail + GitHub 项目调研(按 agent 框架/Adobe MCP/ComfyUI 生态/四方连续专项分类)+ POC 路径 + 与 Artist-code-qa-bot 对照
 - 更新:
-  - [[Readers/AIArt/LoRA 深度指南]] — 新增 §3.3.5 按训练目标类型分流(角色/场景/综合);§3.7 小结追加场景向主推路径;§13 关键洞察 +1 条(基座选型是两个问题,先选目标类型);footer 追加二次增补说明
-  - [[Wiki/Concepts/AIArt/Base-model-selection]] — 新增"按训练目标类型分流"大节(anime 基座场景弱项机理 + 按目标类型推荐表 + 综合 LoRA 路线 1/2 + 决策流);相关区 5 条改 6 条含 DreamShaper;开放问题 +2
-  - [[Wiki/Entities/AIArt/NoobAI-XL]] — 新增"场景向训练是弱项" warning callout,指向 DreamShaper
-  - [[Wiki/Entities/AIArt/Illustrious-XL]] — 同上场景弱项说明
-  - [[index]] — AIArt Entities 分区新增 DreamShaper-XL 登记;顶部"最后更新"改为本轮说明
-- 要点:
-  - **anime 基座场景是结构性弱项**:NoobAI 的 ~1300 万训练图 90%+ 带角色 tag,纯场景 / 环境 / 建筑先验严重欠采
-  - **painterly 游戏 concept(LoL / 米哈游 / 鸣潮 keyart)更接近 Artstation 分布而非 Pixiv**:anime 基座最不擅长的分布
-  - **场景首选 DreamShaper XL**:专为 concept art / 奇幻场景 fine-tune 过,和游戏 concept 风格最贴
-  - **综合 LoRA 优先走路线 2**(双基座双 LoRA + 生产端 ComfyUI 路由):char → NoobAI / scene → DreamShaper;比单基座混训保真度高得多
-  - **决策流**:纯场景占比 <30% 用路线 1, 30-60% 必须路线 2, >60% 场景基座直接选 DreamShaper
-  - **工具链零迁移成本**:SDXL 架构通用,只换 .safetensors 路径 + caption 格式切自然语言
-- 不产新读本:议题已有 [[Readers/AIArt/LoRA 深度指南]],本轮仍是读本 §3 增量深化
-- 不产新 Source:无新 raw
-- 不触 `Raw/Notes/Lora_Deep_Dive.md`(§7.1 只读)
-- 自验:
-  - Glob `Wiki/Entities/AIArt/DreamShaper-XL.md` ✓ 新建存在
-  - Glob `Readers/AIArt/LoRA 深度指南.md` ✓ 已含 §3.3.5
-  - Glob `Wiki/Concepts/AIArt/Base-model-selection.md` ✓ 已含"按训练目标类型分流"
-  - Grep NoobAI-XL 的"场景向训练是弱项"callout ✓ 存在
-  - Grep Illustrious-XL 的"场景训练同样是弱项" ✓ 存在
-  - Grep index.md DreamShaper-XL 登记条目 ✓ 存在
+  - [[index]] — Syntheses 新增"特效贴图 AI 工具"分区 + header 更新
+- 关键发现(GitHub 生态 2026-04):
+  - **架构范本**:GenArtist(NeurIPS 2024)用 MLLM 分解子任务树 + 自验证;AgentLego 提供 LLM 视觉工具 API 库
+  - **ComfyUI 很可能是正解**:twwch/comfyui-workflow-skill 已经支持"自然语言 → ComfyUI workflow JSON",且作为 Claude Code skill 工作 —— 跟本仓 Claude 生态最合拍
+  - **四方连续已成熟**:sagieppel 提供经典 + SD inpaint 双方法;camenduru/seamless、brick2face、dream-textures、Tiled Diffusion(CVPR 2025)各有覆盖
+  - **Adobe MCP** 可行但不推荐独占后端:adb-mcp 已验证 Claude Desktop,但 PS 不擅长 VFX 数据贴图
+- 关键设计选择:
+  - LLM 做路由,不碰像素——与 Artist-code-qa-bot 同构
+  - 高频下沉 L1,长尾保持 L3 代码兜底——避免"所有需求都做成工具"的工程灾难
+  - VFX 特有 guardrail 写进 system prompt:通道语义 / 位深 / alpha 预乘 / 色彩空间 / tile 验证
+  - data texture(flow map / distortion / packed mask) 禁用 AI 超分模型
+- 留下的问题(见综合文末):VFX 数据贴图的 data-aware 超分、和 Niagara/Material 工作流衔接、批处理 vs 交互、ComfyUI 作基座 vs 自建 UI 长期取舍
+- 未产出读本:本轮仅 1 新原子页,未触发 §3.4 读本产出条件
 
 ---
 
-## [2026-04-23] synthesis | LoRA 基座选型增量 — NoobAI vs Illustrious 三维度 + Epsilon/v-pred + 先验反杀
+## [2026-04-24] ingest | 代码检索与美术问答机器人对话 — Claudian 的 agentic grep 方法论 + 项目级落地设计
 
-- 触发:用户连续两轮对话深挖"NoobAI 是不是比 Illustrious 更好"+"按出图效果/易用性/风格保持三维度对比",产生有长期价值的综合判断,按 [[CLAUDE]] §3.2 沉淀入 wiki
-- source: 无新 raw(基于对话 + WebSearch 社区共识),纯 synthesis
-- 更新(不 create):
-  - [[Readers/AIArt/LoRA 深度指南]] — §3 基座选型扩展:新增 §3.3.1 三维度对决 / §3.3.2 Epsilon vs v-pred 分岔 / §3.3.3 先验反杀陷阱 / §3.3.4 双基座 A/B 推荐路径;§3.7 小结调整;§13 关键洞察 +1 条(基座先验 vs LoRA 独特性拉锯);footer 追加 2026-04-23 增补说明
-  - [[Wiki/Concepts/AIArt/Base-model-selection]] — 新增三节:三维度决策 / Epsilon vs V-Pred / 先验反杀 + 推荐决策路径;开放问题 +2 条
-  - [[Wiki/Entities/AIArt/NoobAI-XL]] — 新增 "两个变体" 表;"相对于 Illustrious 的优势" 改 3 条为 4 条并加劣势警告 callout;适用场景改写含场景 A/B 判定;aliases +3(Epsilon/V-Pred/nbep11);开放问题 +2
-  - [[Wiki/Entities/AIArt/Illustrious-XL]] — 新增 "反直觉优势:弱先验 → 独特风格 LoRA 更纯净" 一节
-  - [[index]] — 顶部"最后更新"改为 2026-04-23 并说明本次 synthesis 范围
+- source: [[Raw/Notes/代码检索与美术问答机器人对话]](对话归纳,非逐字)
+- 触发:用户了解到同事用"grep"概念 + Claude Code + OpenClaw 检索 UE 项目源码成功,引出"给美术做代码问答机器人"的项目级 AI 落地方向;用户显式要求"记录到知识库里,放 AIApps 下"
+- 新建(4 页):
+  - [[Raw/Notes/代码检索与美术问答机器人对话]] — 原始对话归纳
+  - [[Wiki/Sources/AIApps/Code-retrieval-conversation]] — 源摘要
+  - [[Wiki/Concepts/AIApps/Agentic-grep]] — 新概念:agentic grep 方法论 + 三件套 + vs RAG + 未知 symbol 四破解策略 + 训练数据先验"作弊成分"
+  - [[Wiki/Syntheses/AIApps/Artist-code-qa-bot]] — 项目级落地设计综合:架构 / 三 persona / 沉淀回路 / 术语桥梁 / 部署风险 / POC
+- 同步产出读本(§3.4 触发条件 2 精神满足:本轮 4 原子页,跨多源综合):
+  - [[Readers/AIApps/给美术做代码问答机器人 - 从 grep 到 wiki 复合记忆]] — 线性读本,Dithered LOD Transition 作贯穿 running example,8 题自检(综合/反推/取舍/假设题,非检索浅题)
+- 更新:
+  - [[Wiki/Concepts/Methodology/Rag]] — 相关区加 Agentic-grep 对照链接
+  - [[Wiki/Overview]] — AI 应用生态区加 Agentic-grep 概念 + Artist-code-qa-bot 项目级落地设计条目
+  - [[index]] — Concepts/AI 应用生态 + Sources + Syntheses + Readers 四分区各登记 + header 更新
+- 关键叙事选择:
+  - 反直觉开题:"我同事说 grep"——引出"AI 其实是自己写 rg 命令,不是 RAG"
+  - 范本展示:Dithered LOD Transition demo 全链路追踪(UI → shader 宏 → discard → stencil 优化 → mobile 性能警告),6 文件 path:line 证据
+  - 诚实的弱点:训练数据先验对 UE 原生 symbol "作弊",换项目自定义 symbol 完全失效——这一点用户追问得很准,读本 §4 专门讲
+  - 长期出路:wiki 作为术语桥梁 + 长期记忆,术语对照表是"复利巨大"的核心资产
+  - 部署纪律:禁幻觉放第一位("美术对代码无免疫力,一次瞎说污染半年信任")
 - 要点:
-  - **三维度赢家**:出图效果 NoobAI ✓ / 易用性 NoobAI Epsilon ✓ / 风格保持 **视数据独特度而定**(反直觉)
-  - **Epsilon vs v-pred 分岔比"NoobAI vs Illustrious"影响更大**:v-pred 需 `--v_parameterization` + `--zero_terminal_snr` + CFG Rescale,非 drop-in
-  - **反直觉点**:NoobAI 见过 1300 万图,先验极强,对独特风格会"反杀" LoRA — 社区 `Style Strength Controller` LoRA 的存在本身印证此问题
-  - **决策方法论**:不要纯理论推,第一轮同数据集双基座 A/B 训两版,半天用事实决策
-- 不产新原子页:所有新洞察都能落在既有 Concept/Entity 页里,避免碎片化;不产 Source(无新 raw);不触 `Raw/Notes/Lora_Deep_Dive.md`(§7.1 只读)
-- 不产读本:议题本身已有 [[Readers/AIArt/LoRA 深度指南]],本轮是对读本 §3 的增量深化,非新读本触发
+  - Agentic grep = Grep + Glob + Read 三件套,字面匹配,无 embedding 无索引,零维护
+  - vs RAG:代码域(符号化系统)agentic grep 更准,自然语言文档 RAG 仍优
+  - 未知 symbol 四策略:锚点反推(LOCTEXT / DisplayName) > 命名约定穷举 > 种子爬行 > 停下追问
+  - Wiki 的 compounding 效应:alias / tag 本身就是词汇桥;术语对照表是核心产物
+  - Persona 分层:`/ask-artist` / `/ask-tech-artist` / `/ask-programmer` 同底座不同粒度
+  - POC 最小路径:一子系统(材质 static switch)+ 3-5 美术 + 2 周 + 四评估指标(采纳率/幻觉率/节省时间/沉淀产出)
+- open questions(留在读本 §议题留下的问题):
+  - POC 评估基线如何量化(无对照组)
+  - 冷启动(自定义代码未 ingest 前挫伤信心)
+  - 蓝图/uasset 不可 grep(显著盲区)
+  - 更新漂移 + lint 周期
+  - multi-agent 架构升级拐点
 - 自验:
-  - Glob `Readers/AIArt/LoRA 深度指南.md` ✓ 存在且已含 §3.3.1-3.3.4 新内容
-  - Glob `Wiki/Concepts/AIArt/Base-model-selection.md` ✓ 存在
-  - Glob `Wiki/Entities/AIArt/NoobAI-XL.md` ✓ 存在
-  - Glob `Wiki/Entities/AIArt/Illustrious-XL.md` ✓ 存在
-  - Glob `index.md` ✓ 存在
-  - `Raw/Notes/Lora_Deep_Dive.md` 未动(§7.1 遵守)
-
----
-
-## [2026-04-22] synthesis | InfoFeeds 周期性推送系统方案设计
-
-- 触发:用户想"周期性接收新内容推送,与知识库主题和权重相关,推到飞书机器人"
-- 整轮讨论决策点:
-  1. 独立目录 → 进化为**独立 private repo** `F:\Cortex\InfoFeeds`(隐私数据,避免 public vault 暴露阅读指纹)
-  2. 权重计算纳入 Readers + 手动 overrides 覆盖层(读本系数比原子页高 3-5×)
-  3. 防茧房用 ε-greedy 60 核心 / 25 邻接 / 15 远场,creator 白名单 + curated 远场源
-  4. VFX 视觉内容通路:creator 白名单 + 社交度量粗筛 + 飞书卡片带缩略图(MVP 不做 LLM 多模态)
-  5. 云端用 GitHub Actions 但**不调 Claude**——纯 Python 规则,Max 订阅留给本地 Claudian 做重算/归档/体检
-- 新建:[[Readers/InfoFeeds/周期性 Feed 推送系统方案设计]]
-- 更新:[[index.md]](Readers 分区新增 InfoFeeds)、本 log
-- 实际文件系统:`F:\Cortex\` 已建,`F:\Cortex\InfoFeeds\` 已就位;`F:\ObsidianNotes` → `F:\Cortex\ObsidianNotes` 需用户手动完成(Obsidian 进程锁)
-- 下一步:用户完成 vault 迁移 → 新会话 Claudian 读方案文档 §4 阶段 1 → bootstrap topic-profile
+  - Glob [[Raw/Notes/代码检索与美术问答机器人对话]] ✓
+  - Glob [[Wiki/Sources/AIApps/Code-retrieval-conversation]] ✓
+  - Glob [[Wiki/Concepts/AIApps/Agentic-grep]] ✓
+  - Glob [[Wiki/Syntheses/AIApps/Artist-code-qa-bot]] ✓
+  - Glob [[Readers/AIApps/给美术做代码问答机器人 - 从 grep 到 wiki 复合记忆]] ✓(见下步)
 
 ---
 
@@ -817,17 +801,6 @@
   - [[Wiki/Syntheses/Methodology/How-to-prompt-ai-chat]] — 详细版（心智模型 + 5 要素 + 8 技巧 + 反模式 + 好/差对照 + 团队推广经验）
 - 更新:[[index]](Syntheses 新增"方法论"分区)
 - 核心洞察:糟糕的 prompt 来自错误的心智模型（把 AI 当搜索引擎/全知神谕）——校正心智模型后,技巧都是推论
-
-## [2026-04-19] ingest | LoRA 深度指南 — AI 美术生成管线首次入驻
-- source: [[Raw/Notes/Lora_Deep_Dive]]（鸣潮美术向 TA 的 LoRA 落地方案）
-- 新建主题目录:`Wiki/{Concepts,Entities,Sources}/AIArt/`
-- 新建:
-  - Source: [[Wiki/Sources/AIArt/Lora-deep-dive]]
-  - Concepts (5): [[Wiki/Concepts/AIArt/Lora]]、[[Wiki/Concepts/AIArt/Base-model-selection]]、[[Wiki/Concepts/AIArt/Caption-strategy]]、[[Wiki/Concepts/AIArt/Trigger-word]]、[[Wiki/Concepts/AIArt/Multi-lora-composition]]
-  - Entities (5): [[Wiki/Entities/AIArt/Illustrious-XL]]、[[Wiki/Entities/AIArt/NoobAI-XL]]、[[Wiki/Entities/AIArt/Flux]]、[[Wiki/Entities/AIArt/Kohya-ss]]、[[Wiki/Entities/AIArt/ComfyUI]]
-- 更新:[[index]](新增 AI 美术 Concepts + Entities + Sources 三个分区)、[[Wiki/Overview]](从 1 主题扩至 3 主题综合,重写知识图)
-- 要点:wiki 首次覆盖 AI 美术生成领域,和既有方法论/Niagara 主题完全独立；核心洞察是 "LoRA 让游戏团队把美术 DNA 固化成可版本化的文件"、Caption 反常识策略、基座选型的许可陷阱（Flux Dev 非商用）
-- 下一步:用户可能要验证本机 kohya_ss 环境,或询问具体章节的实践细节
 
 ## [2026-04-18] refactor | raw/wiki 顶层+笔记首字母大写化、UE 全大写
 - 变更:顶层目录 `raw/` → `Raw/`、`wiki/` → `Wiki/`；所有 raw 子目录 `Articles/Papers/Books/Notes/Assets/`

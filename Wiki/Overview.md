@@ -10,7 +10,7 @@ sources: 9
 
 > Wiki 的顶层综合视图。每次 ingest 有重大影响时,LLM 会在这里更新"当前的最佳理解"。
 
-最后更新：2026-04-20
+最后更新：2026-04-24
 
 ---
 
@@ -65,8 +65,9 @@ sources: 9
 - 核心源：[[Wiki/Sources/AIApps/AI-primer-v2]]（2026-04-19，Eureka × Claude 撰写，v2）
 - 专题综合：[[Wiki/Syntheses/AIApps/Prompt-context-harness-evolution|Prompt → Context → Harness 三段论]](方法论演进专题)
 - 基础概念：[[Wiki/Concepts/AIApps/Llm|LLM]]、[[Wiki/Concepts/AIApps/Hallucination|幻觉]]、[[Wiki/Concepts/AIApps/Context-window|上下文窗口 & Context Rot]]、[[Wiki/Concepts/AIApps/Reasoning-model|推理模型]]
-- Agent 时代：[[Wiki/Concepts/AIApps/Ai-agent|AI Agent]]、[[Wiki/Concepts/AIApps/Mcp|MCP]]、[[Wiki/Concepts/AIApps/Harness-engineering|Harness Engineering]]、[[Wiki/Concepts/AIApps/Agent-skills|Agent Skills]]
+- Agent 时代：[[Wiki/Concepts/AIApps/Ai-agent|AI Agent]]、[[Wiki/Concepts/AIApps/Mcp|MCP]]、[[Wiki/Concepts/AIApps/Harness-engineering|Harness Engineering]]、[[Wiki/Concepts/AIApps/Agent-skills|Agent Skills]]、[[Wiki/Concepts/AIApps/Agentic-grep|Agentic Grep]]
 - 落地产品：[[Wiki/Entities/AIApps/OpenClaw|OpenClaw（小龙虾）]]
+- 项目级落地设计：[[Wiki/Syntheses/AIApps/Artist-code-qa-bot|给美术做代码问答机器人]] — agentic grep + wiki 复合记忆,配套读本 [[Readers/AIApps/给美术做代码问答机器人 - 从 grep 到 wiki 复合记忆]] 含 Dithered LOD Transition 贯穿案例(2026-04-24)
 
 **核心洞察**：2026 年 AI 技术栈三层结构（Model / Harness / Skills）中，模型层正在商品化，真正差异化竞争在 Harness 和 Skills 两层。用户第一纪律：AI 给的具体事实必须验证。
 

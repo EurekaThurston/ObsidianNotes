@@ -3,7 +3,7 @@
 > 本文件是整个 wiki 的内容目录。LLM 每次 ingest 都会更新。
 > 查询时先读这里,再深入相关页面。
 
-最后更新:2026-04-23（refactor:按用户要求删除全部 Lora / AI 生图相关内容——`Readers/AIArt/`、`Wiki/Concepts/AIArt/`、`Wiki/Entities/AIArt/`、`Wiki/Sources/AIArt/` 全目录移除;`Raw/Notes/Lora_Deep_Dive.md` 删除;README / Overview / Vibe-coding / AIApps 读本引用清理）
+最后更新:2026-04-24（refactor:AI 特效贴图工具 TextureTool/ → AIApps/ 归并;前两轮产出:综合 + 读本共 2 页移位并更新链接）
 
 ---
 
@@ -104,11 +104,13 @@
 - [[Wiki/Concepts/AIApps/Mcp|MCP]] — Model Context Protocol,AI 世界的 USB-C 协议 (来源:1)
 - [[Wiki/Concepts/AIApps/Harness-engineering|Harness Engineering]] — AI 的操作系统;四大支柱:上下文/约束/反馈/熵管理 (来源:1)
 - [[Wiki/Concepts/AIApps/Agent-skills|Agent Skills]] — 专业知识打包为可复用模块,渐进式披露三层加载 (来源:1)
+- [[Wiki/Concepts/AIApps/Agentic-grep|Agentic Grep]] — LLM 自己临场 grep 代码库;Grep+Glob+Read 三件套,vs RAG 代码域更准;核心弱点是关键词依赖,破解四策略(锚点/约定/种子/追问) (来源:1)
 
 ## Sources(源摘要)
 *每个 raw 文件或代码源对应一页摘要。按时间倒序。*
 
 ### 文章 / 笔记
+- [[Wiki/Sources/AIApps/Code-retrieval-conversation]] — 代码检索与美术问答机器人对话,Claudian 的 agentic grep 方法论 + 项目级落地设计 (2026-04,note)
 - [[Wiki/Sources/AIApps/Multi-agent-conversation]] — Multi-agent 对话,Claudian 解释自己的多 agent 工作机制 (2026-04,note)
 - [[Wiki/Sources/AIApps/AI-primer-v2]] — AI 应用技术发展脉络与核心概念扫盲手册 v2 (2026-04,article)
 - [[Wiki/Sources/Methodology/Karpathy-llm-wiki]] — Karpathy 的 LLM Wiki idea file (2026-04,note)
@@ -191,9 +193,8 @@
 ### AI 应用生态
 - [[Readers/AIApps/AI 应用生态全景 2026|AI 应用生态读本]] — AI Primer v2 主题读本,从 LLM 本质到 2026 技术栈三层全景,一次读完掌握整条主线 (2026-04-20)
 - [[Readers/AIApps/为什么上下文有限反而必须切多 Agent|Multi-agent / Subagent 架构读本]] — "为什么上下文有限反而是必须切多 agent 的理由";三种病 / 第一性原理 / 子 agent 本质 / 四个次级收益 / 扁平扇出 / 决策矩阵 (2026-04-21)
-
-### InfoFeeds(自动化推送)
-- [[Readers/InfoFeeds/周期性 Feed 推送系统方案设计|Feed 推送系统方案设计]] — 飞书机器人日度 digest;vault 算主题权重 + 手动覆盖 + ε-greedy 防茧房 + VFX creator 白名单 + GitHub Actions 云端无 Claude;五决策点脉络 + 待办接力棒 (2026-04-22)
+- [[Readers/AIApps/给美术做代码问答机器人 - 从 grep 到 wiki 复合记忆]] — 项目级 AI 应用落地读本;agentic grep 三件套 + Dithered LOD Transition 贯穿案例 + 未知 symbol 四破解 + wiki 术语桥梁 + persona 分层 + 部署风险 + POC 最小路径 (2026-04-24)
+- [[Readers/AIApps/让 AI 接特效贴图的长尾需求 - 架构与 GitHub 生态]] — 项目级 AI 应用落地读本;三层架构(L1 原子/L2 模型/L3 代码沙箱)+ VFX 四重数据语义(通道/位深/alpha/色彩空间)+ 2026-04 GitHub 生态分类(架构范本/ComfyUI 基座/四方连续 5 方案)+ POC "四方连续+超分" 最小路径 + 与代码问答机器人同构对照 (2026-04-24)
 
 ### Niagara 源码学习
 - [[Readers/Niagara/Phase 0 - 上阵前的四层脑内地图|Phase 0 读本 — 上阵前的四层脑内地图]] — 把 UObject / Asset-Instance / Niagara-vs-Cascade / CPU-vs-GPU 四概念编成自下而上一条叙事链,一次读完掌握 Phase 1+ 所需全部前置 (2026-04-19)
@@ -216,6 +217,8 @@
 
 ### AI 应用生态
 - [[Wiki/Syntheses/AIApps/Prompt-context-harness-evolution|Prompt → Context → Harness 三段论]] — AI 工程方法论 2022-2026 演进主线叙事
+- [[Wiki/Syntheses/AIApps/Artist-code-qa-bot|给美术做代码问答机器人]] — 项目级 AI 落地设计:agentic grep + wiki 复合记忆;架构/persona/沉淀/风险/POC 路径
+- [[Wiki/Syntheses/AIApps/Ai-texture-tool-design|AI 特效贴图工具设计]] — 项目级 AI 落地设计:三层工具架构(L1 原子/L2 模型/L3 代码沙箱)+ VFX 数据语义 guardrail + 2026-04 GitHub 现成项目调研(GenArtist/AgentLego/ComfyUI-workflow-skill/seamless-tile 家族)+ POC 路径
 
 ### Niagara 源码学习
 - [[Wiki/Syntheses/Niagara/Niagara-learning-path|Niagara 源码学习路径]] — UE 4.26 Niagara 插件 10 阶段学习路线图，含 ~69 个文件待 ingest (stock)
