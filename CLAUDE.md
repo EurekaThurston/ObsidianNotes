@@ -54,6 +54,30 @@ Readers/
 - `Entities/` 和 `Sources/` 的 `Stock/` / `Project/` 子目录专用于代码(§9)
 - **`Syntheses/` vs `Readers/`**:Readers 是每议题必有的"人类首选入口",独立于 Wiki 顶层;Syntheses 是 Wiki 内部的非读本类专题(跨主题对比、指南、总图)。一议题通常一份读本 + 零到多份专题
 
+### 2.1 主题路由(ingest 时决定放哪个 `<主题>/`)
+
+| 主题 | 装什么 | 不装什么 |
+|---|---|---|
+| `Methodology/` | LLM Wiki 方法论、元规则、Karpathy 脉络、Wiki 本身的工程经验 | 具体产品 / 项目 |
+| `AIFoundations/` | AI **基础概念** + 工程方法论 + 扫盲(LLM / MCP / Agent / Multi-agent / Harness / Skills / Agentic-grep / Embedding / Hallucination / Context / Reasoning)+ 代表地基产品(OpenClaw)+ 三段论综合 | 具体 agent 项目、项目级应用落地 |
+| `AIAgents/` | **具体 agent 实现**:学术模拟(Smallville / Park 2024 / a16z AI Town)+ 项目级落地(代码问答机器人 / 特效贴图工具 / Niagara-Material AI)+ 生成式智能体架构等 agent 专用概念 | 基础概念(归 AIFoundations) |
+| `AIArt/` | 视觉生成(LoRA、SD、ComfyUI 节点本身等) | 非视觉 AI、Agent 驱动的贴图工具(归 AIAgents) |
+| `UE/` 及子模块 | UE 引擎(4.x/5.x)**基础**概念(UObject / Asset-Instance / DDC 等;文件名按版本区分,如 `UE4-uobject-系统.md`)+ 模块子主题 `UE/<Module>/`(当前已有 `UE/Niagara/`,未来可加 `UE/Material/` 等);topic-keyed 的 Concepts/Syntheses/Readers 按此分层 | 非 UE 引擎内容 |
+| `Entities/<repo>/<module>/`、`Sources/<repo>/<module>/`(repo + module 两级,正交于上) | 代码实体 / 源摘要按 §9 **repo 键**(stock / project-engine / project-game)+ **module 子命名空间**(Niagara / Material / ...)双级分类 | 由代码仓 + 模块决定,**与 topic 维度是两个轴**(例:Niagara 代码 entity = `Entities/Stock/Niagara/<Class>.md`,Niagara 读本 = `Readers/UE/Niagara/<...>.md`)|
+
+**开新主题 vs 归现有**(新议题冒出时的决策):
+
+1. 本轮产出 **≥ 3 原子页** **且** 与现有所有主题的**第一性原理明显不同** → 开新主题目录
+2. 否则挤进现有主题的合适子分区(例:一份"Prompt Engineering 深度专题"挤进 AIFoundations,不单开)
+3. 边界不清 → **停下问用户**,不自作主张
+
+**已有的主题拆分先例**(供参考边界感):
+- `TextureTool/` → `AIApps/`(2026-04-24):只出了 2 页、非第一性原理级的差异,挤合适
+- `AIApps/` → 拆为 `AIFoundations/` + `AIAgents/`(2026-04-25):AIApps 累积到"其实是两种第一性原理"(基础概念 vs 具体应用)时,拆分
+- `Niagara/` → `UE/Niagara/`(2026-04-25):Niagara 作 UE 引擎的模块,下沉为 UE 子主题;同期把 `UE4/` → `UE/`(为 future UE5 留空间);同期把 `Entities/Stock/*.md` + `Sources/Stock/*.md` 下沉 `Stock/Niagara/` 子命名空间(future 有 Material 等模块时同构扩展)
+
+**改名时机**:主题描述词与实际内容偏离严重时(例 "AIApps / AI 应用生态" 在"应用"内容搬走后名不副实),改名 + 跨仓批量替换 + 按 §5 log,历史 log 条目保留旧名不追溯。
+
 ---
 
 ## 3. 核心操作
@@ -99,7 +123,7 @@ Readers/
 
 **触发条件**(任一):
 
-1. 结构化学习路径的每个 Phase 收尾(如 [[Wiki/Syntheses/Niagara/Niagara-learning-path]] 每完成一 Phase)
+1. 结构化学习路径的每个 Phase 收尾(如 [[Wiki/Syntheses/UE/Niagara/Niagara-learning-path]] 每完成一 Phase)
 2. 新主题首次入驻且本轮产出 ≥3 原子页
 3. 多源交叉综合(同议题跨多 raw source)
 4. 用户显式要求"给我一份能一次读完的"
@@ -289,7 +313,7 @@ op 取值:`ingest / query / lint / synthesis / refactor / bootstrap`。
 1. Read `code-roots.local.md` 确认 id 可用
 2. 按 §9.3 路由决定 `repo`
 3. 记录 `source_commit` / `source_ref` 到 frontmatter
-4. 源摘要写到 `Wiki/Sources/<repo>/<文件名>.md`(模板 `Code-Source.md`)
-5. Entity 写到 `Wiki/Entities/<repo>/<类名或模块名>.md`
+4. 源摘要写到 `Wiki/Sources/<repo>/<module>/<文件名>.md`(模板 `Code-Source.md`)。`<module>` 是引擎模块子命名空间(如 `Niagara` / 未来的 `Material` 等)
+5. Entity 写到 `Wiki/Entities/<repo>/<module>/<类名>.md`
 6. 另一仓已有同名 entity:**双向加 `twin:` 链**,考虑产出 `Syntheses/Topic/xxx-stock-vs-project.md`
 7. Concept 写到 `Wiki/Concepts/<topic>/`;若一概念两仓差异大,页内开 `## Stock 实现` / `## Project 实现` 两节

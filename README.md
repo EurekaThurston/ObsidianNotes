@@ -60,9 +60,9 @@
 | 主题 | 读本 |
 |---|---|
 | 本仓库方法论(想知道"这是什么、为什么存在") | [`Readers/Methodology/从 Memex 到 LLM Wiki.md`](Readers/Methodology/从 Memex 到 LLM Wiki.md) |
-| AI 应用生态(LLM / Agent / MCP / Harness / Skills 全貌) | [`Readers/AIApps/AI 应用生态全景 2026.md`](Readers/AIApps/AI 应用生态全景 2026.md) |
-| Niagara 源码学习 — 心智模型前置 | [`Readers/Niagara/Phase 0 - 上阵前的四层脑内地图.md`](Readers/Niagara/Phase 0 - 上阵前的四层脑内地图.md) |
-| Niagara 源码学习 — Phase 1 资产层 | [`Readers/Niagara/Phase 1 - 从 System 到图源抽象基类.md`](Readers/Niagara/Phase 1 - 从 System 到图源抽象基类.md) |
+| AI 应用生态(LLM / Agent / MCP / Harness / Skills 全貌) | [`Readers/AIFoundations/AI 应用生态全景 2026.md`](Readers/AIFoundations/AI 应用生态全景 2026.md) |
+| Niagara 源码学习 — 心智模型前置 | [`Readers/UE/Niagara/Phase 0 - 上阵前的四层脑内地图.md`](Readers/UE/Niagara/Phase 0 - 上阵前的四层脑内地图.md) |
+| Niagara 源码学习 — Phase 1 资产层 | [`Readers/UE/Niagara/Phase 1 - 从 System 到图源抽象基类.md`](Readers/UE/Niagara/Phase 1 - 从 System 到图源抽象基类.md) |
 
 **如果你是 LLM / 想索引 / 想查具体字段**,从下面这些文件进:
 
@@ -80,8 +80,8 @@
 本仓目前覆盖 3 个互相独立的主题,每个主题都配套一份主题读本。具体最新状态以 [`Wiki/Overview.md`](Wiki/Overview.md) 为准。
 
 1. **知识库方法论（meta / bootstrap）** — 本仓自身的方法论基础，源自 Karpathy 的 LLM Wiki idea file。📖 [方法论读本](Readers/Methodology/从 Memex 到 LLM Wiki.md)。
-2. **Niagara 源码学习（UE 4.26）** — 面向 C++ 零基础学员的 Niagara 插件 11 阶段(Phase 0-10)学习路径,~90 个运行时文件 + 11 份主题读本。**Phase 0-10 ✅ 全部完成 🎉**,并已通过 Phase 5-10 分组 targeted lint 质量基线确认。📖 推荐入口:[Phase 0 心智模型读本](Readers/Niagara/Phase 0 - 上阵前的四层脑内地图.md) / [学习路径总图](Wiki/Syntheses/Niagara/Niagara-learning-path.md)。
-3. **AI 应用生态（2026-04 新增）** — Prompt → Context → Harness 三段论为主线的 AI 应用扫盲,面向美术 / 策划 / 管理者等非开发角色。📖 [AI 应用生态读本](Readers/AIApps/AI 应用生态全景 2026.md)。
+2. **Niagara 源码学习（UE 4.26）** — 面向 C++ 零基础学员的 Niagara 插件 11 阶段(Phase 0-10)学习路径,~90 个运行时文件 + 11 份主题读本。**Phase 0-10 ✅ 全部完成 🎉**,并已通过 Phase 5-10 分组 targeted lint 质量基线确认。📖 推荐入口:[Phase 0 心智模型读本](Readers/UE/Niagara/Phase 0 - 上阵前的四层脑内地图.md) / [学习路径总图](Wiki/Syntheses/UE/Niagara/Niagara-learning-path.md)。
+3. **AI 应用生态（2026-04 新增）** — Prompt → Context → Harness 三段论为主线的 AI 应用扫盲,面向美术 / 策划 / 管理者等非开发角色。📖 [AI 应用生态读本](Readers/AIFoundations/AI 应用生态全景 2026.md)。
 
 ---
 

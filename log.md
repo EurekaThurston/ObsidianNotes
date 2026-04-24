@@ -5,6 +5,231 @@
 
 ---
 
+## [2026-04-25] refactor | UE4 → UE 改名 + Stock/ 下沉 Niagara 子命名空间
+
+- 触发:用户"把 ue4 改成 ue 吧,然后你刚刚提到的 stock/niagara 也改一下"——两个动作一起做,省一次批量 replace
+  - **改名 UE4 → UE**:上一轮 Niagara 下沉时用了 `UE4/`,但该主题其实承载的是"UE 引擎(含 4.x / 未来 5.x)的基础概念与子模块",改 `UE/` 为 future UE5 留空间。文件名 `UE4-uobject-系统.md` 等保留(它们是"UE4 版本的 UObject 系统",名字准确)
+  - **Stock/ 下沉 Niagara**:上一轮 log 记为"等第二个模块冒头再做"的 open,这次直接做。消除未来路径不一致的隐患
+- 重命名(2 部分):
+  - **UE4 → UE**:3 个 topic-keyed 目录整目录 git mv
+    - `Wiki/Concepts/UE4/` → `Wiki/Concepts/UE/`(含子目录 `Niagara/` + 3 文件)
+    - `Wiki/Syntheses/UE4/` → `Wiki/Syntheses/UE/`(含子目录 `Niagara/` + 1 文件)
+    - `Readers/UE4/` → `Readers/UE/`(含子目录 `Niagara/` + 11 文件)
+  - **Stock/ → Stock/Niagara/**:120 文件 git mv
+    - `Wiki/Entities/Stock/*.md`(53 文件)→ `Wiki/Entities/Stock/Niagara/`
+    - `Wiki/Sources/Stock/*.md`(67 文件)→ `Wiki/Sources/Stock/Niagara/`
+- 路径批量替换(PowerShell 扫全 vault .md 排除 log.md),**5 个前缀**一次搞定:
+  - `Wiki/Concepts/UE4/` → `Wiki/Concepts/UE/`
+  - `Wiki/Syntheses/UE4/` → `Wiki/Syntheses/UE/`
+  - `Readers/UE4/` → `Readers/UE/`
+  - `Wiki/Entities/Stock/` → `Wiki/Entities/Stock/Niagara/`
+  - `Wiki/Sources/Stock/` → `Wiki/Sources/Stock/Niagara/`
+  - 共 **143 文件更新**(含所有读本相互引用、Phase N↔N+1 串接、stock 代码 entity 的 60+ 交叉引用、AIAgents 新页对 Niagara 读本/entity 的引用、CLAUDE.md §2.1 示例等)
+  - 防御 double-subnamespace:末尾强制收敛 `Stock/Niagara/Niagara/` → `Stock/Niagara/`(未触发,仅保险)
+- 节标题改名(不被路径 replace 覆盖的部分):
+  - [[index]]:`### UE4 基础` → `### UE 基础`;`### UE4 / Niagara 基础` → `### UE / Niagara 基础`;`### Niagara 代码实体(stock / UE 4.26)` → `### UE / Niagara 代码实体(repo: stock / UE 4.26,module: Niagara)`;`### 代码源摘要 — stock(UE 4.26 Niagara)` → `### UE / Niagara 代码源摘要(repo: stock / UE 4.26,module: Niagara)`;2 处 `### UE4 / Niagara 源码学习` → `### UE / Niagara 源码学习`;header 更新
+  - [[Wiki/Overview]]:`### 2. UE4 / Niagara 源码学习` → `### 2. UE / Niagara 源码学习`;知识图 UE4/ → UE/;header 更新;Stock 代码实体分支加"(按模块下沉 Stock/Niagara/)"注脚
+  - [[CLAUDE]] §2.1 主题路由表:
+    - `UE4/ 及子模块` 行 → `UE/ 及子模块`,示例 `UE/Niagara/`、`UE/Material/`(future)
+    - `Entities/Stock/、Sources/Stock/` 行升级为 `Entities/<repo>/<module>/、Sources/<repo>/<module>/`,显式点明 **repo + module 两级**
+    - 拆分先例末尾条改写为 `Niagara/ → UE/Niagara/`(2026-04-25),注明同期 `UE4→UE` + `Stock/→Stock/Niagara/` 配套操作
+  - [[CLAUDE]] §9.5 ingest 流程:
+    - 原 `Wiki/Sources/<repo>/<文件名>.md` → `Wiki/Sources/<repo>/<module>/<文件名>.md`(+module 子命名空间说明)
+    - 原 `Wiki/Entities/<repo>/<类名或模块名>.md` → `Wiki/Entities/<repo>/<module>/<类名>.md`
+- 不改的:
+  - 文件名 `UE4-uobject-系统.md` 等保留("UE4 版本的 X" 命名准确)
+  - 所有 `UE 4.26` 版本引用保留(这是具体引擎版本,不是主题名)
+  - `UE4.sln` 文件名引用保留(Unreal 自带的解决方案文件名)
+  - frontmatter 字段 `source_root: UE-4.26-Stock` / `repo: stock` 等保留
+  - log.md 历史条目保留旧 `UE4/` / `Stock/` 叙述(append-only §3.1)
+- 自验:
+  - Grep `Wiki/(Concepts|Syntheses)/UE4/` 或 `Readers/UE4/` → 仅 log.md 历史命中 ✓
+  - Grep `\[\[Wiki/Entities/Stock/(?!Niagara/)` 和 `\[\[Wiki/Sources/Stock/(?!Niagara/)` → 0 文件命中(所有引用都已带 Niagara 中段)✓
+  - `find -maxdepth 5 -type d` 确认新结构:
+    - `Wiki/Concepts/UE/Niagara/`、`Wiki/Syntheses/UE/Niagara/`、`Readers/UE/Niagara/` 存在
+    - `Wiki/Entities/Stock/Niagara/`、`Wiki/Sources/Stock/Niagara/` 存在(120 文件各就各位)
+    - 旧 `UE4/` 目录全部已清理
+- 意义:至此 4 轮 refactor(AIApps→AIFoundations / Niagara 下沉 UE / UE4→UE / Stock 模块下沉)把"topic 两级(`UE/Niagara/`)+ repo 两级(`Stock/Niagara/`)"的路径规范全部打通,未来加 Material / 加 UE5 / 加 project-engine Niagara 魔改均有现成位置
+
+---
+
+## [2026-04-25] refactor | Niagara 下沉为 UE4 子主题(topic 维度)
+
+- 触发:用户"把 Niagara 移到 UE4 下吧,UE4/Niagara/各种文档"——反映已有事实:Niagara 是 UE4 引擎的一个模块,放作顶层主题在概念上矮了一级;且未来若涉及其他 UE4 模块(Material / Animation 等),topic 分层不得不做
+- 范围决定:**只移 topic-keyed 目录**(Concepts / Syntheses / Readers 下的 `Niagara/`);**不动 repo-keyed** 的 `Wiki/Entities/Stock/` 与 `Wiki/Sources/Stock/` ——按 [[CLAUDE]] §9 约定,repo(stock / project-engine / project-game)是代码实体的顶层 key,与 topic(UE4 / UE4/Niagara)是正交两轴。Niagara 源码 entity 依然在 `Entities/Stock/<Class>.md`,但对应读本在 `Readers/UE4/Niagara/<...>.md`——两条路径各自其是,不重叠
+- 重命名(3 子目录 → 嵌入 UE4 下,14 文件 `git mv` 保留历史):
+  - `Wiki/Concepts/Niagara/` → `Wiki/Concepts/UE4/Niagara/`(2 文件:Niagara-vs-cascade / Niagara-cpu-vs-gpu模拟)
+  - `Wiki/Syntheses/Niagara/` → `Wiki/Syntheses/UE4/Niagara/`(1 文件:Niagara-learning-path)
+  - `Readers/Niagara/` → `Readers/UE4/Niagara/`(11 文件:Phase 0-10 读本全系)
+- 路径批量替换:PowerShell 扫全 vault `.md`(排除 log.md),3 个路径前缀替换:
+  - `Wiki/Concepts/Niagara/` → `Wiki/Concepts/UE4/Niagara/`
+  - `Wiki/Syntheses/Niagara/` → `Wiki/Syntheses/UE4/Niagara/`
+  - `Readers/Niagara/` → `Readers/UE4/Niagara/`
+  - 共 **86 文件更新**(含 CLAUDE.md §3.4 模板示例 / Overview.md 知识图 / index.md 登记 / 各 Phase 读本交叉引用 / AIAgents 新页引用 Niagara 读本 / Niagara 内部 Phase N+1 ← Phase N 串接链接 等)
+- 删除空目录 3 个:`rmdir D:/Notes/Wiki/Concepts/Niagara/`、`Wiki/Syntheses/Niagara/`、`Readers/Niagara/`
+- 节标题改名:
+  - [[index]] `### Niagara 基础` → `### UE4 / Niagara 基础`;2 处 `### Niagara 源码学习` → `### UE4 / Niagara 源码学习`
+  - [[Wiki/Overview]] `### 2. Niagara 源码学习（UE 4.26）` → `### 2. UE4 / Niagara 源码学习（UE 4.26）`
+  - [[Wiki/Overview]] 主题知识图 `Niagara 源码学习 (UE 4.26)` 子树改写,注明 topic 维度(UE4/ 与 UE4/Niagara/)与 repo 维度(Stock/)正交
+- CLAUDE.md §2.1 主题路由表更新:
+  - 原 Niagara 独立行删除,合并进 UE4 行:`| UE4/ 及子模块 | UE4 基础 + UE4/Niagara/(当前) + UE4/Material/ 等(未来) | 非 UE 引擎 |`
+  - 新增一行专讲 `Entities/Stock/`、`Sources/Stock/` 的 repo 维度,并强调"与 topic 维度两个轴"
+  - "已有的主题拆分先例"末尾加 2026-04-25 Niagara → UE4/Niagara 这条
+- **Entities/Stock/ 和 Sources/Stock/ 未改动**(保留 §9 约定;53 + 67 = 120 文件原地保留,所有 wikilink 形如 `[[Wiki/Entities/Stock/UNiagaraSystem]]` 仍有效)
+- **未来可选的进一步下沉**(记作 open):若 future 有项目引擎 Material 魔改或其他非 Niagara UE 模块要 ingest,Stock 下应该加模块子命名空间 `Entities/Stock/Niagara/` + `Entities/Stock/Material/` 等 ——本次未做是因为:当前 Stock/ 全部是 Niagara 文件,加 `Niagara/` 子目录改动 120 文件但零现实收益,等真有第二模块冒头再做
+- 自验:
+  - Grep `(Wiki/Concepts|Wiki/Syntheses|Readers)/Niagara/` 全仓 → 仅 log.md 命中(历史)✓
+  - `find -maxdepth 4 -type d -name Niagara` → 只剩 `Readers/UE4/Niagara`、`Wiki/Concepts/UE4/Niagara`、`Wiki/Syntheses/UE4/Niagara` ✓
+  - `[[Wiki/Entities/Stock/...]]`、`[[Wiki/Sources/Stock/...]]` 未改动,60+ 读本中的这类链接保持原样 ✓
+- 不做的:
+  - 未移 Entities/Stock/ 和 Sources/Stock/(§9 repo 维度保留)
+  - 未 rename frontmatter 字段(`repo: stock` 等)
+  - 未追溯修改 log.md 历史条目(append-only,保留 "Niagara/" 旧路径叙述)
+
+---
+
+## [2026-04-25] refactor | 主题 AIApps → AIFoundations 改名
+
+- 触发:用户反馈"AI Apps 这个名字感觉有点不符合现在我们对它的定位"——重构把项目级落地(代码问答 / 特效贴图)和生成式智能体研究迁去 AIAgents 之后,AIApps 目录实际只剩基础概念(LLM / 幻觉 / Context / Agent / MCP / Harness / Skills)+ 方法论综合(三段论)+ 扫盲(Primer v2)+ 代表产品(OpenClaw)。"应用"已经名不副实
+- 候选对比(给出 6 个候选 + 利弊分析):AIFoundations ⭐⭐⭐⭐⭐ / AIPrimer ⭐⭐⭐⭐ / AIStack ⭐⭐⭐ / AIEcosystem ⭐⭐⭐ / AIEngineering ⭐⭐ / AI(平级)⭐⭐
+- 用户选定 **AIFoundations**(CamelCase 风格与现有 Methodology / Niagara / AIArt / AIAgents 一致)
+- 重命名(5 子目录,18 文件):
+  - `Wiki/Concepts/AIApps/` → `Wiki/Concepts/AIFoundations/`(11 文件:Agent-skills / Agentic-grep / Ai-agent / Context-window / Embedding / Hallucination / Harness-engineering / Llm / Mcp / Multi-agent / Reasoning-model)
+  - `Wiki/Sources/AIApps/` → `Wiki/Sources/AIFoundations/`(3 文件:AI-primer-v2 / Code-retrieval-conversation / Multi-agent-conversation)
+  - `Wiki/Entities/AIApps/` → `Wiki/Entities/AIFoundations/`(1 文件:OpenClaw)
+  - `Wiki/Syntheses/AIApps/` → `Wiki/Syntheses/AIFoundations/`(1 文件:Prompt-context-harness-evolution)
+  - `Readers/AIApps/` → `Readers/AIFoundations/`(2 文件:AI 应用生态全景 2026 / 为什么上下文有限反而必须切多 Agent)
+- 路径批量替换:PowerShell 递归扫全 vault `.md` 文件(排除 log.md),`AIApps` → `AIFoundations` 整词替换 — 共 **40 文件更新**
+- 删除空目录 5 个:原 5 个 AIApps 子目录已空,`rmdir` 清理
+- 节标题改名:
+  - [[index]] 4 处 `### AI 应用生态` → `### AI 基础(AIFoundations)` / `### AI 基础(AIFoundations — 产品 / 项目)`
+  - [[Wiki/Overview]] `### 3. AI 应用生态(2026-04 新增)` → `### 3. AI 基础(AIFoundations)(2026-04 新增,2026-04-25 改名)`,加改名备忘 callout
+  - [[index]] 头部 "AI 应用生态" → "AI 基础" in 主题并行描述
+  - [[Wiki/Overview]] 最后更新行加改名说明
+- 历史 log 条目按 §3.1 step 9 "本轮"规则不适用于已归档条目——**保留原 `AIApps` 路径叙述不追溯修改**。共 80 处 `AIApps` 出现仅在 log.md,分布在 2026-04-19 到 2026-04-25 各条 ingest / synthesis / refactor / lint 条目
+- 未改的 CLAUDE.md:不含 AIApps 路径硬引用(只讲规则不举例),无需改
+- 自验:
+  - Grep `AIApps` 全仓 → 仅 log.md 命中(预期)✓
+  - `find -type d -name AIApps` → 空 ✓
+  - 新路径全部 Glob 通过 ✓
+- 主题定位文档化(供后续 ingest 决策,写进本 log 方便回溯):
+  - **AIFoundations**(AI 基础):LLM / 幻觉 / Context / Embedding / Reasoning / Agent / Multi-agent / MCP / Harness / Skills / Agentic-grep 等**基础概念 + 方法论**;Primer v2 扫盲源;OpenClaw 作地基产品实例;Prompt → Context → Harness 三段论综合。**不放"具体应用"**
+  - **AIAgents**(具体 agent):生成式智能体学术研究线(Smallville / Park 2024 / a16z AI Town)+ 项目级 AI 应用落地(美术代码问答 / 特效贴图工具 / Niagara-Material AI 理解管道)
+  - **AIArt**:已有独立主题(LoRA 等视觉生成议题)
+  - 未来可能新增:AICoding(Vibe / Spec / Harness coding 系列,若展开)
+- 不做的事:
+  - **未 rename 内部变量** / frontmatter 字段(只是目录重命名)
+  - **未改 tag**:tag `ai`、`agent` 等保持(tag 不绑目录名)
+  - **未回收 log 历史**(append-only)
+- **元规则升级(同一轮追加)**:用户指出"主题分工写在 log 里每次 ingest LLM 不会主动读",按 [[CLAUDE]] §7.6 元规则判断——主题路由属**每轮要守的路由规则**,应进 CLAUDE.md。新增 [[CLAUDE]] §2.1 "主题路由":5 主题决策表(Methodology / AIFoundations / AIAgents / AIArt / Niagara / UE4)+ 开新主题 vs 归现有的判断规则 + 已有主题拆分先例 + 改名时机指引。简短 5-10 行决策导向,细节清单仍归 index.md
+
+---
+
+## [2026-04-25] synthesis | 从斯坦福小镇到 1000 人数字社会 读本
+
+- 触发:用户显式要求"记得写读本"(§3.4 触发条件 4);本轮同期 ingest 产出 ≥3 原子页 + 新主题 AIAgents 首次入驻,也满足触发条件 2+3
+- 新建(1 页):
+  - [[Readers/AIAgents/从斯坦福小镇到 1000 人数字社会]] — 线性读本,8 节叙事(议题问题→2023 前→三件套具体工作→复现经济学→Park 2024 跃迁→a16z 工程化→2026 生态→与工具型 multi-agent 本质区别)+ 全景回看 + 10 条关键洞察 + 8 题自检(综合/反推/取舍/假设,非检索浅题)+ 留下的问题 + 下一步 + 深入阅读 + 签名
+- 更新:
+  - [[index]] Readers 新增 "### AI Agents" 分区 + header 加本读本登记
+  - [[Wiki/Overview]] 主题 4 节 📖 主题读本指向本篇
+- 关键叙事选择:
+  - 开题不写"Smallville 是什么",而是**"LLM 直接套 agent 会撞哪四堵硬墙"**——让三件套的每一件对应一堵墙,避免"架构罗列"的干涩
+  - §3 把"数千美元"成本具体化到**每 agent 每 tick LLM 调用类目 + 每天 22500 次 + 45000 次 × 0.85 美分 × 摊销系数**——把抽象成本拆成可以反推优化的结构,这是读本价值所在
+  - §4 强调**评测标准从 believability → 真人 GSS 对照**,比架构变化更重要——方法论转向是 2024 跃迁的本质
+  - §5 的 a16z "选择性工程化" 提炼:砍 reflection + 砍规模 / 加多人 + 加持久化——这不是忠实复现,理解这点才能选型
+  - §7 专门警戒"multi-agent" 同词异义,和 AIApps 下的 [[Wiki/Concepts/AIApps/Multi-agent]] 做清晰边界——这是本议题在 wiki 内部最重要的一处 guardrail
+  - 自检 8 题全部综合/反推/取舍/假设题;特别是第 3 题("$50 预算怎么削减")、第 5 题("哪类政策敢信哪类不敢")、第 8 题("5 句话向投资人讲清 2023→2024 重要性")都是需要串多节的难题
+- open questions(读本 §议题留下的问题):
+  - 跨文化样本泛化
+  - 成本下降下一跳板
+  - 数字孪生伦理/法律
+  - 25 agent 规模是不是最优
+  - 与传统游戏 AI(行为树/GOAP)取代还是共存
+  - 反向用 agent 研究 LLM 偏见
+- 自验:Glob [[Readers/AIAgents/从斯坦福小镇到 1000 人数字社会]] ✓
+
+---
+
+## [2026-04-25] ingest | 斯坦福小镇与生成式智能体对话 — Park 2023→2024 三年脉络 + AIAgents 新主题首次入驻
+
+- source: [[Raw/Notes/斯坦福 AI 小镇与生成式智能体对话]](对话归纳,非逐字)
+- 触发:用户发来知乎 p/656007815 链接(抓取 403),询问"这篇讲什么 / 斯坦福'筱桢'是谁 / 复现难度 / 最新进展";"筱桢"应为"小镇"的视觉近形字误。定位议题:**斯坦福小镇 / Generative Agents**,跨 2023-2026 脉络梳理
+- 决定新开主题目录 `AIAgents/` — 本轮产出 ≥3 原子页且需要和既有 [[Wiki/Concepts/AIApps/Multi-agent]](工具型)做清晰边界,单独主题胜过挤 AIApps
+- 新建(10 页):
+  - [[Raw/Notes/斯坦福 AI 小镇与生成式智能体对话]] — 原始对话归纳(含 web 搜索整合)
+  - [[Wiki/Sources/AIAgents/Generative-agents-discussion]] — 本对话源摘要
+  - [[Wiki/Sources/AIAgents/Park-2023-generative-agents]] — arXiv 2304.03442 摘要级源(未逐字读 PDF,基于 abstract + HAI 报道 + 开源 README)
+  - [[Wiki/Sources/AIAgents/Park-2024-1000-agents]] — arXiv 2411.10109 摘要级源(基于 HAI 新闻 + 项目主页)
+  - [[Wiki/Entities/AIAgents/Joon-sung-park]] — 方向奠基人 entity
+  - [[Wiki/Entities/AIAgents/Stanford-smallville]] — 25 agent 沙盘项目 entity
+  - [[Wiki/Entities/AIAgents/A16z-ai-town]] — TS + Convex 工业重写 entity
+  - [[Wiki/Concepts/AIAgents/Generative-agents-architecture]] — Memory Stream + Reflection + Planning 三件套概念
+  - [[Wiki/Concepts/AIAgents/Agent-based-social-simulation]] — 研究范式,对照工具型 multi-agent
+- 同步产出读本(见下一条 log):[[Readers/AIAgents/从斯坦福小镇到 1000 人数字社会]]
+- 更新:
+  - [[Wiki/Concepts/AIApps/Multi-agent]]、[[Wiki/Concepts/AIApps/Context-window]]——交叉引用 AIAgents 新概念(相关区会在后续 lint 补;本轮不改,避免 2026-04-25 一口气改太多文件)
+  - [[Wiki/Overview]] — 从 3 主题升 4 主题,新增 "### 4. AI Agents(2026-04-25 新增)" 节,主题知识图同步加 AIAgents 分枝
+  - [[index]] — Entities/Concepts/Sources/Readers/Syntheses 5 分区各加 "### AI Agents" 子分区 + header 更新
+- 关键要点(议题核心叙事,不是复述):
+  - **三件套 = 解 agent 长期运行四堵硬墙**(遗忘 / 无人格 / 短视 / 记忆污染),不是可选扩展
+  - **复现瓶颈在 token 不在代码**:论文级 25 agent × 2 天 ≈ $1000-$5000;国人流传"100 秒 ≈ 6 元 RMB"
+  - **Park 2024 跃迁核心是评测标准质变**:从主观 believability → 真人 GSS 对照(85% 匹配 ≈ 真人两周后 test-retest)
+  - **a16z AI Town 是选择性工程化**,砍 reflection/规模,加多人/持久化/本地 LLM 默认
+  - **"multi-agent" 同词异义**:工具型(上下文隔离派活)vs 模拟型(共生演化观察涌现)—— 本 wiki AIAgents 主题容纳两者,读者要保留警觉
+- 关键诚实:
+  - Park 2023/2024 两篇论文 PDF **本 wiki 未逐字读过**,源页内容基于 arXiv 摘要 + Stanford HAI 报道 + 开源代码 README + 二级文章整合。如需字段级引用,需后续下载 PDF 单独 ingest
+  - 知乎 p/656007815 本体抓取 403,基于 anchor 文字 + 同系列文章(如 p/649244166、p/672157210)的检索还原
+- open questions(记在 Source 页 + 读本):
+  - 跨文化样本泛化(Park 2024 是美国人数据)
+  - 成本下降下一跳板
+  - 伦理 / 法律 / 知情同意边界
+  - 和传统游戏 AI 的融合 / 取代
+  - Park 2023 附录 prompt 模板待单独 ingest
+- 自验:Glob 以下 9 新路径,全部存在 ✓
+  - Raw/Notes/斯坦福 AI 小镇与生成式智能体对话.md
+  - Wiki/Sources/AIAgents/Generative-agents-discussion.md
+  - Wiki/Sources/AIAgents/Park-2023-generative-agents.md
+  - Wiki/Sources/AIAgents/Park-2024-1000-agents.md
+  - Wiki/Entities/AIAgents/Joon-sung-park.md
+  - Wiki/Entities/AIAgents/Stanford-smallville.md
+  - Wiki/Entities/AIAgents/A16z-ai-town.md
+  - Wiki/Concepts/AIAgents/Generative-agents-architecture.md
+  - Wiki/Concepts/AIAgents/Agent-based-social-simulation.md
+
+---
+
+## [2026-04-25] refactor | AIApps/ 下 2 份项目级落地 → AIAgents/ 归并
+
+- 触发:用户决定"给美术做代码问答机器人"与"让 AI 接特效贴图的长尾需求"两份"项目级 AI 应用落地"迁至新开的 AIAgents 主题(与斯坦福小镇 / 生成式智能体模拟同主题,共享 agent 第一性原理的警觉讨论);AIApps 保留基础概念定位
+- 移位(4 页,`git mv` 保留历史):
+  - `Wiki/Syntheses/AIApps/Artist-code-qa-bot.md` → [[Wiki/Syntheses/AIAgents/Artist-code-qa-bot]]
+  - `Wiki/Syntheses/AIApps/Ai-texture-tool-design.md` → [[Wiki/Syntheses/AIAgents/Ai-texture-tool-design]]
+  - `Readers/AIApps/给美术做代码问答机器人 - 从 grep 到 wiki 复合记忆.md` → [[Readers/AIAgents/给美术做代码问答机器人 - 从 grep 到 wiki 复合记忆]]
+  - `Readers/AIApps/让 AI 接特效贴图的长尾需求 - 架构与 GitHub 生态.md` → [[Readers/AIAgents/让 AI 接特效贴图的长尾需求 - 架构与 GitHub 生态]]
+- 更新链接(PowerShell 一次性脚本,跨 8 文件的 4 路径前缀替换):
+  - [[index]] 4 处
+  - [[Wiki/Overview]] 2 处(并重构 AIApps 节)
+  - [[Wiki/Concepts/AIApps/Agentic-grep]] 2 处
+  - [[Wiki/Sources/AIApps/Code-retrieval-conversation]] 3 处
+  - [[Wiki/Syntheses/AIAgents/Artist-code-qa-bot]] 1 处自引
+  - [[Wiki/Syntheses/AIAgents/Ai-texture-tool-design]] 2 处(自引 + 跨引)
+  - [[Readers/AIAgents/给美术做代码问答机器人 - 从 grep 到 wiki 复合记忆]] 1 处
+  - [[Readers/AIAgents/让 AI 接特效贴图的长尾需求 - 架构与 GitHub 生态]] 9 处
+- 删除空目录:原 `Readers/AIApps/` 只留"AI 应用生态全景 2026"和"为什么上下文有限反而必须切多 Agent"2 份真属 AIApps 基础的读本 — **不删,保留 AIApps 目录**
+- 历史 log 条目(§3.1 step 9 的"本轮"规则不适用于已归档条目)保留原路径叙述,不追溯修改——以下条目的路径在当时属实:
+  - `[2026-04-24] refactor | AI 特效贴图工具 TextureTool/ → AIApps/ 归并`
+  - `[2026-04-24] synthesis | AI 特效贴图工具主题读本`
+  - `[2026-04-24] synthesis | AI 特效贴图工具设计 + GitHub 现成项目调研`
+  - `[2026-04-24] ingest | 代码检索与美术问答机器人对话`
+- 自验:Grep `Wiki/Syntheses/AIApps/(Artist|Ai-texture)|Readers/AIApps/(给美术|让 AI)` → 仅在 log.md 命中(历史条目,预期) ✓;新路径 4 文件 Glob 全部存在 ✓
+- 主题定位备忘(供后续 ingest 决策):
+  - **AIApps**:基础概念(LLM / 幻觉 / Context / Agent / MCP / RAG / Harness / Skills / Agentic Grep)+ 产品(OpenClaw)+ 方法论综合(Prompt → Context → Harness 三段论)
+  - **AIAgents**:具体的 agent 研究与落地 —— 生成式智能体学术线(Smallville / Park 2024 / a16z AI Town)+ 项目级 AI 应用落地(代码问答 / 特效贴图)
+  - 概念页归 AIApps,具体 agent 项目归 AIAgents——分工清晰后,AIApps 下的 Agentic-grep、Multi-agent 等仍作基础概念留守
+
+---
+
 ## [2026-04-24] refactor | AI 特效贴图工具 TextureTool/ → AIApps/ 归并
 
 - 触发:用户决定本议题作为"项目级 AI 应用落地"的又一实例,与 [[Wiki/Syntheses/AIApps/Artist-code-qa-bot]] 同族,不单开一级主题目录
@@ -964,3 +1189,31 @@
   - [[README.md]] H1 标题下、blockquote 上插入标准 markdown `![](Raw/Assets/ReadmeHeader.jpeg)`——用 `![]()` 而非 `![[]]` 以兼容 GitHub 渲染
   - Asset 文件 `Raw/Assets/ReadmeHeader.jpeg`(2.4 MB JPEG,用户命名 PascalCase),放 `Raw/Assets/` 符合 CLAUDE §6 附件约定
 - 影响:`Raw/Assets/` 首次入驻一张图片(之前仅 `.gitkeep`)
+
+## [2026-04-25] synthesis | Niagara / Material AI 理解与生成管道 —— 正反两向 uasset 议题
+- 触发:Eureka 在读完"代码问答机器人"和"AI 贴图工具"两份读本后,想扩展其他落地方向。一轮头脑风暴后(8 个候选方向),用户聚焦到"Niagara / Material 理解器"单点;随后追问两件事——(a) 读不了 .uasset 的解法按"复用性/易用性/准确度"评估 (b) 是否可能逆向(自然语言→文本→uasset)。另一会话在讨论期间完成了 AIApps→AIAgents 主题拆分,本次产出直接落 AIAgents。
+- 代码验证(stock 4.26):
+  - `Engine/Source/Editor/MaterialEditor/Public/MaterialEditingLibrary.h` —— CreateMaterialExpression / ConnectMaterialExpressions / ConnectMaterialProperty / RecompileMaterial / LayoutMaterialExpressions 全部 BlueprintCallable,Material 编辑 API 完整
+  - `Engine/Plugins/FX/Niagara/Source/NiagaraEditor/Public/NiagaraClipboard.h` —— Niagara T3D copy/paste 通道存在
+  - `Engine/Plugins/FX/Niagara/Source/Niagara/Classes/NiagaraDataInterfaceArrayFunctionLibrary.h` —— Niagara BlueprintCallable 全是 runtime(Set/Get Array),**没有**编辑器创建 API,证实 4.26 Niagara 编辑层不开放 Python
+  - `Engine/Source/Runtime/Engine/Classes/Materials/Material.h` L833 —— `TArray<UMaterialExpression*> Expressions`
+  - `Engine/Source/Runtime/Engine/Classes/Materials/MaterialExpression.h` L23 —— `struct FExpressionInput`
+- 新建:
+  - [[Wiki/Concepts/AIAgents/Uasset-textualization]] —— uasset→文本代理的概念抽象,含三种方案族 T3D / Python dumper / CUE4Parse
+  - [[Wiki/Syntheses/AIAgents/Niagara-material-ai-comprehension]] —— 正反双向管道设计综合页(方案评估矩阵 / Material vs Niagara 4.26 不对称 / 双层输出 / 语义模型三张表 / 逆向三重 guardrail / POC 次序)
+  - [[Readers/AIAgents/给 AI 看懂 Niagara 和材质 - 正反两条管道]] —— 主题读本,~600 行,含 UMaterialEditingLibrary Python 伪代码 / Niagara 模板化逆向流程图 / 10 条关键洞察 / 8 题自检 / 代码索引
+- 更新:
+  - [[index.md]]:AI Agents Concepts 加 Uasset-textualization;AI Agents Readers 加新读本;AI Agents Syntheses 加新综合页;头部"最后更新"改写为本轮
+- 关键决策:
+  - 方案选型按资产类型拆分 —— Material 正/逆皆走 Python + EditingLibrary;Niagara 正向走 T3D(Clipboard)+ 反射混合,逆向走 R3 模板化克制路径(不允许从零生成,只改允许参数)
+  - 逆向三重 guardrail:路径隔离(强制 /Game/AI_Generated/ 前缀)+ 编译必过才保存(RecompileMaterial 为天然单元测试)+ 溯源元数据(prompt / 时间 / 模板参照)
+  - POC 次序:Material 正向 → Material 逆向 → Niagara 正向 →(选做)Niagara 逆向;**绝对不要四格齐开**,Material 证明通路后才投 Niagara
+  - Compounding 机制:正向 dumper 积累三张语义模型表(节点白名单 / 参数值域 / 命名模式),直接作为逆向 generator 的约束,两向共享同一块 wiki
+- 要点:
+  - .uasset 是二进制反射序列化流,不是符号化系统,agentic grep 基本失效 —— 这是代码问答机器人读本点名的盲区,本议题正面解
+  - Material 和 Niagara 在 4.26 下编辑器 API 成熟度**差一档**,套同一方案会翻车
+  - 逆向比正向危险一档:错了直接污染版本库,必须三重 guardrail 硬约束
+- 下一步:
+  - 等用户决定是否进 POC;若进,从 Material 正向 dumper 起步,1-2 周跑通
+  - 未来 DataTable / Blueprint 资产理解时,复用 Uasset-textualization 概念页的方案族框架
+- 自验证(Glob):4 个新路径(1 概念 + 1 综合 + 1 读本 + 本条 log 引用)全部确认存在

@@ -53,7 +53,7 @@ Grep  -n "^(type|created|updated|tags|sources|aliases|repo|source_root|source_pa
 - 命中某页 frontmatter 的 `aliases` 字段
 
 **排除**(不是真正 broken):
-- `_templates/` 内的占位符(`[[xxx]]`、`[[…]]`、`[[CLAUDE]]`、`[[Wiki/Entities/Stock/UFoo]]` 等模板示例)
+- `_templates/` 内的占位符(`[[xxx]]`、`[[…]]`、`[[CLAUDE]]`、`[[Wiki/Entities/Stock/Niagara/UFoo]]` 等模板示例)
 - 表格里被转义的 `\|` 别名语法(`[[target\|display]]` 是合法的)
 - `[[Raw/...]]` 指向 Raw 目录下实际文件的——这类应逐一验证真的存在
 

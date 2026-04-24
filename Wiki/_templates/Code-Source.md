@@ -45,7 +45,7 @@ source_commit: b6ab0dee9        # git short SHA / p4 CL / "p4: unknown"
 > ```
 
 ## 涉及实体 / 概念
-- [[Wiki/Entities/Stock/UFoo]]、[[Wiki/Concepts/Topic/xxx]]
+- [[Wiki/Entities/Stock/Niagara/UFoo]]、[[Wiki/Concepts/Topic/xxx]]
 
 ## 与另一仓差异(如已 ingest 孪生)
 - 对比见 [[Wiki/Syntheses/Topic/foo-stock-vs-project]]

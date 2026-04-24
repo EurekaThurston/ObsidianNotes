@@ -1,4 +1,4 @@
-﻿---
+---
 type: entity
 created: 2026-04-17
 updated: 2026-04-19
@@ -24,20 +24,20 @@ Karpathy 以 AI 教育性内容、神经网络 from-scratch 讲解和实用 LLM 
 ## 在 AI 方法论演进中的贡献
 
 1. **LLM Wiki 方法论**（2026-04）—— 见 [[Wiki/Concepts/Methodology/Llm-wiki-方法论|LLM Wiki 方法论]]。
-2. **Context Engineering**（2025）—— 在 [[Wiki/Syntheses/AIApps/Prompt-context-harness-evolution|三段论演进]] 的第二阶段扮演关键倡导者角色：公开指出 "Context Engineering > Prompt Engineering"，把焦点从"怎么措辞"转向"给 AI 搭建完整信息环境"。
+2. **Context Engineering**（2025）—— 在 [[Wiki/Syntheses/AIFoundations/Prompt-context-harness-evolution|三段论演进]] 的第二阶段扮演关键倡导者角色：公开指出 "Context Engineering > Prompt Engineering"，把焦点从"怎么措辞"转向"给 AI 搭建完整信息环境"。
 3. **[[Wiki/Concepts/Methodology/Vibe-coding|Vibe Coding]] 命名**（2025-02）—— 在推文里首次命名这种"你主导决策，AI 负责执行"的编程范式（"There's a new kind of coding I call 'vibe coding'"）。随后被 Y Combinator 等大力推广。
 
 ## 相关
 
 - [[Wiki/Concepts/Methodology/Llm-wiki-方法论|LLM Wiki 方法论]] — 他提出的核心方法
-- [[Wiki/Syntheses/AIApps/Prompt-context-harness-evolution|Prompt → Context → Harness 三段论]] — 他是第 2 阶段的关键人物
+- [[Wiki/Syntheses/AIFoundations/Prompt-context-harness-evolution|Prompt → Context → Harness 三段论]] — 他是第 2 阶段的关键人物
 - [[Wiki/Sources/Methodology/Karpathy-llm-wiki]] — 本 wiki 中他的第一份源材料
-- [[Wiki/Sources/AIApps/AI-primer-v2]] — 第二份提及他的源
+- [[Wiki/Sources/AIFoundations/AI-primer-v2]] — 第二份提及他的源
 
 ## 引用来源
 
 - [[Wiki/Sources/Methodology/Karpathy-llm-wiki]] (raw: [[Raw/Notes/Karpathy Wiki 方法论]])
-- [[Wiki/Sources/AIApps/AI-primer-v2]] (raw: [[Raw/Articles/AI 应用技术发展脉络与核心概念扫盲手册 v2]])
+- [[Wiki/Sources/AIFoundations/AI-primer-v2]] (raw: [[Raw/Articles/AI 应用技术发展脉络与核心概念扫盲手册 v2]])
 
 ## 开放问题 / 待补
 
