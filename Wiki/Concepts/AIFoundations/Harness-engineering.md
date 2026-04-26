@@ -1,9 +1,9 @@
 ---
 type: concept
 created: 2026-04-19
-updated: 2026-04-19
+updated: 2026-04-27
 tags: [ai, agent, methodology, engineering]
-sources: 1
+sources: 2
 aliases: [Harness, Harness Engineering, 驾驭工程]
 ---
 
@@ -84,6 +84,8 @@ Harness 的常见组件：在关键决策点（要删数据、要花钱、要对
 
 - [[Wiki/Concepts/AIFoundations/Ai-agent|AI Agent]] — Harness 服务的对象
 - [[Wiki/Concepts/AIFoundations/Llm|LLM]] — Agent 的大脑;Harness 不改 LLM 本身,只改它周围的环境
+- [[Wiki/Concepts/AIFoundations/Multi-agent|Multi-agent / Subagent]] — 支柱一的最强工具(空间维度切上下文)
+- [[Wiki/Concepts/AIFoundations/Ralph-pattern|Ralph 循环模式]] — 长任务 harness 的具名落地(时间维度切上下文 + 经验库就是 Hashimoto 定义的最朴素实例)
 - [[Wiki/Concepts/AIFoundations/Agent-skills|Agent Skills]] — 支柱一（上下文管理）的核心工具
 - [[Wiki/Concepts/AIFoundations/Context-window|Context Window & Context Rot]] — 支柱一的动因
 - [[Wiki/Concepts/AIFoundations/Hallucination|幻觉]] — 支柱二和三的动因
@@ -95,7 +97,9 @@ Harness 的常见组件：在关键决策点（要删数据、要花钱、要对
 ## 引用来源
 
 - 主题读本(推荐通读):[[Readers/AIFoundations/AI 应用生态全景 2026]]
-- 原子 source:[[Wiki/Sources/AIFoundations/AI-primer-v2]] (raw: [[Raw/Articles/AI 应用技术发展脉络与核心概念扫盲手册 v2]])
+- 原子 source:
+  - [[Wiki/Sources/AIFoundations/AI-primer-v2]] (raw: [[Raw/Articles/AI 应用技术发展脉络与核心概念扫盲手册 v2]])
+  - [[Wiki/Sources/AIFoundations/Ralph-multi-agent-video]] (raw: [[Raw/Notes/Ralph + 多智能体协同 - 费曼学徒冬瓜]]) — Ralph 模式 + 经验库机制对 Hashimoto 定义的具体落地
 
 ## 开放问题
 

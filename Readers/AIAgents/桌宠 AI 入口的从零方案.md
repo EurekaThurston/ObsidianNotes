@@ -259,20 +259,30 @@ return streamText({
 > [!info] 节奏
 > 一人业余,每阶段 2-4 周。下面写的是"完成时你能跑给别人看什么",不是"代码量"。**关键节点判断:做完 P2 你能验证整条路对不对**。
 
+> [!note] 双人设:个人版 vs 团队版
+> 下面表格涵盖**个人版**(自己用)+ **团队版**(VFX 团队内部分发)两种部署形态。**🅂** 标记的阶段是团队版才需要。团队版的配置层模型 / Flipbook 工作流 / Team config git sync / Admin/user 权限分离全套架构,见 [[Wiki/Syntheses/AIAgents/Desktop-pet-team-distribution]]。
+
 | Phase | 目标 | 完成时你能演示 |
 |---|---|---|
 | **P0 壳** | Tauri 透明窗口 + 系统托盘 + 全局快捷键 + Live2D 角色站桌面会眨眼 | 一只什么都不会的桌宠,能用快捷键召唤/隐藏 |
+| **P0.5 配置层 + 简单设置页** 🅂 | 三层配置(defaults/team/user)合并逻辑 + Vue Router /settings + 角色 / 快捷键 2 tab | 能在 GUI 里改皮肤和快捷键并立刻生效 |
 | **P1 对话** | Vercel AI SDK + 1-2 个 LLM provider,流式聊天 | 会聊天的桌宠 ≈ ChatGPT 桌面版 + 脸 |
+| **P1.5 Flipbook 渲染**(强烈推荐,VFX 团队首选) | PixiJS AnimatedSprite + sprite sheet 加载 + 手动触发(右键菜单) | 角色身边能播团队产的特效;无需 LLM |
 | **P2 MCP 接入** ⭐ | MCP Manager + tool calling 桥接,挂 1-2 个官方 MCP server(filesystem / fetch)跑通 | **"入口"愿景第一次成立**——桌宠能读你的笔记/抓网页 |
-| **P3 自定义 MCP** | 把第一个你想要的 AI 应用(代码问答 / 笔记搜索 / 贴图工具)写成 MCP server 挂上去 | 真正的"我自己的 AI 入口" |
-| **P4 记忆 + 设置 UI** | SQLite + 向量记忆;可视化管理 MCP server / 看审计日志 | 长期可用版 v1.0 |
+| **P3 自定义 MCP** | 把第一个你想要的 AI 应用(代码问答 / 笔记搜索 / 贴图工具)写成 MCP server 挂上去 + LLM tool_call 触发 Flipbook | 真正的"我自己的 AI 入口";调 tool 时角色出魔法阵 |
+| **P4 记忆 + 完整设置 UI** | SQLite + 向量记忆;Agents / Effects / 团队 4 tab 全开 | 长期可用版 v1.0 |
+| **P4.5 Team config sync** 🅂 | git repo clone + 定期 pull + lock 机制 + admin 模式开关 | admin 改 team-config 仓库 → 全员桌宠半小时内静默更新 |
+| **P5 distribution** 🅂 | 安装包(NSIS/MSIX)+ auto-update + 部署文档 | 同事一键安装,后续静默升级 |
 | **P5+ 锦上添花** | TTS/ASR / 多角色 / 动作触发 / 皮肤系统 | 看心情 |
 
-> [!warning] 不要颠倒顺序
+> [!warning] 不要颠倒顺序(个人版)
 > 1. **不要先做语音**——TTS/ASR 是时间黑洞且对核心价值贡献低,留 P5。
 > 2. **不要先做花哨动画**——P0 一只会眨眼的呆角色就够了,动作系统边际收益最低。
 > 3. **不要先做配置 UI**——P2 跑通完整 turn 之前,改 JSON 配置文件就够了。
 > 4. **不要"以后再加 MCP"**——MCP 决定 Hub 数据流形状,P0 就要按 MCP-host 设计代码路径(可以 0 个 server,但路径要在)。
+
+> [!warning] 团队版反而要颠倒第 3 条
+> 团队版**必须 P0.5 就有基本设置页 + 配置三层架构** —— 团队成员不会编 JSON,且没有 P0.5 后期所有 setting 改起来都要返工。其余三条仍然适用。详见 [[Wiki/Syntheses/AIAgents/Desktop-pet-team-distribution]] §4-§5。
 
 ### 6.1 P0 的最小验收
 
@@ -283,6 +293,26 @@ return streamText({
 - 右键托盘菜单:退出 / 设置(空)/ 关于
 
 代码骨架级别——不超过 500 行 Rust + TS。
+
+### 6.1.5 P0.5 的最小验收(团队版必做)
+
+- 三层配置 store 实现(`config/defaults.ts` + `config/team.ts` + `config/user.ts` + 合并函数)。无 team config 时 layer 2 为空,行为退化到个人版 ✅
+- 设置页路由 `/settings` + 至少 2 tab(角色 / 快捷键)
+- Tab 内改设置 → 立刻持久化到 user-settings.json → UI 立刻反映
+- Lock 机制实现:某项被 layer 2 标 `locked: true` 时,UI 显示 🔒 + 灰显
+- 所有 P0 已写死的 setting(Live2D 模型路径 / 召唤快捷键)从代码迁移到 defaults.ts
+
+代码量增量 ~300-500 行(主要是 store + 设置 UI 框架)。
+
+### 6.2.5 P1.5 的最小验收(Flipbook,强烈推荐)
+
+- PixiJS `AnimatedSprite` 加载团队约定的 sprite sheet + atlas 格式(TexturePacker JSON)
+- 角色舞台上 Live2D 角色和 Flipbook 同 stage,可叠加
+- 手动触发:右键菜单 / 设置页"特效"tab → 选 pack → "试播"按钮
+- 资产目录约定:`config/effects/<pack-name>/{sheet.png, atlas.json}` + manifest.json 列启用清单
+- 至少 2 个示例特效(撒花 + 魔法阵)
+
+代码量 ~200-400 行。完成后**团队任何人扔 sprite sheet 进 effects/ 就能用**——这是团队版核心邀请。
 
 ### 6.2 P1 的最小验收
 
@@ -413,6 +443,7 @@ return streamText({
 - 实体:[[Wiki/Entities/AIAgents/AIRI]]
 - 综合(选型):[[Wiki/Syntheses/AIAgents/Desktop-pet-stack-comparison]]
 - 综合(MCP 实施):[[Wiki/Syntheses/AIAgents/Mcp-host-implementation]]
+- 综合(团队分发):[[Wiki/Syntheses/AIAgents/Desktop-pet-team-distribution]] —— Flipbook + 配置三层 + git sync + admin/user 权限
 
 ### 前置议题
 

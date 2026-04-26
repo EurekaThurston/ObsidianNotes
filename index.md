@@ -3,7 +3,7 @@
 > 本文件是整个 wiki 的内容目录。LLM 每次 ingest 都会更新。
 > 查询时先读这里,再深入相关页面。
 
-最后更新:2026-04-26(synthesis:桌宠作为 AI 应用入口议题首次入驻 AIAgents——1 概念 + 1 实体 + 2 综合 + 1 读本)
+最后更新:2026-04-27(ingest:费曼学徒冬瓜《Ralph + 多智能体协同》视频 —— 新 source 1 + 新概念 Ralph-pattern + Multi-agent / Harness-engineering 双概念页交叉引用补强)
 
 ---
 
@@ -111,6 +111,7 @@
 - [[Wiki/Concepts/AIFoundations/Harness-engineering|Harness Engineering]] — AI 的操作系统;四大支柱:上下文/约束/反馈/熵管理 (来源:1)
 - [[Wiki/Concepts/AIFoundations/Agent-skills|Agent Skills]] — 专业知识打包为可复用模块,渐进式披露三层加载 (来源:1)
 - [[Wiki/Concepts/AIFoundations/Agentic-grep|Agentic Grep]] — LLM 自己临场 grep 代码库;Grep+Glob+Read 三件套,vs RAG 代码域更准;核心弱点是关键词依赖,破解四策略(锚点/约定/种子/追问) (来源:1)
+- [[Wiki/Concepts/AIFoundations/Ralph-pattern|Ralph 循环模式]] — 外部 while + 文件接力让 AI 跑长任务;时间维度切上下文 vs 多 agent 切空间,两者正交常组合;经验库机制 = Hashimoto Harness 定义的最朴素落地 (来源:1)
 
 ### AI Agents
 - [[Wiki/Concepts/AIAgents/Generative-agents-architecture|生成式智能体架构]] — Park 2023 Memory Stream(三路打分)+ Reflection(层级化)+ Planning(粗→细 + reactive)三件套;解 agent 长期运行四堵硬墙 (来源:2)
@@ -122,6 +123,7 @@
 *每个 raw 文件或代码源对应一页摘要。按时间倒序。*
 
 ### 文章 / 笔记
+- [[Wiki/Sources/AIFoundations/Ralph-multi-agent-video]] — 费曼学徒冬瓜《Ralph + 多智能体协同》bilibili 视频(WebFetch 元数据,非逐字稿) (2026-04-27,note)
 - [[Wiki/Sources/AIAgents/Generative-agents-discussion]] — 斯坦福小镇与生成式智能体对话,2023→2026 脉络整合 (2026-04,note)
 - [[Wiki/Sources/AIAgents/Park-2023-generative-agents]] — Park et al. 2023《Generative Agents》arXiv 2304.03442 摘要级源(未逐字读 PDF,基于 abstract + 报道) (2026-04,paper)
 - [[Wiki/Sources/AIAgents/Park-2024-1000-agents]] — Park et al. 2024《Generative Agent Simulations of 1,000 People》arXiv 2411.10109 摘要级源 (2026-04,paper)
@@ -244,6 +246,7 @@
 - [[Wiki/Syntheses/AIAgents/Niagara-material-ai-comprehension|Niagara / Material AI 理解与生成管道]] — 项目级 AI 落地设计:正反两向 uasset 管道;文本化四方案评估 + Material vs Niagara 4.26 API 不对称实况 + Material R2(UMaterialEditingLibrary)+ Niagara R3 模板化 + 逆向三重 guardrail(/AI_Generated/ 隔离 / 编译验证 / 溯源元数据)+ 语义模型 compounding + POC 次序(Material 正 → Material 逆 → Niagara 正 → 选做 Niagara 逆)
 - [[Wiki/Syntheses/AIAgents/Desktop-pet-stack-comparison|桌宠 AI 入口的选型矩阵]] — 桌宠议题选型综合;L1/L2/L3 路线分级 + 现成项目矩阵(AIRI/Open-LLM-VTuber/Fay/VPet)+ 决策矩阵按目标收敛 + L2 装配清单 + 五条决策原则
 - [[Wiki/Syntheses/AIAgents/Mcp-host-implementation|桌宠侧 MCP host 实施手册]] — 桌宠议题 MCP 实施手册;MCP host 五职责 + 配置兼容 Claude Desktop + MCP Manager 实现骨架(命名空间防冲突)+ Vercel AI SDK 桥接 + 安全/边界 + 调试三件套 + AIRI 三路线对比 + L2 P2 子阶段拆分
+- [[Wiki/Syntheses/AIAgents/Desktop-pet-team-distribution|桌宠团队分发架构]] — VFX 团队场景延伸专题;Flipbook 特效(PixiJS 0 依赖,Live2D=身体/Flipbook=特效环绕,团队 sprite sheet 工作流)+ 配置三层模型(defaults/team/user + per-key lock)+ Team config 四源对比(选 git repo)+ admin/user 权限(git 写权限即 admin)+ 设置页 6 tab 结构 + 调整后阶段路线(P0.5/P1.5/P4.5/P5)+ 个人/团队同代码库通过配置启停
 
 ### UE / Niagara 源码学习
 - [[Wiki/Syntheses/UE/Niagara/Niagara-learning-path|Niagara 源码学习路径]] — UE 4.26 Niagara 插件 10 阶段学习路线图，含 ~69 个文件待 ingest (stock)

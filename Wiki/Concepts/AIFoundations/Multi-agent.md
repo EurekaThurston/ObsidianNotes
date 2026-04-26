@@ -1,9 +1,9 @@
 ---
 type: concept
 created: 2026-04-21
-updated: 2026-04-21
+updated: 2026-04-27
 tags: [ai, agent, multi-agent, subagent, context-engineering]
-sources: 1
+sources: 2
 aliases: [Multi-agent, Subagent, 多 Agent, 子 Agent, Agent 分工]
 ---
 
@@ -78,18 +78,39 @@ aliases: [Multi-agent, Subagent, 多 Agent, 子 Agent, Agent 分工]
 
 Claudian 决策:读很多文件、中间噪音大 → 派 Explore agent,prompt 写得很具体:"搜索提到 attention/注意力/self-attention 的 .md,按主题归类,返回文件路径+一句话摘要清单,**不要返回原文摘录**"。它跑完给主 agent 一张表,主 agent 只增加了这张表的上下文,没被 50 个文件原文淹没。
 
+## 实操工具栈(三类不要混)
+
+把"我想试多 Agent 用什么工具"这一问题路由清楚——三类边界很多人踩坑:
+
+| 类型 | 代表 | 适合 |
+|---|---|---|
+| **A. 编码型 Agent Harness(CLI/IDE)** | Claude Code、Codex、Cursor、Aider、Cline、OpenCode | AI 真的写代码 / 改文件 / 跑测试 |
+| **B. 可视化工作流平台(拖拽节点)** | Dify、Coze(扣子)、n8n、Langflow、Flowise、FastGPT | 拼 RAG 应用 / 客服 bot / API 串联 |
+| **C. 代码级 Agent 框架(SDK)** | LangGraph、CrewAI、Microsoft AutoGen、OpenAI Swarm、Anthropic Claude Agent SDK、PydanticAI | 完全自定义多 agent 拓扑 |
+
+**视频实操是 A 类**(Claude Code 命令行 + `.claude/agents/<role>.md`)。B 类常被宣传成"多 Agent",但本职是 AI 应用编排,做"主+子 agent 写代码"很笨重。C 类门槛最高、可塑性最强。
+
+⚠️ Claudian(本仓 LLM)拥有 `Agent` 工具就是 A 类的一种,你要试多 agent 第一站不必装新东西,**直接在 Claudian 里说"派一个子 agent 去 X"** 就跑得起来。
+
+## Ralph 模式:正交补充
+
+[[Wiki/Concepts/AIFoundations/Ralph-pattern|Ralph 循环模式]] 是切上下文的**另一条正交路径**——多 agent 切空间(并行/分工),Ralph 切时间(外部 while + 文件接力)。两者非互斥,实战常组合:Ralph 外循环 + 每轮内多 agent 协作。
+
 ## 相关
 
 - [[Wiki/Concepts/AIFoundations/Ai-agent|AI Agent]] — 单 agent 循环;本概念是其在"多 agent"方向上的延伸
 - [[Wiki/Concepts/AIFoundations/Context-window|上下文窗口 & Context Rot]] — 多 agent 存在的根本动机
 - [[Wiki/Concepts/AIFoundations/Harness-engineering|Harness Engineering]] — 多 agent 是 Harness "上下文管理"支柱的最强工具
+- [[Wiki/Concepts/AIFoundations/Ralph-pattern|Ralph 循环模式]] — 切上下文的正交路径(时间 vs 空间)
 - [[Wiki/Concepts/AIFoundations/Agent-skills|Agent Skills]] — 同样以对抗 Context Rot 为动机(渐进式披露)
 - [[Wiki/Entities/Claudian|Claudian]] — 拥有 `Agent` 工具的自证案例
 
 ## 引用来源
 
 - 主题读本(推荐通读):[[Readers/AIFoundations/为什么上下文有限反而必须切多 Agent]]
-- 原子 source:[[Wiki/Sources/AIFoundations/Multi-agent-conversation]] (raw: [[Raw/Notes/Multi-agent 对话]])
+- 原子 source:
+  - [[Wiki/Sources/AIFoundations/Multi-agent-conversation]] (raw: [[Raw/Notes/Multi-agent 对话]])
+  - [[Wiki/Sources/AIFoundations/Ralph-multi-agent-video]] (raw: [[Raw/Notes/Ralph + 多智能体协同 - 费曼学徒冬瓜]])
 
 ## 开放问题
 

@@ -56,6 +56,18 @@ aliases: [桌宠 AI 入口, Desktop Pet AI Hub, 桌宠 Hub]
 
 L2 详细方案见 [[Readers/AIAgents/桌宠 AI 入口的从零方案]]。
 
+## 两种部署形态:个人版 vs 团队版
+
+| 维度 | 个人版(默认) | 团队版(VFX 团队 mascot) |
+|---|---|---|
+| 用户 | 1 人 | N 个同事 |
+| 配置 | JSON 直接编辑 | GUI 必须 + 集中管理 |
+| 关键扩展 | — | **Flipbook 特效**(VFX 产能舞台)+ 配置三层(defaults/team/user)+ git-based team config sync + admin/user 权限分离 |
+| 工期影响 | 原 P0-P5 计划 | 加 P0.5(配置层 + 设置页提前)+ P1.5(Flipbook)+ P4.5(team sync)+ P5(distribution) |
+| 同代码库 | ✅ 不分叉,通过配置启停团队特性 | ✅ 不配 team repo URL 时退化为个人版 |
+
+团队版完整架构见 [[Wiki/Syntheses/AIAgents/Desktop-pet-team-distribution]]。
+
 ## 相关
 
 - [[Wiki/Concepts/AIFoundations/Mcp]] — MCP 协议本身;桌宠的"总线"标准
@@ -64,6 +76,7 @@ L2 详细方案见 [[Readers/AIAgents/桌宠 AI 入口的从零方案]]。
 - [[Wiki/Entities/AIAgents/AIRI]] — 最接近的开源参考
 - [[Wiki/Syntheses/AIAgents/Mcp-host-implementation]] — 桌宠侧的 MCP host 实施手册
 - [[Wiki/Syntheses/AIAgents/Desktop-pet-stack-comparison]] — 选型矩阵
+- [[Wiki/Syntheses/AIAgents/Desktop-pet-team-distribution]] — 团队分发版架构(Flipbook / 配置三层 / git sync / admin)
 
 ## 深入阅读
 

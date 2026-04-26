@@ -5,6 +5,35 @@
 
 ---
 
+## [2026-04-27] ingest | 费曼学徒冬瓜《Ralph + 多智能体协同,让 AI 长时高品质工作》bilibili 视频
+
+- source: [[Raw/Notes/Ralph + 多智能体协同 - 费曼学徒冬瓜]] (URL: https://www.bilibili.com/video/BV1t9oZBDENp/, 2026-04-26 发布)
+- 触发:用户问"多 agent 怎么实操,有现成工具吗,刷到的 AI 工作流网站是干这个的吗",归档此视频以沉淀答案
+- 抓取方式:Claudian WebFetch 仅拿到页面元数据(标题 + 简介),**未拿到完整字幕/逐字稿**——本轮所有 wiki 内容是元数据 + 既有概念外推,raw 与 source 两处均显式标注此局限
+- 新建:
+  - [[Raw/Notes/Ralph + 多智能体协同 - 费曼学徒冬瓜]] — 视频元数据 + 抓取局限说明
+  - [[Wiki/Sources/AIFoundations/Ralph-multi-agent-video]] — 源摘要(印证 Multi-agent + Harness,新增 Ralph)
+  - [[Wiki/Concepts/AIFoundations/Ralph-pattern]] — 新概念页(while 循环 + 文件接力 / 与多 agent 的时空正交对比 / 4 个常见坑 / 经验库 ↔ Hashimoto 定义)
+- 更新:
+  - [[Wiki/Concepts/AIFoundations/Multi-agent]]:sources 1→2;补"实操工具栈"小节(A 编码型 / B 可视化 / C SDK 三类边界,显式回答"AI 工作流网站是干这个的吗"); 补"Ralph 模式:正交补充"小节;相关链补 Ralph;来源块补第二条
+  - [[Wiki/Concepts/AIFoundations/Harness-engineering]]:sources 1→2;相关链补 Multi-agent + Ralph;来源块补第二条(标注 Ralph 经验库 = Hashimoto 定义最朴素落地)
+  - [[index]]:Concepts/AIFoundations 加 Ralph-pattern 一行;Sources/文章笔记 加 Ralph-multi-agent-video 一行;header 更新
+- 不动:
+  - 既有读本 [[Readers/AIFoundations/为什么上下文有限反而必须切多 Agent]] 暂不更新——单 source 衍生量不够触发(§3.4),后续若用户整理逐字稿再补"实操工具篇"
+  - [[Wiki/Overview]] 暂不动——本轮属"既有概念交叉补强 + 1 个新概念",未到顶层综合改动门槛
+- 要点(给用户的答案):
+  - 视频提的"主+计划+代码+测试"多智能体 = wiki 已有 [[Wiki/Concepts/AIFoundations/Multi-agent]] 的角色实例化
+  - 视频实操平台 = Claude Code 命令行 + `.claude/agents/<role>.md`(Claudian 同体系,Agent 工具就是这一机制的入口)
+  - 用户刷到的 AI 工作流网站(Dify/Coze/n8n/...)= B 类可视化编排,跟视频"AI 写代码"场景是不同物种,有重叠不等价
+  - Ralph(while 循环 + 文件接力)是与多 agent 正交的另一条 harness 路线,实战常组合
+- 自验:
+  - Glob `Raw/Notes/Ralph + 多智能体协同 - 费曼学徒冬瓜.md` ✓
+  - Glob `Wiki/Sources/AIFoundations/Ralph-multi-agent-video.md` ✓
+  - Glob `Wiki/Concepts/AIFoundations/Ralph-pattern.md` ✓
+- 下一步:用户若要落地实操,推荐起点是装命令行版 Claude Code 在小项目里建 `.claude/agents/{planner,coder,reviewer}.md` 跑一遍
+
+---
+
 ## [2026-04-25] refactor | UE4 → UE 改名 + Stock/ 下沉 Niagara 子命名空间
 
 - 触发:用户"把 ue4 改成 ue 吧,然后你刚刚提到的 stock/niagara 也改一下"——两个动作一起做,省一次批量 replace
@@ -1302,3 +1331,83 @@
   - 用户认知曲线一日完成:不懂 MCP → 三角色 + 发现机制 + 描述工程全清晰 → 写过四个 tool → 经历完整迁移重构 → 第一次让 AI 用自己的笔记
 - 自验证:Glob 确认 `D:\Notes\mcp-servers\` 已不存在;Bash 确认 `D:\Claude\mcp-servers\notes-server\index.js` 存在 + 烟雾测试通过(VAULT_ROOT env 注入,搜索真返回 wiki 命中)
 - 下一步:Eureka 转入桌宠 P0 议题(Tauri + Live2D 透明壳 + 系统托盘 + 全局快捷键)。本轮 MCP 工程闭环到此为止,后续 P0/P1/P2 会复用今日 notes-server 作为 P3 已成原型
+
+## [2026-04-26] synthesis | 桌宠议题加"团队分发版"——VFX 团队 mascot 第二人设
+- 触发:Eureka 在准备进 P0 前临时提出三个新需求——(a) 让桌宠播 Flipbook 特效以贴近 VFX 团队 / (b) 后续给整个特效组用,需要统一管理 agents 和设置 / (c) 希望有设置页面。
+- 关键洞察:三件事在架构上汇聚到**配置层模型**。Flipbook 需配置 + 触发规则 + 资产管理;团队管理本质是 admin/user 配置分层;设置页是配置的 UI 表层。先把配置层搞对,后面三件事都顺。
+- 三个架构决策(用户拍板):
+  - **a. Team config source = B(git repo)** —— TA 团队天然爱 git,PR 走代码审,有 diff/blame/revert,出问题能 git revert
+  - **b. Admin 模型 = 几个 lead/TA** —— 不是单 admin(bus factor=1),不是全员(易乱);桌宠端不区分 admin,身份完全由 git 写权限决定
+  - **c. P0 包含 P0.5(配置层 + 简单设置页)** —— 不预留后期所有 setting 改起来都疼
+- 新建:[[Wiki/Syntheses/AIAgents/Desktop-pet-team-distribution]](团队分发架构专题,~280 行)。覆盖 8 节:
+  - §0 个人/团队两人设本质差别表(用户数 / 配置 / MCP / 形象 / 维护)
+  - §1 Flipbook(为什么是 VFX 团队杀手级 / pixi 自带 AnimatedSprite 0 新依赖 / 触发系统 4 类 + 引入时机 / 资产格式约定 / "个人项目 → 团队 IP"心理学杠杆)
+  - §2 配置三层(layer 1-4 优先级 / 四 source 对比表 / B 方案 simpleGit clone+pull 实现 / team-config repo 长什么样)
+  - §3 Admin/user 权限(per-key lock + reset to team default + admin 不在桌宠端区分,git 决定)
+  - §4 设置页结构(6 tab + admin 模式开关)
+  - §5 调整后阶段路线(P0.5/P1.5/P4.5/P5 distribution)
+  - §6 6 个开放问题(Git LFS for sprite sheet / 离线 cache 兜底时长 / lock 后 user override 怎么处理 / 特效预览组件 / VAULT_ROOT 是否 user-local / ...)
+  - §7 同代码库两种部署(配置启停团队特性,不分叉 repo)
+- 更新:
+  - [[Readers/AIAgents/桌宠 AI 入口的从零方案]]:
+    - §6 阶段路线表加 4 个新阶段(P0.5🅂/P1.5/P4.5🅂/P5🅂),🅂 标记团队版独有
+    - §6 加双人设 callout + 团队版必须颠倒"不要先做配置 UI"反 warning
+    - §6.1.5 P0.5 最小验收(三层 store + 设置页骨架 + lock 机制)
+    - §6.2.5 P1.5 最小验收(PixiJS AnimatedSprite + 资产目录约定 + 至少 2 示例特效)
+    - §10 深入阅读加新综合页链接
+  - [[Wiki/Concepts/AIAgents/Desktop-pet-as-ai-hub]]:
+    - 加 "两种部署形态" 表(个人 vs 团队)
+    - 相关链接加 team-distribution 综合
+  - [[index.md]]:头部"最后更新"改写;Syntheses 加 team-distribution 条
+- 决策原则:
+  - **同代码库 + 配置启停**:不分两套代码维护;不配 team repo URL 时退化为个人版,完全等价
+  - **Live2D=身体 / Flipbook=特效环绕**:语义模型对齐 VFX 团队"角色 + 特效"分工(Niagara 式),团队成员秒懂
+  - **桌宠端不区分 admin**:权限完全由 git 写权限决定,这是 git 自带的,我们什么都不做
+  - **配置兼容 schema**:user-settings.json 与 team-defaults.json 同 schema,只 lock 字段差别
+- 工期影响:个人版 1-2 月 v0.1 → 团队版 2-3 月 v0.1。值得,P0.5 不前置后期返工成本远大
+- 下一步:Eureka 装 Rust → P0.0(Tauri scaffold + Vue + TS + 三层 config 骨架)+ P0.1(透明置顶窗口)开工
+- 自验证:Glob 确认 5 处更新全部存在(1 新综合 + 3 修改文件 + 本 log 条)
+
+## [2026-04-27] synthesis | Solaris 3 v0.1.0 完工 —— 桌宠 P0 阶段全部 ship
+- 触发:昨日(2026-04-26)桌宠 AI 入口议题落地 wiki 后,Eureka 决定执行 L2 自做路线。当日完成 MCP 学习闭环 + notes-server 上线;今日(2026-04-27)从零执行 P0 全部 6 个主 phase + 2 个 polish,产出可分发 v0.1.0
+- 项目仓库:`https://github.com/EurekaThurston/Solaris-3`(从昨晚起步;独立仓,不进 vault,符合"工具 ≠ 数据"原则)
+- 项目 commit 序列(8 步,含 polish):
+  - `b02055b` P0.0 + P0.1 — Tauri 2 + Vue 3 scaffold + 透明置顶无装饰窗口 + 磨砂卡片占位 + 拖动整窗
+  - `2aa989e` P0.2 — 系统托盘 (tray-icon feature) + tauri-plugin-global-shortcut + Ctrl+Space toggle + 托盘菜单(显示/隐藏/退出)
+  - `1261619` P0.3 — Live2D 角色(pixi.js@^6.5 + pixi-live2d-display@^0.4 + Cubism Core SDK)+ Hiyori Pro 测试(本地未入仓)+ 自动眨眼/idle/物理(Cubism 内置)
+  - P0.4 — `pnpm tauri build` 验证产 NSIS 6.6MB / MSI 7.7MB / raw exe 15MB(无独立 commit,验证步骤)
+  - `088538a` P0.5 — 三层 config 模型(defaults/team/user via tauri-plugin-store)+ Vue Router 多窗口架构 + macOS 风设置 UI(角色/快捷键 tab)+ 跨窗口 reactive(slider 实时联动主窗口 Live2D)
+  - `ad6666a` P0.5+ — 窗口位置持久化(onMoved + 300ms debounce + setPosition 启动恢复)+ 运行时改快捷键(Tauri command set_summon_hotkey + HotkeysTab 录制 UI)+ Hiyori Pro 换 Hiyori Free + 模型入仓(Free Material License 允许)
+- 产出资产
+  - 8MB Solaris-3 项目仓(含 Hiyori Free + Cubism Core + 完整 src)
+  - 6.6MB NSIS 安装器 / 7.7MB MSI / 15MB raw exe(单文件嵌入所有静态资产,运行时仅依赖系统 WebView2)
+  - GitHub Release v0.1.0(供同事直接下安装器,SmartScreen 警告点"仍要运行"即可)
+- 关键 7 个 bug + lessons learned(详见 [[D:/Solaris-3/DEVLOG.md]] 完整列表):
+  1. **Tauri 2 capabilities 细粒度权限**:`start_dragging` 等 API 必须显式列在 default.json,`core:default` 不含 destructive。教训:报"not allowed"先查 capability 文件,不查网
+  2. **Cargo lib.name 改了忘改 main.rs 引用**:scaffold `solaris_3_scaffold_lib` 改 `solaris_3_lib` 后 `main.rs::run()` 调用要同步改;教训:grep crate 名是改名标配步骤
+  3. **MS Store 版 Claude Desktop 误判**(与本项目无关但有方法论价值):我先入为主认为"沙箱不能 spawn",看 main.log 才发现完全成功,真正问题是 Claude Desktop 反向覆盖 config;教训:**先看日志再下结论**
+  4. **`WebviewUrl::App("index.html#/settings")` 全白屏**:Tauri 2 把 path 当字面文件路径,`#` 不是 fragment 而是文件名一部分;修法:URL 不带 hash,前端按 `window.label` 决定路由
+  5. **Vue Router 4 `router.isReady()` 在 `app.use(router)` 前调用永远 hang**:initial navigation 在 `app.use(router)` 时启动,顺序错就死锁。修法:严格 `createApp → use(router) → await isReady → mount`
+  6. **`tauri-plugin-global-shortcut` handler by-move 闭包**:捕获的初始 shortcut 不会跟着 unregister/register 变;修法:handler 不比较 shortcut,任何已注册组合按下都 toggle(因只注册一个)
+  7. **Live2D 不同发行版文件名前缀差异**:Pro `hiyori_pro_t11.*` vs Free `hiyori_free_t08.*`;defaults.ts 的 modelPath 必须匹配实际文件名;未来 P1+ 加模型选择器应**自动扫描** `public/live2d/<dir>/*.model3.json`
+- 关键架构决策(为什么这么设计)
+  - **三层配置 P0.5 就上不 P4 后置**:团队分发场景必需,后期改架构成本极高;同时是跨窗口 reactive 链路的基础,P5+ Flipbook trigger 也吃这条管道
+  - **设置 = 独立 Tauri 窗口而非 modal**:主窗口 400×500 + 透明 + 置顶装不下表单;独立窗口让用户能"边改边看 Live2D 实时变化"
+  - **Vue Router hash mode + label-based routing**:Tauri 2 不支持 URL fragment(Bug 4);source of truth 是 Tauri 端 label,前端 follow
+  - **Hiyori Free 入仓 vs Pro 不入仓**:Free Material License 明确允许"小规模商用 + 大型组织内部使用 + 项目内分发";Pro 限制更严走 P4.5 git sync 路线
+  - **跨窗口 reactive = tauri-plugin-store + Tauri events**:`setUser()` 三件套(更新 reactive + 持久化 + emit event);其他窗口 listen 后替换本地 state → effective computed 重算 → watch 触发 UI 反应;**整链路完全声明式**,加新 setting 0 改动
+- 方法论里程碑(本日真正的"为什么记 log")
+  - 昨日完成 wiki 闭环(写 → AI 读 → 回灌),今日完成**议题 → 设计 → 落地**全链路:
+    - 4 月 26 早:议题入驻 wiki + Mcp 概念页教学化 + notes-server 上线
+    - 4 月 26 晚:议题暴露第二人设(团队版),架构升级为三层 config + Flipbook + git sync,沉淀团队分发综合页
+    - 4 月 27:照着读本 P0 阶段表 8 步 ship 出可分发 v0.1.0;P0.5 三层配置完全照 [[Wiki/Syntheses/AIAgents/Desktop-pet-team-distribution]] §2 实现
+  - **wiki 不是只用来读的,是用来"指导施工"的**——读本里 §6 P0-P5 阶段表今日逐字执行,综合页 §2 配置三层模型今日逐字落码。这是 [[Wiki/Concepts/Methodology/Llm-wiki-方法论]] 从"知识库"升级为"工程蓝图"的实证
+  - **DEVLOG 与 wiki log 双层记录**:wiki log 记方法论级里程碑(本条目);项目 DEVLOG 记每个 bug 的具体症状/根因/修法/教训(7 条详细)。两者各自服务对象不同——wiki log 给未来读取议题脉络的我看,DEVLOG 给未来在 Solaris-3 上动手的人(我或同事)看
+- 下一步:P1 启动(LLM 流式聊天)
+  - 子阶段:P1.0 Vercel AI SDK + provider / P1.1 设置加 AI tab(API key)/ P1.2 聊天 UI(下方滑出 + 气泡)/ P1.3 流式渲染 / P1.4 多轮上下文 in-memory / P1.5 Hiyori 表情联动(可选)
+  - 决策点:默认 provider(推 OpenAI 兼容 endpoint 覆盖国内厂商)/ 聊天 UI 形态(推下方滑出)/ 上下文持久化(P1 in-memory,P4 SQLite)
+  - 不在 P1 做的:MCP 接入(P2)/ TTS+ASR(P5 黑洞)/ Flipbook(P1.5 可插)
+- 自验证(Glob):
+  - [[D:/Solaris-3/DEVLOG.md]] 存在(今日新建)
+  - GitHub Release v0.1.0 已发(用户可访问 `https://github.com/EurekaThurston/Solaris-3/releases/tag/v0.1.0` 验证)
+  - 项目 commits `b02055b`(P0.0+1)/ `2aa989e`(P0.2)/ `1261619`(P0.3)/ `088538a`(P0.5)/ `ad6666a`(P0.5+) 全部 push 到 origin/main
