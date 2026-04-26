@@ -1217,3 +1217,88 @@
   - 等用户决定是否进 POC;若进,从 Material 正向 dumper 起步,1-2 周跑通
   - 未来 DataTable / Blueprint 资产理解时,复用 Uasset-textualization 概念页的方案族框架
 - 自验证(Glob):4 个新路径(1 概念 + 1 综合 + 1 读本 + 本条 log 引用)全部确认存在
+
+## [2026-04-26] synthesis | 桌宠作为 AI 应用入口议题首次入驻
+- 触发:Eureka 想做桌宠作为日后所有 AI 应用的入口。多轮对话:方向/方案盘点 → AIRI 深度解析(GitHub README + plugins/ + apps/ + mcp-launcher 姊妹仓 WebFetch)→ 用户判断 AIRI 不够适配 → 评估"从零自做"可行性 → 用户选 (a)+(c) 落 wiki + MCP 手册
+- 关键决策:议题归 AIAgents(具体 agent 实现 / 项目级落地)而非 AIFoundations,符合 CLAUDE §2.1 路由
+- 新建:
+  - [[Wiki/Concepts/AIAgents/Desktop-pet-as-ai-hub]] —— 议题概念,三层架构(形象/Hub/MCP host)+ L1/L2/L3 路线分级 + 反模式预警(MCP 后置 / Hub 绑死前端)
+  - [[Wiki/Entities/AIAgents/AIRI]] —— Project AIRI(moeru-ai/airi v0.9.0)实体页;26+ provider / Live2D+VRM / Electron 桌面端 / plugins 五个 / mcp-launcher 姊妹仓 / 7 维评分(LLM 5⭐ 形象 5⭐ MCP 2⭐ 契合度 2⭐ 装配参考 5⭐)
+  - [[Wiki/Syntheses/AIAgents/Desktop-pet-stack-comparison]] —— 选型矩阵综合;L1/L2/L3 + 现成项目横向(AIRI/Open-LLM-VTuber/Fay/VPet)+ 按用户偏好的决策矩阵 + 五条原则
+  - [[Wiki/Syntheses/AIAgents/Mcp-host-implementation]] —— MCP host 实施手册;五职责 + 配置兼容 Claude Desktop + MCP Manager 实现骨架(命名空间 `<server>__<tool>`)+ Vercel AI SDK 桥接(JSON Schema 天然兼容)+ 安全(filesystem 限根/首次确认/审计/超时)+ 调试三件套(Inspector/sidecar log/devtools)+ AIRI 三路线对比(plugin/launcher daemon/prompt 模拟)+ L2 的 P2 子阶段(P2.1-P2.7)
+  - [[Readers/AIAgents/桌宠 AI 入口的从零方案]] —— 主题读本;入口语义三分(A 启动器/B 单体助手/C AI 总线⭐)→ AIRI 评估(强项 + 三个错配)→ 三档路线分级 → L2 装配清单(Tauri/pixi-live2d/Vercel AI SDK/MCP SDK/SQLite-vec/Claude Desktop 配置格式)→ 三层架构 ASCII → MCP host 五职责浓缩 + 数据流时序 → P0-P5 分阶段 + 每段最小验收 + P3 候选(笔记搜索⭐/代码问答/贴图/Niagara)→ 10 条避坑 → 全景回看 → 10 条洞察 → 9 题自检(题型:错配返工 / L2-L3 取舍 / sidecar 第一性原理 / MCP-first 连锁 / Vercel SDK 可替代性 / 命名空间冲突场景 / P2 诊断顺序 / P3 选型取舍 / 5 句话讲第一性原理)
+- 更新:
+  - [[index.md]]:头部"最后更新"改写为本轮;AI Agents Entities 加 AIRI;Concepts 加 Desktop-pet-as-ai-hub;Syntheses 加 Desktop-pet-stack-comparison + Mcp-host-implementation;Readers 加桌宠从零方案
+- 关键洞察(本读本沉淀):
+  - 桌宠是壳,Hub 是脑,**MCP host 才是"入口"语义本身** —— 名字是桌宠,本质是私人 MCP host
+  - AIRI 最有价值的不是它的躯壳而是它的依赖装配清单 —— 库选得对,但怎么拼是自己的事
+  - **MCP-first 不可让步**:决定 Hub 整个数据流形状(tool 注册 / function calling 桥接 / result 回灌 / 设置 UI 数据模型),后置 = 推倒重来
+  - **Vercel AI SDK + MCP SDK 的 JSON Schema 天然兼容** 是 L2 选型核心理由 —— 这条桥不用自写,选别的栈就要自搭
+  - 配置格式照抄 Claude Desktop 是杠杆最大的兼容性投资 —— 一份配置三个 host 通用
+  - P2 是验证整条路的最小回路 —— 跑通它就知道项目能不能走下去
+  - 第一个自定义 MCP server 选"笔记搜索":本仓 wiki 直接成 LLM 扩展记忆,自我闭环最快
+- 下一步:
+  - 用户决定何时动手 P0;若动手,推荐另开仓库跟随读本 P0-P5
+  - 可先做的预备:给本 wiki 写 MCP server(暴露 search_notes / read_note / list_recent),P3 阶段直接挂上桌宠
+  - AIRI 持续观察:mcp-launcher 进展、@proj-airi/server-runtime 是否暴露稳定接口
+- 自验证:Glob 5 个新路径全部确认存在(1 概念 + 1 实体 + 2 综合 + 1 读本)
+
+## [2026-04-26] refactor | MCP 概念页教学化重写
+- 触发:Eureka 在桌宠议题里跟着架构推进发现自己其实没真正理解 MCP——意识到"USB-C 类比"懂了不等于"为什么我要写 MCP server"懂了。请求把对话里"场景驱动 + 四种解法对比 + server 代码骨架"三块通用化后融进 MCP 概念页(明确不要桌宠相关内容)
+- 改动:[[Wiki/Concepts/AIFoundations/Mcp]] 整体重写,从 64 行扩到 ~140 行
+  - 新增"一个能立刻代入的场景"(ChatGPT 读本地文件做不到 → LLM 根本限制)
+  - 新增"几种解法"对比表(A 复制粘贴 / B RAG / C Function Calling / D MCP),让 MCP 在替代方案矩阵里被理解,而非孤立的"USB-C 类比"
+  - "三个角色"补具体 host 例子(Claude Desktop / Cursor / Windsurf / Cline)+ ASCII 图 + "杠杆从哪儿来"小结(server 写一次 N 用 / Host 实现一次挂全部)
+  - **新增"MCP server 长什么样"整节**,~30 行 TypeScript 代码骨架(read_file 例子,tools/list + tools/call + stdio transport),配 jsonc 配置示例;让概念从"懂定义"变成"摸过代码"
+  - "与相关概念的区别"表格加 RAG 行(原表只有 Skill / CLAUDE.md);加"简记四件套"
+  - "开放问题"补"命名空间常用做法 `<server>__<tool>` 前缀"和"发现/分发机制 / 应用商店"
+  - frontmatter `updated` → 2026-04-26
+- 决策原则(用户明确要求):**纯 MCP 内容,不带桌宠**——避免概念页被某个具体应用绑死。桌宠侧 MCP 实施细节继续放 [[Wiki/Syntheses/AIAgents/Mcp-host-implementation]],概念页只讲协议本身
+- 不改:其他引用本概念页的地方([[Readers/AIFoundations/AI 应用生态全景 2026]] / [[Wiki/Concepts/AIAgents/Desktop-pet-as-ai-hub]] / [[Wiki/Syntheses/AIAgents/Mcp-host-implementation]])保持不变,因本次只是把概念页讲深,反链/事实没动
+- 自验证:Glob 确认 `Wiki/Concepts/AIFoundations/Mcp.md` 存在
+
+## [2026-04-26] refactor | MCP 概念页加"发现机制"章节
+- 触发:Eureka 在 MCP 概念清楚后追问"AI 工具怎么知道 MCP server 在哪"——这是 MCP 学完概念后第一个会冒出的实操疑问。先口述讲清后,用户要求把这部分(纯协议层发现机制)沉淀到概念页
+- 改动:[[Wiki/Concepts/AIFoundations/Mcp]] 把原"配置方式"小 tip 块替换为整节 `## Host 怎么找到 server(发现机制)`,~70 行
+  - **核心论断 callout**:MCP 协议本身不规定 server 怎么被发现 → 发现是 Host 的事 → "位置"就是配置里那行 command+args
+  - **配置文件位置表**(Claude Desktop Win/Mac / Cursor / Windsurf / Cline / 自研)+ "为什么大家都抄 Claude Desktop 格式"tip(事实标准的形成)
+  - **配置内容示例**(filesystem npx + git uvx + 本地 node 三种 entry)
+  - **Host 启动时序**(spawn → stdio → initialize → tools/list → 注册给 LLM)
+  - **三种 server 描述方式**表(本地 stdio / npx / uvx / 远程 SSE-HTTP)+ "npx -y 和 uvx 让用户不用预装"tip
+  - **当前发现现状** "没有官方应用商店"warning + 5 来源表(官方仓库 / awesome list / 第三方 registry Smithery+mcp-get+Pulse / 厂商自营 / 集中式 launcher mcp-launcher)
+- 同步收紧"开放问题"原"发现/分发机制"条 —— 正文已答,留下"官方应用商店是否出现 + 非技术用户门槛"作真正 open
+- 不改:其他章节("场景驱动引入"/"三角色"/"server 长什么样"/"行业采纳"/"与相关概念区别"/"相关")保持上一轮重写后状态
+- 决策:与上一轮重写规则一致——纯 MCP 协议内容,不带任何特定应用(桌宠/wiki)的语义
+- 自验证:Glob 确认页面存在
+
+## [2026-04-26] synthesis | wiki 首次被 AI 实时消费 —— notes-server 上线 + 方法论闭环
+- 触发:本日早些时候完成桌宠议题落地后(见 [2026-04-26] synthesis | 桌宠作为 AI 应用入口议题首次入驻),Eureka 表示对 MCP 仍是"跟着推进点头",不真懂。请求把对话中"场景驱动 + 四解法对比 + server 代码骨架"沉淀进 [[Wiki/Concepts/AIFoundations/Mcp]](该页两次 refactor 见早些 log)。随后用户追问发现机制,再次扩页。再随后用户提议"自己写一个 server 跑一下"——实操进入。
+- 第一阶段:实操起步(quote-server)
+  - 检测环境:Node 22.15 + npm 11.8 ✅;Claude Desktop 是 MS Store 版(沙箱重定向至 `Local\Packages\Claude_pzs8sxrjxfjjc\LocalCache\Roaming\Claude\`),本机已有 Claude Code(`LocalAppData\claude-cli-nodejs`)
+  - 在 `D:\Notes\mcp-servers\quote-server\` 建首个 server(2 tool: `get_random_quote` 8 句硬编码 + `roll_dice` 带参数 demo);烟雾测试通过 stdio handshake + tools/list + 双 tool call 全过
+  - 挂 Claude Desktop:配置首写到错路径(`%APPDATA%\Claude\` 标准路径,被 Store 沙箱忽略)→ 用户自行打开 Settings 触发真路径(`Local\Packages\...\LocalCache\Roaming\Claude\`)→ Edit 合并(保留 preferences 字段)
+  - 用户验证:不点名 tool 自然语言"给我一句关于编程的名言激励一下我"成功触发 `get_random_quote`,返回 Hoare 那句(QUOTES 数组第 5 条字字一致)+ Claude 自加中文翻译和"加油"鼓励语 → 三件事一次验证:**自然语言触发 / 真实 server 调用 / LLM 在 server 之上的语境加工**
+- 第二阶段:升级 search/read(把"玩具"变"工具")
+  - 加 `search_notes`(case-insensitive 全文 walk + 命中行 ±1 上下文)+ `read_note`(防越界 `..`);两 tool description 都重写到"不点名也能触发"水平(明确说"用户的 wiki 是 curated second brain, 应优先于通用知识")
+  - 烟雾测试 search_notes("DataInterface")在 ~50ms 内返回 3 文件真实命中,涵盖 index.md / log.md / Niagara 读本
+  - 用户测试 prompt:"我之前是怎么理解 Niagara DataInterface 三路代码生成的?"——Claude 走完整 5 步链:[1] 承认记忆里没有 → [2] search 三路 失败 → [3] 改关键词 search 命中 → [4] read_note 拉 Entity 全文 → [5] 综合输出三段表 + 引用 `UNiagaraDataInterface.md:43` / `Niagara-learning-path.md:230`。**这是 wiki 第一次被 AI 实时使用、引用、回灌**
+- 第三阶段:工程组织重构(quote-server → notes-server,vault 外迁)
+  - 用户反馈:不想让 mcp-servers 工程目录 + node_modules 污染 vault;问"有没有全局 MCP 位置"
+  - 答:**MCP 协议根本不规定 server 物理位置**——纯工程组织事;npm/uvx 自动管理,本地 server 自定。给 D:\(已有 Claude/code/ObsidianVault 等)和 C:\(AppData/Local 是 idiomatic Windows 用户级工具位)选项;用户选 A:`D:\Claude\mcp-servers\`(已有 D:\Claude\ 是 Claude Code CWD,语义自洽,桌宠未来也住这)
+  - 重要发现(改正前轮误判):**MS Store 版 Claude Desktop 沙箱 NOT 是问题** —— 日志 `[LocalMcpServerManager] Connected to quote-server (4 tools)` 证明能 spawn node。真问题是 Claude Desktop 周期性把内部状态反写 config(用户没经 GUI 加的 server 被覆盖清空)。建议:(a)长期用 GUI 加 / (b)主战场放 Claude Code(实际用户用的是 Claude Desktop 的 Code 模式,共用配置)
+  - 拆迁:新建 `D:\Claude\mcp-servers\notes-server\`(纯笔记工具)+ `VAULT_ROOT` 环境变量解耦(server 不再硬编码 vault 路径,通过 MCP 配置 env 字段注入,迈向"通用工具"第一步);更新 Claude Desktop config + `D:\Claude\.claude\settings.local.json` 权限白名单(预批 `mcp__notes-server__search_notes` / `mcp__notes-server__read_note` 免弹窗);删除 `D:\Notes\mcp-servers\` 整目录(21MB)
+  - 终验:用户问"我的 wiki 里关于 MCP host 的论述要点是什么?",Claude 综合三个**今日才创建**的文件(`Mcp-host-implementation.md` + `Desktop-pet-as-ai-hub.md` + `Mcp.md` 重写版),输出"概念层 / 施工层"两线索分述,§0-§12 实施手册八点骨架还原,直接引用"桌宠是 MCP host 的人格化前端"原 callout 句。**通用训练绝无可能产生此类内容**,链路完全成立
+- 关键决策与原则
+  - **工具 ≠ 数据**:notes-server 服务 vault 但不该住在 vault 里;`D:\Notes\` 重回"纯知识"语义
+  - **VAULT_ROOT env 注入**:server 与具体 vault 解耦,理论上可发布 npm 包供任何 Obsidian 用户使用
+  - **单 server 单领域**:quote-server 时期 4 个混杂 tool 的反模式立即纠正,桌宠 P3 起步即遵循
+  - **配置兼容 Claude Desktop 格式**:notes-server 配置在 Claude Desktop 与 (假设的) Claude Code 之间天然通用 —— [[Wiki/Concepts/AIFoundations/Mcp]] §"Host 怎么找到 server"原则的实证
+- 落地资产
+  - `D:\Claude\mcp-servers\notes-server\index.js` 与 `package.json`(91 deps;5953 字节代码;两 tool description ~200 字工程级)
+  - `D:\Claude\mcp-servers\.gitignore`(node_modules + package-lock)
+  - 配置文件:Claude Desktop config(MS Store 沙箱路径)+ `D:\Claude\.claude\settings.local.json`
+- 方法论里程碑(本条最重要)
+  - vault 首次完成 **"写 → 被 AI 读 → 被回灌"** 闭环。[[Wiki/Concepts/Methodology/Llm-wiki-方法论]] 从理论到亲手验证;[[Raw/Notes/Karpathy Wiki 方法论]] 提出的"为 LLM 维护 wiki 反过来 LLM 用 wiki 服务你"今日实证
+  - 用户认知曲线一日完成:不懂 MCP → 三角色 + 发现机制 + 描述工程全清晰 → 写过四个 tool → 经历完整迁移重构 → 第一次让 AI 用自己的笔记
+- 自验证:Glob 确认 `D:\Notes\mcp-servers\` 已不存在;Bash 确认 `D:\Claude\mcp-servers\notes-server\index.js` 存在 + 烟雾测试通过(VAULT_ROOT env 注入,搜索真返回 wiki 命中)
+- 下一步:Eureka 转入桌宠 P0 议题(Tauri + Live2D 透明壳 + 系统托盘 + 全局快捷键)。本轮 MCP 工程闭环到此为止,后续 P0/P1/P2 会复用今日 notes-server 作为 P3 已成原型

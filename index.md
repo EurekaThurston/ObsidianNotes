@@ -3,7 +3,7 @@
 > 本文件是整个 wiki 的内容目录。LLM 每次 ingest 都会更新。
 > 查询时先读这里,再深入相关页面。
 
-最后更新:2026-04-25(refactor:(1) `UE4/` → `UE/` 为 future UE5 留空间(3 topic-keyed 子目录改名);(2) `Entities/Stock/*.md` 与 `Sources/Stock/*.md` 下沉 `Stock/Niagara/` 子命名空间(120 文件),CLAUDE.md §9.5 路径模板升级为 `<repo>/<module>/<文件名>`。同日较早 refactor:Niagara 下沉为 UE 子主题 / AIApps → AIFoundations 改名)
+最后更新:2026-04-26(synthesis:桌宠作为 AI 应用入口议题首次入驻 AIAgents——1 概念 + 1 实体 + 2 综合 + 1 读本)
 
 ---
 
@@ -24,6 +24,7 @@
 - [[Wiki/Entities/AIAgents/Joon-sung-park|Joon Sung Park（朴俊成）]] — 斯坦福 HCI 博士;生成式智能体方向奠基人;2023 Smallville + 2024 1000-人数字孪生 主作者 (来源:3)
 - [[Wiki/Entities/AIAgents/Stanford-smallville|斯坦福小镇 Smallville]] — Park 2023 论文的 25 agent 像素沙盘;UIST Best Paper;后续所有"AI 小镇"项目的谱系源头 (来源:2)
 - [[Wiki/Entities/AIAgents/A16z-ai-town|a16z AI Town]] — 斯坦福小镇的 TypeScript + Convex + PixiJS 工业级开源重写;MIT;默认跑本地 llama3 (来源:1)
+- [[Wiki/Entities/AIAgents/AIRI|AIRI(Project AIRI)]] — 开源 Neuro-sama 复刻;Tauri/Web + Live2D/VRM + 26+ LLM provider;桌宠 AI 入口议题最接近的开源参照,但 MCP 不是一级公民 (来源:1)
 
 ### UE / Niagara 代码实体（repo: stock / UE 4.26,module: Niagara）
 - [[Wiki/Entities/Stock/Niagara/UNiagaraSystem|UNiagaraSystem]] — Niagara 特效顶层资产;EmitterHandles + System 脚本 + 编译产物 (来源:1)
@@ -115,6 +116,7 @@
 - [[Wiki/Concepts/AIAgents/Generative-agents-architecture|生成式智能体架构]] — Park 2023 Memory Stream(三路打分)+ Reflection(层级化)+ Planning(粗→细 + reactive)三件套;解 agent 长期运行四堵硬墙 (来源:2)
 - [[Wiki/Concepts/AIAgents/Agent-based-social-simulation|LLM 驱动的社会模拟]] — 研究范式:从 HCI demo → 真人对照数字孪生;与工具型 multi-agent 的第一性原理之别(共生演化 vs 上下文隔离) (来源:2)
 - [[Wiki/Concepts/AIAgents/Uasset-textualization|Uasset 文本化]] — 把 UE 二进制 .uasset 转成 agent 可读/可写的文本代理;所有"让 LLM 理解/生产非代码资产"应用的基础设施;按资产类型分方案(T3D / Python dumper / CUE4Parse) (来源:1)
+- [[Wiki/Concepts/AIAgents/Desktop-pet-as-ai-hub|桌宠作为 AI 入口]] — 形态是壳,本质是 MCP host;三层架构(形象 / Hub / MCP host)+ L1/L2/L3 路线分级;"未来所有 AI 应用都是 MCP server,桌宠只是其一个 host" (来源:1)
 
 ## Sources(源摘要)
 *每个 raw 文件或代码源对应一页摘要。按时间倒序。*
@@ -212,6 +214,7 @@
 - [[Readers/AIAgents/给美术做代码问答机器人 - 从 grep 到 wiki 复合记忆]] — 项目级 AI 应用落地读本;agentic grep 三件套 + Dithered LOD Transition 贯穿案例 + 未知 symbol 四破解 + wiki 术语桥梁 + persona 分层 + 部署风险 + POC 最小路径 (2026-04-24)
 - [[Readers/AIAgents/让 AI 接特效贴图的长尾需求 - 架构与 GitHub 生态]] — 项目级 AI 应用落地读本;三层架构(L1 原子/L2 模型/L3 代码沙箱)+ VFX 四重数据语义(通道/位深/alpha/色彩空间)+ 2026-04 GitHub 生态分类(架构范本/ComfyUI 基座/四方连续 5 方案)+ POC "四方连续+超分" 最小路径 + 与代码问答机器人同构对照 (2026-04-24)
 - [[Readers/AIAgents/给 AI 看懂 Niagara 和材质 - 正反两条管道]] — 项目级 AI 应用落地读本;.uasset 二进制实况 + 文本化四方案评估(T3D/Python dumper/CUE4Parse/UAssetAPI)+ Material vs Niagara 4.26 API 成熟度不对称 + 正向双层输出 + 逆向四路径(R1-R4)+ Material R2 甜点(UMaterialEditingLibrary)+ Niagara R3 克制模板化 + 逆向三重 guardrail + compounding 语义模型 + POC 单点突破次序 (2026-04-25)
+- [[Readers/AIAgents/桌宠 AI 入口的从零方案]] — 桌宠 AI 入口议题主题读本;入口语义三分(启动器/单体助手/AI 总线)+ AIRI 三星错配评估 + L1/L2/L3 路线分级 + L2 装配清单(Tauri + pixi-live2d + Vercel AI SDK + MCP SDK + SQLite-vec)+ 三层架构(形象/Hub/MCP host)+ MCP host 五职责 + Vercel AI SDK ↔ MCP JSON Schema 天然桥接 + P0-P5 阶段路线 + 10 条避坑 + 9 题自检 (2026-04-26)
 
 ### UE / Niagara 源码学习
 - [[Readers/UE/Niagara/Phase 0 - 上阵前的四层脑内地图|Phase 0 读本 — 上阵前的四层脑内地图]] — 把 UObject / Asset-Instance / Niagara-vs-Cascade / CPU-vs-GPU 四概念编成自下而上一条叙事链,一次读完掌握 Phase 1+ 所需全部前置 (2026-04-19)
@@ -239,6 +242,8 @@
 - [[Wiki/Syntheses/AIAgents/Artist-code-qa-bot|给美术做代码问答机器人]] — 项目级 AI 落地设计:agentic grep + wiki 复合记忆;架构/persona/沉淀/风险/POC 路径
 - [[Wiki/Syntheses/AIAgents/Ai-texture-tool-design|AI 特效贴图工具设计]] — 项目级 AI 落地设计:三层工具架构(L1 原子/L2 模型/L3 代码沙箱)+ VFX 数据语义 guardrail + 2026-04 GitHub 现成项目调研(GenArtist/AgentLego/ComfyUI-workflow-skill/seamless-tile 家族)+ POC 路径
 - [[Wiki/Syntheses/AIAgents/Niagara-material-ai-comprehension|Niagara / Material AI 理解与生成管道]] — 项目级 AI 落地设计:正反两向 uasset 管道;文本化四方案评估 + Material vs Niagara 4.26 API 不对称实况 + Material R2(UMaterialEditingLibrary)+ Niagara R3 模板化 + 逆向三重 guardrail(/AI_Generated/ 隔离 / 编译验证 / 溯源元数据)+ 语义模型 compounding + POC 次序(Material 正 → Material 逆 → Niagara 正 → 选做 Niagara 逆)
+- [[Wiki/Syntheses/AIAgents/Desktop-pet-stack-comparison|桌宠 AI 入口的选型矩阵]] — 桌宠议题选型综合;L1/L2/L3 路线分级 + 现成项目矩阵(AIRI/Open-LLM-VTuber/Fay/VPet)+ 决策矩阵按目标收敛 + L2 装配清单 + 五条决策原则
+- [[Wiki/Syntheses/AIAgents/Mcp-host-implementation|桌宠侧 MCP host 实施手册]] — 桌宠议题 MCP 实施手册;MCP host 五职责 + 配置兼容 Claude Desktop + MCP Manager 实现骨架(命名空间防冲突)+ Vercel AI SDK 桥接 + 安全/边界 + 调试三件套 + AIRI 三路线对比 + L2 P2 子阶段拆分
 
 ### UE / Niagara 源码学习
 - [[Wiki/Syntheses/UE/Niagara/Niagara-learning-path|Niagara 源码学习路径]] — UE 4.26 Niagara 插件 10 阶段学习路线图，含 ~69 个文件待 ingest (stock)
