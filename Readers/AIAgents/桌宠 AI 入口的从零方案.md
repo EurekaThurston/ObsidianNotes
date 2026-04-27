@@ -1,8 +1,8 @@
 ---
 type: synthesis
 created: 2026-04-26
-updated: 2026-04-26
-tags: [aiagents, desktop-pet, mcp, agent-hub, tauri, live2d, reader]
+updated: 2026-04-28
+tags: [aiagents, desktop-pet, mcp, agent-skills, agent-hub, tauri, live2d, reader]
 sources: 4
 aliases: [桌宠从零方案, Desktop Pet From Scratch]
 ---
@@ -252,6 +252,62 @@ return streamText({
 
 排错顺序:**Inspector 直连 server → Hub 是否拉到 tool → LLM 是否输出 tool_call → args schema 是否对得上**。
 
+### 5.7 MCP vs Skills:为什么不混入 Skills
+
+> [!info] 2026-04-28 增订
+> 此节由 P1 收工时的 Q&A 沉淀(详见 [[D:/Notes/log.md]] 同日条目)。
+> 概念基础:[[Wiki/Concepts/AIFoundations/Agent-skills]]。
+
+Anthropic 2025-2026 推出的 **Agent Skills** 是另一条"扩展 LLM 能力"的路。读本读到这里,常见疑问:**为什么不在桌宠里也支持 Skills,跟 MCP 双轨并行?**
+
+简短回答:**Skills 跟 MCP 不是竞争,是正交。而且桌宠作为 host 接不上 Skills 这条路。**
+
+#### 本质差异(逐项)
+
+| 维度 | MCP | Skills |
+|---|---|---|
+| **是什么** | 协议(像 HTTP for AI tools) | 文件夹约定(SKILL.md + 可选脚本)|
+| **谁定义** | Anthropic 开源 → 全行业接受(OpenAI / Google 都跟进)| Anthropic 专属 |
+| **跑在哪** | 独立进程(server,stdio/SSE/HTTP)| 进 Claude 的 context(指令 + 脚本)|
+| **跨厂商** | ✅ 任何 host(Claude Desktop / Cursor / 桌宠)都能用 | ❌ 只 Claude(claude.ai / Claude Code / Anthropic API)|
+| **执行模型** | LLM 调 tool → server 真跑代码 → 返结果 | LLM 读 SKILL.md → 决定怎么做 → 可选跑脚本 |
+| **状态** | server 长期存活,可持连接 / 缓存 / 池子 | 无状态调用 |
+| **适合做** | DB / 文件系统 / API / 复杂服务 / 长跑流程 | 程序化知识 / 决策规则 / 参考数据 |
+| **写起来** | 写一个真正的 server(TS/Python/Rust)| 大部分是 markdown,代码可有可无 |
+
+> [!abstract] 一句话
+> **MCP 让 Claude *做事*;Skills 教 Claude *什么时候 / 怎么做事*。**
+
+#### 桌宠为什么走 MCP 而非 Skills(5 条硬约束)
+
+1. **桌宠是 host,不是 client** —— Skills 依赖 Claude 自家的 context 引擎(prompt 增强机制),Solaris-3 跑 Vercel AI SDK + 任意 provider,**根本没这个引擎**。要用 Skills 等于先克隆一个 Claude 出来,反目标。
+2. **跨 provider** —— 桌宠 schema 支持 OpenAI / Claude / Gemini / DeepSeek。Skills 只在 Anthropic 系成立,**公司网关接 GPT 时一行代码不工作**。
+3. **VFX 工具是真服务** —— 代码问答 / 贴图生成 / Niagara 分析 都需要跑代码(读 wiki、调 ComfyUI、Python 推理...)。Skills 只是"指令 + 偶尔脚本",**替代不了独立服务**。
+4. **跨 host 复用** —— 笔记搜索 server 在 Claude Desktop / 桌宠 / Cursor 三 host 通用,这正是 MCP 的设计哲学;Skills 反过来,同一份只在 Claude 系生效。
+5. **配置照抄 Claude Desktop**(§3.2 / §7.2 硬约束)—— Claude Desktop 用 MCP **不**用 Skills。
+
+#### Skills 在生态里可能出现的位置(P3+ 甜品)
+
+> [!tip] 不需要桌宠 host 实现 Skills,但写 MCP server 时可以顺手附 SKILL.md
+>
+> P3 起,你的每个 MCP server(笔记搜索 / 代码问答 / 贴图工具 / Niagara 理解)都是独立仓。**仓里附一份 `SKILL.md`**,内容大致:"用户问 X 类问题时,优先调用本 server 的 `Y` tool,参数约定是 ..."。
+>
+> 受益对象:**团队成员在 Claude Code 里用你的 MCP server 时**,Claude Code 自动把 SKILL.md 加进 context,工具调用更准、更对路。
+>
+> 这是 **MCP 做执行 + Skills 做调度提示**的组合拳。**桌宠 host 端 0 改动**,只是 MCP server 仓里多一个 markdown。
+
+#### Skills 接入时机表
+
+| 阶段 | 做什么 | 工作量 |
+|---|---|---|
+| **P0-P2** | **不**接 Skills(桌宠 host 用不上,徒增复杂度)| 0 |
+| **P3** 写第一个 MCP server | server 仓里加 `SKILL.md`(团队 Claude Code 用户受益)| ~15 min/server |
+| **P3+** 每个新 server | 同上 | ~15 min/server |
+| **未来**(if Anthropic 把 Skills 协议开放跨厂商,像 MCP 那样)| 重评是否在桌宠 host 实现 Skills loader | TBD,届时再评 |
+
+> [!warning] Skills 当前(2026-04)仍锁在 Anthropic 生态
+> 不是开放协议(不像 MCP)。如果未来开放跨厂商,本读本会更新接入策略。**目前不要为"以后可能要支持 Skills"在 host 架构里预留任何东西** —— 等真开放再说,YAGNI。
+
 ---
 
 ## 6. 分阶段落地路线
@@ -344,6 +400,9 @@ return streamText({
 
 **推荐"笔记搜索"作 P3**:工作量小、价值密度高、能验证你的 wiki 真的成了 LLM 的扩展记忆。后面的代码问答 / 贴图都可以复用同一套 MCP server 框架。
 
+> [!tip] 写 P3 第一个 MCP server 时顺手附 SKILL.md
+> 详见 §5.7 接入时机表。每个 server 仓里加一份 SKILL.md(15 min),团队成员从 Claude Code 用你的 server 时调度更准。**桌宠 host 端 0 改动**,这只是 server 仓里多个 markdown,P3 顺手做即可。
+
 ---
 
 ## 7. 核心避坑清单
@@ -401,6 +460,7 @@ return streamText({
 8. **P2 是验证整条路的最小回路**——做完它你就知道这个项目能不能走下去;之前做的都是 P2 的脚手架,之后做的都是把 P2 做厚。
 9. **第一个自定义 MCP server 选"笔记搜索"**——工作量低、价值密度最高、能让你的 wiki 同时变成 LLM 的扩展记忆,一石二鸟。
 10. **未来所有 AI 应用都包成 MCP server**——这是把"做一次,处处用"从口号变成架构,你的工作天然是向 Cursor / Claude Desktop / VS Code Cline 等所有 host 输出。
+11. **MCP 与 Skills 是正交而非竞争**(§5.7)——MCP 让 Claude *做事*(host-side execution),Skills 教 Claude *什么时候 / 怎么做事*(client-side instructions)。桌宠作为 host 走 MCP 是必然;Skills 是 P3+ 写 MCP server 时**顺手附给 Claude Code 用户的甜品**,跟 host 端实现完全无关。被"双轨支持"的提议诱惑时,记住硬约束:Skills 锁 Anthropic 生态,host 用不上。
 
 ---
 
@@ -426,6 +486,7 @@ return streamText({
 - **Hub sidecar 通信开销**——Tauri IPC + Node sidecar 的延迟在 LLM 流式场景下是否够低,要实测;P1 阶段就能验证。
 - **MCP server 的本地资源占用**——挂 5-10 个 server 时,各自常驻一个 Node/Python 进程,内存可能爆。何时需要 mcp-launcher 这种集中进程管理器?→ P3-P4 之间观察。
 - **角色 IP 与陪伴感**——Live2D 默认模型(Hiyori / Haru)够用还是要自己画/买?这件事影响"日用感"但不影响架构,放 P5。
+- **Skills 协议会不会跨厂商开放**(§5.7)——Anthropic 当前(2026-04)把 Agent Skills 锁在自家生态。**如果未来像 MCP 那样开放跨厂商**,届时要重评:桌宠 host 是否实现 Skills loader?跟 MCP 是双轨并行还是 fold-in?**目前不为这种可能性预留架构**(YAGNI),但保持观察。→ Anthropic Skills 文档 / 开放协议公告。
 
 ## 下一步预告
 

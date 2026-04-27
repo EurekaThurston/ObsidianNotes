@@ -1446,3 +1446,23 @@
   - [[D:/Solaris-3/DEVLOG.md]] v0.2.0 段已加(Bug 8/9/10 完整,P2 子阶段拆分完整)
   - GitHub Release v0.2.0 已发(用户可访问 `https://github.com/EurekaThurston/Solaris-3/releases/tag/v0.2.0` 验证)
   - 项目 commits `550a5d9`(P1.0)/ `a495eed`(P1.1-1.4)/ `d57fa23`(hotfix endpoint)/ `366e37d`(hotfix retry error)+ 本条目执行时的 release commit 全部 push 到 origin/main
+
+## [2026-04-28] refactor | 桌宠 reader 加 Skills 章节(MCP vs Skills 正交关系 + P3+ 接入时机)
+- 触发:同日 P1 v0.2.0 收工对话末尾,Eureka 问"MCP 和 Skill 区别 + 我选 MCP 是否最优";Q&A 沉淀回 [[Readers/AIAgents/桌宠 AI 入口的从零方案]] 让议题闭环
+- 改动 reader(refactor,无新原子页)
+  - frontmatter:`updated: 2026-04-28`,tags 加 `agent-skills`
+  - **新增 §5.7 "MCP vs Skills:为什么不混入 Skills"** —— 本质差异表(8 维度)+ 桌宠走 MCP 5 条硬约束 + Skills 接入时机表(P0-P2 不接 / P3 写 server 时顺手附 SKILL.md / 未来开放跨厂商时重评)+ Anthropic Skills 仍未跨厂商开放警告
+  - §6.4 P3 推荐策略:加 SKILL.md tip box(指回 §5.7)
+  - §9 关键洞察:加第 11 条(MCP/Skills 正交而非竞争)
+  - §"这个议题留下的问题":加 Skills 协议是否开放跨厂商的观察项
+- 不改:§4 架构图 / §6 阶段路线表 / §7 避坑清单 —— 因为 Skills 不影响 host 设计,只是 MCP server 仓侧的甜品
+- 关键洞察(本次新沉淀,reader §5.7 + §9 #11 双向落地)
+  - **Skills ≠ MCP 的竞争**:协议(MCP,行业事实标准)vs 文件夹约定(Skills,Anthropic 专属);host-side execution vs client-side instructions。**一句话:MCP 让 Claude 做事;Skills 教 Claude 什么时候/怎么做事**
+  - **桌宠走 MCP 是 5 重必然**:host 不是 client(Skills 依赖 Claude 自家 context 引擎)/ 跨 provider(Skills 锁 Anthropic 系)/ VFX 工具是真服务(指令替代不了执行)/ 跨 host 复用(MCP 设计哲学)/ Claude Desktop 配置兼容(用 MCP 不用 Skills)
+  - **Skills 不影响 host 架构,P3 写 MCP server 仓时顺手附即可**——15 min/server 工作量,桌宠端 0 改动。受益对象是团队成员从 Claude Code 用 server 时调度更准
+  - **YAGNI 但保持观察**的典型应用:Anthropic 当前没把 Skills 开放协议化(2026-04 仍锁自家生态),所以**目前不为"以后可能要支持 Skills"在 host 架构里预留任何东西**;真开放(像 MCP 那样)再重评接入策略
+- 方法论意义:这是 reader 落地后**反过来打磨**的第二次实证(第一次是 P1 落地后修正了 §7.8 "国内 provider 质量参差" 描述)。reader 不是写完就完,是被实际工程问题反复检验、补全 doctrine 的活文档
+- 自验证(Glob)
+  - [[Readers/AIAgents/桌宠 AI 入口的从零方案]] §5.7 / §9 #11 / §"留下的问题" Skills 项 都已加(grep 验证 line 255 / 463 / 489)
+  - [[Wiki/Concepts/AIFoundations/Agent-skills]] 概念页已存在(2026-04 早期建,本次未改;reader §5.7 引用为概念基础)
+- 不需要新建原子页(本次只是 reader 增订;CLAUDE.md §3.4 触发条件未满足:不是结构化学习路径 Phase 收尾、不是新主题首次入驻、未达 ≥3 原子页阈值)
