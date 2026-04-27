@@ -1411,3 +1411,38 @@
   - [[D:/Solaris-3/DEVLOG.md]] 存在(今日新建)
   - GitHub Release v0.1.0 已发(用户可访问 `https://github.com/EurekaThurston/Solaris-3/releases/tag/v0.1.0` 验证)
   - 项目 commits `b02055b`(P0.0+1)/ `2aa989e`(P0.2)/ `1261619`(P0.3)/ `088538a`(P0.5)/ `ad6666a`(P0.5+) 全部 push 到 origin/main
+
+## [2026-04-28] synthesis | Solaris 3 v0.2.0 完工 —— 桌宠 P1 阶段(LLM 流式聊天)ship
+- 触发:昨日(2026-04-27)夜里 P0 v0.1.0 收工后,Eureka 提"一气呵成做到 P1 验收";按照 [[Readers/AIAgents/桌宠 AI 入口的从零方案]] §6.2 P1 最小验收清单(点击角色弹聊天 + 流式 LLM 回复 + 设置填 key + 多轮 in-memory)从零执行 P1.0-1.4 全部 4 个 sub-phase + 2 个测试中暴露的 hotfix,产出可分发 v0.2.0
+- 项目 commit 序列(6 步):
+  - `550a5d9` P1.0 — 装 `ai@6` + `@ai-sdk/openai@3`;schema/defaults/store 加 `ai.{provider, baseURL, apiKey, modelName}` 段;`src/lib/llm.ts` 写 `getModel()` 工厂 + **MCP-first** `runTurn({ messages, tools })` 骨架(tools 入参 P1 永远空,P2 接 MCP 时一行调用方修改即可)
+  - `a495eed` P1.1-1.4 一并 ship — `AITab.vue`(baseURL/key/model 输入 + 显示/隐藏切换)/ `ChatPanel.vue`(下方滑出 60% 高度 backdrop blur,Hiyori 上半身仍透出)/ `useChat.ts` composable(messages/streaming/error 三态,for-await textStream 累计 token)/ v-show 而非 v-if 实现"关闭面板不丢历史"的 in-memory 多轮
+  - `d57fa23` 测试时发现 hotfix #1:`@ai-sdk/openai@3` 默认 `provider(model)` 走新的 `/v1/responses` 端点,99% 国内/兼容 provider 只实现老的 `/v1/chat/completions`,所以 MiniMax 直接 404;改用 `provider.chat(model)` 显式走老 API
+  - `366e37d` 测试时发现 hotfix #2:`streamText` 内部 retry 失败不会 throw 进 for-await,通过 `onError` 静默上报 → UI 误显示"(模型没有返回文本)";加 `getStreamError()` 钩子让 useChat 主动捕获并转抛
+  - 最后(本条目执行时):版本号 0.1.0 → 0.2.0,DEVLOG 加 v0.2.0 完整段(Bug 8/9/10 详解 + 架构决策 + P2 子阶段拆分),`pnpm tauri build` 出 v0.2.0 NSIS / MSI / raw exe
+- 产出资产
+  - 5.1MB NSIS 安装器(自动处理 WebView2;比 v0.1.0 还小)/ 6.2MB MSI / 12.7MB raw exe(P1 加了 ai SDK 但 vite tree-shake 后体积反而下降)
+  - GitHub Release v0.2.0
+  - 桌宠现在是个真正会聊天的形象 —— 跟 ChatGPT 客户端 + 脸 体验等价(差 MCP 工具调用,P2 加)
+- 关键 3 个 bug + lessons learned(详见 [[D:/Solaris-3/DEVLOG.md]] Bug 8/9/10 完整列表):
+  1. **vue-tsc TS2589 "Type instantiation excessively deep"**:ai@6 的 `ToolSet` / `ModelMessage` 是深泛型,vue-tsc 编模板时把 `messages: ModelMessage[]` 暴露给 v-for 上下文 → 推断算法爆栈。修法分层切断:UI 层用本地 `ChatMessage` 简单 shape,`runTurn` 入参 / 返回类型用宽松 shape,SDK 深泛型只在 `src/lib/llm.ts` 内部存在。**架构层教训:第三方 SDK 类型只在适配层用,出层用项目自己的简单接口**(hexagonal architecture 核心思想)
+  2. **`@ai-sdk/openai@3+` 默认走 `/v1/responses` 而非 `/v1/chat/completions`**:OpenAI 2025-03 推出 Responses API,SDK 跟进默认值,但兼容 provider 全部只实现老 Chat Completions。修法 `provider.chat(model)`。**Reader §7.8 "国内 provider 质量参差" 这条避坑描述错了** —— 不是 provider 质量问题,是 SDK 默认值跟兼容 provider 不匹配,需要修正
+  3. **SDK 内部 retry-with-backoff 失败错误不抛进 for-await**:streamText 走 onError 钩子静默上报,UI 没接钩子就只看到"空流"。**流式 API 通用教训:消费方必须同时检查 textStream + onError**,问"流提前结束/中途出错/重试失败,我能感知吗?" 答不上来就是隐患
+- 关键架构决策(为什么这么设计)
+  - **MCP-first runTurn API 即使 P1 tools 永远空**:接口形状已就位,P2 接 MCP 时改一行 `tools: mcpManager.getAllTools()`,整条数据流不动。这是 reader §7.1 "P0 就要按 MCP host 设计代码路径,不能'以后加'" 的具体落地。反例(写成 `chat(messages)`)= P2 推倒重来
+  - **ChatPanel `v-show` 而非 `v-if`**:切面板不卸载组件 → useChat 实例随面板存活 → messages ref 保留 → 关掉重开历史还在。**纯靠组件生命周期实现 in-memory 多轮**,没写 store / 持久化,代价几 KB 内存
+  - **UI 类型 (`ChatMessage`) 与 SDK 类型 (`ModelMessage`) 解耦**:看似冗余实际隔离 SDK 升级影响、支持多 provider、vue-tsc 不爆 —— 一鱼三吃
+  - **`provider.chat()` 不用 `provider()`** —— Chat Completions 是事实标准跨所有 provider 通用,Responses 是 OpenAI 自己的下一代尝试只有自家支持;我们 MCP-first 架构用不上 Responses 的内置工具,选 `.chat()` 是必然。**这条不只是修 bug,是 provider 抽象选型的核心权衡**
+- 方法论里程碑(本日真正的"为什么记 log")
+  - **Reader 作为施工蓝图被反复印证**:今日 P1 整个流程严格按 [[Readers/AIAgents/桌宠 AI 入口的从零方案]] §6.2 验收单 + §3.2 装配清单 + §7 避坑列表执行,**3 个新 bug 中 2 个(Bug 9 端点选择 / Bug 10 流式错误)其实 reader §7.8 + §7.9 早就警告过**,只是当时描述还不够精准 —— 落地撞到才能把"国内 provider 质量参差" 修正为"SDK 默认值不匹配兼容 provider"。**Reader 不是写完就完,是要在落地反过来打磨的**
+  - **DEVLOG 与 wiki log 双层 + 跨日同议题接力**:Bug 编号从 7 续到 10(DEVLOG),vault log 的"3 个 bug"摘要指回 DEVLOG 详情;两份 log 同一议题可有多条(P0 v0.1.0 在 2026-04-27 + P1 v0.2.0 在 2026-04-28 跨夜接力),通过 `## [YYYY-MM-DD] <op> | <title>` 严格格式 + grep 可独立检索
+  - **MCP-first 在没接 MCP 的阶段就显灵**:P1.0 写 `runTurn({ messages, tools })` 骨架,P1 全程 tools 永远空,**但骨架决定了 P2 是改一行还是大手术**。这印证了 reader §7.1 第 1 条避坑 —— 架构关键决策不能延迟,延迟就是技术债
+- 下一步:P2 MCP 接入(reader §6.3 关键里程碑)
+  - 子阶段拆分(详见 DEVLOG):P2.0 装 `@modelcontextprotocol/sdk` + schema 加 `mcpServers` 字段(严格沿用 Claude Desktop 格式)/ P2.1 MCP Manager Rust 端管 server 子进程 / P2.2 tools 聚合 + 命名空间 `<server>__<tool>` 防冲突 / P2.3 桥接 `runTurn(tools=mcpManager.getAllTools())` / P2.4 设置页 MCP tab / P2.5 安全边界(首次确认 + 白名单 + destructive 默认禁)/ P2.6 验证挂 `@modelcontextprotocol/server-filesystem` 让桌宠"读今天的笔记"
+  - 启动前要拍板:MCP server 进程跑哪(Rust 后端 spawn 推荐) / 首次确认 UX(气泡 / 设置页) / 是否做 audit log 早期版(reader §7.10 推荐做)
+  - 不做的:自定义 MCP config 格式(reader §3.2 / §7.2 硬约束)/ filesystem MCP 给整盘根(reader §5.5 安全)
+- P1.5 Flipbook 留作甜品(reader §6.2.5):VFX 团队产能舞台,可在 P2 之前/之后插。但 reader §6.3 明说"P2 是验证整条路的最小回路",**先 P2 后 P1.5** 更合理
+- 自验证(Glob):
+  - [[D:/Solaris-3/DEVLOG.md]] v0.2.0 段已加(Bug 8/9/10 完整,P2 子阶段拆分完整)
+  - GitHub Release v0.2.0 已发(用户可访问 `https://github.com/EurekaThurston/Solaris-3/releases/tag/v0.2.0` 验证)
+  - 项目 commits `550a5d9`(P1.0)/ `a495eed`(P1.1-1.4)/ `d57fa23`(hotfix endpoint)/ `366e37d`(hotfix retry error)+ 本条目执行时的 release commit 全部 push 到 origin/main
