@@ -1,7 +1,7 @@
 ---
 type: entity
 created: 2026-04-20
-updated: 2026-04-20
+updated: 2026-04-29
 tags: [meta, llm, vault-author, agent]
 sources: 1
 aliases: [Claudian, 本仓 LLM, wiki 作者]
@@ -10,6 +10,9 @@ aliases: [Claudian, 本仓 LLM, wiki 作者]
 # Claudian
 
 > 本仓库的 LLM 持续维护者。基于 Anthropic Claude,按 [[CLAUDE]] 中规定的作业规程运行,作为三层架构(Raw / Wiki / Schema)中 Wiki 层的唯一作者。
+
+> [!warning] 命名异义
+> "Claudian" 还指 [https://github.com/YishenTu/claudian](GitHub 上的 Obsidian 插件项目) —— 一个把 Claude Code 套壳进 Obsidian 的开源项目。在 Solaris-3 项目语境(`D:\Solaris-3`、其 DEVLOG.md、log.md `[2026-04-29]` 起的条目)里**所有 "Claudian" 都指 GitHub 那个项目**(被 Solaris-3 用作 chat UX 的 hard reference);本 vault 内部其他语境(本页、读本签名行、ingest 流程描述)里的 "Claudian" 才是这个 LLM 作者人设。两者同名异实,通过上下文区分。
 
 ## 本质
 

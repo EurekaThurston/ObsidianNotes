@@ -5,6 +5,56 @@
 
 ---
 
+## [2026-04-29] synthesis | Solaris 3 v0.3.0 完工 —— Hub sidecar 架构 + Claudian 风格 chat UX
+
+- 触发:P2.0(自研 MCP host)在 4-28 实测时撞坑成片(npx 路径 / "总是允许" 不持久 / 跨窗口状态机复杂度爆炸),Eureka 拍板**整体 pivot** —— 不再自研 MCP,改成"Bun sidecar 套壳官方 Claude Agent SDK + Claudian 风格的多 tab 聊天面板"。Solaris-3 重新定位 = **Claudian + Live2D 形象**(Claudian 是 Obsidian 端的 Claude Code 套壳,我们是 Tauri / 桌宠端的同款思路)
+- ⚠️ **命名异义**:这里讲的 Claudian = [https://github.com/YishenTu/claudian](GitHub 上的 Obsidian 插件项目),**不是** vault 自己的 LLM 作者人设 [[Wiki/Entities/Claudian]]。两者同名异实,后者是本仓库这套 wiki 方法论里 Claude 的署名身份(规程见 [[CLAUDE]]);前者是个开源 Obsidian 插件,Solaris-3 的 chat UX 全程 hard-reference 这个项目
+- 项目 commit 序列(主要里程碑):
+  - R.0–R.7 sidecar 重构:废弃 P2.0 嵌入式 MCP host,改成 `solaris3-hub` Bun binary(Tauri Rust spawn,JSON-RPC over stdio),两 adapter(`claude-code` / `openai-compat`)
+  - B.1–B.10 聊天面板:sidebar 布局(window 向右长 chat)、多 tab 工作区(maxTabs 1-5)、toolbar 4 控件(Model/Effort/YOLO/ctx%)、streaming + cancel + 历史 popover
+  - B.11.1–B.11.22 Claudian 审计 fix(详见下)
+  - `13384a5` v0.3.0 主 commit;`c1f6203` DEVLOG 条目
+- 产出资产
+  - GitHub Release v0.3.0:`https://github.com/EurekaThurston/Solaris-3/releases/tag/v0.3.0`(NSIS + MSI)
+  - Sidecar binary `solaris3-hub-x86_64-pc-windows-msvc.exe` ~110MB(Bun 运行时嵌入)
+  - 删掉 P2.0 死代码:`src/lib/mcp/{audit, permissions, confirmation}.ts` + ChatPanel 的 confirm-bubble template + `tauri-plugin-dialog`
+- **8 个 silent breakage**(Claudian 作 hard reference 全面审计后定位的 v0.3.0 核心修复,详见 [[D:/Solaris-3/DEVLOG.md]])
+  1. 🔴 上下文百分比永远 0%(`client.dispatch` 漏 `case "usage"`)
+  2. 🔴 **多轮对话失忆** —— 之前每次 send 都是新 SDK session 没传 `resume:`,现在 sidecar 抓 `system/init.session_id` → emit `session_started` event → 前端持久化 → 下轮 `resumeSessionId` → SDK `options.resume`
+  3. 🔴 历史恢复是假的(同 #2 + 历史不存 sdkSessionId)→ 加 `sdk_session_id` 字段,restoreFromHistory 带回去
+  4. 🔴 cancel 后 tab 卡死 streaming(adapter abort 时不发 done/error)→ sidecar finally{} 检测无 terminal event 时 emit synthetic done
+  5. 🟡 YOLO mode SDK 拒收(缺 `allowDangerouslySkipPermissions: true`)
+  6. 🟡 Effort 只 3 档(`low/medium/high`)→ 5 档 (+ `xhigh / max`)+ `thinking: { type: 'adaptive' }` 配对
+  7. 🟡 ctx 公式错(把 outputTokens 也算成 input window)→ 改 `inputTokens + cacheRead + cacheCreation`(仿 Claudian `transformClaudeMessage.ts`)
+  8. 🟢 `additionalDirectories` 替代 prepend 给目录(后续 B.11.22 整个 external context 功能删掉)
+- 关键架构决策
+  - **放弃自研 MCP host**:Claude Agent SDK 已经把 MCP / permission / 历史 / model 选择全做完,且复用用户的 `claude login` 鉴权。P2.0 不是失败,是教学:验证了"能不能自己做 → 能,但代价不值"
+  - **Sidecar 而非直接 import SDK**:Claude Agent SDK 是 Node 库(spawn `claude` CLI 子进程),webview 跑不了。`bun build --compile` 出 110MB 单文件 binary,Tauri `tauri-plugin-shell` 直接 spawn,无 network 暴露面
+  - **历史改 JSON Store 不再用 SQLite**:tauri-plugin-sql 的 migration hash 校验跟 dev 节奏不合,且 `sql:allow-execute` 权限漏配。改用 `tauri-plugin-store` 单 JSON 文件(`.solaris3/chat-history.json`),仿 Claudian 的 vault file approach(`.claude/sessions/<id>.meta.json`)
+  - **Model 用家族别名 + `[1m]` 后缀**:`opus / sonnet / haiku` 由 CLI 自动解析最新版,`[1m]` 后缀触发 1M context(Sonnet 4/4.5、Opus 4/4.5/4.7 都支持)。仿 Claudian `DEFAULT_CLAUDE_MODELS`。**之前写死 `claude-sonnet-4-5` 是错的**(过时 + 缺 1M)
+  - **Streaming 期间允许预输入 + 排队**(B.11.5):input 不再 disable,Enter 排队,多次合并 `\n\n`,turn 结束自动 dispatch + resume。仿 Claudian `mergeQueuedMessages`
+  - **角色 / 间距 解耦**(B.11.9–11.22):hiyori-area 锁 400×500、Live2DStage 删 ResizeObserver、scale 改成只看 height —— 用户拉对话框 / 调间距时角色身高永不变
+- **下一步:P3.x 跟齐 Claudian**(明确告知未来 Claudian-the-LLM-author 路由)
+  - **后续 AI 侧功能有意识地 hard-reference Claudian,不重新发明轮子**。优先级排序:
+    | Phase | 内容 | Claudian 参考点 |
+    |---|---|---|
+    | P3.1 | tool call inline 渲染 | `ToolCallRenderer.ts` / `WriteEditRenderer.ts` |
+    | P3.2 | Permission UI(消息流 inline 气泡,而非现在的"全权委托 CLI") | inline approval bubble |
+    | P3.3 | 每会话 MCP server 启用/禁用 | `Conversation.enabledMcpServers` |
+    | P3.4 | LLM 生成 conversation title(Haiku 快+便宜) | `ClaudeTitleGenerationService.ts` |
+    | P3.5 | Slash commands + agents + skills | `SlashCommandStorage` / `AgentVaultStorage` / `SkillStorage` |
+    | P4 | Live2D 联动 chat 状态(说话 / thinking / tool call 反应) | 没有,Solaris-3 独家 |
+    | P5 | Resume from cancelled / forked session | Claudian fork interaction |
+- 方法论里程碑
+  - **wiki + DEVLOG 双层记录维持**:wiki log 记方法论级 pivot(本条目);项目 [[D:/Solaris-3/DEVLOG.md]] 记 8 个 silent breakage 各自的症状/根因/修法/教训。继承 v0.1/0.2 的双层模型
+  - **"hard reference 一个开源项目"作为质量天花板的方法**:不再自己拍脑袋设计 chat UX,直接对照 Claudian 一项项审计自家实现。**这一招在 v0.3.0 找出 8 个 silent breakage**(都是 typecheck 通过、UI 看上去正常,但语义错的)。沉淀:**对成熟领域(chat / agent UX),挑一个公认做得好的开源项目当 ground truth,逐项 diff 自家实现 → 比凭空想需求清单效率高一个量级**
+- 自验(Glob):
+  - [[D:/Solaris-3/DEVLOG.md]] 含 `[2026-04-29] v0.3.0 — Hub sidecar 架构 + Claudian 风格 chat UX` 条目 ✓
+  - GitHub Release v0.3.0 已发(`https://github.com/EurekaThurston/Solaris-3/releases/tag/v0.3.0`)
+  - 项目 commits `13384a5` 主 commit + `c1f6203` DEVLOG 推到 origin/main ✓
+
+---
+
 ## [2026-04-27] ingest | 费曼学徒冬瓜《Ralph + 多智能体协同,让 AI 长时高品质工作》bilibili 视频
 
 - source: [[Raw/Notes/Ralph + 多智能体协同 - 费曼学徒冬瓜]] (URL: https://www.bilibili.com/video/BV1t9oZBDENp/, 2026-04-26 发布)
