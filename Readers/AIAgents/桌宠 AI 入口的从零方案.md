@@ -329,7 +329,7 @@ Anthropic 2025-2026 推出的 **Agent Skills** 是另一条"扩展 LLM 能力"�
 | **P4 记忆 + 完整设置 UI** | SQLite + 向量记忆;Agents / Effects / 团队 4 tab 全开 | 长期可用版 v1.0 |
 | **P4.5 Team config sync** 🅂 | git repo clone + 定期 pull + lock 机制 + admin 模式开关 | admin 改 team-config 仓库 → 全员桌宠半小时内静默更新 |
 | **P5 distribution** 🅂 | 安装包(NSIS/MSIX)+ auto-update + 部署文档 | 同事一键安装,后续静默升级 |
-| **P5+ 锦上添花** | TTS/ASR / 多角色 / 动作触发 / 皮肤系统 | 看心情 |
+| **P5+ 锦上添花** | TTS/ASR / 多角色 / 动作触发 / 皮肤系统 / **3D 形象升级**(2D/3D toggle,见 [[Wiki/Syntheses/AIAgents/Desktop-pet-3d-figure-spec]]) | 看心情 |
 
 > [!warning] 不要颠倒顺序(个人版)
 > 1. **不要先做语音**——TTS/ASR 是时间黑洞且对核心价值贡献低,留 P5。
@@ -505,6 +505,7 @@ Anthropic 2025-2026 推出的 **Agent Skills** 是另一条"扩展 LLM 能力"�
 - 综合(选型):[[Wiki/Syntheses/AIAgents/Desktop-pet-stack-comparison]]
 - 综合(MCP 实施):[[Wiki/Syntheses/AIAgents/Mcp-host-implementation]]
 - 综合(团队分发):[[Wiki/Syntheses/AIAgents/Desktop-pet-team-distribution]] —— Flipbook + 配置三层 + git sync + admin/user 权限
+- 综合(3D 形象升级):[[Wiki/Syntheses/AIAgents/Desktop-pet-3d-figure-spec]] —— P5+ 议题;VRM 规范 + IFigureRenderer 抽象 + PMX→VRM 工具链 + MMD 许可证警告
 
 ### 前置议题
 

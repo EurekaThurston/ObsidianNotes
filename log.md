@@ -5,6 +5,49 @@
 
 ---
 
+## [2026-04-30] synthesis | Solaris 3 v0.4.0 — Claudian 对标完工 + UX 全面打磨
+
+- 触发:v0.3.0 ship 之后用户拍板"P3 = 把 Claudian 的所有 feature 都搬过来"。本日在 26 个 commit 里跨 P3.0(架构清理)→ P3.1-P3.7(7 个对标 phase)→ UX-1~10(收尾打磨)三层全部 ship,版本号 v0.3.0 → v0.4.0
+- ⚠️ **命名异义**:本条 "Claudian" 仍指 [https://github.com/YishenTu/claudian](GitHub Obsidian 插件项目,v2.0.3),不是 [[Wiki/Entities/Claudian]]
+- 一句话归纳:**v0.3.0 = 能聊天的桌宠;v0.4.0 = 像 Claudian 一样能用的桌宠**
+- 三层交付
+  - **A. v0.3.1 内部清理** —— 抽 `shared/protocol.ts` 单一来源 + Stream 事件 switch → handler map + Claudian 完整功能审计(把 ship 当天 5-phase roadmap 修订成 8-phase)
+  - **B. P3.1-P3.7 Claudian 对标** —— Tool 渲染基础(P3.1)/ Permission UI(P3.2)/ LLM 标题生成(P3.3a)/ Slash command(P3.4a)/ Subagent @mention + 软 Rewind + Fork(P3.5)/ Thinking + TodoWrite + Bang-bash + 指令精化(P3.6)/ Vim 导航(P3.7)
+  - **C. UX 收尾 10 项** —— Markdown 渲染(marked + dompurify)/ 代码高亮(highlight.js + 自写 Rider Dark 主题对齐 vault)/ 面板色透明度配置 / 拖动对话框移动桌宠 / 点击角色 toggle chat / 输入框字号归 UI / 对话框宽度持久化 / bubble 文本可选可复制 / 智能 auto-scroll(用户上滚不被拽回)
+- 推迟项(都有充分理由)
+  - **0 用户数据无法 e2e 验证**:P3.3b 会话级 MCP toggles + P3.4b Skills 启用 Settings(用户机器 0 MCP / 0 skill)
+  - **vault-coupled 不适用**:P3.7b Inline Edit Modal(Solaris 没文档编辑面板)
+  - **需要 SDK API 重构**:P3.5d 硬 Rewind(需 streaming-input mode 取 user uuid)
+  - **用户拒**:P3.8 i18n + 高级设置("公司用不上")
+- 关键架构教训(从 26 commit 提炼)
+  - **协议契约一定要单一来源**,哪怕"只有 2 个文件"——v0.3.0 的两份 protocol.ts 看着只是 200 行重复,实际 B.11.2 加 `resumeSessionId` 时差点漏一份(silent type drift = 模型零记忆 bug)
+  - **加新事件类型 = handler map 加一行 ≫ switch 加 case** —— 第二份重复 switch 出现的瞬间就该 refactor,不要等"以后再说"
+  - **SDK 帮一半的 phase 工时 ≠ "audit 估算"** —— P3.4a / P3.5a 看着复杂,SDK `supportedCommands()` / `supportedAgents()` 帮做完一半,实际半天搞定。**估算前必须看 SDK type defs**
+  - **async generator + 同步 callback 的并发要 event bus 中转** —— P3.2 canUseTool 是 SDK await 链里的 callback,跟 generator 是并发关系,不能 cross-yield,只能队列 + waker
+  - **v-html + 第三方 CSS 主题必须 global import** —— Vue scoped CSS 给元素加 `data-v-XXXX` 属性,但 v-html 注入的子树不带,scoped `:deep()` 改 50+ 类不现实
+  - **roadmap 估算 vault-coupled / 0-用户-数据 功能要打折** —— **实际工时 ≈ audit 估算的 60-70%**,剩余 30-40% 是合理推迟。审 roadmap 时省不得这一步
+- 方法论里程碑
+  - **"hard reference 一个开源项目"作为质量天花板**,本 phase 二度验证(v0.3.0 一度):26 个 commit 中 7 个 P3.x 全靠 Claudian 源码当 ground truth,实现选项有疑问就先看 Claudian 怎么做。**不"自己拍脑袋设计 UX"省了大量 churn**
+  - **"功能"≠ 一定要在 Solaris 实现**:vault-coupled / 0-用户-数据 的功能审 roadmap 时就该判断推迟。**实际工时偏离 audit 估算 30-40% 的原因不是低估,而是合理推迟**
+- 自验(Glob)
+  - [[D:/Solaris-3/DEVLOG.md]] 含 `[2026-04-30] v0.4.0 — Claudian 对标完工 + UX 全面打磨` 条目 ✓
+  - GitHub Release v0.4.0 已发(待发布脚本完成)
+  - 26 commits 推到 origin/main(`c13af8a` v0.3.1 → `ada1f96` UX-10 智能 auto-scroll)
+
+---
+
+## [2026-04-29] synthesis | 桌宠 3D 形象规范 + PMX 入资产管线
+
+- 触发:用户问"加 2D/3D 切换功能,3D 资源规范是什么?"和"aplaybox 下了个 .pmx 怎么办?"两轮对话,够厚 + 长期相关,按 §3.2 沉淀
+- 新建:[[Wiki/Syntheses/AIAgents/Desktop-pet-3d-figure-spec]] — VRM 选择硬理由 / 模型规范(humanoid/Expression enum/Spring Bone)/ 动作规范(.glb 桩动画 hips 不位移约束)/ IFigureRenderer 抽象(2D/3D toggle 不 stack,两块独立 canvas)/ PMX→VRM 工具链(Blender + mmd_tools + VRM Add-on + CATS)/ Expression 日↔英 remap 表(まばたき→blink、あいうえお→aa/ih/ou/ee/oh)/ MMD 许可证警告(二次配布禁止 → 团队版 build 直接放弃)/ 工时估算(熟手 2-4h,生手 1-2 天)/ P5+ 时机判断
+- 更新:[[index.md]] Syntheses/AIAgents 区登记
+- 主读本回链:[[Readers/AIAgents/桌宠 AI 入口的从零方案]] §6 P5+ + §"深入阅读"加链
+- 要点:本页落地"形象层与 Hub 严格解耦"那个抽象——Solaris-3 v0.3.1 还没真兑现 IFigureRenderer 接口;3D 升级时第一次让它落地。manifest.json 跟 Flipbook 同 schema,事件总线复用
+- 范围边界:**P5+ 议题**,Solaris-3 当前(v0.3.1)只走 Live2D。本页是规范储备,不是 P0-P3 施工手册
+- 自验(Glob):[[Wiki/Syntheses/AIAgents/Desktop-pet-3d-figure-spec]] ✓ index.md / 主读本回链 ✓
+
+---
+
 ## [2026-04-29] synthesis | Solaris 3 v0.3.1 — 内部架构清理 + Claudian 完整功能审计 → P3.x 8-phase roadmap
 
 - 触发:v0.3.0 ship 当晚,用户问"层级耦合度高吗"。架构审计后发现 3 处脆弱接缝(protocol 双份手动同步 / `useChatTabs` 两份 switch 重复 / `Effort` 三处定义);用户拍板"都做了",顺势抽出为 v0.3.1 内部清理。同时用户明确 P3 目标 = "把 Claudian 所有功能/feature 都搬过来",于是 clone Claudian 源码做完整审计,把 ship 当天那个 5-phase roadmap 扩展成 8-phase

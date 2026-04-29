@@ -247,6 +247,7 @@
 - [[Wiki/Syntheses/AIAgents/Desktop-pet-stack-comparison|桌宠 AI 入口的选型矩阵]] — 桌宠议题选型综合;L1/L2/L3 路线分级 + 现成项目矩阵(AIRI/Open-LLM-VTuber/Fay/VPet)+ 决策矩阵按目标收敛 + L2 装配清单 + 五条决策原则
 - [[Wiki/Syntheses/AIAgents/Mcp-host-implementation|桌宠侧 MCP host 实施手册]] — 桌宠议题 MCP 实施手册;MCP host 五职责 + 配置兼容 Claude Desktop + MCP Manager 实现骨架(命名空间防冲突)+ Vercel AI SDK 桥接 + 安全/边界 + 调试三件套 + AIRI 三路线对比 + L2 P2 子阶段拆分
 - [[Wiki/Syntheses/AIAgents/Desktop-pet-team-distribution|桌宠团队分发架构]] — VFX 团队场景延伸专题;Flipbook 特效(PixiJS 0 依赖,Live2D=身体/Flipbook=特效环绕,团队 sprite sheet 工作流)+ 配置三层模型(defaults/team/user + per-key lock)+ Team config 四源对比(选 git repo)+ admin/user 权限(git 写权限即 admin)+ 设置页 6 tab 结构 + 调整后阶段路线(P0.5/P1.5/P4.5/P5)+ 个人/团队同代码库通过配置启停
+- [[Wiki/Syntheses/AIAgents/Desktop-pet-3d-figure-spec|桌宠 3D 形象规范 + PMX 入资产管线]] — 2D/3D toggle 议题;VRM 选择硬理由 + 模型规范(humanoid/Expression enum/Spring Bone)+ 动作规范(.glb/桩动画约束)+ IFigureRenderer 抽象(2D/3D toggle 不 stack)+ PMX→VRM 完整工具链(Blender + mmd_tools + VRM Add-on + CATS)+ 表情 enum 日↔英 remap 表 + MMD 许可证警告 + 工时估算 + P5+ 时机判断
 
 ### UE / Niagara 源码学习
 - [[Wiki/Syntheses/UE/Niagara/Niagara-learning-path|Niagara 源码学习路径]] — UE 4.26 Niagara 插件 10 阶段学习路线图，含 ~69 个文件待 ingest (stock)
