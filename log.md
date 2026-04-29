@@ -5,6 +5,31 @@
 
 ---
 
+## [2026-04-29] synthesis | Solaris 3 v0.3.1 — 内部架构清理 + Claudian 完整功能审计 → P3.x 8-phase roadmap
+
+- 触发:v0.3.0 ship 当晚,用户问"层级耦合度高吗"。架构审计后发现 3 处脆弱接缝(protocol 双份手动同步 / `useChatTabs` 两份 switch 重复 / `Effort` 三处定义);用户拍板"都做了",顺势抽出为 v0.3.1 内部清理。同时用户明确 P3 目标 = "把 Claudian 所有功能/feature 都搬过来",于是 clone Claudian 源码做完整审计,把 ship 当天那个 5-phase roadmap 扩展成 8-phase
+- ⚠️ **命名异义**:本条 "Claudian" 仍指 [https://github.com/YishenTu/claudian](GitHub Obsidian 插件项目,v2.0.3),不是 [[Wiki/Entities/Claudian]]
+- 三件内部清理(不增加用户可见功能,但是 P3.x 14-20 周长跑的"地基"):
+  1. **共享 protocol 单一来源** —— 抽出 `D:\Solaris-3\shared\protocol.ts`,前后端各一个 7 行 re-export shim;`config/schema.ts` 的 `Effort` / `HubMode` 改为转发。两边 tsconfig 加 `shared/**/*.ts` 到 include。**根因**:v0.3.0 之前两份 protocol.ts 看似只是"200 行重复",实际 B.11.2 加 `resumeSessionId` 时差点漏改一份(silent type drift = 模型零记忆 bug)
+  2. **Stream 事件 switch → handler map** —— `STREAM_EVENT_HANDLERS: { [K in ChatStreamEvent["type"]]: ... }` 静态映射;`send` / `runOnTab` 的重复 stream-loop 合并为 `runChatTurn`。**顺手修了 silent bug**:`runOnTab` 旧 switch 漏处理 `tool_use` / `tool_result` case(noFallthroughCasesInSwitch 通过但运行时丢弃)
+  3. **类型单一来源**:见 #1
+- Claudian 完整审计(clone v2.0.3 = `6774351`,过 `src/` 80+ .ts):**v0.3.0 ship 当天 5-phase roadmap 漏了 30%+ 功能** —— Rewind/Fork、Extended Thinking 块、Todo 列表、Inline Edit Modal、`#` 指令精化、`!` Bang-bash、Vim 导航、i18n、文件 @mention、MCP 测试 modal
+- 修订后 P3.x 8-phase roadmap(完整表 + 估算 + Claudian 源参考见 [[D:/Solaris-3/DEVLOG.md]] 的 v0.3.1 条目):
+  - **P3.1** Tool 渲染基础(1-2w)| **P3.2** Permission UI(2-3w)| **P3.3** 标题生成 + 会话级 MCP(1.5-2w)| **P3.4** Slash `/` + Skill `$`(2-3w)| **P3.5** Rewind/Fork + Subagents(2-3w)| **P3.6** Thinking/Todo + Bang-bash + 指令精化(1.5-2w)| **P3.7** Inline Edit + Vim(2-3w)| **P3.8** i18n + 高级设置(1-2w)
+  - 合计 **~14-20 周**,目标"功能完整性达到或超过 Claudian"
+  - ⏭️ **N/A**(不移植):vault 生态(wikilink / frontmatter / Canvas / Obsidian Plugin 注册)、Codex/Opencode adapter
+- **方法论沉淀**(扩展 v0.3.0 那条"hard reference 开源项目"):
+  - "hard reference" 不止用于**ship 当天定 bug**(v0.3.0 找出 8 个 silent breakage),也用于**ship 之后定 roadmap**:把 ship 当天 30 分钟出的快速估算扔掉,改成基于源码审计的修订版。**clone repo + 过一遍 src/** 大致结构 ~30 分钟,但避免 P3.5 才发现"忘了 Rewind"那种结构性补漏
+  - **"看着廉价的 duplication 是隐性长期负债"** —— 两份 protocol.ts 看着只是粘贴成本,实际是 silent type drift 隐患(B.11.2 那个零记忆 bug 直到全面审计才显形)。第二份重复出现的瞬间就该 refactor,不要等"以后再说"
+  - **新流程的 ship-day roadmap 不是真 roadmap** —— 任何"快速估算"的产出物都需要在事后用源码审计校准过一遍,才能作为长期 commit 计划用
+- 自验(Glob):
+  - [[D:/Solaris-3/DEVLOG.md]] 含 `[2026-04-29] v0.3.1 — 内部架构清理 + Claudian 完整功能审计` 条目 ✓
+  - `D:\Solaris-3\shared\protocol.ts` 已落盘(单一来源,~200 行) ✓
+  - vue-tsc + sidecar tsc + vite build + bun build:windows 全 EXITCODE=0 ✓
+  - Claudian 源 clone 在 `D:\_Download\claudian-audit\claudian`(commit `6774351`,临时审计用)
+
+---
+
 ## [2026-04-29] synthesis | Solaris 3 v0.3.0 完工 —— Hub sidecar 架构 + Claudian 风格 chat UX
 
 - 触发:P2.0(自研 MCP host)在 4-28 实测时撞坑成片(npx 路径 / "总是允许" 不持久 / 跨窗口状态机复杂度爆炸),Eureka 拍板**整体 pivot** —— 不再自研 MCP,改成"Bun sidecar 套壳官方 Claude Agent SDK + Claudian 风格的多 tab 聊天面板"。Solaris-3 重新定位 = **Claudian + Live2D 形象**(Claudian 是 Obsidian 端的 Claude Code 套壳,我们是 Tauri / 桌宠端的同款思路)
