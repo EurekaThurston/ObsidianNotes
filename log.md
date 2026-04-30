@@ -5,6 +5,37 @@
 
 ---
 
+## [2026-04-30] synthesis | Solaris 3 v0.5.0 — 灵魂注入(P4.0):多 persona + 长期记忆 + 会话压缩
+
+- 触发:v0.4.x 完了 Claudian 对标 + UX 打磨之后,用户拍板"现在该聊怎么注入灵魂了"。本日跨 P4.0a-d 四个切片一气 ship,版本号 v0.4.1 → v0.5.0。**v0.4.x = 像 Claudian 一样能用的桌宠;v0.5.0 = 有人格 + 有记忆的桌宠**
+- 一句话归纳:**桌宠从"工具"变"角色"——她有名字、有性格、记得你之前聊过什么**
+- 四个切片
+  - **A. P4.0a 多 persona 文件系统** —— `$APPDATA/personas/<id>/persona.md`,Rust 端首启 seed,用户编辑 → 下条消息生效。默认 persona 是用户给的 OpenClaw 角色卡迁移版"珂莱塔·莫塔里"(《鸣潮》黎那汐塔莫塔里家族二小姐 / 代号"欧泊")
+  - **B. P4.0b Pinned 钉住** —— 消息 hover 出 📌 按钮,append 到 `memories/<personaId>/pinned.md`,每次 chat 注入到 system prompt
+  - **C. P4.0c /compact 会话压缩** —— sidecar haiku 单 turn 总结成"前文备忘",前端清空 messages + sdkSessionId,下轮新 SDK session 把 summary 当上文注入。token ≥ 80% 弹橙色提示。压缩中 / 已压缩两态视觉占位 + 文案配置化
+  - **D. P4.0d Auto-diary 自动日记** —— 关 tab / 应用退出时 fire-and-forget 触发 haiku 写 3-5 句中文总结 append 到 `memories/<personaId>/diary.md`,每次新会话注入最近 5 条做"长期记忆"。haiku prompt 严格约束防过度解读 / 编造情绪状态
+- 注入顺序(sidecar `composeSystemAppend`):`<persona body> + 最近 diary + pinned + lastCompactSummary + customInstructions`
+- 关键架构教训
+  - **持久化分层**:ship 资源(默认 persona) vs 用户数据(pinned/diary)绝对要分目录,升级时不能覆盖用户编辑。Rust seed 函数判 `dst.exists()` 跳过,以及 `src-tauri/resources/personas/` 跟 `$APPDATA/personas/` 双栈
+  - **环境变量是 Tauri Rust ↔ sidecar 解耦的最小公约数**:`SOLARIS3_DATA_DIR` 透传 AppData 路径,sidecar 用 node fs 直接读,不需要前端经 Tauri fs 插件 IPC 一圈
+  - **不缓存 = 即时反馈**:每次 chat 重读 persona/pinned/diary 文件,用户改文件 → 下条消息生效。文件 KB 级,IO 可忽略,省了"reload"按钮 + 缓存失效逻辑两层心智
+  - **fire-and-forget 是关闭路径的硬约束**:关 tab / 退出 app 不能因为 LLM 调用失败被阻塞。日记 / pinned 都走 catch console.warn
+  - **配置化占位文字 ≫ 硬编码 system 消息**:本来 compact 完成后 push 一条 system role 消息进 messages,改成 `tab.compacted` flag + 渲染层从 config 读,**改设置文案立即生效 + tab.messages 干净**
+  - **opener path scope 不是默认开**:Tauri 2 `opener:allow-open-path` 必须配 `[{"path":"$APPDATA"},{"path":"$APPDATA/**"}]` scope,光加权限名报"Not allowed"
+  - **sidecar binary 替换 ≠ 重启 sidecar 进程**:bun build 写硬盘成功但运行进程加载的是旧映像,新 RPC 报 unknown method。开发期改 sidecar 后必须 `pnpm tauri dev` 重启
+- 推迟项
+  - **P4.1 Live2D 联动**:Hiyori 免费版 motion/expression 弱,且用户拍板 Live2D 是临时方案,后续全面换 3D 模型 + 动画。等 3D 模型一起做反应系统更划算
+- 方法论沉淀
+  - **"灵魂"是工程结构**:看似 UX 议题,落地是 5 层文件系统(persona / lore / examples / pinned / diary)+ 注入预算管理(~6k token / 每会话)+ 持久化层级。设计前花 30 分钟把 5 层分清楚,实施时 8-12 个工作时段一气呵成
+  - **桌宠记忆 ≠ RAG**:用户钉的(pinned)+ LLM 自己写的(diary)+ 工程上 fork-aware 压缩(compact summary)三层加起来才是"她记得我"。单纯 vector search 解决不了"她记得你昨天通宵骂 vue-tsc"
+  - **release notes 短粗 > 技术详细**:v0.4.0 那次 release 写得太技术,用户反馈"别人不会看"。v0.5.0 改用 bullet point 简短列"加了什么 / 改了什么",technical details 进 DEVLOG
+- 自验(Glob)
+  - [[D:/Solaris-3/DEVLOG.md]] 含 `[2026-04-30] v0.5.0 — 灵魂注入(P4.0)` 条目 ✓
+  - `D:/Solaris-3/src-tauri/resources/personas/carlotta/persona.md` 存在 ✓
+  - `D:/Solaris-3/sidecar/src/{personas,memories,diaryGen,compact}.ts` 4 个新模块 ✓
+
+---
+
 ## [2026-04-30] synthesis | Solaris 3 v0.4.0 — Claudian 对标完工 + UX 全面打磨
 
 - 触发:v0.3.0 ship 之后用户拍板"P3 = 把 Claudian 的所有 feature 都搬过来"。本日在 26 个 commit 里跨 P3.0(架构清理)→ P3.1-P3.7(7 个对标 phase)→ UX-1~10(收尾打磨)三层全部 ship,版本号 v0.3.0 → v0.4.0
