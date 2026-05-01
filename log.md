@@ -5,6 +5,49 @@
 
 ---
 
+## [2026-05-01] synthesis | Solaris 3 v0.6.0 — 3D 桌宠(P4.1):Tuanzi-demo 全套迁移 + 双窗口 + 互动闭环
+
+- 触发:用户拍板"3D 形象 demo 调到满意了,迁去正式项目"。Tuanzi-demo([[D:\Tuanzi-demo]] commit `5bf5b02` 锁定快照)是独立 Vite 工程,跑 master/outline shader + 母材质实例化 + Wake/Sleep 序列 + 跟随鼠标 + 调试 UI 全套。本日把这套全部搬进 Solaris-3,**剥 Live2D 出主窗口 → 拆双窗口架构 → 接 LLM 状态桥 → 完成桌宠级互动闭环**,版本号 v0.5.0 → v0.6.0
+- 一句话归纳:**v0.5.0 = 有灵魂的 2D 桌宠;v0.6.0 = 有身体的 3D 桌宠**
+- 范围拆分(都在 `feat/3d-pet` branch 上 ~20 个 commit chain)
+  - **资产搬运**:`src/pet/{customMaterial.ts, shaders/*.glsl}` 4 个 shader + 母材质工厂直搬,carlotta 模型 + textures 进 `src-tauri/resources/personas/carlotta/`,seed_personas 拷到 AppData
+  - **架构层**:tauri.conf.json 加第二个 startup 窗口 `pet`(560×720 transparent),main.ts label 分派加 `pet → /pet3d`,新建 `Pet3DView.vue` + `Pet3DStage.vue`(stage Tauri-agnostic 只管 Three.js,view 处理 Tauri 调用 / 鼠标 / 桥接)
+  - **Persona schema**:`personas/<id>/figure3d.json`(独立 JSON 文件,**不挤 frontmatter**——sidecar YAML 解析极简,深嵌套 slots 用 JSON 干净一万倍),sidecar `readFigure3d` JSON.parse 完返回到 PersonaSummary。前端 `pet/personaFigure3d.ts` transform 一层(asset:// URL + THREE.Color 实例)喂给 stage
+  - **LLM 状态桥**:`lib/petBridge.ts` 用 Tauri 跨窗口 event "pet:state",`useChatTabs` 的 STREAM_EVENT_HANDLERS 在 thinking_delta / text_delta / tool_use / error 分别 setPetState,Pet3DView listen 后调 stage.playState 切对应 GLB clip
+  - **桌宠级互动**:5 个独立动作各自实现
+    - 左键 click(命中模型)= 摸头 / 长按 = Tauri startDragging 移窗
+    - 右键 click = 召唤 chat / 长按 = 旋转模型(松开 2s 后 0.5s autoReturn 平滑回正)
+    - 跟随鼠标(yaw ±30° / pitch ±15° 缓动,思考/说话时暂停)
+    - 全局 cursorPosition 50ms 轮询 + framebuffer alpha hit-test → 透明区点击穿透到下面应用,只有命中模型才接事件 + 20px 容差
+    - Wake 序列(模型从镜头外滚入)/ Sleep 序列(Tray 退出前播,3s 兜底强退)
+- 关键决策 / 为什么这么设计
+  - **双窗口 vs 浮窗**:用户硬约束"模型大小 ⊥ 对话框大小"+ 滚出语义清晰(过窗口边界 = 消失)→ 必须拆双窗口。代价是 Tauri 多 webview 退出有 Chromium `window_impl.cc:134` stderr 噪音(Error 1412,无害,所有多 window 应用都有)
+  - **figure3d.json 独立 JSON,不塞 frontmatter**:1:1 mirror DumplingConfig,JSON 友好。sidecar 不需要扩 YAML 解析(它的极简 YAML 只支持一层嵌套,figure3d 深结构不能塞)
+  - **stage Tauri-agnostic / view Tauri-aware**:Pet3DStage 只 import three / customMaterial,view 独占 Tauri 调用。组件复用性更好,以后换 Electron / 浏览器 demo 也能跑
+  - **autoPlayOnReady prop 而非父 watch**:父组件 watch 在 setup ref 变化时 fire,撞上 stage 内部 GLB 异步加载未完成 → playWake silent fail。stage 内部知道何时 ready,自己决定首播什么。**异步加载组件的"启动动作"应当由组件内部决定,而不是父级 watch**
+  - **interactionLocked 仅右键 drag 用**:左键 drag 触发 Tauri startDragging,OS 接管鼠标 → 我们 @mouseup 永远不 fire → 锁卡死。OS-level drag 跟浏览器 hit-test 互不干扰,左键不锁也行。右键 drag 用 document-level mouseup 收得到,锁安全
+  - **像素 alpha hit-test 替代 raycast**:raycast 是三角形级,会被 invisible 几何 / cutout 拐到。alpha=1 写死后任何被画的几何都"实心命中"。`gl.readPixels` 取所见即所得,bypass 几何层。**坑:WebGL 默认 `preserveDrawingBuffer: false` → readPixels 在 polling 间隔(50ms)读 0 alpha**,要显式开 true
+- 关键 14 个 bug + 4 类教训(详见 [[D:\Solaris-3\DEVLOG.md]] v0.6.0 段)
+  - **异步竞态类(2 次)**:mixer 创建顺序晚于 idle 调用 / wake watch 抢 GLB 加载时序。两次都是异步 setup 阶段 silent return。**异步 setup 阶段的"动作触发"必须放到 setup 完成后,父级 watch 抢时序往往失败**
+  - **配置 schema 不到位(2 次)**:Cargo `protocol-asset` / `image-png` features 漏开,导致 asset:// 协议 / `Image::from_bytes` 不存在。**Tauri 子模块 feature flag 跟主依赖独立**,加新 Tauri API 必须 grep features
+  - **Tauri permission 静默失败(1 次,教训重)**:`core:window:allow-set-ignore-cursor-events` 没列在 capabilities allowlist,前端调 setIgnoreCursorEvents silently 失败。**permission-based IPC 系统不抛错只是默默不起作用** —— 加 Tauri API 第一动作:grep 对应权限是否在 default.json
+  - **AppData seed 不覆盖 / sidecar binary 不重建**:dev mode 反复踩。**Dev mode 必须有手动同步路径**(给用户 PowerShell `Copy-Item` snippet,别让用户自己想)
+  - **outline shader 切线空间 vs 对象空间编码**:反复试 2 轮才对——uv3 不是 oct 编码,是 "x/y 直存 + sqrt 重建 z" 切线空间。**遇到"渲染条纹"先排查空间(切线/对象/世界)和编码格式,别盲调系数**
+- 方法论里程碑
+  - **Tuanzi-demo 独立 sandbox 验证 → 主项目迁移**模式收效:用户在小工程里调好整套渲染管线 + 动画(包括 13 次反复试错 outline / SSS / specular 等迭代),只把"最终满意态"搬进主项目。**主项目代码冷静干净,不沉淀实验性代码** —— 适合中等规模特性的 demo workflow 范本
+  - **架构上:渲染 / 状态桥 / 资产配置 / 互动 4 个层互相不耦合**——sidecar 只新加 readFigure3d,其它原 P4.0 链路 0 改动;前端 LLM 事件链路加 setPetState 一行 hook,其它 0 改动;Pet3DStage 不知道 Tauri / persona / chat 存在;Pet3DView 不知道 Three.js / shader 细节。**单一职责落实到组件级**
+  - **DEVLOG 与 vault log 双层 + 14 bugs 的归类**:DEVLOG 给工程档案(每个 bug 详细复现 / 根因 / 修法),vault log 抽象成"模式":异步竞态(2 次)/ 配置 schema 不到位(2 次)/ Tauri permission 静默失败(1 次,但教训重)/ Cargo features(1 次)。**bug 不止是修了就完,还要分类沉淀以免下次踩同类**
+- 下一步
+  - **角色消息泡(P4.2)**:把 chat 从主窗口移到 pet 窗口当"漂在团子头上的对话气泡",这是过渡形态 → 最终形态。当前主窗口 chat-only 是中转
+  - **召回带动画**:Ctrl+Space 现在 snap 显示,后面接"显示 → playWake"流畅化
+  - **VFX 团队真用**:v0.5 人格 + v0.6 形象闭环,接下来挂 MCP-Niagara / MCP-AE / MCP-Houdini 等专项工具(P3 阶段的事,需要单独议题)
+- 自验证(Glob)
+  - [[D:\Solaris-3\DEVLOG.md]] 含 `[2026-05-01] v0.6.0 — 3D 桌宠(P4.1)` 完整段(14 bugs / 架构决策 / 协议变更 / 文件布局)✓
+  - [[D:\Tuanzi-demo]] commit `5bf5b02` 快照锁定为参考实现 ✓
+  - GitHub Release v0.6.0(待 push tag + 发布脚本完成)
+
+---
+
 ## [2026-04-30] synthesis | Solaris 3 v0.5.0 — 灵魂注入(P4.0):多 persona + 长期记忆 + 会话压缩
 
 - 触发:v0.4.x 完了 Claudian 对标 + UX 打磨之后,用户拍板"现在该聊怎么注入灵魂了"。本日跨 P4.0a-d 四个切片一气 ship,版本号 v0.4.1 → v0.5.0。**v0.4.x = 像 Claudian 一样能用的桌宠;v0.5.0 = 有人格 + 有记忆的桌宠**
